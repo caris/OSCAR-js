@@ -1,0 +1,88 @@
+<help>
+	<component id="DataExtractor">
+		<header>Descarga de datos</header>
+		<para>
+
+			Hay dos tipos de datos que pueden ser descargados a través del botón
+			<b>Descarga de datos</b>
+			: Objetos y Coberturas. Los Objetos se obtienen desde un Servicio de
+			Objetos en la web y las Coberturas son provistas a través de un
+			Servicio de Coberturas de la web. Se pueden seleccionar múltiples
+			objetos, así como hacer una búsqueda de objetos específicos o
+			coberturas específicas.
+		</para>
+		<para>
+			La ventana de diálogo
+			<b>Descarga de datos</b>
+			le permite la selección de datos disponibles para ser descargados.
+			Una vez que ha seleccionado un objeto o una cobertura, el mapa se
+			ampliará en un rectángulo de selección, que muestra un área de
+			recorte así como la lista de formatos disponibles. Puede hacer clic
+			en el botón
+			<b>Descargar</b>
+			para descargar los objetos seleccionados utilizando la configuración
+			por defecto, o puede refinar los objetos seleccionados.
+		</para>
+		<para>
+			La pestaña
+			<b>Objetos</b>
+			en la ventana de diálogo
+			<b>Descarga de datos</b>
+			presenta los objetos disponibles, que pueden ser seleccionados
+			marcando las casillas correspondientes. El botón
+			<b>Selecionar todo</b>
+			le permite seleccionar todo lo que haya disponible. El formato de la
+			descarga se puede seleccionar en la lista desplegable.
+		</para>
+		<para>
+			La pestaña
+			<b>Coberturas</b>
+			contiene las pestañas
+			<b>Básico</b>
+			y
+			<b>Avanzado</b>
+			. La pestaña
+			<b>Básico</b>
+			muestra las Coberturas disponibles, que se pueden seleccionar
+			haciendo clic en los botones de radio. La lista desplegable
+			<b>Formato</b>
+			le permite seleccionar un formato de salida. La pestaña
+			<b>Avanzado</b>
+			le permite seleccionar campos disponibles y el sistema de referencias
+			de coordenadas (SRC).
+		</para>
+		<para>
+			Además del botón de
+			<b>Ayuda</b>
+			, el borde de botones de la base de la ventana de diálogo posee otros
+			dos botones. Haga clic en
+			<b>Descargar</b>
+			para abrir una ventana con el código xml que se puede usar para la
+			presentación de los datos seleccionados en otra aplicación. Haga clic
+			en
+			<b>Cancelar</b>
+			para finalizar la descarga de los datos.
+		</para>
+		<para>
+			Todos los datos disponibles en estas pestañas se pueden seleccionar ya sea
+			desde la ventana de diálogo, o desde la herramienta de recorte del
+			mapa. Durante la navegación por el mapa, puede utilizar las técnicas
+			de cambiar la escala con la barra ubicada en el lado izquierdo y de
+			arrastrar el mapa con el ratón.
+</para>
+		<para>
+			Para refinar el área recortada, haga clic en el área recortada sobre el
+			mapa. Una vez seleccionada, el área recortada tendrá un punto en el
+			centro para permitir su desplazamiento, y un punto en la esquina
+			inferior derecha para permitir la rotación y cambio de tamaño.
+</para>
+		<para>
+			La ventana
+			<b>Descarga de datos</b>
+			tiene también una barra para
+			<b>Buscar</b>
+			Objetos y Coberturas. Puede encontrar Objetos escribiendo en el campo
+			de los objetos (o coberturas) que desea visualizar.
+		</para>
+	</component>
+</help>

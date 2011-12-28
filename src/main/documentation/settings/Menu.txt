@@ -1,0 +1,205 @@
+Format: 1.4
+
+
+Title: Oscar
+SubTitle: Caris Web Mapping API
+
+Footer: Caris 2011
+Timestamp: Generated on month day, year
+#   m     - One or two digit month.  January is "1"
+#   mm    - Always two digit month.  January is "01"
+#   mon   - Short month word.  January is "Jan"
+#   month - Long month word.  January is "January"
+#   d     - One or two digit day.  1 is "1"
+#   dd    - Always two digit day.  1 is "01"
+#   day   - Day with letter extension.  1 is "1st"
+#   yy    - Two digit year.  2006 is "06"
+#   yyyy  - Four digit year.  2006 is "2006"
+#   year  - Four digit year.  2006 is "2006"
+
+
+# --------------------------------------------------------------------------
+# 
+# Cut and paste the lines below to change the order in which your files
+# appear on the menu.  Don't worry about adding or removing files, Natural
+# Docs will take care of that.
+# 
+# You can further organize the menu by grouping the entries.  Add a
+# "Group: [name] {" line to start a group, and add a "}" to end it.
+# 
+# You can add text and web links to the menu by adding "Text: [text]" and
+# "Link: [name] ([URL])" lines, respectively.
+# 
+# The formatting and comments are auto-generated, so don't worry about
+# neatness when editing the file.  Natural Docs will clean it up the next
+# time it is run.  When working with groups, just deal with the braces and
+# forget about the indentation and comments.
+# 
+# --------------------------------------------------------------------------
+
+
+Group: Lib  {
+   File: oscar  (lib\oscar.js)
+   File: Loader  (Loader.js)
+
+   Group: Oscar  {
+      Group: Control  {
+         File: Control  (lib\oscar\Control.js)
+         Group: Control  {
+            File: ArgParser  (lib\oscar\Control\ArgParser.js)
+            File: Box  (lib\oscar\Control\Box.js)
+            File: ClearSelection  (lib\oscar\Control\ClearSelection.js)
+            File: DataExtractor  (lib\oscar\Control\DataExtractor.js)
+            File: Measure  (lib\oscar\Control\Measure.js)
+            File: Multi  (lib\oscar\Control\Multi.js)
+            File: OverviewMap  (lib\oscar\Control\OverviewMap.js)
+            File: OXFConfigManager  (lib\oscar\Control\OXFConfigManager.js)
+            File: PanZoom  (lib\oscar\Control\PanZoom.js)
+            File: PanZoomBar  (lib\oscar\Control\PanZoomBar.js)
+            File: Permalink  (lib\oscar\Control\Permalink.js)
+            File: Point  (lib\oscar\Control\Point.js)
+            File: PreviousView  (lib\oscar\Control\PreviousView.js)
+            File: Print (lib\oscar\Control\Print.js)
+            File: RangeSelect (lib\oscar\Control\RangeSelect.js)
+            File: Select  (lib\oscar\Control\Select.js)
+            File: ThemeManager  (lib\oscar\Control\ThemeManager.js)
+            File: ThemeSwitcher  (lib\oscar\Control\ThemeSwitcher.js)
+            File: ToolBar  (lib\oscar\Control\ToolBar.js)
+            }  # Group: Control
+         }  # Group: Control
+
+      Group: Format  {
+        File: Format  (lib\oscar\Format.js)
+        Group: Format  {
+                 File: OGC  (lib\oscar\Format\OGC.js)
+                 File: OXF  (lib\oscar\Format\OXF.js)
+                 File: WCSCapabilities  (lib\oscar\Format\WCSCapabilities.js)
+                 File: WCSDescribeCoverage  (lib\oscar\Format\WCSDescribeCoverage.js)
+                 File: WFSCapabilities  (lib\oscar\Format\WFSCapabilities.js)
+                 File: WFSDescribeFeatureType  (lib\oscar\Format\WFSDescribeFeatureType.js)
+                 File: WMTSCapabilities  (lib\oscar\Format\WMTSCapabilities.js)
+                 Group: OGC  {
+                    File: ows  (lib\oscar\Format\OGC\ows.js)
+                    File: wcs Methods used for reading elements defined in the  (lib\oscar\Format\OGC\wcs.js)
+                    File: wfs Methods used for reading elements defined in the  (lib\oscar\Format\OGC\wfs.js)
+                    File: wmts Methods used for reading elements defined in the  (lib\oscar\Format\OGC\wmts.js)
+                 }  # Group: OGC
+                 Group: OXF  {
+                    File: v2  (lib\oscar\Format\OXF\v2.js)
+                 }  # Group: OXF
+                 Group: WCSCapabilities  {
+                    File: v1  (lib\oscar\Format\WCSCapabilities\v1.js)
+                    File: v1_0_0  (lib\oscar\Format\WCSCapabilities\v1_0_0.js)
+                    File: v1_1_0  (lib\oscar\Format\WCSCapabilities\v1_1_0.js)
+                    File: v1_1_1  (lib\oscar\Format\WCSCapabilities\v1_1_1.js)
+                 }  # Group: WCSCapabilities
+                 Group: WCSDescribeCoverage  {
+                    File: v1  (lib\oscar\Format\WCSDescribeCoverage\v1.js)
+                    File: v1_0_0  (lib\oscar\Format\WCSDescribeCoverage\v1_0_0.js)
+                    File: v1_1_0  (lib\oscar\Format\WCSDescribeCoverage\v1_1_0.js)
+                    File: v1_1_1  (lib\oscar\Format\WCSDescribeCoverage\v1_1_1.js)
+                 }  # Group: WCSDescribeCoverage
+                 Group: WFSCapabilities  {
+                    File: v1  (lib\oscar\Format\WFSCapabilities\v1.js)
+                    File: v1_0_0  (lib\oscar\Format\WFSCapabilities\v1_0_0.js)
+                    File: v1_1_0  (lib\oscar\Format\WFSCapabilities\v1_1_0.js)
+                 }  # Group: WFSCapabilities
+                 Group: WFSDescribeFeatureType  {
+                    File: v1  (lib\oscar\Format\WFSDescribeFeatureType\v1.js)
+                    File: v1.0.0  (lib\oscar\Format\WFSDescribeFeatureType\v1.0.0.js)
+                    File: v1.1.0  (lib\oscar\Format\WFSDescribeFeatureType\v1.1.0.js)
+                 }  # Group: WFSDescribeFeatureType
+                 Group: WMTSCapabilities  {
+                    File: v1  (lib\oscar\Format\WMTSCapabilities\v1.js)
+                    File: v1_0_0  (lib\oscar\Format\WMTSCapabilities\v1_0_0.js)
+                 }  # Group: WMTSCapabilities
+             }  # Group: Format
+        }  # Group: Format 
+        
+      Group: Gui  {
+         File: Gui  (lib\oscar\Gui.js)
+         Group: Gui  {
+            File: AlertDialog  (lib\oscar\Gui\AlertDialog.js)
+            File: ClickableLabel.js (lib\oscar\Gui\ClickableLabel.js)
+            File: CollapsiblePanel  (lib\oscar\Gui\CollapsiblePanel.js)
+            File: ConfirmDialog  (lib\oscar\Gui\ConfirmDialog.js)
+            File: DataExtraction  (lib\oscar\Gui\DataExtraction.js)
+            File: DataExtractionPanel (lib\oscar\Gui\DataExtractionPanel.js)
+            File: Dialog  (lib\oscar\Gui\Dialog.js)
+            File: Grid  (lib\oscar\Gui\Grid.js)
+            File: Metadata  (lib\oscar\Gui\Metadata.js)
+            File: MultiCoordinateSystemsChooser (lib\oscar\Gui\MultiCoordinateSystemsChooser.js)
+            File: MultiDataExtractionChooser  (lib\oscar\Gui\MultiDataExtractionChooser.js)
+            File: MultiItemChooserTable  (lib\oscar\Gui\MultiItemChooserTable.js)
+            File: ServicePanel  (lib\oscar\Gui\ServicePanel.js)
+            }  # Group: Gui
+         }  # Group: Gui
+
+      Group: Handler  {
+         File: Handler  (lib\oscar\Handler.js)
+         Group: Handler  {
+            File: WFS  (lib\oscar\Handler\WFS.js)
+            }  # Group: Handler
+      }  # Group: Handler
+         
+      Group: Lang  {
+        File: Lang  (lib\oscar\Lang.js)
+        Group: Lang  {
+            File: en  (lib\oscar\Lang\en.js)
+            File: es  (lib\oscar\Lang\es.js)
+            File: fr  (lib\oscar\Lang\fr.js)
+        }  # Group: Lang
+      }  # Group: Lang
+
+      Group: Layer  {
+         File: Layer  (lib\oscar\Layer.js)
+         Group: Layer  {
+            File: POILayer  (lib\oscar\Layer\POILayer.js)
+            File: WMTS  (lib\oscar\Layer\WMTS.js)
+            }  # Group: Layer
+         }  # Group: Layer
+
+      Group: ox  {
+         File: ox  (lib\oscar\ox\ox.js)
+         }  # Group: ox
+      
+      Group: Popup  {
+         File: FramedCloud  (lib\oscar\Popup\FramedCloud.js)
+         }  # Group: Popup
+         
+      Group: Types  {
+         File: BaseClass  (lib\oscar\Types\BaseClass.js)
+         }  # Group: Types
+      
+      Group: Util  {
+         File: Util  (lib\oscar\Util.js)
+         Group: Util  {
+            File: AlertBox  (lib\oscar\Util\AlertBox.js)
+            File: ConfigManager  (lib\oscar\Util\ConfigManager.js)
+            File: ConfirmBox  (lib\oscar\Util\ConfirmBox.js)
+            File: CoordinateSystemAutoComplete  (lib\oscar\Util\CoordinateSystemAutoComplete.js)
+            File: DivSelect  (lib\oscar\Util\DivSelect.js)
+            File: DivSelectOption  (lib\oscar\Util\DivSelectOption.js)
+            File: Metadata  (lib\oscar\Util\Metadata.js)
+            File: MultiCoordinateSystemsChooser  (lib\oscar\Util\MultiCoordinateSystemsChooser.js)
+            File: SelectControl  (lib\oscar\Util\SelectControl.js)
+            File: SettingsAutoCompleteTable  (lib\oscar\Util\SettingsAutoCompleteTable.js)
+            File: StatusChecker  (lib\oscar\Util\StatusChecker.js)
+            }  # Group: Util
+         }  # Group: Util
+
+      File: Map  (lib\oscar\Map.js)
+      File: SingleFile  (lib\oscar\SingleFile.js)
+      
+      }  # Group: Oscar
+   }  # Group: Lib
+
+Group: Index  {
+   Index: Everything
+   Class Index: Classes
+   Constant Index: Constants
+   Function Index: Functions
+   Property Index: Properties
+   Constructor Index: Constructor
+}  # Group: Index
+

@@ -1,0 +1,16 @@
+<html>
+<head>
+<script src="../../Loader.js"></script>
+<script type="text/javascript">
+var url = "../files/themeConfiguration.json";
+var waitTime = 2;
+function test_Control_ThemeManager(t) {
+    var control = new oscar.Control.ThemeManager();
+    t.ok(control instanceof oscar.Control.ThemeManager,"new oscar.Control.ThemeManager returns ThemeManager object");
+    t.eq(control.CLASS_NAME,"oscar.Control.ThemeManager","control.CLASS_NAME is set correctly");
+}
+</script>
+<body>
+
+</body>
+</html>

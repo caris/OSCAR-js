@@ -1,0 +1,235 @@
+<html>
+<head>
+<script src="../Loader.js"></script>
+<script type="text/javascript">
+   var successMsg = "Matching translation values";
+
+ var local = { 
+  getOscarDictionary: function(dictionary) {
+        var oscarDictionary = {};
+        var count = 0;
+        
+        for(var prop in dictionary) {
+            if(!(this.openLayersKeys[prop] && this.openLayersKeys[prop]==dictionary[prop]) && dictionary[prop].length > 0) {
+                oscarDictionary[prop] = dictionary[prop];
+            }
+        }
+        return oscarDictionary;
+  },
+  openLayersKeys:{
+
+    'unhandledRequest': "Unhandled request return ${statusText}",
+
+    'permalink': "Permalink",
+
+    'overlays': "Overlays",
+
+    'baseLayer': "Base Layer",
+
+    'sameProjection':
+        "The overview map only works when it is in the same projection as the main map",
+
+    'readNotImplemented': "Read not implemented.",
+
+    'writeNotImplemented': "Write not implemented.",
+
+    'noFID': "Can't update a feature for which there is no FID.",
+
+    'errorLoadingGML': "Error in loading GML file ${url}",
+
+    'browserNotSupported':
+        "Your browser does not support vector rendering. Currently supported renderers are:\n${renderers}",
+
+    'componentShouldBe': "addFeatures : component should be an ${geomType}",
+
+    // console message
+    'getFeatureError':
+        "getFeatureFromEvent called on layer with no renderer. This usually means you " +
+        "destroyed a layer, but not some handler which is associated with it.",
+
+    // console message
+    'minZoomLevelError':
+        "The minZoomLevel property is only intended for use " +
+        "with the FixedZoomLevels-descendent layers. That this " +
+        "wfs layer checks for minZoomLevel is a relic of the" +
+        "past. We cannot, however, remove it without possibly " +
+        "breaking OL based applications that may depend on it." +
+        " Therefore we are deprecating it -- the minZoomLevel " +
+        "check below will be removed at 3.0. Please instead " +
+        "use min/max resolution setting as described here: " +
+        "http://trac.openlayers.org/wiki/SettingZoomLevels",
+
+    'commitSuccess': "WFS Transaction: SUCCESS ${response}",
+
+    'commitFailed': "WFS Transaction: FAILED ${response}",
+
+    'googleWarning':
+        "The Google Layer was unable to load correctly.<br><br>" +
+        "To get rid of this message, select a new BaseLayer " +
+        "in the layer switcher in the upper-right corner.<br><br>" +
+        "Most likely, this is because the Google Maps library " +
+        "script was either not included, or does not contain the " +
+        "correct API key for your site.<br><br>" +
+        "Developers: For help getting this working correctly, " +
+        "<a href='http://trac.openlayers.org/wiki/Google' " +
+        "target='_blank'>click here</a>",
+
+    'getLayerWarning':
+        "The ${layerType} Layer was unable to load correctly.<br><br>" +
+        "To get rid of this message, select a new BaseLayer " +
+        "in the layer switcher in the upper-right corner.<br><br>" +
+        "Most likely, this is because the ${layerLib} library " +
+        "script was not correctly included.<br><br>" +
+        "Developers: For help getting this working correctly, " +
+        "<a href='http://trac.openlayers.org/wiki/${layerLib}' " +
+        "target='_blank'>click here</a>",
+
+    'scale': "Scale = 1 : ${scaleDenom}",
+    
+    //labels for the graticule control
+    'W': 'W',
+    'E': 'E',
+    'N': 'N',
+    'S': 'S',
+    'graticule': 'Graticule',
+
+    // console message
+    'layerAlreadyAdded':
+        "You tried to add the layer: ${layerName} to the map, but it has already been added",
+
+    // console message
+    'reprojectDeprecated':
+        "You are using the 'reproject' option " +
+        "on the ${layerName} layer. This option is deprecated: " +
+        "its use was designed to support displaying data over commercial " + 
+        "basemaps, but that functionality should now be achieved by using " +
+        "Spherical Mercator support. More information is available from " +
+        "http://trac.openlayers.org/wiki/SphericalMercator.",
+
+    // console message
+    'methodDeprecated':
+        "This method has been deprecated and will be removed in 3.0. " +
+        "Please use ${newMethod} instead.",
+
+    // console message
+    'boundsAddError': "You must pass both x and y values to the add function.",
+
+    // console message
+    'lonlatAddError': "You must pass both lon and lat values to the add function.",
+
+    // console message
+    'pixelAddError': "You must pass both x and y values to the add function.",
+
+    // console message
+    'unsupportedGeometryType': "Unsupported geometry type: ${geomType}",
+
+    // console message
+    'pagePositionFailed':
+        "OpenLayers.Util.pagePosition failed: element with id ${elemId} may be misplaced.",
+
+    // console message
+    'filterEvaluateNotImplemented': "evaluate is not implemented for this filter type.",
+
+    // **** end ****
+    'end': ''
+ }
+};
+
+function test_dictionary_entries(t) {
+    /**
+    * Separate the oscar dictionary from the OpenLayers one because by default 
+    * only the english OL dictionary is loaded so the french and spanish dictionarys
+    * provided by oscar will not have the OL dictionary entries.
+    */
+    var english = local.getOscarDictionary(oscar.Lang.getDictionary("en"));
+    var french = oscar.Lang.getDictionary("fr");
+    var spanish = oscar.Lang.getDictionary("es");
+    
+    for(var prop in english) {
+        t.ok(Object.prototype.hasOwnProperty.call(french,prop) ,prop + " - exists in French language file");
+        t.ok(Object.prototype.hasOwnProperty.call(spanish,prop),prop + " - exists in Spanish language file");
+    };
+
+}
+ 
+   function test_Lang_en(t) {
+       //t.plan(14);
+       OpenLayers.Lang.setCode("en");
+       var d = local.getOscarDictionary(oscar.Lang.getDictionary("en"));
+       t.eq(d["alertBoxHeader"],"Warning!",successMsg);
+       t.eq(d["confirmBoxHeader"],"Warning!",successMsg);
+       t.eq(d["yesButtonLabel"],"Yes",successMsg);
+       t.eq(d["cancelButtonLabel"],"Cancel",successMsg);
+       t.eq(d["okayButtonLabel"],"Okay",successMsg);
+       t.eq(d["confirmDeleteMessage"],"Are you sure you want to delete this item?",successMsg);
+       t.eq(d["confirmRemoveMessage"],"Are you sure you want to remove this item?",successMsg);
+       t.eq(d["oneChecked"],"At least one item must be checked.",successMsg);
+       t.eq(d["nameColumnLabel"],"Name",successMsg);
+       t.eq(d["statusColumnLabel"],"Status",successMsg);
+       t.eq(d["typeColumnLabel"],"Type",successMsg);
+       t.eq(d["valueColumnLabel"],"Value",successMsg);
+       t.eq(d["resetColumnLabel"],"Reset",successMsg);
+       t.eq(d["modified"],"Modified",successMsg);
+       t.eq(d["default"],"Default",successMsg);
+       t.eq(d["confirmReset"],"Reset value to default?",successMsg);
+       t.eq(d["saveButtonLabel"],"Save",successMsg);
+       t.eq(d["Themes"],"&nbsp;",successMsg);
+       t.eq(d["ExtractDataDlgHeader"],"Extract Data",successMsg);
+       t.eq(d["Custom"],"Custom",successMsg);
+       t.eq(d["Current View"],"Current View",successMsg);
+       t.eq(d["Format Type"],"Format Type",successMsg);
+       t.eq(d["Layers"],"Layers",successMsg);
+       t.eq(d["Download"],"Download",successMsg);
+       t.eq(d["Close"],"Close",successMsg);
+       t.eq(d["Please Wait"],"Please wait ...",successMsg);
+       t.eq(d["Retrieving Features"],"Retrieving Features",successMsg);
+       t.eq(d["Units"],"Units",successMsg);
+       t.eq(d["english"],"Imperial",successMsg);
+       t.eq(d["metric"],"Metric",successMsg);
+       t.eq(d["geographic"],"Geographic",successMsg);
+       t.eq(d["Area"],"Area",successMsg);
+       t.eq(d["Distance"],"Distance",successMsg);
+       t.eq(d["MeasurementToole"],"Measurement Tool",successMsg);
+       t.eq(d["srsCodeColumnLabel"],"Coordinate System",successMsg);
+       t.eq(d["srsDescriptionColumnLabel"],"Description",successMsg);
+       t.eq(d["first"],"&lt;&lt;",successMsg);
+       t.eq(d["last"],"&gt;&gt;",successMsg);
+       t.eq(d["previous"],"&lt;",successMsg);
+       t.eq(d["next"],"&gt;",successMsg);
+       tEntries(d,t);
+       t.ok(!d["LayerToggleToolTip"].contains("{translate}"),"LayerToggleToolTip entry found");
+       t.ok(!d["LayerToggleTitle"].contains("{translate}"),"LayerToggleTitle entry found");
+   }
+   function test_Lang_es(t) {
+       var d = oscar.Lang.getDictionary("es");
+       tEntries(d,t);
+
+       t.ok(!d["LayerToggleToolTip"].contains("{translate}"),"LayerToggleToolTip entry found");
+       t.ok(!d["LayerToggleTitle"].contains("{translate}"),"LayerToggleTitle entry found");
+       
+   }
+   function test_Lang_fr(t) {
+       var d = oscar.Lang.getDictionary("fr");
+       tEntries(d,t);
+
+       t.ok(!d["LayerToggleToolTip"].contains("{translate}"),"LayerToggleToolTip entry found");
+       t.ok(!d["LayerToggleTitle"].contains("{translate}"),"LayerToggleTitle entry found");
+   }
+   
+   function tEntries(dictionary,test) {
+       //Currently 145 entries in the dictionary
+       var dictionaryCount = 145;
+       var count=0;
+       for(var entry in dictionary) {
+           test.debug_print(entry + " : " + dictionary[entry]);
+           test.ok(!dictionary[entry].contains("{translate}"), dictionary[entry] + " translated");
+           ++count;
+       }
+       test.debug_print(count + " entries found");
+       test.ok(count == dictionaryCount,"Found " + count + "; Expected " + dictionaryCount);
+   }       
+      
+</script>
+<body>
+</body>
+</html>

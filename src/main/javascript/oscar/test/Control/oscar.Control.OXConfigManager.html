@@ -1,0 +1,34 @@
+<html>
+<head>
+<script src="../../Loader.js"></script>
+<script type="text/javascript">
+_OscarLoader.onReady(test_OXFConfig_Load);
+var config;
+function init() {
+    config = {"version":1.0,"proxy":"proxy?url\u003d","themes":[{"id":0,"name":"Fredericton","layers":[{"layerId":0,"name":"FredWorld","urls":["http://tcoburnvs.caris.priv:8080/sfs/services/ows/wms/fredericton_world"],"format":"image/png","baseLayer":false,"layerType":"WMS","dataLayers":[{"id":0,"layerName":"World","index":0},{"id":0,"layerName":"Land","index":0},{"id":0,"layerName":"Forest","index":0},{"id":0,"layerName":"Buildings","index":0}],"displayOrder":1,"parameters":{"buffer":"0"}},{"wfsVersion":"1.0.0","responseFormat":"GML2","featureColor":"ff0000","featureSelectedColor":"0000ff","layerId":0,"name":"FredWFS","urls":["http://sfs.caris.com/spatialfusionserver/services/ows/wfs/fredericton?"],"format":"image/png","baseLayer":false,"layerType":"SELECTION","dataLayers":[{"id":0,"layerName":"cs:Buildings","index":0},{"id":0,"layerName":"cs:Forest","index":0}],"displayOrder":-1,"parameters":{"buffer":"0"}}],"displayOrder":1,"srs":"EPSG:4326","backgroundColor":"FFFFFF","parameters":{"numzoomlevels":"16"}}]};
+
+}
+   function test_OXFConfig_Load(t) {
+       var cfgManager = new oscar.Control.OXFConfigManager();
+       init();
+       alert(cfgManager);
+       alert(config);
+/**
+       t.plan(4);
+       t.ok(oscarMap instanceof oscar.Map," constructor returns instance");
+       t.eq(oscarMap.CLASS_NAME,"oscar.Map","We have a map instance");
+       t.eq(oscarMap.getActiveTheme().name,"Default","Default theme is set");
+       var cb = function(theme,b) {
+           t.eq(b,oscarMap.getExtent().toBBOX(),"Equals extents");
+       }
+       var pt = new oscar.Control.Print(null,null,{callback:cb});
+       oscarMap.addControl(pt);
+       pt.element.onclick();
+**/
+   }
+   
+</script>
+<body>
+
+</body>
+</html>

@@ -1,0 +1,62 @@
+<html>
+<head>
+<script src="../../Loader.js"></script>
+<script type="text/javascript">
+var url = "../files/themeConfiguration.json";
+var waitTime = 2;
+var chooser=null;
+var preSelectedSRSs=null;
+function test_MultiCoordinateSystemsChooser_Constructor(t){
+	buildChooser();
+	t.ok(chooser instanceof oscar.Gui.MultiCoordinateSystemsChooser, "chooser created");
+	t.eq(chooser.getSRSsSelections(), preSelectedSRSs, "selected SRSs match");
+}
+
+function buildChooser() {
+    preSelectedSRSs = [
+        {"id":1,"code":"EPSG:4326","name":"CRS84"},
+        {"id":2,"code":"EPSG:3857","name":"Google Mercator"},
+        {"id":3,"code":"EPSG:900913","name":"Web Mercator"}
+    ]
+    
+    var srsDataSource = new YAHOO.util.DataSource(preSelectedSRSs,{doBeforeCallback : function(req, raw, res, cb) {
+            var filtered = [];
+            var match = function(obj, key) {
+              if(key!=null) {
+                  if (obj.code.toLowerCase().contains(
+                          key.toLowerCase())
+                          ) {
+                      return true;
+                  } else {
+                      return false;
+                  }
+              } else return true;
+            }
+            for ( var item in raw) {
+                var obj = raw[item];
+                if (match(obj, req)) {
+                    filtered.push(obj);
+                }
+            }
+            res.results = filtered
+            return res;
+    }});
+    srsDataSource.responseType = YAHOO.util.DataSource.TYPE_JSARRAY;
+    srsDataSource.responseSchema = {
+            fields: ["id","code","name"]
+    }
+    chooser = new oscar.Gui.MultiCoordinateSystemsChooser(
+        "coordinateSystemsChooser",
+        preSelectedSRSs,
+        srsDataSource,
+        "code",
+        "name",
+        "filter"
+    );
+}
+</script>
+<body class="yui-skin-sam">
+<button onclick="buildChooser()">Go</button>
+<div id="coordinateSystemsChooser"></div>
+</body>
+</html>

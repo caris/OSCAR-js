@@ -1,0 +1,1641 @@
+@import url('help.css');
+
+body {
+    font-family: "Arial", "Helvetica", "Verdana", "sans-serif" !important;
+    font-size: 11px !important;
+}
+
+/* DivSelect style info */
+.highlighted {
+    background-color: #0066CC;
+    color: white;
+    display: table;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-left: 2px;
+    border-left: 1px dotted white;
+    border-right: 1px dotted white;
+    border-top: 1px dotted white;
+    white-space: nowrap;
+    width: 500%;
+    height: 15px;
+    line-height: 10px;
+}
+
+.unhighlighted {
+    display: table;
+    padding-top: 2px;
+    padding-bottom: 1px;
+    padding-left: 3px;
+    white-space: nowrap;
+    width: 500%;
+    height: 15px;
+    line-height: 10px;
+}
+
+.isDisabled {
+    display: table;
+    padding-top: 2px;
+    padding-bottom: 1px;
+    padding-left: 3px;
+    white-space: nowrap;
+    width: 500%;
+    height: 15px;
+    line-height: 10px;
+    color: #D0D0D0;
+}
+
+/* Settings page style info */
+.filter-container {
+    position: relative;
+    height: 50px;
+}
+
+.filter-container-left-element {
+    position: absolute;
+    left: 0;
+    width: 85%;
+}
+
+.filter-container-right-element {
+    position: absolute;
+    right: 0;
+    width: 15%;
+    text-align: left;
+}
+.mict_input_default {
+    color:#000;
+    font-style:italic;
+    border:1px solid;
+}
+
+.mict_input_inactive {
+    color:#bdbdbd;  
+}
+.oscar_Gui_MultiItemChooserTable_inputPanel{}
+
+.oscar_Gui_MultiItemChooserTable_autoComplete {
+margin-left:auto;
+margin-right:auto;
+margin-bottom:5px;
+}
+
+.oscar_Gui_MultiItemChooserTable_autocomplete_label {
+    padding-right: 5px;
+}
+
+input.oscar_Gui_MultiItemChooserTable_autocomplete_input {
+      width:75% !important;
+}
+
+.oscar_Gui_MultiItemChooserTable_clearFilter {
+    background-image: url("img/toolbarSprites.png");
+    background-position: -297px -32px;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    display:block;
+    float:right;
+    width: 15px;
+    height: 15px;
+    margin-top: 2px;
+}
+
+.oscar_Gui_MultiItemChooserTable_clearFilter_disabled {
+    background-image: url("img/toolbarSprites.png");
+    background-position: -312px -32px;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    display:block;
+    float:right;
+    width: 15px;
+    height: 15px;
+    margin-top: 2px;
+}
+
+.oscar_Gui_MultiItemChooserTable_resetTable {
+    background-image: url("img/toolbarSprites.png");
+    background-position: -328px -32px;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    display:block;
+    float:right;
+    width: 16px;
+    height: 16px;
+    margin-top: 2px;
+}
+
+.oscar_Gui_MultiItemChooserTable_resetTable_disabled {
+    background-image: url("img/toolbarSprites.png");
+    background-position: -360px -32px;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    display:block;
+    float:right;
+    width: 16px;
+    height: 16px;
+    margin-top: 2px;
+}
+
+.oscar_Gui_MultiDataExtractionTable_dataConnection_label {
+    float: left;
+}
+
+.oscar_Gui_MultiDataExtractionTable_dataConnection_radio {
+    float: left;
+}
+
+.oscar_Gui_MultiDataExtractionChooser_radioPanel {
+    float: left;
+    height: 300px;
+    overflow: auto;
+    border: 1px solid #D2D2D2;
+    width: 180px;
+    padding: 20px;
+    display: block;
+    margin: 10px;
+}
+
+.oscar_Gui_MultiDataExtractionChooser_dataConnLabel {
+    display:block;
+    margin:20px 0 0 20px;
+    text-align:left;
+    width:180px;
+}
+
+.oscar_Gui_MultiDataExtractionChooser_dataConnItem {
+    display:inline-block;
+    margin-bottom:5px;
+    width:100%;
+}
+
+.oscar_Gui_MultiItemChooserTable_checkAll_Panel {
+    padding-bottom: 15px;
+}
+
+.oscar_Gui_MultiItemChooserTable_checkAll {
+    background-repeat: no-repeat;
+    display:block;
+    margin-left:14px;
+    float:left;
+    height:16px;
+    width:16px;
+}
+
+.oscar_Gui_MultiItemChooserTable_checkAll_none {
+    background-image: url("img/selection_none.png");
+}
+    
+.oscar_Gui_MultiItemChooserTable_checkAll_partial {
+    background-image: url("img/selection_partial.png");
+}
+    
+.oscar_Gui_MultiItemChooserTable_checkAll_all {
+    background-image: url("img/selection_all.png");
+}
+    
+.oscar_Gui_MultiDataExtractionTable__MultiDataItemChooser {
+    float: left;
+    margin-left:25px;
+    margin-top:25px;
+}
+
+.oscar_Gui_MultiItemChooserTable_checkAll_label {
+    margin: 10px;
+}
+
+/**
+* Derived from the openlayers default theme with customized values
+**/
+div.olMap {
+    z-index: 0;
+    padding: 0px !important;
+    margin: 0px !important;
+    cursor: default;
+}
+
+div.olMapViewport {
+    text-align: left;
+}
+
+div.olLayerDiv {
+    -moz-user-select: none;
+}
+
+.olLayerGoogleCopyright {
+    left: 2px;
+    bottom: 2px;
+}
+
+.olLayerGooglePoweredBy {
+    left: 2px;
+    bottom: 15px;
+}
+
+.olControlAttribution {
+    font-size: smaller;
+    right: 3px;
+    bottom: 4.5em;
+    position: absolute;
+    display: block;
+}
+
+.olControlScale {
+    right: 3px;
+    bottom: 3em;
+    display: block;
+    position: absolute;
+    font-size: smaller;
+}
+
+.olControlScaleLine {
+    position: absolute;
+    left: 3px;
+    bottom: 70px;
+    font-size: xx-small;
+}
+
+.olControlScaleLineBottom {
+    border: solid 2px black;
+    border-bottom: none;
+    margin-top: -2px;
+    text-align: center;
+}
+
+.olControlScaleLineTop {
+    border: solid 2px black;
+    border-top: none;
+    text-align: center;
+}
+
+.olControlPermalink {
+    right: 3px;
+    bottom: 1.5em;
+    display: block;
+    position: absolute;
+    font-size: smaller;
+}
+
+div.olControlMousePosition {
+    bottom: 50px;
+    left: 3px;
+    display: block;
+    position: absolute;
+    font-family: Arial;
+    font-size: smaller;
+}
+
+.olLayerGeoRSSDescription {
+    float: left;
+    width: 100%;
+    overflow: auto;
+    font-size: 1.0em;
+}
+
+.olLayerGeoRSSClose {
+    float: right;
+    color: gray;
+    font-size: 1.2em;
+    margin-right: 6px;
+    font-family: sans-serif;
+}
+
+.olLayerGeoRSSTitle {
+    float: left;
+    font-size: 1.2em;
+}
+
+.olPopupContent {
+    padding: 5px;
+    overflow: auto;
+}
+
+.olControlNavToolbar {
+    width: 0px;
+    height: 0px;
+}
+
+.olControlNavToolbar div {
+    display: block;
+    width: 28px;
+    height: 28px;
+    top: 300px;
+    left: 6px;
+    position: relative;
+}
+
+
+
+.olControlNavigationHistory {
+    background-repeat: no-repeat;
+    width: 42px;
+    height: 42px;
+}
+
+.olControlNavToolbar .olControlNavigationItemActive {
+    background-image: url("img/panning-hand-on.png");
+    background-repeat: no-repeat;
+    border: 1px solid black;
+}
+
+.olControlNavToolbar .olControlNavigationItemInactive {
+    background-image: url("img/panning-hand-off.png");
+    background-repeat: no-repeat;
+}
+
+.olControlNavToolbar .olControlZoomBoxItemActive {
+    background-image: url("img/drag-rectangle-on.png");
+    background-color: orange;
+    background-repeat: no-repeat;
+}
+
+.olControlNavToolbar .olControlZoomBoxItemInactive {
+    background-image: url("img/drag-rectangle-off.png");
+    background-repeat: no-repeat;
+}
+
+.olControlEditingToolbar {
+    float: right;
+    right: 0px;
+    height: 30px;
+    width: 200px;
+}
+
+.olControlEditingToolbar div {
+    background-image: url("img/editing_tool_bar.png");
+    background-repeat: no-repeat;
+    float: right;
+    width: 24px;
+    height: 24px;
+    margin: 5px;
+}
+
+.olControlEditingToolbar .olControlNavigationItemActive {
+    background-position: -103px -23px;
+}
+
+.olControlEditingToolbar .olControlNavigationItemInactive {
+    background-position: -103px -0px;
+}
+
+.olControlEditingToolbar .olControlDrawFeaturePointItemActive {
+    background-position: -77px -23px;
+}
+
+.olControlEditingToolbar .olControlDrawFeaturePointItemInactive {
+    background-position: -77px -0px;
+}
+
+.olControlEditingToolbar .olControlDrawFeaturePathItemInactive {
+    background-position: -51px 0px;
+}
+
+.olControlEditingToolbar .olControlDrawFeaturePathItemActive {
+    background-position: -51px -23px;
+}
+
+.olControlEditingToolbar .olControlDrawFeaturePolygonItemInactive {
+    background-position: -26px 0px;
+}
+
+.olControlEditingToolbar .olControlDrawFeaturePolygonItemActive {
+    background-position: -26px -23px;
+}
+
+.olControlSaveFeaturesItemActive {
+    background-image: url(img/save_features_on.png);
+    background-repeat: no-repeat;
+    background-position: 0px 1px;
+}
+
+.olControlSaveFeaturesItemInactive {
+    background-image: url(img/save_features_off.png);
+    background-repeat: no-repeat;
+    background-position: 0px 1px;
+}
+
+.olHandlerBoxZoomBox {
+    border: 2px solid red;
+    position: absolute;
+    background-color: white;
+    opacity: 0.50;
+    font-size: 1px;
+    filter: alpha(opacity =     50);
+}
+
+.olHandlerBoxSelectFeature {
+    border: 2px solid blue;
+    position: absolute;
+    background-color: white;
+    opacity: 0.50;
+    font-size: 1px;
+    filter: alpha(opacity =     50);
+}
+
+.olControlPanPanel {
+    top: 10px;
+    left: 5px;
+}
+
+.olControlPanPanel div {
+    background-image: url(img/pan-panel.png);
+    height: 18px;
+    width: 18px;
+    cursor: pointer;
+    position: absolute;
+}
+
+.olControlPanPanel .olControlPanNorthItemInactive {
+    top: 0px;
+    left: 9px;
+    background-position: 0px 0px;
+}
+
+.olControlPanPanel .olControlPanSouthItemInactive {
+    top: 36px;
+    left: 9px;
+    background-position: 18px 0px;
+}
+
+.olControlPanPanel .olControlPanWestItemInactive {
+    position: absolute;
+    top: 18px;
+    left: 0px;
+    background-position: 0px 18px;
+}
+
+.olControlPanPanel .olControlPanEastItemInactive {
+    top: 18px;
+    left: 18px;
+    background-position: 18px 18px;
+}
+
+.olControlZoomPanel {
+    top: 71px;
+    left: 14px;
+}
+
+.olControlZoomPanel div {
+    background-image: url(img/zoom-panel.png);
+    position: absolute;
+    height: 18px;
+    width: 18px;
+    cursor: pointer;
+}
+
+.olControlZoomPanel .olControlZoomInItemInactive {
+    top: 0px;
+    left: 0px;
+    background-position: 0px 0px;
+}
+
+.olControlZoomPanel .olControlZoomToMaxExtentItemInactive {
+    top: 18px;
+    left: 0px;
+    background-position: 0px -18px;
+}
+
+.olControlZoomPanel .olControlZoomOutItemInactive {
+    top: 36px;
+    left: 0px;
+    background-position: 0px 18px;
+}
+
+.olPopupCloseBox {
+    background: url("img/close.png") no-repeat;
+    cursor: pointer;
+}
+
+.olFramedCloudPopupContent {
+    padding: 5px;
+    overflow: auto;
+}
+
+.olControlNoSelect {
+    -moz-user-select: none;
+}
+
+/**
+ * Cursor styles
+ */
+.olCursorWait {
+    cursor: wait;
+}
+
+.olDragDown {
+    cursor: move;
+}
+
+.olDrawBox {
+    cursor: crosshair;
+}
+
+.olControlDragFeatureOver {
+    cursor: move;
+}
+
+.olControlDragFeatureActive.olControlDragFeatureOver.olDragDown {
+    cursor: -moz-grabbing;
+}
+
+/*** Oscar overrides **/
+.oscarControlPanZoomBar {
+    
+}
+
+.oscarControlOverviewMapContainer {
+    position: absolute;
+    bottom: -2px;
+    right: -2px;
+}
+
+.oscarControlOverviewMapElement {
+    padding: 5px 5px 5px 5px;
+    overflow: hidden;
+    background: #fff;
+    border: 2px solid #afc7db;
+    -moz-border-radius: 1em 0 0 0;
+}
+
+.oscarControlOverviewMapMinimizeButton {
+    right: 0px;
+    bottom: 0px;
+}
+
+.oscarControlOverviewMapMaximizeButton {
+    right: 0px;
+    bottom: 0px;
+}
+
+.oscarControlOverviewMapExtentRectangle {
+    overflow: hidden;
+    background-image: url("img/blank.gif");
+    cursor: move;
+    border: 2px dotted red;
+}
+
+.oscarControlOverviewMapRectReplacement {
+    overflow: hidden;
+    cursor: move;
+    background-image: url("img/overview_replacement.gif");
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.oscarControlToolBar {
+    position:relative;
+    right:10px;
+    top:10px;
+    float:right;
+    cursor:pointer;
+
+}
+.oscarControlToolBar div {
+    float:right;    
+}
+.oscarControlToolBar .toolBarBookendLeft {
+    background-image:url('img/toolbarSprites.png');
+    background-position: 0 -32px;
+    width:17px;
+    height: 32px;
+}
+.oscarControlToolBar .toolBarBookendRight {
+    background-image:url('img/toolbarSprites.png');
+    background-position: -51px -32px;
+    width:16px;
+    height:32px;
+}
+.oscarControlToolBar .oscarControlPreviousViewItemActive {
+    background-image:url('img/toolbarSprites.png');
+    background-position: -17px -32px;
+    width:17px !important;
+    height: 32px;
+}
+.oscarControlToolBar .oscarControlMeasureItemInactive {
+    background-image:url('img/toolbarSprites.png');
+    background-position: -99px -32px;
+    height: 32px;
+    width:30px;
+    float:left;
+    
+}
+
+.oscarControlToolBar .oscarControlMeasureItemActive {
+    background-image:url('img/toolbarSprites.png');
+    background-position: -189px -32px;
+    height: 32px !important;
+    width:30px !important;
+    float:left;
+    
+}
+
+.oscarControlToolBar .oscarControlDataExtractorItemInactive {
+    background-image:url('img/toolbarSprites.png');
+    background-position: -159px -32px;
+    height: 32px;
+    width:30px;
+    float:left;
+}
+
+.oscarControlToolBar .oscarControlDataExtractorItemActive {
+    background-image:url('img/toolbarSprites.png');
+    background-position: -249px -32px;
+    height: 32px;
+    width:30px;
+    float:left;
+}
+
+.oscarControlToolBar .oscarControlSelectItemInactive {
+    background-image:url('img/toolbarSprites.png');
+    background-position: -129px -32px;
+    height: 32px;
+    width:30px;
+    float:left; 
+}
+.oscarControlToolBar .oscarControlSelectItemActive {
+   background-image:url('img/toolbarSprites.png');
+   background-position: -219px -32px;
+   height: 32px;
+   width:30px;
+   float:left;
+}
+/** SubMenu Controls **/
+
+.subMenu {
+    width:15px;
+    height:32px;
+    background-image:url('img/toolbarSprites.png');
+    background-position:top right;
+    position:absolute;
+}
+.subMenuBookEnd {
+    width:4px;
+    height:32px;
+    background-image:url('img/toolbarSprites.png');
+    background-position: 0 0;
+    position:absolute;
+    left:-4px;
+    float:left;
+}
+
+
+.subTool {
+    display: block;
+    background-image: url("img/toolbarSprites.png");
+    width: 26px;
+    height: 32px;
+    float: left !important;
+    margin-right:2px;
+}
+/** Measure Control **/
+
+.subTool.polygon.toolActive {
+    background-position: -130px -64px;
+}
+
+.subTool.polygon.toolInactive {
+    background-position: -26px -64px;
+}
+
+.subTool.line.toolActive {
+    background-position: -104px -64px;
+}
+
+.subTool.line.toolInactive {
+    background-position: 0px -64px;
+}
+/** End Measure Control **/
+
+/** Selection Control **/
+
+.subTool.point.toolActive {
+    background-position: -156px -64px;
+}
+
+.subTool.point.toolInactive {
+    background-position: -52px -64px;
+}
+
+.subTool.range.toolActive {
+    background-position: -182px -64px;
+}
+
+.subTool.range.toolInactive {
+    background-position: -78px -64px;
+}
+
+.rangeSelectItemInactive {
+    display: block;
+    background-image: url("img/toolbarSprites.png");
+    width: 26px;
+    height: 32px;
+    margin-right:2px;
+    background-position: -78px -64px;
+}
+.rangeSelectItemActive {
+    display: block;
+    background-image: url("img/toolbarSprites.png");
+    width: 26px;
+    height: 32px;
+    margin-right:2px;
+    background-position: -182px -64px;
+    
+}
+
+/** End Selection Control **/
+
+
+/* oscar.Gui.Gruid */
+.wfsGrid {
+    width: auto;
+    height: 85%;
+    overflow: auto;
+
+    -moz-border-radius: 5px;
+    padding: 5px;
+}
+
+#permalinkPanel.yui-panel{
+    border:none;
+    padding:6px;
+    background-color:#bbb;
+    }
+ #permalinkPanel.yui-panel .container-close {
+    position:absolute;
+    top:3px;
+    right:5px;
+    _right:3px;
+  }
+/* Metadata Dialog Styles */
+div#MapInformationDlg div.hd {
+    background: url(img/titlebarBackground.png) repeat-x;
+    font-weight: bold;
+    color: #fff;
+}
+
+div#MapInformationDlg .bd,div#MapInformationDlg .ft {
+    background: #D8D4C6;
+}
+
+.metadataConstraint {
+    height: 450px;
+    overflow: hidden;
+}
+
+.Metadata_ServicePanel {
+    float: left;
+    width: 45%;
+    height: 90%;
+    overflow: auto;
+    padding: 10px;
+    border: 1px solid black;
+    background: #fff;
+}
+
+.Metadata_MetadataPanel {
+    float: right;
+    width: 45%;
+    height: 90%;
+    overflow: auto;
+    border: 1px solid black;
+    background: #fff;
+    padding: 10px;
+    font-size: 12px;
+}
+
+.md_label {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-weight: bold;
+    display: block;
+}
+
+#md_abstract_panel,#md_keywords_panel,#md_resources_panel {
+    margin-bottom: 5px;
+}
+
+.serviceContactInfoTable {
+    width: 100%;
+}
+
+.serviceContactInfoTable caption {
+    background: #b7ab83;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.serviceContactInfoTable tr td {
+    font-size: 12px;
+    vertical-align: top;
+}
+
+/* Collapsible Panel Styles &  Service Panel Styles */
+.oscar_Gui_ServicePanel_collapsiblePanel,.oscar_Gui_CollapsiblePanel_collapsiblePanel
+    {
+    background: transparent;
+    margin-bottom: 3px;
+}
+
+.oscar_Gui_ServicePanel_contentPanel {
+    padding-top: 5px;
+    padding-left: 10px;
+    padding-bottom: 5px;
+}
+
+.oscar_Gui_ServicePanel_headerPanel,.oscar_Gui_CollapsiblePanel_headerPanel
+    {
+    background-color: #D8D4C6;
+    padding: 5px;
+    -moz-border-radius: 4px;
+}
+
+.oscar_Gui_ServicePanel_headerText,.oscar_Gui_CollapsiblePanel_headerText
+    {
+    text-indent: 15px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.contentOpen {
+    background-image: url('img/content_collapse.png');
+    background-repeat: no-repeat;
+}
+
+.contentClosed {
+    background-image: url('img/content_expand.png');
+    background-repeat: no-repeat;
+}
+
+.oscar_Gui_ServicePanel_contentPanel {
+    background: transparent;
+}
+
+.oscar_Gui_CollapsiblePanel_collapsiblePanel {
+    background: transparent;
+}
+
+.oscar_Gui_CollapsiblePanel_expandable {
+    float: left;
+}
+
+.oscar_Gui_CollapsiblePanel_contentPanel {
+    background: #f4ecd2;
+    padding: 5px;
+}
+
+.identifier {
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: 12px;
+}   
+
+/* Style attributes for the Data Extraction widget */
+.extraction_panel {
+    margin-top:5px;
+    margin-bottom:5px;
+}
+.extraction_label {
+    font-weight:bold;
+    margin-bottom:3px;
+    -moz-border-radius:5px;   
+}
+.extraction_crs_list {
+    width: 100%;
+    margin-top: 5px;
+}
+.extraction_select {
+    width:100%;
+}
+.goToExtent {
+    background-image: url("img/toolbarSprites.png");
+    background-position: -345px -32px;
+    width:16px;
+    height:16px;
+}
+
+.panelSectionContainer {
+    margin-bottom:5px;
+    border:1px solid #afafaf;   
+    padding:3px;
+    -moz-border-radius:3px;
+}
+
+div.loadingBar {
+    /*background: url('img/loadingBar.gif');*/
+    text-align:right;
+    width:200px;
+    height:22px;
+    -moz-border-radius:5px;
+    position:relative;
+    bottom:0px;
+    float:right;
+    display:none;
+    font-style:italic;
+    color:#00f;
+}
+
+.yui-skin-sam .yui-navset .yui-nav li.disabled {
+    opacity: .5;
+}
+.yui-skin-sam .yui-navset .yui-nav li.disabled a, .yui-skin-sam .yui-navset .yui-nav li.disabled a:hover {
+    background:#D8D8D8 url(sprite.png) repeat-x scroll 0% 50%;
+    cursor: default;
+}
+/* end Data Extraction Widget */
+
+/* Theme Style Information */
+.oscarThemeSwitcherWidget {
+    position: absolute;
+    top: 70px;
+    right: 0px;
+}
+
+.oscarThemeSwitcher {
+    background: transparent;
+    background-color: #d8d4c6;
+}
+
+.themeHover {
+    background-color:#00f;
+    color:#fff;
+}
+
+.themeMenu {
+            display:none;
+            position:absolute;
+            top:0px;
+            background-color:#fff;
+            overflow:visible;
+            padding:0px;
+            border:1px solid black
+}
+
+.themeSwitcherActiveTheme {
+    text-indent:3px;
+    display:inline-block;
+
+}
+
+.themeSpriteDropdown {
+    background-image: url("img/toolbarSprites.png");
+    background-position: -279px -64px;
+    background-repeat: no-repeat;
+    width:17px;
+    height:17px;
+    display:inline-block;
+}
+
+
+/* Metadata Widget */
+.md_layers {
+    background-color: #fff;
+    height: 330px;
+    width: 200px;
+    overflow: auto;
+    border: 1px solid black;
+}
+
+.md_abstract {
+    background-color: #eee;
+    border: 1px solid #bbb;
+    height: 150px;
+    width: 300px;
+    padding: 2px 2px 2px 2px;
+    overflow: auto;
+}
+
+div.metaDataLayerActive {
+    background-color: #6285a3;
+    padding: 5px 5px 5px 5px;
+    color: #fff;
+}
+
+div.metaDataLayerInactive {
+    background-color: #fff;
+    padding: 5px 5px 5px 5px;
+}
+
+div.md_loadingActive {
+    background-image: url("img/loading.gif");
+    background-repeat: no-repeat;
+    width: 35px;
+    height: 35px;
+}
+
+div.md_loadingInactive {
+    width: 35px;
+    height: 35px;
+}
+
+.yui-skin-sam .yui-navset .yui-nav, .yui-skin-sam .yui-navset .yui-navset-top .yui-nav {
+    border-color: #345d91;
+}
+
+
+.yui-skin-sam .yui-panel .hd,  .yui-skin-sam .yui-navset .yui-nav .selected a, .yui-skin-sam .yui-navset .yui-nav .selected a:focus, .yui-skin-sam .yui-navset .yui-nav .selected a:hover{
+    background: url(img/titlebarBackground.png) repeat-x;
+    color: white;
+}
+
+.yui-skin-sam .yui-panel .bd,.yui-skin-sam .yui-panel .ft {
+    background: #D8D4C6;
+}
+
+#oscarext_container.oscarControlToolBar {
+    border: 0px;
+}
+
+#oscarLayout {
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    border-spacing: 0px;
+    border-padding: 0px;
+}
+
+#oscarMapContainer {
+    width: 100%;
+    height: 100%;
+}
+
+td#oscarLayoutFooterContainer {
+    background-color: #00f;
+    height: 40px;
+}
+
+#oscarInfoContainer {
+    visibility: visible;
+    height: 100%;
+}
+
+.oscarInfo {
+    float: left;
+    font-size: 10px;
+    font-family: Helvetica;
+    min-width: 180px;
+    height: 100%;
+    border-right: 1px solid #aaaaaa;
+    border-top: 1px solid #aaaaaa;
+    border-bottom: 1px solid black;
+    border-left: 1px solid black;
+    text-align: center;
+    color: #ffffff;
+    font-weight: bold;
+    background-color: #ace;
+}
+
+.oscarViewThemeNormal,.oscarViewThemeActive {
+    height: 30px;
+    width: 30px;
+    float: left;
+}
+
+.oscarViewThemeNormal {
+    background-image: url("img/view_off.png");
+}
+
+.oscarViewThemeActive {
+    background-image: url("img/view_on.png");
+}
+
+.oscarControlThemeManager {
+    position: absolute;
+}
+
+.oscarGuiThemeToggleButton {
+    width: 20px;
+    height: 20px;
+    border: 1px dashed #000;
+}
+
+.oscarControlPermalink {
+    position: absolute;
+    right: 10px;
+}
+
+.panZoomPointer {
+    cursor:pointer;
+}
+
+.checked {
+    background-image: url("img/selection_all.png");
+    background-repeat:no-repeat;
+    text-indent:18px;
+}
+.unchecked {
+    background-image: url("img/selection_none.png");
+    background-repeat:no-repeat;
+    text-indent:18px;
+}
+
+
+/* New DragPanel Styles */
+.o-widget {
+    position:relative;
+    background: url('img/layerToggleBG.png');
+    width:300px;
+    height:300px;
+    padding-top:33px;
+    border:1px solid white;
+    -moz-border-radius:5px;
+    border-radius:5px;
+    /**TODO**/
+    /**TODO**/
+    /**overflow:hidden;**/
+    padding:right:1px;
+}
+
+.o-widget .handle {
+    height:33px;
+    width:100%;
+    position:absolute;
+    top:0px;
+    z-index:1;
+    white-space:nowrap;
+    overflow:hidden;
+    cursor:move;
+    background: url(img/titlebarBackground.png) repeat-x;    
+}
+
+.panelTitle {
+    line-height:30px;
+    position:absolute;
+    left:35px;
+}
+.panelTitleText {
+    font-size:14px;
+    font-weight:bold;
+    color:#fff;
+        
+    
+}
+
+.oIcon {
+    width:30px;
+    height:30px;
+    display:inline-block;
+    position:absolute;
+}
+.o-widget .content {
+    /**TODO**/
+    /**
+    overflow:auto;
+    **/
+    
+    width:100%;
+    height:100%;
+}
+
+
+.minMax {
+    width:16px;
+    height:16px;
+    display:inline-block;
+    margin-right:3px;
+    cursor:pointer;
+    float:right;
+}
+.closeBox {
+    background-image:url('img/content_close.png');
+    width:16px;
+    height:16px;
+    display:inline-block;
+    margin-right:3px;
+    cursor:pointer;
+    float:right;
+
+}
+
+.small {
+    width:250px !important;
+    height:33px !important;
+    padding-top:0px;
+
+}
+
+/* oscar.Control.LayerToggle styles */
+.oscarControlLayerToggle {
+    position:absolute !important;
+    top:10px;
+    right:150px;
+}
+
+.oscarControlLayerToggle.o-widget {
+    width:250px;
+    height:150px;
+    /**background: #D8D4C6 !important;**/
+    border:1px solid black;
+
+}
+
+.LayersIcon {
+    background: url('img/layerIcon.png');
+    background-repeat:no-repeat;
+    
+}
+.content .serviceLayer {
+    white-space:nowrap;
+    display:block;
+}
+.content .serviceLayerLabel {
+    font-size:11px;
+    color:#fff;
+    font-weight:bold;
+}
+
+/* oscar.Control.ThemeSwitcher styles */
+
+.oscarControlThemeSwitcher.o-widget {
+    position:absolute !important;
+    top:10px;
+    left:75px;
+    height:150px;
+    width:250px;
+    border:1px solid black;
+}
+.oscarControlThemeSwitcher .handle {
+     overflow:visible !important;
+}
+
+.oscarControlThemeSwitcher .ThemesIcon {
+    background: url('img/themeIcon.png') no-repeat;
+     background-repeat:no-repeat;
+    cursor:move;
+}
+
+.oscarControlThemeSwitcher .themeContainer {
+    padding:5px 5px 5px 5px;
+    width:90%;
+}
+
+.oscarControlThemeSwitcher .themePanelContainer {
+    width:100%;
+    height:20px;
+    padding:3px;
+    cursor:pointer;
+    white-space: nowrap;
+}
+
+.oscarControlThemeSwitcher .themePanelContainer.active {
+    background-color:#afc7db;
+    -moz-border-radius:5px;
+}
+
+.oscarControlThemeSwitcher .themeTitleText {
+    color:#fff;
+    font-weight:bold;   
+}
+
+.oscarControlThemeSwitcher .activationBox {
+      width:16px;
+      height:16px;
+      float:right;
+}
+
+
+.oscarControlThemeSwitcher  .activationBox.active {
+      background-image: url("img/selection_all.png") !important;
+}
+.oscarControlThemeSwitcher .activationBox.inactive {
+      background-image: url("img/selection_none.png");
+}
+
+.KeywordVocabularyTableAddRow { 
+    background-image: url('img/add.gif');
+    width:16px;
+    height:16px;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+.KeywordVocabularyTableDeleteRow {
+    background-image: url('img/delete.gif');
+    width:16px;
+    height:16px;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+.oscarGuiComboBox button.ui-button {width: 1.5em; height: 1.5em;}
+.oscarGuiComboBox .ui-button { margin-left: -1px; }
+.oscarGuiComboBox .ui-button-icon-only .ui-button-text { padding: 0; } 
+.oscarGuiComboBox .ui-autocomplete-input { margin: 0; padding: 2px;}
+.oscarGuiComboBox .ui-corner-left {
+    border-bottom-left-radius: 0px;
+    border-top-left-radius: 0px;
+}
+
+.oscarControlDataDiscovery {
+    width:300px;
+    height:350px;
+    border:none !important;
+    -moz-border-radius:5px;
+    -webkit-border-radius: 5px;
+    position:absolute !important;
+    top:50px;
+    right:10px;
+}
+
+.oscarControlDataDiscovery .ui-accordion-header.ui-state-active, .oscarControlDataDiscovery .ui-accordion-header.ui-state-default  {
+    background:none !important;
+    border:none !important;
+}
+
+.oscarControlDataDiscovery .ui-state-active a {
+    color:#fff !important;  
+}
+
+.oscarControlDataDiscovery .ui-state-default a {
+    color:#fff !important;  
+}
+
+.oscarControlDataDiscovery .ui-accordion-content-active {
+    background:none !important;
+    border:none !important; 
+}
+
+
+.discoverPanel {
+    height:330px;
+    
+}
+
+.oscarControlDataDiscovery.o-widget {
+    width:250px;
+    height:350px;
+    border:1px solid black !important;
+    overflow:visible;
+    background-color:#345d91;
+}
+
+.oscarControlDataDiscovery.o-widget .content {
+    overflow:hidden;
+    height:100%;    
+}
+
+.searchPanel, .optionsPanel, .queryPanel {
+    padding:0px 0px 0px 0px !important;
+    height:255px !important;
+}
+.optionsPanel {
+    overflow:hidden !important;
+    padding: 2px 2px 2px 2px !important;    
+    
+}
+
+.searchPanel .search {
+    background-image: url("img/search.png");
+    background-repeat:no-repeat;
+    float:left;
+    text-indent:18px;
+    font-size:1.4 em;
+}
+
+.searchPanel .reset {
+    background-image: url("img/toolbarSprites.png");
+    background-position: -328px -32px;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    display:inline-block;
+    width: 16px;
+    height: 16px;
+    float:right;
+}
+
+.searchPanel .resultsPanel {
+    margin-top:2px;
+    height:215px;
+    overflow:auto;
+
+}
+
+.resultsPanel .result {
+    cursor:pointer;
+    padding:5px;
+    text-indent:32px;
+    border-bottom:1px solid black;
+    background-color:#fdf9ba;
+    position:relative;
+}
+
+.result .wfs {
+background-image: url("img/toolbarSprites.png");
+    background-position: -425px -49px;
+    background-repeat: no-repeat;    
+    width:32px;
+    height:15px;
+    position:absolute;
+    top:0px;
+    left:0px;
+}
+
+.result.selected {
+    background-color:#00f !important;
+    color:white;
+}
+
+.result .wcs {
+background-image: url("img/toolbarSprites.png");
+    background-position: -457px -49px;
+    background-repeat: no-repeat;
+    width:32px;
+    height:15px;
+    position:absolute;
+    top:0px;
+    left:0px;
+}
+
+
+
+.options .info {
+    font-family:verdana;
+    font-size:11px;
+    height:90px;
+    overflow-y:auto;
+    padding-left:2px;
+    padding-top:2px;
+    margin-bottom:5px;
+    text-align:left;
+    border-bottom:1px solid #fff;
+}
+
+.buttonsPanel {
+    padding-top:10px;
+    text-align:right;
+    
+}
+.crop {
+    width:31px;
+    height:31px;
+    background-image: url("img/toolbarSprites.png");
+    background-position: -209px -64px;
+    background-repeat: no-repeat;
+    cursor:pointer;
+    display:inline-block;
+}
+
+.queueDownload {
+    width:31px;
+    height:31px;
+    background-image: url("img/toolbarSprites.png");
+    background-position: -240px -64px;
+    background-repeat: no-repeat;
+    cursor:pointer;
+    display:inline-block;
+}
+
+.dmIFrame {
+    display:none;
+}
+
+.queuePanel {
+    height:255px !important;
+    overflow-y:auto;
+    padding: 0px 0px 0px 0px !important;
+}    
+    
+
+.oscarGuiDownloadWFS,.oscarGuiDownloadWCS {
+    background-color:#1f5594;
+    z-index:9999;
+}
+
+
+.oscarGuiDownloadWFS .dContainer, .oscarGuiDownloadWCS .dContainer {
+    width:60px;
+    height:16px;
+    position:absolute;
+    right:0px;
+    text-align:right; 
+}
+
+.downloadContainer {
+    font-family:arial;
+    font-size:12px;
+    color:#fff;
+    font-weight:bold;
+    height:18px;
+    position:relative;
+}
+.downloadCancelled {
+    background-image: url('img/delete.gif');
+    width:16px;
+    height:16px;
+}
+
+
+.animatedDownload {
+    width:16px;
+    height:16px;
+    background-image: url('img/downloading.gif');
+    position:absolute;
+    top:0px;
+    left:0px;
+}
+
+.dmTextContainer {
+    white-space: nowrap;
+    height:16px;
+    position:absolute;
+    top:0px;
+    left:20px;
+    width:165px;
+    overflow:hidden;
+    
+}
+
+.downloadReady {
+    width:16px;
+    height:16px;
+    background-image: url("img/toolbarSprites.png");
+    background-position: -441px -32px;
+    background-repeat: no-repeat;
+    position:absolute;
+    top:0px;
+    left:0px;
+}
+
+.dMetadata {
+    background-image: url("img/toolbarSprites.png");
+    background-position: -457px -32px;
+    background-repeat: no-repeat;
+    width:41px;
+    height:16px;
+    cursor:pointer;
+    margin-left:3px;
+    position:absolute;
+    top:0px;
+    right:0px;
+}
+
+.ui-icon-disk-save {
+    background-image: url("img/toolbarSprites.png") !important;
+    background-position: -282px -49px  !important;
+    background-repeat: no-repeat  !important;
+    width:15px;
+    height:15px;
+    display:block;
+    cursor:pointer;
+    position:absolute;
+    right:0px;
+}
+
+.dCoverage {
+    background-image: url("img/toolbarSprites.png");
+    background-position: -425px -32px;
+    background-repeat: no-repeat;
+    width:16px;
+    height:16px;
+    cursor:pointer;
+    position:absolute;
+    top:0px;
+    left:0px;
+}
+
+.ui-dialog {
+    padding:0px !important;
+    border:1px solid black;
+    background: url('img/layerToggleBG.png');
+}
+
+.ui-dialog-titlebar.ui-widget-header {
+    background: url("img/titlebarBackground.png") !important;
+    
+    border:none !important;
+}
+
+.ui-dialog-title {
+    color:#fff !important;
+}
+
+.ui-dialog .ui-dialog-content {
+    color:#fff;
+}
+
+.ui-fields {
+    position:absolute;
+    top:0px;
+    left:62px;
+    z-index:9999;
+    padding: 2px;
+    margin: 0;
+    display:block;
+    float: left;
+    background:#fff;
+    -moz-border-radius: 4px; -webkit-border-radius: 4px; -khtml-border-radius: 4px; border-radius: 4px;
+}
+
+/* OL class, hides broke  or non-loaded image tiles in the map */
+.olImageLoadError {
+    visibility:hidden;
+}
+
+
+
+/* style definition for the new alert and confirm dialogs */
+
+.dlgButtonPanel {
+    position:absolute;
+    bottom:5px;
+    right:5px;
+    text-align:right;
+}

@@ -1,0 +1,23 @@
+<html>
+<head>
+<script src="../../Loader.js"></script>
+<script type="text/javascript">
+var url = "../files/themeConfiguration.json";
+var waitTime = 2;
+function test_OXFConfig_Load(t) {
+    
+	var oxfConfig = new oscar.Control.OXFConfigManager();
+	oxfConfig.events.on({"haveThemes":success});
+    oxfConfig.load(url);
+    function success(ox) {
+    	t.eq(ox.themes.length,2,"oxf themes has correct amount.");
+        t.eq(ox.version,2,"oxf version is correct.");
+    };
+    t.wait_result(waitTime);
+   }
+   
+</script>
+<body>
+
+</body>
+</html>

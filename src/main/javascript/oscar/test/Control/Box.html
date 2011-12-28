@@ -1,0 +1,26 @@
+<html>
+<head>
+<script src="../../Loader.js"></script>
+<script type="text/javascript">
+var url = "../files/themeConfiguration.json";
+var waitTime = 0;
+function test_Control_Box(t) {
+	var ctrl = new oscar.Control.Box();
+	t.ok(ctrl instanceof oscar.Control.Box,"new oscar.Control.Box returns Box object.");
+	t.eq(ctrl.CLASS_NAME,"oscar.Control.Box","CLASS_NAME is set correct");
+
+	ctrl.draw();
+
+	t.ok(ctrl.handler instanceof OpenLayers.Handler.RegularPolygon,"draw function sets correct OpenLayers.Handler.RegularPolygon handler");
+	t.ok(ctrl.events instanceof OpenLayers.Events,"control events property set correctly");
+	t.ok(typeof ctrl.handler.callbacks["done"] == "function","handler done callback is set");
+	t.ok(typeof ctrl.handler.callbacks["up"] == "function","handler done callback is set");
+	t.ok(typeof ctrl.handler.callbacks["down"] == "function","handler done callback is set");
+	
+
+}
+</script>
+<body>
+
+</body>
+</html>

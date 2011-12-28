@@ -1,0 +1,79 @@
+<html>
+<head>
+<script src="../../Loader.js"></script>
+<script type="text/javascript">
+var url = "../files/themeConfiguration.json";
+var waitTime = 2;
+var chooser = null;
+var preSelected = null;
+function test_MultiDataExtractionChooser_Constructor(t) {
+	buildChooser();
+	t.ok(chooser instanceof oscar.Gui.MultiDataExtractionChooser,"chooser created successfully");
+	t.eq(chooser.CLASS_NAME,"oscar.Gui.MultiDataExtractionChooser","class name correct");
+	t.eq(chooser.getExtractionSelections(),preSelected,"preselected items are set");
+}
+
+function buildChooser() {
+	   preSelected = [
+        {"id":1,"title":"connection1"},
+        {"id":2,"title":"connection2"}
+    ];
+    
+    var dataSource = new YAHOO.util.DataSource(preSelected,{doBeforeCallback : function(req, raw, res, cb) {
+            var filtered = [];
+            var match = function(obj, key) {
+              if(key!=null) {
+                  if (obj.title.toLowerCase().contains(
+                          key.toLowerCase())
+                          ) {
+                      return true;
+                  } else {
+                      return false;
+                  }
+              } else return true;
+            }
+            for ( var item in raw) {
+                var obj = raw[item];
+                if (match(obj, req)) {
+                    filtered.push(obj);
+                }
+            }
+            res.results = filtered
+            return res;
+    }});
+    dataSource.responseType = YAHOO.util.DataSource.TYPE_JSARRAY;
+    dataSource.responseSchema = {
+            fields: ["id","title"]
+    }
+    
+    var wfsArray = new Array();
+    wfsArray[0] = new Object();
+    wfsArray[0].id = 1;
+    wfsArray[0].name = "connection1";
+    
+    wfsArray[1] = new Object();
+    wfsArray[1].id = 2;
+    wfsArray[1].name = "connection2"
+    
+    var div = document.createElement("div");
+    div.id = "chooserDiv";
+    document.body.appendChild(div);
+    
+    chooser = new oscar.Gui.MultiDataExtractionChooser(
+        div.id,
+        "wfs",
+        preSelected,
+        wfsArray,
+        dataSource,
+        "id",
+        "title",
+        "filter"
+    );
+
+}
+</script>
+<body class="yui-skin-sam">
+<button onclick="buildChooser()">Go</button>
+<div id="chooserDiv"></div>
+</body>
+</html>

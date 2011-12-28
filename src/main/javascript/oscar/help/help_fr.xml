@@ -1,0 +1,96 @@
+<help>
+	<component id="DataExtractor">
+		<header>Téléchargement des données</header>
+		<para>
+			Il y a deux types de données qui peuvent être téléchargées via le
+			bouton
+			<b>Téléchargement de données</b>
+			: Objets et Couvertures. Les Objets sont fournies à partir d'un
+			Service d'Objets de Web, et les couvertures par un Service de
+			Couvertures de Web. Vous pouvez sélectionner plusieurs d'objets,
+			ainsi que rechercher des objets ou des couvertures spécifiques.
+		</para>
+		<para>
+			La boîte de dialogue
+			<b>Téléchargement des données</b>
+			vous permettra de sélectionner les données qui sont disponibles pour
+			téléchargement. Une fois que vous avez sélectionné un objet ou une
+			couverture, la carte effectue un zoom avant dans une boîte
+			englobante, affichant une zone de découpe et la liste des formats
+			disponibles. Vous pouvez cliquer sur le bouton
+			<b>Télécharger</b>
+			pour télécharger les objets sélectionnés en utilisant les paramètres
+			par défaut, ou vous pouvez affiner les objets sélectionnés.
+		</para>
+		<para>
+			L'onglet
+			<b>Objets</b>
+			en la boîte de dialogue
+			<b>Téléchargement des données</b>
+			affiche les objets disponibles, qui peuvent être sélectionnés en
+			cliquant sur les cases à cocher. Le bouton
+			<b>Sélectionner tout</b>
+			permet de sélectionner tous ceux qui sont disponibles. Le format du
+			téléchargement peut être choisi parmi la liste déroulante.
+		</para>
+		<para>
+			L'onglet
+			<b>Couvertures</b>
+			contient les onglets
+			<b>Basique</b>
+			et
+			<b>Avancé</b>
+			. L'onglet
+			<b>Basique</b>
+			affiche les couvertures qui existent, qui peuvent être sélectionnés
+			en cliquant sur les boutons de radio. La liste déroulante
+			<b>Format</b>
+			vous permet de sélectionner un format de sortie. L'onglet
+			<b>Avancé</b>
+			vous permet de sélectionner les champs disponibles et les Systèmes de
+			Référence des Coordonnées de sortie (SRC).
+		</para>
+		<para>
+			En plus du bouton
+			<b>Aide</b>
+			, la bordure inférieure de la boîte de dialogue a deux autres
+			boutons. Cliquez sur
+			<b>Télécharger</b>
+			pour ouvrir une fenêtre avec le code XML qui peut être utilisé pour
+			afficher les données sélectionnées dans une autre application.
+			Cliquez sur
+			<b>Annuler</b>
+			pour mettre fin au téléchargement des données.
+		</para>
+		<para>
+			Toutes les données qui sont disponibles dans ces onglets peuvent
+			être
+			sélectionnées soit à partir de la boîte de dialogue, ou de
+			l'outil
+			découpe de la carte. Lors de la navigation sur la carte on
+			peut
+			utiliser des techniques de modifier l'échelle avec la barre
+			d'échelle
+			sur le côté gauche, et de glisser la carte avec la souris.
+		</para>
+		<para>
+			Pour affiner la zone découpée, cliquez sur la zone découpée sur
+			la carte.
+			Une fois sélectionnée, la zone de découpe aura un point au
+			centre
+			pour permettre de glisser, et un point situé sur le coin
+			inférieur
+			droit pour permettre une rotation et le redimensionnement.
+		</para>
+
+		<para>
+			La boîte de dialogue
+			<b>Téléchargement des données</b>
+			a également une barre pour
+			<b>Rechercher</b>
+			les objets et les couvertures. Vous pouvez trouver les objets en
+			tapant dans le champ des objets (ou des couvertures) que vous
+			souhaitez afficher.
+		</para>
+	</component>
+</help>

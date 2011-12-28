@@ -1,0 +1,100 @@
+<html>
+<head>
+<script src="../../Loader.js"></script>
+<script type="text/javascript">
+/**
+ * Unit Tests for oscar.Format.WFSCapabilities
+ */
+
+/* Test Urls */
+var urls = {
+       "1.0.0":"../files/wfs_1_0_0.xml",
+       "1.1.0":"../files/wfs_1_1_0.xml",
+       "2.0.0":"../files/wfs_2_0_0.xml"
+}
+/* Time in seconds to wait */
+var waitTime=2;
+
+/* Test Functions */
+function test_WFS_1_0_0(t) {
+ t.plan(10);
+  var success = function(resp) {
+      var reader = new oscar.Format.WFSCapabilities();
+      var doc = resp.responseXML;
+      var cap = reader.read(doc);
+      t.ok(cap,"Capabilities object created");
+      t.ok(cap.capability,"Capability object present");
+
+      t.ok(cap.capability.request.getcapabilities,"getcapabilities operation version: " + cap.version);
+      t.ok(cap.capability.request.getfeature,"getfeature operation version: " + cap.version);
+      t.ok(cap.capability.request.describefeaturetype,"describefeaturetype operation version: " + cap.version);
+
+      t.ok((cap.featureTypeList && cap.featureTypeList.featureTypes),"FeatureTypeList Available");
+      t.eq(cap.featureTypeList.featureTypes.length,2, "2 FeatureTypes Available");
+
+      var feat = cap.featureTypeList.featureTypes[0];
+      t.eq(feat["name"], "cs:Buildings", "First feature name is correct");
+      t.eq(feat["title"], "cs:Buildings", "First feature title is correct");
+      
+      t.eq(cap.version, "1.0.0", "Version 1.0.0");
+  }
+  var fail = function(resp) {};
+  OpenLayers.loadURL(urls["1.0.0"], null, this, success, fail);
+  t.wait_result(waitTime);
+ 
+}
+function test_WFS_1_1_0(t) {
+    t.plan(10);
+    var success = function(resp) {
+        var reader = new oscar.Format.WFSCapabilities();
+        var doc = resp.responseXML;
+        var cap = reader.read(doc);
+        t.ok(cap,"Capabilities object created");
+        t.ok(cap.operationsMetadata,"OperationsMetadata object present");
+        t.ok(cap.operationsMetadata["GetCapabilities"],"GetCapabilities operation version: " + cap.version);
+        t.ok(cap.operationsMetadata["GetFeature"],"GetFeature operation version: " + cap.version);
+        t.ok(cap.operationsMetadata["DescribeFeatureType"],"DescribeFeatureType operation version: " + cap.version);
+        
+        t.ok((cap.featureTypeList && cap.featureTypeList.featureTypes),"Coverages Available");
+        t.eq(cap.featureTypeList.featureTypes.length,2, "2 FeatureTypes available");
+        
+        var feat = cap.featureTypeList.featureTypes[0];
+        t.eq(feat["name"], "cs:Buildings", "First feature name is correct");
+        t.eq(feat["title"], "cs:Buildings", "First feature title is correct");
+        t.eq(cap.version, "1.1.0", "Version 1.1.0");
+    }
+    var fail = function(resp) {};
+    OpenLayers.loadURL(urls["1.1.0"], null, this, success, fail);
+    t.wait_result(waitTime);
+}
+
+function test_WFS_2_0_0(t) {
+    t.plan(10);
+    var success = function(resp) {
+        var reader = new oscar.Format.WFSCapabilities();
+        var doc = resp.responseXML;
+        var cap = reader.read(doc);
+        console.log(cap);
+        t.ok(cap,"Capabilities object created");
+        t.ok(cap.operationsMetadata,"OperationsMetadata object present");
+        t.ok(cap.operationsMetadata["GetCapabilities"],"GetCapabilities operation version: " + cap.version);
+        t.ok(cap.operationsMetadata["GetFeature"],"GetFeature operation version: " + cap.version);
+        t.ok(cap.operationsMetadata["DescribeFeatureType"],"DescribeFeatureType operation version: " + cap.version);
+        
+        t.ok((cap.featureTypeList && cap.featureTypeList.featureTypes),"Coverages Available");
+        t.eq(cap.featureTypeList.featureTypes.length,4, "4 FeatureTypes available");
+        
+        var feat = cap.featureTypeList.featureTypes[0];
+        t.eq(feat["name"], "cs:MT_Railroads", "First feature name is correct");
+        t.eq(feat["title"]["en"], "Montana Railroads", "First feature title is correct");
+        t.eq(cap.version, "2.0.0", "Version 2.0.0");
+    }
+    var fail = function(resp) {};
+    OpenLayers.loadURL(urls["2.0.0"], null, this, success, fail);
+    t.wait_result(waitTime);
+}
+
+</script>
+<body>
+</body>
+</html>

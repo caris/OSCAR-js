@@ -1,0 +1,57 @@
+<html>
+<head>
+<script src="../Loader.js"></script>
+<script type="text/javascript">
+   var successMsg = "Matching translation values";
+   function test_Lang_en(t) {
+       //t.plan(14);
+       OpenLayers.Lang.setCode("en");
+       var d = oscar.Lang.getDictionary("en");
+       t.eq(d["alertBoxHeader"],"Warning!",successMsg);
+       t.eq(d["confirmBoxHeader"],"Warning!",successMsg);
+       t.eq(d["yesButtonLabel"],"Yes",successMsg);
+       t.eq(d["cancelButtonLabel"],"Cancel",successMsg);
+       t.eq(d["okayButtonLabel"],"Okay",successMsg);
+       t.eq(d["confirmDeleteMessage"],"Are you sure you want to delete this item?",successMsg);
+       t.eq(d["confirmRemoveMessage"],"Are you sure you want to remove this item?",successMsg);
+       t.eq(d["oneChecked"],"At least one item must be checked.",successMsg);
+       t.eq(d["nameColumnLabel"],"Name",successMsg);
+       t.eq(d["statusColumnLabel"],"Status",successMsg);
+       t.eq(d["typeColumnLabel"],"Type",successMsg);
+       t.eq(d["valueColumnLabel"],"Value",successMsg);
+       t.eq(d["resetColumnLabel"],"Reset",successMsg);
+       t.eq(d["modified"],"Modified",successMsg);
+       t.eq(d["default"],"Default",successMsg);
+       t.eq(d["confirmReset"],"Reset value to default?",successMsg);
+       t.eq(d["saveButtonLabel"],"Save",successMsg);
+       t.eq(d["Themes"],"&nbsp;",successMsg);
+       t.eq(d["ExtractDataDlgHeader"],"Extract Data",successMsg);
+       t.eq(d["Custom"],"Custom",successMsg);
+       t.eq(d["Current View"],"Current View",successMsg);
+       t.eq(d["Format Type"],"Format Type",successMsg);
+       t.eq(d["Layers"],"Layers",successMsg);
+       t.eq(d["Download"],"Download",successMsg);
+       t.eq(d["Close"],"Close",successMsg);
+       t.eq(d["Please Wait"],"Please wait ...",successMsg);
+       t.eq(d["Retrieving Features"],"Retrieving Features",successMsg);
+       t.eq(d["Units"],"Units",successMsg);
+       t.eq(d["english"],"Imperial",successMsg);
+       t.eq(d["metric"],"Metric",successMsg);
+       t.eq(d["geographic"],"Geographic",successMsg);
+       t.eq(d["Area"],"Area",successMsg);
+       t.eq(d["Distance"],"Distance",successMsg);
+       t.eq(d["MeasurementToole"],"Measurement Tool",successMsg);
+       t.eq(d["srsCodeColumnLabel"],"Coordinate System",successMsg);
+       t.eq(d["srsDescriptionColumnLabel"],"Description",successMsg);
+       t.eq(d["first"],"&lt;&lt;",successMsg);
+       t.eq(d["last"],"&gt;&gt;",successMsg);
+       t.eq(d["previous"],"&lt;",successMsg);
+       t.eq(d["next"],"&gt;",successMsg);
+       
+              
+
+   }
+</script>
+<body>
+</body>
+</html>

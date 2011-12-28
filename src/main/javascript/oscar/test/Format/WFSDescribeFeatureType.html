@@ -1,0 +1,42 @@
+<html>
+<head>
+<script src="../../Loader.js"></script>
+<script type="text/javascript">
+var url = "../files/themeConfiguration.json";
+var waitTime = 2;
+
+var urls = {
+       "1.0.0":"../files/wfs_1_0_0.xml",
+       "1.1.0":"../files/wfs_1_1_0.xml"
+}
+
+function test_wfs_describe_feature_type_1_0_0(t) {
+	var success = function(resp){
+		var reader = new oscar.Format.WFSDescribeFeatureType();
+        var doc = resp.responseXML;
+        var features = reader.read(doc);
+		t.ok(features,"features list created");
+		t.eq(features.version,"1.0.0","version set correctly");
+	}
+    var fail = function(resp) {};
+    OpenLayers.loadURL(urls["1.0.0"], null, this, success, fail);
+    t.wait_result(waitTime);	
+}
+
+function test_wfs_describe_feature_type_1_1_0(t) {
+    var success = function(resp){
+        var reader = new oscar.Format.WFSDescribeFeatureType();
+        var doc = resp.responseXML;
+        var features = reader.read(doc);
+        t.ok(features,"features list created");
+        t.eq(features.version,"1.1.0","version set correctly");
+    }
+    var fail = function(resp) {};
+    OpenLayers.loadURL(urls["1.1.0"], null, this, success, fail);
+    t.wait_result(waitTime);    
+}
+</script>
+<body>
+
+</body>
+</html>

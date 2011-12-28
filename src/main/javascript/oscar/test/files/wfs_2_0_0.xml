@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WFS_Capabilities version="2.0.0"
+    xsi:schemaLocation="http://www.opengis.net/wfs/2.0 http://schemas.opengis.net/wfs/2.0/wfs.xsd http://www.opengis.net/ows/1.1 http://schemas.opengis.net/ows/1.1.0/owsAll.xsd"
+    xmlns:cs="http://www.caris.com/cs"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:fes="http://www.opengis.net/fes/2.0"
+    xmlns:ows="http://www.opengis.net/ows/1.1"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="http://www.opengis.net/wfs/2.0"
+    xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <ows:ServiceIdentification>
+        <ows:Title xml:lang="en">Montana</ows:Title>
+        <ows:Abstract xml:lang="en">This is a web freature service covering the state of Montana.</ows:Abstract>
+        <ows:Keywords>
+            <ows:Keyword xml:lang="en">MONTANA</ows:Keyword>
+            <ows:Keyword xml:lang="en">USA</ows:Keyword>
+            <ows:Keyword xml:lang="en">WFS</ows:Keyword>
+        </ows:Keywords>
+        <ows:ServiceType>WFS</ows:ServiceType>
+        <ows:ServiceTypeVersion>2.0.0</ows:ServiceTypeVersion>
+        <ows:ServiceTypeVersion>1.1.0</ows:ServiceTypeVersion>
+        <ows:ServiceTypeVersion>1.0.0</ows:ServiceTypeVersion>
+        <ows:Fees>conditions unknown</ows:Fees>
+        <ows:AccessConstraints>None</ows:AccessConstraints>
+    </ows:ServiceIdentification>
+    <ows:OperationsMetadata>
+        <ows:Operation name="DescribeFeatureType">
+            <ows:DCP>
+                <ows:HTTP>
+                    <ows:Get xlink:href="http://tcoburnvs.caris.priv:8080/sfs/services/ows/wfs/montanawfs?"/>
+                    <ows:Post xlink:href="http://tcoburnvs.caris.priv:8080/sfs/services/ows/wfs/montanawfs?"/>
+                </ows:HTTP>
+            </ows:DCP>
+            <ows:Parameter name="outputFormat">
+                <ows:AllowedValues>
+                    <ows:Value>application/gml+xml; version=3.2</ows:Value>
+                    <ows:Value>text/xml; subtype=gml/3.1.1</ows:Value>
+                    <ows:Value>text/xml; subType=gml/3.1.1/profiles/gmlsf/1.0.0/0</ows:Value>
+                    <ows:Value>text/xml; subtype=gml/2.1.2</ows:Value>
+                </ows:AllowedValues>
+            </ows:Parameter>
+        </ows:Operation>
+        <ows:Operation name="ListStoredQueries">
+            <ows:DCP>
+                <ows:HTTP>
+                    <ows:Get xlink:href="http://tcoburnvs.caris.priv:8080/sfs/services/ows/wfs/montanawfs?"/>
+                    <ows:Post xlink:href="http://tcoburnvs.caris.priv:8080/sfs/services/ows/wfs/montanawfs?"/>
+                </ows:HTTP>
+            </ows:DCP>
+        </ows:Operation>
+        <ows:Operation name="GetPropertyValue">
+            <ows:DCP>
+                <ows:HTTP>
+                    <ows:Get xlink:href="http://tcoburnvs.caris.priv:8080/sfs/services/ows/wfs/montanawfs?"/>
+                    <ows:Post xlink:href="http://tcoburnvs.caris.priv:8080/sfs/services/ows/wfs/montanawfs?"/>
+                </ows:HTTP>
+            </ows:DCP>
+            <ows:Parameter name="outputFormat">
+                <ows:AllowedValues>
+                    <ows:Value>application/gml+xml; version=3.2</ows:Value>
+                    <ows:Value>text/xml; subtype=gml/3.1.1</ows:Value>
+                    <ows:Value>text/xml; subType=gml/3.1.1/profiles/gmlsf/1.0.0/0</ows:Value>
+                    <ows:Value>text/xml; subtype=gml/2.1.2</ows:Value>
+                    <ows:Value>text/xml; subtype=kml/2.2</ows:Value>
+                    <ows:Value>application/json</ows:Value>
+                    <ows:Value>shapefile</ows:Value>
+                </ows:AllowedValues>
+            </ows:Parameter>
+        </ows:Operation>
+        <ows:Operation name="GetMetadata">
+            <ows:DCP>
+                <ows:HTTP>
+                    <ows:Get xlink:href="http://tcoburnvs.caris.priv:8080/sfs/services/ows/wfs/montanawfs?"/>
+                </ows:HTTP>
+            </ows:DCP>
+        </ows:Operation>
+        <ows:Operation name="GetFeature">
+            <ows:DCP>
+                <ows:HTTP>
+                    <ows:Get xlink:href="http://tcoburnvs.caris.priv:8080/sfs/services/ows/wfs/montanawfs?"/>
+                    <ows:Post xlink:href="http://tcoburnvs.caris.priv:8080/sfs/services/ows/wfs/montanawfs?"/>
+                </ows:HTTP>
+            </ows:DCP>
+            <ows:Parameter name="outputFormat">
+                <ows:AllowedValues>
+                    <ows:Value>application/gml+xml; version=3.2</ows:Value>
+                    <ows:Value>text/xml; subtype=gml/3.1.1</ows:Value>
+                    <ows:Value>text/xml; subType=gml/3.1.1/profiles/gmlsf/1.0.0/0</ows:Value>
+                    <ows:Value>text/xml; subtype=gml/2.1.2</ows:Value>
+                    <ows:Value>text/xml; subtype=kml/2.2</ows:Value>
+                    <ows:Value>application/json</ows:Value>
+                    <ows:Value>shapefile</ows:Value>
+                </ows:AllowedValues>
+            </ows:Parameter>
+        </ows:Operation>
+        <ows:Operation name="GetCapabilities">
+            <ows:DCP>
+                <ows:HTTP>
+                    <ows:Get xlink:href="http://tcoburnvs.caris.priv:8080/sfs/services/ows/wfs/montanawfs?"/>
+                    <ows:Post xlink:href="http://tcoburnvs.caris.priv:8080/sfs/services/ows/wfs/montanawfs?"/>
+                </ows:HTTP>
+            </ows:DCP>
+        </ows:Operation>
+        <ows:Operation name="DescribeStoredQueries">
+            <ows:DCP>
+                <ows:HTTP>
+                    <ows:Get xlink:href="http://tcoburnvs.caris.priv:8080/sfs/services/ows/wfs/montanawfs?"/>
+                    <ows:Post xlink:href="http://tcoburnvs.caris.priv:8080/sfs/services/ows/wfs/montanawfs?"/>
+                </ows:HTTP>
+            </ows:DCP>
+        </ows:Operation>
+        <ows:Constraint name="ImplementsTemporalJoins">
+            <ows:NoValues/>
+            <ows:DefaultValue>FALSE</ows:DefaultValue>
+        </ows:Constraint>
+        <ows:Constraint name="ImplementsResultPaging">
+            <ows:NoValues/>
+            <ows:DefaultValue>FALSE</ows:DefaultValue>
+        </ows:Constraint>
+        <ows:Constraint name="SOAPEncoding">
+            <ows:NoValues/>
+            <ows:DefaultValue>FALSE</ows:DefaultValue>
+        </ows:Constraint>
+        <ows:Constraint name="KVPEncoding">
+            <ows:NoValues/>
+            <ows:DefaultValue>TRUE</ows:DefaultValue>
+        </ows:Constraint>
+        <ows:Constraint name="ImplementsBasicWFS">
+            <ows:NoValues/>
+            <ows:DefaultValue>TRUE</ows:DefaultValue>
+        </ows:Constraint>
+        <ows:Constraint name="ImplementsInheritance">
+            <ows:NoValues/>
+            <ows:DefaultValue>FALSE</ows:DefaultValue>
+        </ows:Constraint>
+        <ows:Constraint name="ImplementsStandardJoins">
+            <ows:NoValues/>
+            <ows:DefaultValue>FALSE</ows:DefaultValue>
+        </ows:Constraint>
+        <ows:Constraint name="ImplementsTransactionalWFS">
+            <ows:NoValues/>
+            <ows:DefaultValue>FALSE</ows:DefaultValue>
+        </ows:Constraint>
+        <ows:Constraint name="XMLEncoding">
+            <ows:NoValues/>
+            <ows:DefaultValue>TRUE</ows:DefaultValue>
+        </ows:Constraint>
+        <ows:Constraint name="ImplementsSpatialJoins">
+            <ows:NoValues/>
+            <ows:DefaultValue>FALSE</ows:DefaultValue>
+        </ows:Constraint>
+        <ows:Constraint name="ImplementsLockingWFS">
+            <ows:NoValues/>
+            <ows:DefaultValue>FALSE</ows:DefaultValue>
+        </ows:Constraint>
+        <ows:Constraint name="ManageStoredQueries">
+            <ows:NoValues/>
+            <ows:DefaultValue>FALSE</ows:DefaultValue>
+        </ows:Constraint>
+        <ows:Constraint name="ImplementsRemoteResolve">
+            <ows:NoValues/>
+            <ows:DefaultValue>FALSE</ows:DefaultValue>
+        </ows:Constraint>
+        <ows:Constraint name="ImplementsFeatureVersioning">
+            <ows:NoValues/>
+            <ows:DefaultValue>FALSE</ows:DefaultValue>
+        </ows:Constraint>
+    </ows:OperationsMetadata>
+    <FeatureTypeList>
+        <FeatureType>
+            <Name>cs:MT_Railroads</Name>
+            <Title xml:lang="en">Montana Railroads</Title>
+            <Abstract xml:lang="en">Railroads  in the state of Montana</Abstract>
+            <ows:Keywords>
+                <ows:Keyword xml:lang="en"></ows:Keyword>
+            </ows:Keywords>
+            <DefaultCRS>urn:ogc:def:crs:EPSG::3857</DefaultCRS>
+            <OtherCRS>urn:ogc:def:crs:EPSG::4326</OtherCRS>
+            <OtherCRS>urn:ogc:def:crs:EPSG::900913</OtherCRS>
+            <ows:WGS84BoundingBox>
+                <ows:LowerCorner>-116.14596467061891 44.410198073004366</ows:LowerCorner>
+                <ows:UpperCorner>-103.76919540617658 49.04214719914856</ows:UpperCorner>
+            </ows:WGS84BoundingBox>
+            <MetadataURL xlink:href="http://tcoburnvs.caris.priv:8080/sfs/services/ows/wfs/montanawfs?request=GetMetadata&amp;service=WFS&amp;version=2.0.0&amp;outputSchema=http://www.isotc211.org/2005/gmd&amp;identifier=cs:MT_Railroads"/>
+            <MetadataURL xlink:href="http://www.caris.com"/>
+        </FeatureType>
+        <FeatureType>
+            <Name>cs:Parks</Name>
+            <Title xml:lang="en">Parks</Title>
+            <DefaultCRS>urn:ogc:def:crs:EPSG::3857</DefaultCRS>
+            <OtherCRS>urn:ogc:def:crs:EPSG::4326</OtherCRS>
+            <OtherCRS>urn:ogc:def:crs:EPSG::900913</OtherCRS>
+            <ows:WGS84BoundingBox>
+                <ows:LowerCorner>-114.46993219868631 44.392330958595906</ows:LowerCorner>
+                <ows:UpperCorner>-107.22706849301441 49.10307115498938</ows:UpperCorner>
+            </ows:WGS84BoundingBox>
+            <MetadataURL xlink:href="http://tcoburnvs.caris.priv:8080/sfs/services/ows/wfs/montanawfs?request=GetMetadata&amp;service=WFS&amp;version=2.0.0&amp;outputSchema=http://www.isotc211.org/2005/gmd&amp;identifier=cs:Parks"/>
+        </FeatureType>
+        <FeatureType>
+            <Name>cs:Forests</Name>
+            <Title xml:lang="en">Forests</Title>
+            <DefaultCRS>urn:ogc:def:crs:EPSG::3857</DefaultCRS>
+            <OtherCRS>urn:ogc:def:crs:EPSG::4326</OtherCRS>
+            <OtherCRS>urn:ogc:def:crs:EPSG::900913</OtherCRS>
+            <ows:WGS84BoundingBox>
+                <ows:LowerCorner>-116.26563053293648 44.232426936679424</ows:LowerCorner>
+                <ows:UpperCorner>-103.66807146763357 49.176382221716025</ows:UpperCorner>
+            </ows:WGS84BoundingBox>
+            <MetadataURL xlink:href="http://tcoburnvs.caris.priv:8080/sfs/services/ows/wfs/montanawfs?request=GetMetadata&amp;service=WFS&amp;version=2.0.0&amp;outputSchema=http://www.isotc211.org/2005/gmd&amp;identifier=cs:Forests"/>
+        </FeatureType>
+        <FeatureType>
+            <Name>cs:MT_Streams</Name>
+            <Title xml:lang="en">MT_Streams</Title>
+            <DefaultCRS>urn:ogc:def:crs:EPSG::3857</DefaultCRS>
+            <OtherCRS>urn:ogc:def:crs:EPSG::4326</OtherCRS>
+            <OtherCRS>urn:ogc:def:crs:EPSG::900913</OtherCRS>
+            <ows:WGS84BoundingBox>
+                <ows:LowerCorner>-116.16683970627913 44.2616535274985</ows:LowerCorner>
+                <ows:UpperCorner>-103.62447802596763 49.1526834519028</ows:UpperCorner>
+            </ows:WGS84BoundingBox>
+            <MetadataURL xlink:href="http://tcoburnvs.caris.priv:8080/sfs/services/ows/wfs/montanawfs?request=GetMetadata&amp;service=WFS&amp;version=2.0.0&amp;outputSchema=http://www.isotc211.org/2005/gmd&amp;identifier=cs:MT_Streams"/>
+        </FeatureType>
+    </FeatureTypeList>
+    <fes:Filter_Capabilities>
+        <fes:Conformance>
+            <fes:Constraint name="ImplementsQuery">
+                <ows:NoValues/>
+                <ows:DefaultValue>TRUE</ows:DefaultValue>
+            </fes:Constraint>
+            <fes:Constraint name="ImplementsAdHocQuery">
+                <ows:NoValues/>
+                <ows:DefaultValue>TRUE</ows:DefaultValue>
+            </fes:Constraint>
+            <fes:Constraint name="ImplementsFunctions">
+                <ows:NoValues/>
+                <ows:DefaultValue>FALSE</ows:DefaultValue>
+            </fes:Constraint>
+            <fes:Constraint name="ImplementsResourceld">
+                <ows:NoValues/>
+                <ows:DefaultValue>TRUE</ows:DefaultValue>
+            </fes:Constraint>
+            <fes:Constraint name="ImplementsMinStandardFilter">
+                <ows:NoValues/>
+                <ows:DefaultValue>TRUE</ows:DefaultValue>
+            </fes:Constraint>
+            <fes:Constraint name="ImplementsStandardFilter">
+                <ows:NoValues/>
+                <ows:DefaultValue>TRUE</ows:DefaultValue>
+            </fes:Constraint>
+            <fes:Constraint name="ImplementsMinSpatialFilter">
+                <ows:NoValues/>
+                <ows:DefaultValue>TRUE</ows:DefaultValue>
+            </fes:Constraint>
+            <fes:Constraint name="ImplementsSpatialFilter">
+                <ows:NoValues/>
+                <ows:DefaultValue>TRUE</ows:DefaultValue>
+            </fes:Constraint>
+            <fes:Constraint name="ImplementsMinTemporalFilter">
+                <ows:NoValues/>
+                <ows:DefaultValue>FALSE</ows:DefaultValue>
+            </fes:Constraint>
+            <fes:Constraint name="ImplementsTemporalFilter">
+                <ows:NoValues/>
+                <ows:DefaultValue>FALSE</ows:DefaultValue>
+            </fes:Constraint>
+            <fes:Constraint name="ImplementsVersionNav">
+                <ows:NoValues/>
+                <ows:DefaultValue>FALSE</ows:DefaultValue>
+            </fes:Constraint>
+            <fes:Constraint name="ImplementsSorting">
+                <ows:NoValues/>
+                <ows:DefaultValue>FALSE</ows:DefaultValue>
+            </fes:Constraint>
+            <fes:Constraint name="ImplementsExtendedOperators">
+                <ows:NoValues/>
+                <ows:DefaultValue>FALSE</ows:DefaultValue>
+            </fes:Constraint>
+            <fes:Constraint name="ImplementsMinimumXPath">
+                <ows:NoValues/>
+                <ows:DefaultValue>FALSE</ows:DefaultValue>
+            </fes:Constraint>
+            <fes:Constraint name="ImplementsSchemaElementFunc">
+                <ows:NoValues/>
+                <ows:DefaultValue>FALSE</ows:DefaultValue>
+            </fes:Constraint>
+        </fes:Conformance>
+    </fes:Filter_Capabilities>
+</WFS_Capabilities>

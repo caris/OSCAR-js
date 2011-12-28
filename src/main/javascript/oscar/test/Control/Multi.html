@@ -1,0 +1,20 @@
+<html>
+<head>
+<script src="../../Loader.js"></script>
+<script type="text/javascript">
+var url = "../files/themeConfiguration.json";
+var waitTime = 2;
+function test_Control_Multi(t) {
+    var control = new oscar.Control.Multi();
+    t.ok(control instanceof oscar.Control.Multi,"new oscar.Control.Multi returns Multi object");
+    t.eq(control.CLASS_NAME,"oscar.Control.Multi","control.CLASS_NAME is set correctly");
+    t.eq(control.size.w,32,"control.size.w set to 32");
+    t.eq(control.size.h,32,"control.size.h set to 32");
+
+	
+}
+</script>
+<body>
+
+</body>
+</html>

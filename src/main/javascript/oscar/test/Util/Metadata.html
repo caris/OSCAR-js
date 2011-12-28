@@ -1,0 +1,173 @@
+<html>
+<head>
+<script src="../../Loader.js"></script>
+<script type="text/javascript">
+/**
+ * Unit Tests for oscar.Util.Metadata
+ */
+
+/* Test Urls */
+var urls = {
+       "wfs1.0.0":"../files/wfs_1_0_0.xml",
+       "wfs1.1.0":"../files/wfs_1_1_0.xml",
+       "wcs1.0.0":"../files/wcs_1_0_0.xml",
+       "wcs1.1.1":"../files/wcs_1_1_1.xml",
+       "wmts1.0.0":"../files/wmts_1_0_0.xml",
+       "themes":"../files/wmts_bathymetry.xml"
+         
+}
+/* Time in seconds to wait */
+var waitTime=2;
+var maxRequests=2;
+/* Test Functions */
+
+var operationsTests = {
+"wcs": {
+    test:function(t,cap) {
+        t.ok(typeof oscar.Util.Metadata.getOperation(cap,"GetCapabilities") == "object", "GetCapabilities Operation version: " + cap.version);
+        t.ok(typeof oscar.Util.Metadata.getOperation(cap,"GetCoverage") == "object", "GetCoverage Operation version: " + cap.version);
+        t.ok(typeof oscar.Util.Metadata.getOperation(cap,"DescribeCoverage") == "object", "Describe Operation version: " + cap.version);
+    }
+},
+"wfs": {
+    test:function(t,cap) {
+    t.ok(typeof oscar.Util.Metadata.getOperation(cap,"GetCapabilities") == "object", "GetCapabilities Operation version: " + cap.version);
+    t.ok(typeof oscar.Util.Metadata.getOperation(cap,"GetFeature") == "object", "GetFeature Operation version: " + cap.version);
+    t.ok(typeof oscar.Util.Metadata.getOperation(cap,"DescribeFeatureType") == "object", "DescribeFeatureType Operation version: " + cap.version);
+
+    }
+},
+"wmts": {
+    test: function(t,cap) {
+    t.ok(typeof oscar.Util.Metadata.getOperation(cap,"GetCapabilities") == "object", "GetCapabilities Operation version: " + cap.version);
+    t.ok(typeof oscar.Util.Metadata.getOperation(cap,"GetTile") == "object", "GetTile Operation version: " + cap.version);
+    t.ok(typeof oscar.Util.Metadata.getOperation(cap,"GetFeatureInfo") == "object", "GetFeatureInfo Operation version: " + cap.version);
+    }
+}
+        
+}
+
+function test_Metadata_wcs_getOperations(t) {
+    var success = function(resp) {
+        var reader = new oscar.Format.WCSCapabilities();
+        var cap = reader.read(resp.responseXML);
+        operationsTests["wcs"].test(t,cap);
+    };
+    var fail = function(resp){};
+    t.plan(6);
+    OpenLayers.loadURL(urls["wcs1.0.0"],null,this,success,fail);
+    OpenLayers.loadURL(urls["wcs1.1.1"],null,this,success,fail);
+    t.wait_result(waitTime);
+}
+function test_Metadata_wfs_getOperations(t) {
+    var success = function(resp) {
+        var reader = new oscar.Format.WFSCapabilities();
+        var cap = reader.read(resp.responseXML);
+        operationsTests["wfs"].test(t,cap);
+    };
+    var fail = function(resp){};
+    t.plan(6);
+    OpenLayers.loadURL(urls["wfs1.0.0"],null,this,success,fail);
+    OpenLayers.loadURL(urls["wfs1.1.0"],null,this,success,fail);
+    t.wait_result(waitTime);
+}
+
+function test_Metadata_wmts_getOperations(t) {
+    var success = function(resp) {
+        var reader = new oscar.Format.WMTSCapabilities();
+        var cap = reader.read(resp.responseXML);
+        operationsTests["wmts"].test(t,cap);
+    };
+    var fail = function(resp){};
+    t.plan(3);
+    OpenLayers.loadURL(urls["wmts1.0.0"],null,this,success,fail);
+    t.wait_result(waitTime);
+}
+function test_Metadata_compare(t) {
+    t.plan(5);
+    var testFunctions = {
+            getServiceTitle:function(p1,p2) {
+              t.eq(oscar.Util.Metadata.getServiceTitle(p1),oscar.Util.Metadata.getServiceTitle(p2),"WFS service titles match!");
+            },
+            getServiceAbstract:function(p1,p2) {
+              t.eq(oscar.Util.Metadata.getServiceAbstract(p1), oscar.Util.Metadata.getServiceAbstract(p2),"WFS service abstracts match!");
+            },
+            getFeatureTypes:function(p1,p2) {
+              t.eq(oscar.Util.Metadata.getFeatureTypes(p1).length, oscar.Util.Metadata.getFeatureTypes(p2).length,"Number of FeatureTypes match!");
+            },
+            getServiceType:function(p1,p2) {
+                t.eq(oscar.Util.Metadata.getServiceType(p1), oscar.Util.Metadata.getServiceType(p2),"Service types match!");
+            },
+            getOperationHref:function(p1,p2) {
+                var p1Href = oscar.Util.Metadata.getOperationHref(p1, "GetFeature");
+                var p2Href = oscar.Util.Metadata.getOperationHref(p2, "GetFeature");
+                t.eq(p1Href,p2Href,"Service hrefs match!");
+            }
+    };
+ 
+  var v100Cap = null;
+  var v110Cap = null;
+  var requestCounter=2;
+  var getV100 = function(resp) {
+      requestCounter--;
+      var reader = new oscar.Format.WFSCapabilities();
+      var doc = resp.responseXML;
+      v100Cap = reader.read(doc);
+      if(requestCounter <=0) {
+         executeTests();
+      }
+  }
+  var getV110 = function(resp) {
+      requestCounter--;
+      var reader = new oscar.Format.WFSCapabilities();
+      var doc = resp.responseXML;
+      v110Cap = reader.read(doc);
+      if(requestCounter <=0) {
+          executeTests();
+      }
+  }
+
+  var executeTests = function () {
+      for(var fn in testFunctions) {
+            var process = testFunctions[fn];
+            if(process) {
+                process.apply(this,[v100Cap,v110Cap]);
+            }
+
+      }
+        
+  }
+  var fail = function(resp) {};
+  OpenLayers.loadURL(urls["wfs1.0.0"], null, this, getV100, fail);
+  OpenLayers.loadURL(urls["wfs1.1.0"], null, this, getV110, fail);
+  t.wait_result(waitTime);
+ 
+}
+
+function test_Metadata_getThemes(t) {
+    var s = function(resp) {
+        var reader = new oscar.Format.WMTSCapabilities();
+        var capabilities = reader.read(resp.responseXML);
+
+        var themes = oscar.Util.Metadata.getThemes(capabilities);
+        t.ok(themes!=null,"getThemes function returns Themes array.");
+        t.eq(themes.length,1,"One theme returned");
+        
+        var theme = themes[0];
+        t.eq(theme.title,"HPD_WMTS_GROUP","Title value correct");
+        t.eq(theme.identifier,"HPD_WMTS_GROUP","Identifier value correct");
+        t.eq(theme.layerRef.length,18,"Theme references 18 layers.");
+    };
+
+    var f = function(resp) {};
+    
+    OpenLayers.loadURL(urls["themes"], null, this, s, f);
+    t.wait_result(waitTime);
+
+    
+}
+
+</script>
+<body>
+</body>
+</html>
