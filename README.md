@@ -3,7 +3,7 @@ OSCAR (Open Spatial Component Architecture) is a JavaScript Map API that was cre
 It has been spun-off as an open-source project (licensed under [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0.html))
 to allow for public contributions and forking.
 
-## Download/Documentation OSCAR
+## Download/Documentation
 OSCAR is located on http://ucode.caris.com/oscar. The latest release of OSCAR can be downloaded from the [web site] 
 (http://ucode.caris.com/oscar/download). 
 
