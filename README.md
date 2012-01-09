@@ -1,10 +1,12 @@
 # OSCAR
-OSCAR (Open Spatial Component Architecture) is a JavaScript Map API that was created to help build CARIS Spatial Fusion Viewer. 
+OSCAR (Open Spatial Component Architecture) is a JavaScript Map API that was created to help build [CARIS Spatial Fusion Viewer] (http://www.caris.com/products/sfe/SFE-Viewer/). 
 It has been spun-off as an open-source project (licensed under [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0.html))
 to allow for public contributions and forking.
 
 ## Download/Documentation OSCAR
-Latest release of OSCAR can be downloaded from the OSCAR web site at http://ucode.caris.com/oscar/download. 
+OSCAR is located on http://ucode.caris.com/oscar. The latest release of OSCAR can be downloaded from the [web site] 
+(http://ucode.caris.com/oscar/download). 
+
 If you are looking to incorporate OSCAR in your own website there is a full set of [examples] 
 (http://ucode.caris.com/oscar/examples/) and [developer guides] (http://ucode.caris.com/oscar/documents/) to get 
 you started.  The latest version of the [API documentation] (http://ucode.caris.com/oscar/documents/apidocs/)
