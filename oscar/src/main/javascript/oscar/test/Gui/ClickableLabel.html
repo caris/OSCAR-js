@@ -1,0 +1,27 @@
+<html>
+<head>
+<script src="../../Loader.js"></script>
+<script type="text/javascript">
+var url = "../files/themeConfiguration.json";
+var waitTime = 2;
+function test_Gui_ClickableLabel(t) {
+    var lbl = new oscar.Gui.ClickableLabel("Click Me");
+    t.ok(lbl instanceof oscar.Gui.ClickableLabel,"new oscar.Gui.ClickableLable returns ClickableLabel object");
+    t.eq(lbl.CLASS_NAME,"oscar.Gui.ClickableLabel","lbl.CLASS_NAME set correctly");
+    t.eq(lbl.style,"inline","lbl.style set to default value ['inline']");
+    t.eq(lbl.labelText,"Click Me","lbl.labelText initialized to correct value ['Click Me']");
+    t.eq(lbl.count,0,"lbl.count value initialized to 0");
+    lbl.container.onmouseup();
+    t.eq(lbl.count,1,"lbl.count changed to 1 when clicked the first time.");
+    t.eq(lbl.toggle(),true,"Label is toggled when odd clicked.");
+    lbl.container.onmouseup();
+    t.eq(lbl.toggle(),false,"Label is untoggled when even clicked.");
+    t.eq(lbl.count,2,"lbl.count changed to 2 when clicked the second time.");
+    lbl.reset();
+    t.eq(lbl.count,0,"lbl.count value set to 0 when reset.");
+}
+</script>
+<body>
+
+</body>
+</html>

@@ -1,0 +1,48 @@
+<html>
+<head>
+<script src="../Loader.js"></script>
+<script type="text/javascript">
+/**
+ * Test to see if the proper formatters are returned for GEORSS
+ */
+   function test_getDataFormatter(t) {
+     t.plan(3);
+     var formatter = oscar.Util.getDataFormatter("GEORSS_SIMPLE");
+     t.ok(formatter instanceof OpenLayers.Format.GeoRSS, "GEORSS_SIMPLE supported");
+     formatter == null;
+     formatter = oscar.Util.getDataFormatter("GEORSS_GEO");
+     t.ok(formatter instanceof OpenLayers.Format.GeoRSS, "GEORSS_GEO supported");
+     formatter == null;
+     formatter = oscar.Util.getDataFormatter("GEORSS");
+     t.eq(formatter,null,"GEORSS not supported");
+   }
+
+   var epsgList = [];
+   epsgList.push("EPSG:4326");
+   epsgList.push("EPSG:6402");
+   epsgList.push("CRS:84");
+
+   var urnList = [];
+   urnList.push("urn:ogc:def:crs:EPSG::4326");
+   urnList.push("urn:ogc:def:crs:EPSG::6402");
+   urnList.push("urn:ogc:def:crs:OGC:2:84");
+   
+   function test_EpsgConversion_urnToEpsg(t) {
+       t.plan(epsgList.length);
+       for(var i=0;i<epsgList.length;i++) {
+            var msg = urnList[i] + " to " + epsgList[i] + " conversion success!";
+            t.eq(epsgList[i],oscar.Util.EpsgConversion.urnToEpsg(urnList[i]),msg);
+       }
+   }
+   function test_EpsgConversion_epsgToUrn(t) {
+       t.plan(epsgList.length);
+       for(var i=0;i<epsgList.length;i++) {
+            var msg = epsgList[i] + " to " + urnList[i] + " conversion success!";
+            t.eq(urnList[i],oscar.Util.EpsgConversion.epsgToUrn(epsgList[i]),msg);
+       }
+        
+   }
+</script>
+<body>
+</body>
+</html>

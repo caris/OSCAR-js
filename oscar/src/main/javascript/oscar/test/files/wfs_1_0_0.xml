@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WFS_Capabilities version="1.0.0" xmlns="http://www.opengis.net/wfs"
+    xmlns:ogc="http://www.opengis.net/ogc"
+    xmlns:wfs="http://www.opengis.net/wfs"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opengis.net/wfs http://tcoburnvs.caris.priv:8080/sfs/schemas/wfs/1.0.0/WFS-capabilities.xsd">
+    <Service>
+        <Name>CARIS Spatial Fusion WFS</Name>
+        <Title>Test WFS Service</Title>
+        <Abstract>This is a test WFS Service</Abstract>
+        <Keywords>Test, WFS</Keywords>
+        <OnlineResource>http://www.caris.com</OnlineResource>
+        <Fees>NONE</Fees>
+        <AccessConstraints>NONE</AccessConstraints>
+    </Service>
+    <Capability>
+        <Request>
+            <GetCapabilities>
+                <DCPType>
+                    <HTTP>
+                        <Get onlineResource="http://tcoburnvs.caris.priv:8080/sfs/services/ows/wfs/testWFS?"/>
+                    </HTTP>
+                </DCPType>
+                <DCPType>
+                    <HTTP>
+                        <Post onlineResource="http://tcoburnvs.caris.priv:8080/sfs/services/ows/wfs/testWFS?"/>
+                    </HTTP>
+                </DCPType>
+            </GetCapabilities>
+            <DescribeFeatureType>
+                <SchemaDescriptionLanguage>
+                    <XMLSCHEMA/>
+                </SchemaDescriptionLanguage>
+                <DCPType>
+                    <HTTP>
+                        <Get onlineResource="http://tcoburnvs.caris.priv:8080/sfs/services/ows/wfs/testWFS?"/>
+                    </HTTP>
+                </DCPType>
+                <DCPType>
+                    <HTTP>
+                        <Post onlineResource="http://tcoburnvs.caris.priv:8080/sfs/services/ows/wfs/testWFS?"/>
+                    </HTTP>
+                </DCPType>
+            </DescribeFeatureType>
+            <GetFeature>
+                <ResultFormat>
+                    <GML2/>
+                    <kml/>
+                    <geojson/>
+                </ResultFormat>
+                <DCPType>
+                    <HTTP>
+                        <Get onlineResource="http://tcoburnvs.caris.priv:8080/sfs/services/ows/wfs/testWFS?"/>
+                    </HTTP>
+                </DCPType>
+                <DCPType>
+                    <HTTP>
+                        <Post onlineResource="http://tcoburnvs.caris.priv:8080/sfs/services/ows/wfs/testWFS?"/>
+                    </HTTP>
+                </DCPType>
+            </GetFeature>
+        </Request>
+    </Capability>
+    <FeatureTypeList>
+        <Operations>
+            <Query/>
+        </Operations>
+        <FeatureType>
+            <Name>cs:Buildings</Name>
+            <Title>cs:Buildings</Title>
+            <Keywords>Buildings, Towers,</Keywords>
+            <SRS>EPSG:4326</SRS>
+            <LatLongBoundingBox maxx="-66.61648179573713"
+                maxy="45.97788938593632" minx="-66.67752136335088" miny="45.93886503892975"/>
+            <MetadataURL format="SGML" type="FGDC"/>
+            <MetadataURL format="SGML" type="FGDC">http://www.cnn.com</MetadataURL>
+        </FeatureType>
+        <FeatureType>
+            <Name>cs:Forest</Name>
+            <Title>Forest</Title>
+            <SRS>EPSG:4326</SRS>
+            <LatLongBoundingBox maxx="-66.61267468601467"
+                maxy="45.97994912079562" minx="-66.68061237332816" miny="45.93685197325931"/>
+        </FeatureType>
+    </FeatureTypeList>
+    <ogc:Filter_Capabilities>
+        <ogc:Spatial_Capabilities>
+            <ogc:Spatial_Operators>
+                <ogc:BBOX/>
+                <ogc:Equals/>
+                <ogc:Disjoint/>
+                <ogc:Touches/>
+                <ogc:Crosses/>
+                <ogc:Within/>
+                <ogc:Contains/>
+                <ogc:Overlaps/>
+            </ogc:Spatial_Operators>
+        </ogc:Spatial_Capabilities>
+        <ogc:Scalar_Capabilities>
+            <!--ogc:Logical_Operators support is disabled.-->
+            <ogc:Comparison_Operators>
+                <ogc:Simple_Comparisons/>
+            </ogc:Comparison_Operators>
+        </ogc:Scalar_Capabilities>
+    </ogc:Filter_Capabilities>
+</WFS_Capabilities>

@@ -1,0 +1,16 @@
+<html>
+<head>
+<script src="../../Loader.js"></script>
+<script type="text/javascript">
+var url = "../files/themeConfiguration.json";
+var waitTime = 2;
+function test_Control_Permalink(t) {
+    var control = new oscar.Control.Permalink();
+    t.ok(control instanceof oscar.Control.Permalink,"new oscar.Control.Permalink returns Permalink object");
+    t.eq(control.CLASS_NAME,"oscar.Control.Permalink","control.CLASS_NAME is set correctly");
+}
+</script>
+<body>
+
+</body>
+</html>

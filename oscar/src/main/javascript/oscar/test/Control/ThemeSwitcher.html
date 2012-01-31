@@ -1,0 +1,107 @@
+<html>
+<head>
+<script src="../../Loader.js"></script>
+<script type="text/javascript">
+var url = "../files/themeConfiguration.json";
+var waitTime = 2;
+
+function test_Control_ThemeSwitcher(t,control) {
+
+    if(!control) {
+           control = new oscar.Control.ThemeSwitcher();
+    }
+    t.ok(control instanceof oscar.Control.ThemeSwitcher,"new oscar.Control.ThemeSwitcher returns ThemeSwitcher object");
+    t.eq(control.CLASS_NAME,"oscar.Control.ThemeSwitcher","control.CLASS_NAME is set correctly");
+}
+
+var replay = { checkpoints: [
+function( tst, wnd ) { // #0 time 3s. cursor was over BUTTON [0]
+    var tm = wnd.map.getControlsByClass("oscar.Control.ThemeManager")[0];
+    tst.eq(tm.activeTheme.name,"fredericton city","Active theme is correct (fredericton city)");
+}, function( tst, wnd ) { // #1 time 8s. cursor was over DIV #oscar.Gui.CollapsiblePanel25, DIV [0], DIV [0], DIV [0]
+    var tm = wnd.map.getControlsByClass("oscar.Control.ThemeManager")[0];
+    tst.eq(tm.activeTheme.name,"montana","Active theme is correct (montana)");
+
+}
+], events: [
+{type:"mouseover", target:"0 BUTTON", bubbles:"true", cancelable:"true", which:"1", pageX:"43", pageY:"31", isChar:"false", screenX:"1963", screenY:"16", clientX:"43", clientY:"31", ctrlKey:"false", shiftKey:"false", altKey:"false", metaKey:"false", button:"0", relatedTarget:"", detail:"0", mozPressure:"0", layerX:"43", layerY:"31", cancelBubble:"false", time:"945"},
+{type:"mousedown", target:"0 BUTTON", bubbles:"true", cancelable:"true", which:"1", pageX:"34", pageY:"20", isChar:"false", screenX:"1954", screenY:"5", clientX:"34", clientY:"20", ctrlKey:"false", shiftKey:"false", altKey:"false", metaKey:"false", button:"0", relatedTarget:null, detail:"1", mozPressure:"0", layerX:"34", layerY:"20", cancelBubble:"false", time:"272"},
+{type:"mouseup", target:"0 BUTTON", bubbles:"true", cancelable:"true", which:"1", pageX:"34", pageY:"20", isChar:"false", screenX:"1954", screenY:"5", clientX:"34", clientY:"20", ctrlKey:"false", shiftKey:"false", altKey:"false", metaKey:"false", button:"0", relatedTarget:null, detail:"1", mozPressure:"0", layerX:"34", layerY:"20", cancelBubble:"false", time:"64"},
+{type:"click", target:"0 BUTTON", bubbles:"true", cancelable:"true", which:"1", pageX:"34", pageY:"20", isChar:"false", screenX:"1954", screenY:"5", clientX:"34", clientY:"20", ctrlKey:"false", shiftKey:"false", altKey:"false", metaKey:"false", button:"0", relatedTarget:null, detail:"1", mozPressure:"0", layerX:"34", layerY:"20", cancelBubble:"false", time:"1"},
+{type:"mouseout", target:"0 BUTTON", bubbles:"true", cancelable:"true", which:"1", pageX:"54", pageY:"54", isChar:"false", screenX:"1974", screenY:"39", clientX:"54", clientY:"54", ctrlKey:"false", shiftKey:"false", altKey:"false", metaKey:"false", button:"0", relatedTarget:"", detail:"0", mozPressure:"0", layerX:"54", layerY:"54", cancelBubble:"false", time:"427"},
+{type:"_checkpoint", time:"1795", which:"0", target:"0 BUTTON"},
+{type:"mouseover", target:"#OpenLayersDiv251 IMG", bubbles:"true", cancelable:"true", which:"1", pageX:"482", pageY:"161", isChar:"false", screenX:"2402", screenY:"146", clientX:"482", clientY:"161", ctrlKey:"false", shiftKey:"false", altKey:"false", metaKey:"false", button:"0", relatedTarget:"", detail:"0", mozPressure:"0", layerX:"5", layerY:"48", cancelBubble:"false", time:"1009"},
+{type:"mouseout", target:"#OpenLayersDiv251 IMG", bubbles:"true", cancelable:"true", which:"1", pageX:"550", pageY:"150", isChar:"false", screenX:"2470", screenY:"135", clientX:"550", clientY:"150", ctrlKey:"false", shiftKey:"false", altKey:"false", metaKey:"false", button:"0", relatedTarget:"#oscar.Control.ThemeSwitcher_18 DIV,1 DIV", detail:"0", mozPressure:"0", layerX:"2", layerY:"107", cancelBubble:"false", time:"16"},
+{type:"mouseover", target:"#oscar.Control.ThemeSwitcher_18 DIV,1 DIV", bubbles:"true", cancelable:"true", which:"1", pageX:"550", pageY:"150", isChar:"false", screenX:"2470", screenY:"135", clientX:"550", clientY:"150", ctrlKey:"false", shiftKey:"false", altKey:"false", metaKey:"false", button:"0", relatedTarget:"#OpenLayersDiv251 IMG", detail:"0", mozPressure:"0", layerX:"2", layerY:"107", cancelBubble:"false", time:"1"},
+{type:"mouseout", target:"#oscar.Control.ThemeSwitcher_18 DIV,1 DIV", bubbles:"true", cancelable:"true", which:"1", pageX:"797", pageY:"121", isChar:"false", screenX:"2717", screenY:"106", clientX:"797", clientY:"121", ctrlKey:"false", shiftKey:"false", altKey:"false", metaKey:"false", button:"0", relatedTarget:"#oscar.Control.ThemeSwitcher_18 DIV,2 DIV", detail:"0", mozPressure:"0", layerX:"1", layerY:"111", cancelBubble:"false", time:"239"},
+{type:"mouseover", target:"#oscar.Control.ThemeSwitcher_18 DIV,2 DIV", bubbles:"true", cancelable:"true", which:"1", pageX:"797", pageY:"121", isChar:"false", screenX:"2717", screenY:"106", clientX:"797", clientY:"121", ctrlKey:"false", shiftKey:"false", altKey:"false", metaKey:"false", button:"0", relatedTarget:"#oscar.Control.ThemeSwitcher_18 DIV,1 DIV", detail:"0", mozPressure:"0", layerX:"1", layerY:"111", cancelBubble:"false", time:"0"},
+{type:"mouseout", target:"#oscar.Control.ThemeSwitcher_18 DIV,2 DIV", bubbles:"true", cancelable:"true", which:"1", pageX:"799", pageY:"120", isChar:"false", screenX:"2719", screenY:"105", clientX:"799", clientY:"120", ctrlKey:"false", shiftKey:"false", altKey:"false", metaKey:"false", button:"0", relatedTarget:"#OpenLayersDiv249 IMG", detail:"0", mozPressure:"0", layerX:"66", layerY:"7", cancelBubble:"false", time:"8"},
+{type:"mouseover", target:"#OpenLayersDiv249 IMG", bubbles:"true", cancelable:"true", which:"1", pageX:"799", pageY:"120", isChar:"false", screenX:"2719", screenY:"105", clientX:"799", clientY:"120", ctrlKey:"false", shiftKey:"false", altKey:"false", metaKey:"false", button:"0", relatedTarget:"#oscar.Control.ThemeSwitcher_18 DIV,2 DIV", detail:"0", mozPressure:"0", layerX:"66", layerY:"7", cancelBubble:"false", time:"1"},
+{type:"mouseout", target:"#OpenLayersDiv249 IMG", bubbles:"true", cancelable:"true", which:"1", pageX:"801", pageY:"112", isChar:"false", screenX:"2721", screenY:"97", clientX:"801", clientY:"112", ctrlKey:"false", shiftKey:"false", altKey:"false", metaKey:"false", button:"0", relatedTarget:"#OpenLayersDiv275 IMG", detail:"0", mozPressure:"0", layerX:"68", layerY:"255", cancelBubble:"false", time:"31"},
+{type:"mouseover", target:"#OpenLayersDiv275 IMG", bubbles:"true", cancelable:"true", which:"1", pageX:"801", pageY:"112", isChar:"false", screenX:"2721", screenY:"97", clientX:"801", clientY:"112", ctrlKey:"false", shiftKey:"false", altKey:"false", metaKey:"false", button:"0", relatedTarget:"#OpenLayersDiv249 IMG", detail:"0", mozPressure:"0", layerX:"68", layerY:"255", cancelBubble:"false", time:"0"},
+{type:"mouseout", target:"#OpenLayersDiv275 IMG", bubbles:"true", cancelable:"true", which:"1", pageX:"798", pageY:"100", isChar:"false", screenX:"2718", screenY:"85", clientX:"798", clientY:"100", ctrlKey:"false", shiftKey:"false", altKey:"false", metaKey:"false", button:"0", relatedTarget:"#oscar.Control.ThemeSwitcher_18 DIV", detail:"0", mozPressure:"0", layerX:"251", layerY:"91", cancelBubble:"false", time:"40"},
+{type:"mouseover", target:"#oscar.Control.ThemeSwitcher_18 DIV", bubbles:"true", cancelable:"true", which:"1", pageX:"798", pageY:"100", isChar:"false", screenX:"2718", screenY:"85", clientX:"798", clientY:"100", ctrlKey:"false", shiftKey:"false", altKey:"false", metaKey:"false", button:"0", relatedTarget:"#OpenLayersDiv275 IMG", detail:"0", mozPressure:"0", layerX:"251", layerY:"91", cancelBubble:"false", time:"0"},
+{type:"mouseout", target:"#oscar.Control.ThemeSwitcher_18 DIV", bubbles:"true", cancelable:"true", which:"1", pageX:"797", pageY:"98", isChar:"false", screenX:"2717", screenY:"83", clientX:"797", clientY:"98", ctrlKey:"false", shiftKey:"false", altKey:"false", metaKey:"false", button:"0", relatedTarget:"#oscar.Control.ThemeSwitcher_18 DIV,2 DIV", detail:"0", mozPressure:"0", layerX:"1", layerY:"88", cancelBubble:"false", time:"8"},
+{type:"mouseover", target:"#oscar.Control.ThemeSwitcher_18 DIV,2 DIV", bubbles:"true", cancelable:"true", which:"1", pageX:"797", pageY:"98", isChar:"false", screenX:"2717", screenY:"83", clientX:"797", clientY:"98", ctrlKey:"false", shiftKey:"false", altKey:"false", metaKey:"false", button:"0", relatedTarget:"#oscar.Control.ThemeSwitcher_18 DIV", detail:"0", mozPressure:"0", layerX:"1", layerY:"88", cancelBubble:"false", time:"0"},
+{type:"mouseout", target:"#oscar.Control.ThemeSwitcher_18 DIV,2 DIV", bubbles:"true", cancelable:"true", which:"1", pageX:"794", pageY:"92", isChar:"false", screenX:"2714", screenY:"77", clientX:"794", clientY:"92", ctrlKey:"false", shiftKey:"false", altKey:"false", metaKey:"false", button:"0", relatedTarget:"#oscar.Control.ThemeSwitcher_18 DIV,1 DIV", detail:"0", mozPressure:"0", layerX:"246", layerY:"49", cancelBubble:"false", time:"16"},
+{type:"mouseover", target:"#oscar.Control.ThemeSwitcher_18 DIV,1 DIV", bubbles:"true", cancelable:"true", which:"1", pageX:"794", pageY:"92", isChar:"false", screenX:"2714", screenY:"77", clientX:"794", clientY:"92", ctrlKey:"false", shiftKey:"false", altKey:"false", metaKey:"false", button:"0", relatedTarget:"#oscar.Control.ThemeSwitcher_18 DIV,2 DIV", detail:"0", mozPressure:"0", layerX:"246", layerY:"49", cancelBubble:"false", time:"0"},
+{type:"mouseout", target:"#oscar.Control.ThemeSwitcher_18 DIV,1 DIV", bubbles:"true", cancelable:"true", which:"1", pageX:"782", pageY:"83", isChar:"false", screenX:"2702", screenY:"68", clientX:"782", clientY:"83", ctrlKey:"false", shiftKey:"false", altKey:"false", metaKey:"false", button:"0", relatedTarget:"#oscar.Control.ThemeSwitcher_18 DIV,1 DIV,0 DIV", detail:"0", mozPressure:"0", layerX:"234", layerY:"40", cancelBubble:"false", time:"64"},
+{type:"mouseover", target:"#oscar.Control.ThemeSwitcher_18 DIV,1 DIV,0 DIV", bubbles:"true", cancelable:"true", which:"1", pageX:"782", pageY:"83", isChar:"false", screenX:"2702", screenY:"68", clientX:"782", clientY:"83", ctrlKey:"false", shiftKey:"false", altKey:"false", metaKey:"false", button:"0", relatedTarget:"#oscar.Control.ThemeSwitcher_18 DIV,1 DIV", detail:"0", mozPressure:"0", layerX:"234", layerY:"40", cancelBubble:"false", time:"0"},
+{type:"mouseout", target:"#oscar.Control.ThemeSwitcher_18 DIV,1 DIV,0 DIV", bubbles:"true", cancelable:"true", which:"1", pageX:"777", pageY:"82", isChar:"false", screenX:"2697", screenY:"67", clientX:"777", clientY:"82", ctrlKey:"false", shiftKey:"false", altKey:"false", metaKey:"false", button:"0", relatedTarget:"#oscar.Gui.CollapsiblePanel25 DIV,0 DIV", detail:"0", mozPressure:"0", layerX:"229", layerY:"39", cancelBubble:"false", time:"32"},
+{type:"mouseover", target:"#oscar.Gui.CollapsiblePanel25 DIV,0 DIV", bubbles:"true", cancelable:"true", which:"1", pageX:"777", pageY:"82", isChar:"false", screenX:"2697", screenY:"67", clientX:"777", clientY:"82", ctrlKey:"false", shiftKey:"false", altKey:"false", metaKey:"false", button:"0", relatedTarget:"#oscar.Control.ThemeSwitcher_18 DIV,1 DIV,0 DIV", detail:"0", mozPressure:"0", layerX:"229", layerY:"39", cancelBubble:"false", time:"0"},
+{type:"mouseout", target:"#oscar.Gui.CollapsiblePanel25 DIV,0 DIV", bubbles:"true", cancelable:"true", which:"1", pageX:"772", pageY:"82", isChar:"false", screenX:"2692", screenY:"67", clientX:"772", clientY:"82", ctrlKey:"false", shiftKey:"false", altKey:"false", metaKey:"false", button:"0", relatedTarget:"#oscar.Gui.CollapsiblePanel25 DIV,0 DIV,0 DIV,0 DIV", detail:"0", mozPressure:"0", layerX:"224", layerY:"39", cancelBubble:"false", time:"64"},
+{type:"mouseover", target:"#oscar.Gui.CollapsiblePanel25 DIV,0 DIV,0 DIV,0 DIV", bubbles:"true", cancelable:"true", which:"1", pageX:"772", pageY:"82", isChar:"false", screenX:"2692", screenY:"67", clientX:"772", clientY:"82", ctrlKey:"false", shiftKey:"false", altKey:"false", metaKey:"false", button:"0", relatedTarget:"#oscar.Gui.CollapsiblePanel25 DIV,0 DIV", detail:"0", mozPressure:"0", layerX:"224", layerY:"39", cancelBubble:"false", time:"0"},
+{type:"mousedown", target:"#oscar.Gui.CollapsiblePanel25 DIV,0 DIV,0 DIV,0 DIV", bubbles:"true", cancelable:"true", which:"1", pageX:"760", pageY:"90", isChar:"false", screenX:"2680", screenY:"75", clientX:"760", clientY:"90", ctrlKey:"false", shiftKey:"false", altKey:"false", metaKey:"false", button:"0", relatedTarget:null, detail:"1", mozPressure:"0", layerX:"212", layerY:"47", cancelBubble:"false", time:"641"},
+{type:"mouseup", target:"#oscar.Gui.CollapsiblePanel25 DIV,0 DIV,0 DIV,0 DIV", bubbles:"true", cancelable:"true", which:"1", pageX:"760", pageY:"90", isChar:"false", screenX:"2680", screenY:"75", clientX:"760", clientY:"90", ctrlKey:"false", shiftKey:"false", altKey:"false", metaKey:"false", button:"0", relatedTarget:null, detail:"1", mozPressure:"0", layerX:"212", layerY:"47", cancelBubble:"false", time:"118"},
+{type:"click", target:"#oscar.Gui.CollapsiblePanel25 DIV,0 DIV,0 DIV,0 DIV", bubbles:"true", cancelable:"true", which:"1", pageX:"760", pageY:"90", isChar:"false", screenX:"2680", screenY:"75", clientX:"760", clientY:"90", ctrlKey:"false", shiftKey:"false", altKey:"false", metaKey:"false", button:"0", relatedTarget:null, detail:"1", mozPressure:"0", layerX:"212", layerY:"47", cancelBubble:"false", time:"1"},
+{type:"_checkpoint", time:"2719", which:"1", target:"#oscar.Gui.CollapsiblePanel25 DIV,0 DIV,0 DIV,0 DIV"}
+] }
+;
+
+function test_UI(t) {
+    t.replay_events(window,replay);
+}
+
+function test_Translations(t) {
+    var getTranslation = function(lang,key) {
+        return OpenLayers.Lang[lang][key];
+    };
+
+    t.eq(getTranslation("en","ThemeSwitcherTitle"),"Themes","English key ThemeSwitcherTitle is correct");
+    t.debug_print("[Key] ThemeSwitcherTitle [English] " + getTranslation("en","ThemeSwitcherTitle"));
+
+    t.eq(getTranslation("en","ThemeSwitcherToolTip"),"Switch between themes","English key ThemeSwitcherToolTip is correct");
+    t.debug_print("[Key] ThemeSwitcherToolTip [English] " + getTranslation("en","ThemeSwitcherToolTip"));
+
+    t.eq(getTranslation("es","ThemeSwitcherTitle"),"Temas","Spanish key ThemeSwitcherTitle is correct");
+    t.debug_print("[Key] ThemeSwitcherTitle [Spanish] " + getTranslation("es","ThemeSwitcherTitle"));
+
+    t.eq(getTranslation("es","ThemeSwitcherToolTip"),"Cambiar de un tema a otro","Spanish key ThemeSwitcherToolTip is correct");
+    t.debug_print("[Key] ThemeSwitcherToolTip [Spanish] " + getTranslation("es","ThemeSwitcherToolTip"));
+
+    t.eq(getTranslation("fr","ThemeSwitcherTitle"),"Th\u00e8mes","French key ThemeSwitcherTitle is correct");
+    t.debug_print("[Key] ThemeSwitcherTitle [French] " + getTranslation("fr","ThemeSwitcherTitle"));
+
+    t.eq(getTranslation("fr","ThemeSwitcherToolTip"),"Basculer entre les th\u00e8mes","French key ThemeSwitcherToolTip is correct");
+    t.debug_print("[Key] ThemeSwitcherToolTip [French] " + getTranslation("fr","ThemeSwitcherToolTip"));
+    
+}
+var map;
+function run() {
+    OpenLayers.ProxyHost = "/osa/proxy?url=";
+    var options = {
+        controls:[new oscar.Control.LayerToggle({closed:false,resizable:true,tooltipText:"Use the checkboxes to show or hide different layers."})]
+    };
+    map = new oscar.Map("map",options);
+    var ts = new oscar.Control.ThemeSwitcher();
+    map.addControl(ts);
+    ts.getThemeManager().autoDraw=true;
+    ts.getConfigManager().load(url);
+}
+
+</script>
+<body>
+<button onclick="run()">Open</button>
+<div id="map" style="width:800px;height:600px;float:right;"></div>
+</body>
+</html>

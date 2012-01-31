@@ -1,0 +1,37 @@
+<html>
+<head>
+<script src="../../Loader.js"></script>
+<script type="text/javascript">
+var oscarMap;
+function init() {
+var theme = {"id":1,"name":"Default","covers":[{"id":0,"maxX":-66.60176,"maxY":45.99174,"minX":-66.68123,"minY":45.92856,"type":"DEFAULT"},{"id":0,"maxX":180.0,"maxY":90.0,"minX":-180.0,"minY":-90.0,"type":"MAX"}],"layers":[{"layerId":0,"name":"CARIS World Map","urls":["http://sfs.caris.com:80/spatialfusionserver/ogcAction?servicename\u003dworld\u0026SERVICE\u003dWMS\u0026","http://server.caris.com:80/spatialfusionserver/ogcAction?servicename\u003dworld\u0026SERVICE\u003dWMS\u0026"],"baseLayer":false,"layerType":"WMS","dataLayers":[{"id":0,"layerName":"World","index":0},{"id":0,"layerName":"Ocean","index":0}],"displayOrder":0,"parameters":{"buffer":"0"}},{"layerId":0,"name":"fredericton","urls":["http://server.caris.com:80/spatialfusionserver/ogcAction?servicename\u003dfredericton_world\u0026"],"baseLayer":false,"layerType":"WMS","dataLayers":[{"id":0,"layerName":"Land","index":0},{"id":0,"layerName":"Forest","index":0},{"id":0,"layerName":"River","index":0},{"id":0,"layerName":"Fredericton Roads","index":0},{"id":0,"layerName":"Buildings","index":0},{"id":0,"layerName":"Properties","index":0}],"displayOrder":0,"parameters":{"buffer":"0"}}],"displayOrder":1,"srs":"EPSG:4326","backgroundColor":"ffc800"};
+OpenLayers.ProxyHost = "proxy?url=";
+OpenLayers.Lang.setCode("en");
+var url = "/osa/config";
+var options = {
+    controls : []
+};
+    oscarMap = new oscar.Map('carisviewer', options);
+    oscarMap.addTheme(theme);
+    oscarMap.setTheme(theme.name);
+
+    
+}
+   function test_Print_constructor(t) {
+	   init();
+	   t.plan(4);
+       t.ok(oscarMap instanceof oscar.Map," constructor returns instance");
+       t.eq(oscarMap.CLASS_NAME,"oscar.Map","We have a map instance");
+       t.eq(oscarMap.getActiveTheme().name,"Default","Default theme is set");
+       var cb = function(theme,b) {
+           t.eq(b,oscarMap.getExtent().toBBOX(),"Equals extents");
+       }
+       var pt = new oscar.Control.Print(null,null,{callback:cb});
+       oscarMap.addControl(pt);
+       pt.element.onclick();
+   }
+</script>
+<body>
+<div id="carisviewer"></div>
+</body>
+</html>

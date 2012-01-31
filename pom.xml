@@ -1,44 +1,45 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>oscar</artifactId>
-    <name>oscar</name>
-    <packaging>jar</packaging>
-    <groupId>com.caris</groupId>    
+    <groupId>com.caris</groupId>
+    <artifactId>oscar_framework</artifactId>
+    <name>Oscar Framework</name>
     <version>11.3-SNAPSHOT</version>
-	<parent>
+    <packaging>pom</packaging>
+    <description>This is the CARIS JavaScript map library. It currently
+        extends the Openlayers library and uses YUI and jQuery UI to make
+        more advanced mapping widgets. By extending Openlayers, we hope to
+        inherit their work and build upon it or potentially replace their
+        implementation if need be.
+    </description>
+
+    <properties>
+        <branch>trunk</branch>
+    </properties>
+
+    <parent>
         <groupId>com.caris.pom</groupId>
         <artifactId>caris-opensource-pom</artifactId>
-        <version>1</version>
+        <version>2</version>
     </parent>
+
+    <issueManagement>
+        <system>JIRA</system>
+        <url>${issues.base.url}/OSCAR</url>
+    </issueManagement>
+
+    <ciManagement>
+        <system>CruiseControl</system>
+        <url>${ci.base.url}/oscar_framework_${branch}</url>
+    </ciManagement>
+
     <scm>
         <connection>scm:svn:${project.scm.url}</connection>
         <developerConnection>scm:svn:${project.scm.url}</developerConnection>
-        <url>${scm.base.url}/oscar/${branch}/oscar</url>
+        <url>${scm.base.url}/oscar/${branch}</url>
     </scm>
-	<dependencies>
-        <dependency>
-            <groupId>osgeo</groupId>
-            <artifactId>openlayers</artifactId>            
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>osgeo</groupId>
-            <artifactId>proj4js</artifactId>            
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>jquery</groupId>
-            <artifactId>jqueryui</artifactId>            
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>yahoo</groupId>
-            <artifactId>yui</artifactId>            
-            <type>jar</type>
-            <scope>provided</scope>
-        </dependency>
-    </dependencies>
-    <repositories>                
+
+	<repositories>                
         <repository>
             <name>CARIS Snapshots</name>
             <id>nexus.caris.com.snapshots</id>
@@ -55,6 +56,7 @@
             <url>http://nexus.caris.com/nexus/content/repositories/public-vendor/</url>
         </repository>			
     </repositories>	
+	
     <pluginRepositories>                
         <pluginRepository>
             <name>oss.sonatype.org</name>
@@ -66,308 +68,18 @@
             <id>nexus.codehouse.org</id>
             <url>http://nexus.codehaus.org/content/groups/snapshots-group</url>
         </pluginRepository>		
-    </pluginRepositories>	
-    <build>
-        <finalName>oscar</finalName>
-        <outputDirectory>target/scripts</outputDirectory>
-        <testOutputDirectory>target/test-scripts</testOutputDirectory>
-        <plugins>   
-			 <plugin>
-                <groupId>org.codehaus.mojo.javascript</groupId>
-                <artifactId>javascript-maven-plugin</artifactId>				
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>unpack</id>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>unpack</goal>
-                        </goals>
-                        <configuration>
-                             <artifactItems>
-                                 <artifactItem>
-                                     <groupId>osgeo</groupId>
-                                     <artifactId>openlayers</artifactId>
-                                     <version>2.11.0</version>
-                                     <type>jar</type>
-                                     <overWrite>false</overWrite>
-                                     <outputDirectory>${project.build.directory}/scripts/openlayers</outputDirectory>
-                                     <includes>OpenLayers.js, theme/**, img/**,
-                                        license.txt,release-license.txt,news.txt,readme.txt</includes>
-                                 </artifactItem>
-                                 <artifactItem>
-                                     <groupId>jquery</groupId>
-                                     <artifactId>jqueryui</artifactId>
-                                     <version>1.8.16</version>
-                                     <type>jar</type>
-                                     <overWrite>false</overWrite>
-                                     <outputDirectory>${project.build.directory}/scripts/jquery</outputDirectory>
-                                     <includes>**</includes>
-                                 </artifactItem>
-                                 <artifactItem>
-                                     <groupId>osgeo</groupId>
-                                     <artifactId>proj4js</artifactId>
-                                     <version>1.0-0</version>
-                                     <type>jar</type>
-                                     <overWrite>false</overWrite>
-                                     <outputDirectory>${project.build.directory}/scripts/proj4js</outputDirectory>
-                                     <includes>lib/**</includes>
-                                 </artifactItem>
-                                 <artifactItem>
-                                     <groupId>yahoo</groupId>
-                                     <artifactId>yui</artifactId>
-                                     <version>2.8.2r1</version>
-                                     <type>jar</type>
-                                     <overWrite>false</overWrite>
-                                     <outputDirectory>${project.build.directory}/scripts/yui</outputDirectory>
-                                     <destFileName />
-                                     <includes>build/**</includes>
-                                 </artifactItem>
-                            </artifactItems>
-                            <outputDirectory>${project.build.directory}</outputDirectory>
-                            <overWriteReleases>false</overWriteReleases>
-                            <overWriteSnapshots>true</overWriteSnapshots>
-                        </configuration>
-                     </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>net.alchim31.maven</groupId>
-                <artifactId>yuicompressor-maven-plugin</artifactId>
-                <version>1.1</version>
-                <executions>
-                    <execution>
-                        <id>aggrCompress</id>
-                        <goals>
-                            <goal>compress</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <jswarn>false</jswarn>
-                    <nosuffix>true</nosuffix>
-                    <statistics>false</statistics>
-                    <sourceDirectory>../../src/main/javascript/oscar
-                    </sourceDirectory>
-                    <aggregations>
-                        <aggregation>
-                             <!-- remove files after aggregation (default: false) -->
-                             <removeIncluded>true</removeIncluded>
-                             <!-- insert new line after each concatenation (default: false) -->
-                             <insertNewLine>true</insertNewLine>
-                             <!-- Output path -->
-                             <output>target/scripts/oscar/oscar.js 
-                             </output>
-                             <!--
-                                 files to include, path relative to output's directory or
-                                 absolute path
-                             -->
-                             <includes>
-                                 <include>**/SingleFile.js</include>
-                                 <include>**/oscar.js</include>
-                                 <include>**/Util.js</include>
-                                 <include>**/Types/BaseClass.js</include>
-                                 <include>**/ox/ox.js</include>
-                                 <include>**/Gui.js</include>
-                                 <include>**/Gui/Download.js</include>
-                                 <include>**/Gui/Download/WCS.js</include>
-                                 <include>**/Gui/Download/WFS.js</include>
-                                 <include>**/Gui/Dialog.js</include>
-                                 <include>**/Gui/AlertDialog.js</include>
-                                 <include>**/Gui/ConfirmDialog.js</include>
-                                 <include>**/Gui/MultiItemChooserTable.js</include>
-                                 <include>**/Gui/MultiCoordinateSystemsChooser.js</include>
-                                 <include>**/Gui/MultiDataExtractionChooser.js</include>
-                                 <include>**/Gui/Grid.js</include>
-                                 <include>**/Gui/CollapsiblePanel.js</include>
-                                 <include>**/Gui/DownloadOptions.js</include>
-                                 <include>**/Gui/ServicePanel.js</include>
-                                 <include>**/Gui/Metadata.js</include>
-                                 <include>**/Gui/ClickableLabel.js</include>
-                                 <include>**/Gui/KeywordVocabularyTable.js</include>
-                                 <include>**/Gui/ComboBox.js</include>
-                                 <include>**/Handler.js</include>
-                                 <include>**/Handler/WFS.js</include>
-                                 <include>**/Control.js</include>
-                                 <include>**/Control/ArgParser.js</include>
-                                 <include>**/Control/DragPanel.js</include>
-                                 <include>**/Control/DataDiscovery.js</include>
-                                 <include>**/Control/Multi.js</include>
-                                 <include>**/Control/PanZoom.js</include>
-                                 <include>**/Control/PanZoomBar.js</include>
-                                 <include>**/Control/Permalink.js</include>
-                                 <include>**/Control/ToolBar.js</include>
-                                 <include>**/Control/Box.js</include>
-                                 <include>**/Control/RangeSelect.js</include>
-                                 <include>**/Control/Point.js</include>
-                                 <include>**/Control/Select.js</include>
-                                 <include>**/Control/Print.js</include>
-                                 <include>**/Control/DataExtractor.js</include>
-                                 <include>**/Control/Measure.js</include>
-                                 <include>**/Control/MetaData.js</include>
-                                 <include>**/Control/PreviousView.js</include>
-                                 <include>**/Control/OverviewMap.js</include>
-                                 <include>**/Control/SelectFeature.js</include>
-                                 <include>**/Control/ThemeManager.js</include>
-                                 <include>**/Control/OXFConfigManager.js</include>
-                                 <include>**/Control/ThemeSwitcher.js</include>                                        
-                                 <include>**/Format.js</include>
-                                 <include>**/Format/OGC.js</include>
-                                 <include>**/Format/OGC/ows.js</include>
-                                 <include>**/Format/OGC/wcs.js</include>
-                                 <include>**/Format/OGC/wfs.js</include>
-                                 <include>**/Format/OGC/wmts.js</include>
-                                 <include>**/Format/OXF.js</include>
-                                 <include>**/Format/OXF/v2.js</include>
-                                 <include>**/Format/OXF/XML.js</include>
-                                 <include>**/Format/WFSCapabilities.js</include>
-                                 <include>**/Format/WFSCapabilities/v1.js</include>
-                                 <include>**/Format/WFSCapabilities/v1_0_0.js</include>
-                                 <include>**/Format/WFSCapabilities/v1_1_0.js</include>
-                                 <include>**/Format/WFSCapabilities/v2_0_0.js</include>
-                                 <include>**/Format/WCSCapabilities.js</include>
-                                 <include>**/Format/WCSCapabilities/v1.js</include>
-                                 <include>**/Format/WCSCapabilities/v1_0_0.js</include>
-                                 <include>**/Format/WCSCapabilities/v1_1_0.js</include>
-                                 <include>**/Format/WCSCapabilities/v1_1_1.js</include>
-                                 <include>**/Format/WCSDescribeCoverage.js</include>
-                                 <include>**/Format/WCSDescribeCoverage/v1.js</include>
-                                 <include>**/Format/WCSDescribeCoverage/v1_0_0.js</include>
-                                 <include>**/Format/WCSDescribeCoverage/v1_1_0.js</include>
-                                 <include>**/Format/WCSDescribeCoverage/v1_1_1.js</include>
-                                 <include>**/Format/WMTSCapabilities.js</include>
-                                 <include>**/Format/WMTSCapabilities/v1.js</include>
-                                 <include>**/Format/WMTSCapabilities/v1_0_0.js</include>
-                                 <include>**/Format/WFSDescribeFeatureType.js</include>
-                                 <include>**/Format/WFSDescribeFeatureType/v1.js</include>
-                                 <include>**/Format/WFSDescribeFeatureType/v1_0_0.js</include>
-                                 <include>**/Format/WFSDescribeFeatureType/v1_1_0.js</include>
-                                 <include>**/Util/ConfigManager.js</include>
-                                 <include>**/Util/ConfirmBox.js</include>
-                                 <include>**/Util/AlertBox.js</include>
-                                 <include>**/Util/SelectControl.js</include>
-                                 <include>**/Util/SettingsAutoCompleteTable.js</include>
-                                 <include>**/Util/SFSAutoCompleteTable.js</include>
-                                 <include>**/Util/StatusChecker.js</include>
-                                 <include>**/Util/Database.js</include>
-                                 <include>**/Util/DivSelect.js</include>
-                                 <include>**/Util/DivSelectOption.js</include>
-                                 <include>**/Util/Metadata.js</include>
-                                 <include>**/Util/CoordinateSystemAutoComplete.js</include>
-                                 <include>**/Util/CoordinateReferences.js</include>
-                                 <include>**/Util/Transform.js</include>
-                                 <include>**/Util/Help.js</include>
-                                 <include>**/Lang.js</include>
-                                 <include>**/Lang/en.js</include>
-                                 <include>**/Lang/es.js</include>
-                                 <include>**/Lang/fr.js</include>
-                                 <include>**/Popup/FramedCloud.js</include>
-                                 <include>**/Map.js</include>
-                                 <include>**/OLPrototypePatches.js</include>
-                             </includes>							
-                         </aggregation>
-                     </aggregations>
-					 <excludes>
-                         <exclude>**/*.*</exclude>
-                     </excludes>
-                </configuration>                        
-            </plugin>	
-			<plugin>
-                <groupId>com.google.code.maven-license-plugin</groupId>
-                <artifactId>maven-license-plugin</artifactId>               
-                <version>1.4.0</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
-					    <phase>compile</phase>
-                    </execution>
-                </executions>
-                <configuration>
-                    <header>src/etc/license.txt</header>
-                    <quiet>false</quiet>
-                    <failIfMissing>true</failIfMissing>
-                    <includes>
-                       <include>src/main/javascript/oscar/**/*.js</include>
-                    </includes>
-					<properties>
-                        <year>2011</year>
-                    </properties>
-                    <encoding>UTF-8</encoding>
-                </configuration>
-            </plugin>
-        </plugins>
-        <resources>
-            <resource>
-                <directory>src/main/javascript/oscar 
-                </directory>
-                <targetPath>/oscar</targetPath>
-            </resource>
-        </resources>
-    </build>
+    </pluginRepositories>
+	
+    <distributionManagement>
+        <site>
+            <id>com.caris.oscar.site</id>
+            <name>Oscar Maven site</name>
+            <url>${site.base.url}/oscar_framework_${branch}</url>
+        </site>
+    </distributionManagement>
 
-    <profiles>
-        <profile>
-            <id>production</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>net.alchim31.maven</groupId>
-                        <artifactId>yuicompressor-maven-plugin</artifactId>
-                        <version>1.1</version>
-                        <executions>
-                            <execution>
-                                <id>aggrCompress</id>
-                                <goals>
-                                    <goal>compress</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                        <configuration>						
-                            <excludes>                            	
-                                <exclude>**/*.pack.js</exclude>
-                                <exclude>**/*-min.js</exclude>
-                                <exclude>**/compressed.css</exclude>
-                                <exclude>**/*.gif</exclude>
-                                <exclude>**/*.png</exclude>
-                                <exclude>**/examples/**/*.*</exclude>
-                            </excludes>                       
-                        </configuration>                        
-                    </plugin>
-                </plugins>
-            </build>
-		</profile> 
-		<profile>
-            <id>naturaldocs</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.codehaus.mojo.naturaldocs</groupId>
-                        <artifactId>naturaldocs-maven-plugin</artifactId>
-                        <version>1.0-SNAPSHOT</version>
-                        <executions>
-                            <execution>
-                                <phase>compile</phase>
-                                <goals>
-                                    <goal>generate</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                        <configuration>
-                            <naturalDocsHome>D:\Development Tools\NaturalDocs-1.51</naturalDocsHome>
-                            <input>src/main/javascript/oscar</input>
-                            <project>src/main/documentation/settings</project>
-                            <output>target/scripts/oscar/documentation</output>
-                            <outputFormat>FramedHTML</outputFormat>
-                            <rebuild>true</rebuild>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
+    <modules>
+        <module>oscar</module>
+        <module>oscarexchange4j</module>
+    </modules>
 </project>

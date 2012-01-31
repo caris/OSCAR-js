@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<wcs:CoverageDescriptions xmlns:ows="http://www.opengis.net/ows"
+	xmlns:owcs="http://www.opengis.net/wcs/1.1/ows" xmlns:xlink="http://www.w3.org/1999/xlink"
+	xmlns:wcs="http://www.opengis.net/wcs/1.1" xmlns:gml="http://www.opengis.net/gml"
+	xmlns:smil="http://www.w3.org/2001/SMIL20/" xmlns:smil20lang="http://www.w3.org/2001/SMIL20/Language"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.opengis.net/wcs/1.1 http://jfitzgeraldvs.caris.priv:8080/sfogc/schemas/wcs/1.1/wcsDescribeCoverage.xsd">
+	<wcs:CoverageDescription>
+		<ows:Title>0347p0801_2x2_ETRS89_extract</ows:Title>
+		<wcs:Identifier>0347p0801_2x2_ETRS89_extract</wcs:Identifier>
+		<wcs:Domain>
+			<wcs:SpatialDomain>
+				<ows:WGS84BoundingBox crs="urn:ogc:def:crs:OGC:2:84">
+					<ows:LowerCorner>3.954210160986873
+						51.409504647176206</ows:LowerCorner>
+					<ows:UpperCorner>3.991077161533655
+						51.438035912317154</ows:UpperCorner>
+				</ows:WGS84BoundingBox>
+				<ows:BoundingBox crs="urn:ogc:def:crs:EPSG::4326">
+					<ows:LowerCorner>3.954210160986873
+						51.409504647176206</ows:LowerCorner>
+					<ows:UpperCorner>3.991077161533655
+						51.438035912317154</ows:UpperCorner>
+				</ows:BoundingBox>
+			</wcs:SpatialDomain>
+		</wcs:Domain>
+		<wcs:Range>
+			<wcs:Field>
+				<wcs:Identifier>Height</wcs:Identifier>
+				<owcs:InterpolationMethods>
+					<owcs:DefaultMethod>none</owcs:DefaultMethod>
+				</owcs:InterpolationMethods>
+			</wcs:Field>
+		</wcs:Range>
+		<wcs:SupportedCRS>urn:ogc:def:crs:EPSG::4326</wcs:SupportedCRS>
+		<wcs:SupportedCRS>urn:ogc:def:crs:EPSG::4027</wcs:SupportedCRS>
+		<wcs:SupportedCRS>urn:ogc:def:crs:EPSG::3395</wcs:SupportedCRS>
+		<wcs:SupportedCRS>urn:ogc:def:crs:EPSG::3857</wcs:SupportedCRS>
+		<wcs:SupportedCRS>urn:ogc:def:crs:EPSG::900913</wcs:SupportedCRS>
+		<wcs:SupportedFormat>image/tiff</wcs:SupportedFormat>
+		<wcs:SupportedFormat>image/geotiff</wcs:SupportedFormat>
+		<wcs:SupportedFormat>application/xyz</wcs:SupportedFormat>
+	</wcs:CoverageDescription>
+</wcs:CoverageDescriptions>

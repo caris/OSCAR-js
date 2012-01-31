@@ -1,0 +1,66 @@
+<html>
+<head>
+<script src="../../Loader.js"></script>
+<script type="text/javascript">
+/**
+ * Unit Tests for oscar.Format.WCSCapabilities
+ */
+
+/* Test Urls */
+var urls = {
+	   "1.0.0":"../files/wcs_1_0_0.xml",
+	   "1.1.1":"../files/wcs_1_1_1.xml"
+}
+/* Time in seconds to wait */
+var waitTime=5;
+
+/* Test Functions */
+function test_WCS_1_0_0(t) {
+  t.plan(5);
+  var success = function(resp) {
+      var reader = new oscar.Format.WCSCapabilities();
+      var doc = resp.responseXML;
+      var cap = reader.read(doc);
+  	t.ok(cap,"Capabilities object created");
+  	t.ok(cap.operationsMetadata,"operationsMetadata object present");
+  	t.ok((cap.contents && cap.contents.coverages),"cCoverages Available");
+  	t.eq(cap.contents.coverages.length,5, "4 coverages available");
+  	t.eq(cap.version, "1.0.0", "Version 1.0.0");
+  }
+  var fail = function(resp) {};
+  OpenLayers.loadURL(urls["1.0.0"], null, this, success, fail);
+  t.wait_result(waitTime);
+ 
+}
+function test_WCS_1_1_1(t) {
+	t.plan(13);
+	  var success = function(resp) {
+	      var reader = new oscar.Format.WCSCapabilities();
+	      var doc = resp.responseXML;
+	      var cap = reader.read(doc);
+	    t.ok(cap,"Capabilities object created");
+	    t.ok(cap.operationsMetadata,"OperationsMetadata object present");
+	    t.ok(cap.operationsMetadata.GetCapabilities,"GetCapabilities Operation");
+	    t.ok(cap.operationsMetadata.GetCoverage,"GetCoverage Operation");
+	    t.ok(cap.operationsMetadata.DescribeCoverage,"DescribeCoverage Operation");
+	    t.ok((cap.contents && cap.contents.coverages),"Coverages Available");
+
+	    var cvgs = cap.contents.coverages;
+	    
+	    t.eq(cvgs.length,5, "5 Coverages available");
+	    t.eq(cvgs[0]["abstract"],"Generated from arcGridSample","first coverage abstract correct");
+	    t.eq(cvgs[0]["title"],"A sample ArcGrid file","first coverage title correct");
+	    t.eq(cvgs[0]["identifier"],"Arc_Sample","first coverage identifier correct");
+	    t.eq(cvgs[0]["keywords"].length,3,"first coverage has 3 keywords");
+	    t.ok(typeof cvgs[0]["wgs84BoundingBox"] == "object","Has WGS84BoundingBox");
+	    t.eq(cap.version, "1.1.1", "Version 1.1.1");
+    
+	  }
+	  var fail = function(resp) {};
+	  OpenLayers.loadURL(urls["1.1.1"], null, this, success, fail);
+	  t.wait_result(waitTime);
+	}
+</script>
+<body>
+</body>
+</html>

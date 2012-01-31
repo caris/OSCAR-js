@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<help>
+	<component id="DataExtractor">
+		<header>Download Data</header>
+		
+		<para>There are two types of data that can be downloaded through the <b>Download Data</b> button, Features and Coverages. Features are provided from a Web Feature Service and Coverages are provided through a Web Coverage Service. You can select multiple features, as well as search for specific features or coverages.</para>
+		
+		<para>The <b>Download Data</b> dialog box will permit you to select the data that is available for download. Once you have selected a feature or coverage, the map will zoom into a bounding box displaying a cut-out area, and will also list the available formats. You can click the <b>Download</b> button to download the selected features using default settings, or you can refine the selected features.</para>
+
+		<para>The <b>Features</b> tab on the <b>Download Data</b> dialog box displays the available features, which can be selected by clicking on the check boxes. The <b>Select All</b> button permits you to select all that are available. The format of the download can be selected from the drop down list.</para>
+		
+		<para>The <b>Coverages</b> tab contains the <b>Basic</b> tab and the <b>Advanced</b> tab. The <b>Basic</b> tab displays the available coverages, which can be selected by clicking on the radio buttons. The drop-down <b>Format</b> list allows you to select an output format. The <b>Advanced</b> tab permits you to select available fields and output Coordinate Reference Systems (CRS). </para>
+		
+		<para>In addition to the <b>Help</b> button, the bottom border of the dialog box has two other buttons. Click <b>Download</b> to open a window with the xml code that can be used to display the selected data in another application. Click <b>Cancel</b> to end the data download.</para>
+
+		<para>Any data that is available in these tabs may be selected either from the dialog box, or from the map cut-out tool. Changing the scale with the scale bar on the left side, and dragging the map with the mouse may both be useful techniques when navigating the map.</para>
+		
+		<para>To refine the cut-out area, click the cut-out area on the map. Once selected, the cut-out area will have a point in the center to allow for dragging, and a point on the lower-right corner to allow for rotation and resizing.</para>
+			
+		<para>The <b>Download Data</b> dialog box also has a <b>Search</b> bar for both Features and Coverages. You can find features by typing in the text of the features (or coverages) you wish to display.</para>
+		
+				
+	</component>
+</help>

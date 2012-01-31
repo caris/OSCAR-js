@@ -1,0 +1,73 @@
+<html>
+<head>
+<script src="../../Loader.js"></script>
+<script type="text/javascript">
+var url = "../files/themeConfiguration.json";
+var waitTime = 2;
+
+function test_Format_OXF(t) {
+
+	var success = function(resp) {
+	    var reader = new oscar.Format.OXF();
+	    var oxf = reader.read(resp.responseText);
+
+	    t.eq(oxf.themes.length,2,"Two oscar.ox.Theme object returned");
+	    var theme  = oxf.themes[0];
+	    t.eq(theme.name,"fredericton city","Name is correct");
+	    var defaultCover = theme.getDefaultCover();
+	    t.ok(defaultCover instanceof OpenLayers.Bounds,"getDefaultCover returns OpenLayers.Bounds object");
+	    t.eq(defaultCover.CLASS_NAME,"OpenLayers.Bounds", "defaultCover.CLASS_NAME set correctly");
+	    t.eq(defaultCover.left,-7422316.45033, "defaultCover.left set correctly");
+	    t.eq(defaultCover.bottom,5771426.72369, "defaultCover.bottom set correctly");
+	    t.eq(defaultCover.right,-7417262.05183, "defaultCover.right set correctly");
+	    t.eq(defaultCover.top,5774785.17561, "defaultCover.top set correctly");
+
+	    var maxCover = theme.getMaxCover();
+	    t.eq(maxCover,null,"getMaxCover returns null");
+
+	    var layers = theme.layers; 
+	    t.eq(layers.length,2,"Theme contains 2 layers");
+
+	    var baseLayer = theme.layers[0];
+	    t.eq(baseLayer.layerType,"OSM","First layer set correctly");
+	    olLayer = baseLayer.toMapLayer();
+	    t.ok (olLayer instanceof OpenLayers.Layer.OSM,"toMapLayer returns OpenLayers.Layer.OSM object");
+
+	    var overlay = theme.layers[1];
+
+	    t.ok(overlay instanceof oscar.ox.Layer,"overlay is oscar.ox.Layer object");
+	    t.eq(overlay.layerType,"WMTS","LayerType is WMTS");
+	    t.eq(overlay.requestType,"REST","Layer requestType is REST");
+
+	    var olOverlay = overlay.toMapLayer();
+        t.ok(olOverlay instanceof OpenLayers.Layer.WMTS,"toMapLayer returns OpenLayers.Layer.WMTS object");
+
+        //Test selection and extraction service properties
+        
+        t.eq(theme.hasSelectionService(),true,"Theme has a selection service");
+        
+        t.eq(theme.getSelectionService().length,1,"theme.getSelectionService() returns array of service entries");
+        var serviceEntry = theme.getSelectionService()[0];
+        
+        t.ok(serviceEntry instanceof oscar.ox.ServiceEntry,"theme.getSelectionService()[0] returns oscar.ox.ServiceEntry object");
+        t.eq(serviceEntry.identifiers.length,1,"ServiceEntry has 1 identifier");
+        t.eq(serviceEntry.serviceType,"WFS","ServiceEntry type is WFS");
+        t.eq(serviceEntry.version,"1.1.0","ServiceEntry version is 1.1.0");
+        t.eq(serviceEntry.format,"application/json","ServiceEntry format is application/json");
+
+        t.eq(theme.hasExtractionService(),true,"Theme has an extraction service");
+	};
+
+	var fail = function(resp) {
+	    
+
+	};
+
+    OpenLayers.loadURL(url,null,this,success,fail);
+    t.wait_result(waitTime);
+}
+
+</script>
+<body>
+</body>
+</html>

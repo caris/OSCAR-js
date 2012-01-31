@@ -1,0 +1,21 @@
+<html>
+<head>
+<script src="../../Loader.js"></script>
+<script type="text/javascript">
+var url = "../files/themeConfiguration.json";
+var waitTime = 2;
+function test_ServicePanel_Constructor(t) {
+	var div = document.createElement("div");
+	div.name = "panelDiv";
+	div.id = "panelDiv";
+	var panel = new oscar.Gui.ServicePanel(div);
+	
+	t.ok(panel instanceof oscar.Gui.ServicePanel,"panel created");
+	t.ok(panel.serviceContents instanceof oscar.Gui.CollapsiblePanel,"serviceContents created");
+	t.ok(panel.serviceMetadata instanceof oscar.Gui.CollapsiblePanel,"serviceMetadata created");
+	
+}
+</script>
+<body>
+</body>
+</html>

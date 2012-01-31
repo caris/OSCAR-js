@@ -1,0 +1,59 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css"
+    href="../../theme/default/style.css">
+<script src="../../Loader.js"></script>
+<script type="text/javascript">
+var oxCfg;
+var configUrl = "../files/themeConfiguration.json";
+var waitTime = 2;
+var ctrl;
+var defaultSketchSymbolizers = {
+        "Point" : {
+	    pointRadius :4,
+	    graphicName :"square",
+	    fillColor :"white",
+	    fillOpacity :1,
+	    strokeWidth :1,
+	    strokeOpacity :1,
+	    strokeColor :"#333333"
+	},
+	"Line" : {
+	    strokeWidth :3,
+	    strokeOpacity :1,
+	    strokeColor :"#f00",
+	    strokeDashstyle :"solid"
+	},
+	"Polygon" : {
+	    strokeWidth :2,
+	    strokeOpacity :1,
+	    strokeColor :"#f00",
+	    fillColor :"white",
+	    fillOpacity :0.3
+	}
+}
+
+function test_Control_Measure(t) {
+	var checkSybolizers = function(symbolizer) {
+	    var sketchSymbolizer = defaultSketchSymbolizers[symbolizer];
+	    for(var prop in sketchSymbolizer) {
+	        t.eq(sketchSymbolizer[prop],ctrl.sketchSymbolizers[symbolizer][prop],symbolizer+"."+prop + " value is initialized [" + sketchSymbolizer[prop] + "]");
+	    }
+	}
+    ctrl = new oscar.Control.Measure();
+    t.ok(ctrl instanceof oscar.Control.Measure,"new oscar.Control.Measure returns Measure object.");
+    t.eq(ctrl.CLASS_NAME,"oscar.Control.Measure","CLASS_NAME is set correct");
+    checkSybolizers("Point");
+    checkSybolizers("Line");
+    checkSybolizers("Polygon");
+
+    t.eq(ctrl.defaultUnit,"metric","defaultUnit initialized to 'metric'");
+    t.eq(ctrl.currentUnit,null,"currentUnit initialized to null");
+    
+}
+
+
+</script>
+<body>
+</body>
+</html>

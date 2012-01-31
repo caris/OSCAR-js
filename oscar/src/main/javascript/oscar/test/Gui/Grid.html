@@ -1,0 +1,16 @@
+<html>
+<head>
+<script src="../../Loader.js"></script>
+<script type="text/javascript">
+var url = "../files/themeConfiguration.json";
+var waitTime = 2;
+function test_Gui_Grid(t) {
+	var grid = new oscar.Gui.Grid();
+	t.ok(grid instanceof oscar.Gui.Grid,"new oscar.Gui.Grid returns Grid object");
+	t.eq(grid.CLASS_NAME, "oscar.Gui.Grid","grid.CLASS_NAME is set correctly.");
+}
+</script>
+<body>
+
+</body>
+</html>

@@ -1,0 +1,39 @@
+<html>
+<head>
+<script src="../../Loader.js"></script>
+<script type="text/javascript">
+var url = "../files/themeConfiguration.json";
+var waitTime = 2;
+function test_Gui_Dialog(t) {
+	
+	var dialog = new oscar.Gui.Dialog("dialog name", null);
+    t.ok(dialog instanceof oscar.Gui.Dialog,"new oscar.Gui.Dialog returns Dialog object");
+	t.eq(dialog.CLASS_NAME,"oscar.Gui.Dialog","dialog.CLASS_NAME set correctly");
+	t.ok(dialog.dialog instanceof YAHOO.widget.SimpleDialog,"nested YAHOO dialog created");
+	t.eq(dialog.name,"dialog name","name set correctly");
+	
+	dialog.setHeader("new header");
+    t.eq(dialog.header,"new header", "header set correctly");
+	
+	content = "this is some new content";
+	dialog.setContent(content);
+	t.eq(dialog.body.innerHTML, content, "content was set correctly");
+	
+	dialog.createButton("button1", function() {
+		t.debug_print("button1 handler");
+	});
+	dialog.createButton("button2");
+	dialog.render();
+    t.ok(dialog.container,"container created successfully");
+    t.eq(dialog.container.className,"yui-skin-sam","container class set");
+    t.ok(dialog.container.id,"container id set");
+	t.eq(dialog.dialogButtons.length,2,"both buttons are in the dialog");
+	
+	dialog.hide();
+	t.eq(null,dialog.dialog,"dialog was destroyed");
+}
+</script>
+<body>
+
+</body>
+</html>

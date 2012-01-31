@@ -1,0 +1,41 @@
+<html>
+<head>
+<script src="../../Loader.js"></script>
+<script type="text/javascript">
+/**
+ * Unit Tests for oscar.Format.WMTSCapabilities
+ */
+
+/* Test Urls */
+var urls = {
+       "1.0.0":"../files/wmts_1_0_0.xml"
+}
+/* Time in seconds to wait */
+var waitTime=2;
+
+/* Test Functions */
+function test_WMTS_1_0_0(t) {
+ t.plan(8);
+  var success = function(resp) {
+      var reader = new oscar.Format.WMTSCapabilities();
+      var doc = resp.responseXML;
+      var cap = reader.read(doc);
+      t.ok(cap,"Capabilities object created");
+      t.ok(cap.contents,"Contents available");
+      t.ok(cap.contents.layers,"Layers Available");
+      t.eq(cap.contents.layers.length,10,"10 Layers available");
+      t.ok(cap.operationsMetadata,"Operations Metadata");
+      t.ok(cap.operationsMetadata.GetTile,"GetTile Operation");
+      t.ok(cap.operationsMetadata.GetFeatureInfo,"GetFeatureInfo Operation");
+      t.eq(cap.version,"1.0.0","Version is correct");
+  }
+  var fail = function(resp) {};
+  OpenLayers.loadURL(urls["1.0.0"], null, this, success, fail);
+  t.wait_result(waitTime);
+ 
+}
+
+</script>
+<body>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<html>
+<head>
+<script src="../../Loader.js"></script>
+<script type="text/javascript">
+/**
+ * Unit Tests for oscar.Format.WCSCapabilities
+ */
+
+/* Test Urls */
+var urls = {
+	   "1.1.1":"../files/wcs_desc_1_1_1.xml",
+}
+/* Time in seconds to wait */
+var waitTime=2;
+
+/* Test Functions */
+function test_DescCoverage_1_1_1(t) {
+t.plan(0);
+  var success = function(resp) {
+      var reader = new oscar.Format.WCSDescribeCoverage({"version":"1.1.1"});
+      var doc = resp.responseXML;
+      var cap = reader.read(doc);
+  }
+  var fail = function(resp) {};
+  OpenLayers.loadURL(urls["1.1.1"], null, this, success, fail);
+  t.wait_result(waitTime);
+ 
+}
+
+</script>
+<body>
+</body>
+</html>
