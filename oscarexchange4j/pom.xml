@@ -46,7 +46,8 @@
             </plugin>
             <plugin>
                 <groupId>com.google.code.maven-license-plugin</groupId>
-                <artifactId>maven-license-plugin</artifactId>				
+                <artifactId>maven-license-plugin</artifactId>
+                <version>1.4.0</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
