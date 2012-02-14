@@ -277,7 +277,7 @@
             <resource>
                 <directory>src/main/javascript/oscar 
                 </directory>
-                <targetPath>/oscar</targetPath>
+                <targetPath>oscar</targetPath>
             </resource>
         </resources>
     </build>
