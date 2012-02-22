@@ -236,6 +236,36 @@ oscar.Control.DataDiscovery = oscar.BaseClass(oscar.Control.DragPanel, {
 	 */
 	
 	getResults:function() {
+        var scope=this;
+        var columns = this.database.tables["sources"].columns;
+		var records = this.database.tables["sources"].records;
+		for(var r=0;r<records.length;r++) {
+            var record = records[r];
+            var $recDiv = $$("<div></div>");
+            $recDiv.html(record.title || record.id).addClass("result");
+            var $dataType = $$("<div></div>");
+            $dataType.addClass(record.dataType);
+            $recDiv.prepend($dataType);
+            for(var c=0;c<columns.length;c++) {
+                var column = columns[c];
+                $recDiv.data(column,record[column]);
+            }
+            $recDiv.click(function() {
+                var $this = $$(this);
+                scope.resultsPanel.children().each(function() {
+                    $$(this).removeClass("selected");
+                });
+                $this.addClass("selected");
+                scope.discoverPanel.accordion("activate",1);
+                scope.drawFeature($this);
+                
+            });
+            $recDiv.hide();
+            this.resultsPanel.append($recDiv);
+        }
+        this.displayResults();
+		return;
+		
 		 var scope = this;
 		 var filterFunction = function(table,query) {
 			 var viewPort = scope.map.getExtent();
@@ -277,28 +307,25 @@ oscar.Control.DataDiscovery = oscar.BaseClass(oscar.Control.DragPanel, {
 	 * result should be displayed.
 	 */
 	displayResults:function(e) {
-		var query = this.txt.val().trim();
-		for(var i in this.results) {
-			var result = this.results[i];
-			
-			var viewPort = this.map.getExtent();
-			
-			var isInRange = (viewPort.containsBounds(result.record.bbox) || 
-					viewPort.intersectsBounds(result.record.bbox)
+        var scope = this;
+        var query = this.txt.val().trim();
+        this.resultsPanel.children().each(function() {
+            var $this = $$(this);
+            var mapViewPort = scope.map.getExtent();
+            var isInRange = (mapViewPort.containsBounds($this.data("bbox")) ||
+                mapViewPort.intersectsBounds($this.data("bbox")));
+            
+            var textFound = (query.length == 0 || 
+					$this.data("id").toLowerCase().contains(query.toLowerCase()) || 
+					$this.data("title").toLowerCase().contains(query.toLowerCase())
 			);
-			var textFound = (query.length == 0 || 
-					result.record.id.toLowerCase().contains(query.toLowerCase()) || 
-					result.record.title.toLowerCase().contains(query.toLowerCase())
-			);
-			
-			if(isInRange && textFound) {
-				result.div.show();
-			} else {
-				result.div.hide();
-			}
-
-			this.resultsPanel.append(result.div);
-		}
+            
+            if(isInRange && textFound) {
+                $this.show();
+            } else {
+                $this.hide();
+            }
+        });
 	},	
 	/**
 	 * Method: drawFeature
@@ -306,12 +333,13 @@ oscar.Control.DataDiscovery = oscar.BaseClass(oscar.Control.DragPanel, {
 	 * the feature on the map while activating the Download Options panel.
 	 * 
 	 */
-	drawFeature:function(result) {
+	drawFeature:function($div) {
+        var bbox = $div.data("bbox");
 		if(this.layer && this.layer.features.length > 0) {
 			this.layer.removeAllFeatures();
 		}
-        var feat = new OpenLayers.Feature.Vector(result.record.bbox.toGeometry());
-        feat.record = result.record;
+        var feat = new OpenLayers.Feature.Vector(bbox.toGeometry());
+        feat.div = $div;
         this.layer.addFeatures(feat);
 	    this.layer.events.triggerEvent("loadend");
 	    
@@ -324,7 +352,6 @@ oscar.Control.DataDiscovery = oscar.BaseClass(oscar.Control.DragPanel, {
 	    },0);
 	    
 	    var viewPort = this.map.getExtent();
-	    var bbox = result.record.bbox;
 	    if(viewPort.containsBounds(bbox)) {
 	    	this.map.zoomToExtent(bbox);
 	    }
@@ -355,7 +382,9 @@ oscar.Control.DataDiscovery = oscar.BaseClass(oscar.Control.DragPanel, {
 	checkLayer:function() {
 		if(this.layer) return;
 		this.layer = new OpenLayers.Layer.Vector("Results");
+		this.layer.hidden = true;
 		var selectStyle = OpenLayers.Util.applyDefaults( this.styles.select, OpenLayers.Feature.Vector.style["select"]);
+		selectStyle.cursor = "";
 
 		var temporaryStyle = OpenLayers.Util.applyDefaults( this.styles.temporary, OpenLayers.Feature.Vector.style["temporary"]);
 		this.layer.styleMap = new OpenLayers.StyleMap( {

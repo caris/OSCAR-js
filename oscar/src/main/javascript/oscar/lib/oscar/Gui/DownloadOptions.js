@@ -96,11 +96,11 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 		var featureAbstract = document.createElement("p");
 		infoPanel.appendChild(featureTitle);
 		infoPanel.appendChild(featureAbstract);
-		featureTitle.innerHTML = this.feature.record.title || this.feature.record.id;
-		if(!this.feature.record["abstract"] || this.feature.record["abstract"].length == 0) {
+		featureTitle.innerHTML = this.feature.div.data("title") || this.feature.div.data("id");
+		if(!this.feature.div.data("abstract") || this.feature.div.data("abstract").length == 0) {
 			featureAbstract.innerHTML = "";
 		} else {
-			featureAbstract.innerHTML = this.feature.record["abstract"];
+			featureAbstract.innerHTML = this.feature.div.data("abstract");
 		}
 		this.buildDownloadOptions();
 
@@ -459,7 +459,7 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 		var params = {
 			service :"WCS",
 			request :"DescribeCoverage",
-			identifiers :this.feature.record.id,
+			identifiers :this.feature.div.data("id"),
 			version :this.capabilities.capabilities.version
 		}
 		var scope = this;
@@ -500,9 +500,9 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
         });
 
 		this.defaultOptions.operationUrl = GetCoverageOp.dcp.http.get;
-		this.defaultOptions.id = this.feature.record.id;
-		this.defaultOptions.bbox = this.feature.record.bbox;
-		this.defaultOptions.title = this.feature.record.title || this.feature.record.id;
+		this.defaultOptions.id = this.feature.div.data("id");
+		this.defaultOptions.bbox = this.feature.div.data("bbox");
+		this.defaultOptions.title = this.feature.div.data("title") || this.feature.div.data("id");
 		
 		
 		
@@ -529,7 +529,7 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
      * 
      */
     getCapabilities:function() {
-    	this.capabilities = this.db.search("capabilities",this.feature.record.fk_capabilities,function(table,query) {
+    	this.capabilities = this.db.search("capabilities",this.feature.div.data("fk_capabilities"),function(table,query) {
     	     return table.records[query];
     	});
     	this.serviceType = oscar.Util.Metadata.getServiceType(this.capabilities.capabilities);

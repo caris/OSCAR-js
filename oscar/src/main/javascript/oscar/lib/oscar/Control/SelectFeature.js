@@ -125,16 +125,7 @@ oscar.Control.SelectFeature = oscar.BaseClass(oscar.Control,{
 	    var layer = e.layer;
 	    if(layer.renderers) {
 	        layer.events.on({"loadend":this.layerLoaded,scope:this});
-	        
 	    }
-	    return;
-	    
-	    var f = function(context) {
-	        return function() {
-	            context.ctrl.activate();
-	        }
-	    }
-	    this.to = setTimeout(f(this),1000); 
 	},
 	/**
 	 * Method: layerLoaded
@@ -148,6 +139,7 @@ oscar.Control.SelectFeature = oscar.BaseClass(oscar.Control,{
 	    if(layer.features.length == 0) {
 	        this.map.removeLayer(layer)
 	    } else {
+	    	if(layer.hidden) return;
 	        var isNew = function(layer,existing) {
 	            for(var i=0;i<existing.length;i++) {
 	                if(layer.id == existing[i].id) {

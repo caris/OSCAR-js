@@ -326,13 +326,13 @@ OpenLayers.Util.applyDefaults(oscar.Lang.getDictionary("fr"), {
 	
 	"DataDiscoverySearchToolTip": "Recherche de donn\u00e9es dans la carte",
 	
-	"DataDiscoverySearchTitle" : "T\u00e9l\u00e9charger",
+	"DataDiscoverySearchTitle" : "D\u00e9tection des donn\u00e9es",
 	
 	"Search": "Chercher",
 	
-	"DownloadOptions" : "Options",
+	"DownloadOptions" : "Options de t\u00e9l\u00e9chargement",
 	
-	"DownloadQueue" : "File d'attente",
+	"DownloadQueue" : "File d'attente de t\u00e9l\u00e9chargement",
 	
 	"Crop" : "Rognage"
 });
