@@ -10,13 +10,7 @@
         <version>11.3-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-
-    <scm>
-        <connection>scm:svn:${project.scm.url}</connection>
-        <developerConnection>scm:svn:${project.scm.url}</developerConnection>
-        <url>${scm.base.url}/oscar/${branch}/oscarexchange4j</url>
-    </scm>
-
+    
     <dependencies>
         <dependency>
             <groupId>junit</groupId>

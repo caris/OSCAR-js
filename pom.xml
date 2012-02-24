@@ -14,7 +14,8 @@
     </description>
 
     <properties>
-        <branch>trunk</branch>
+        <branch>11.3</branch>
+        <project.scm.url>https://github.com/caris/OSCAR-js.git</project.scm.url>
     </properties>
 
     <parent>
@@ -29,14 +30,14 @@
     </issueManagement>
 
     <ciManagement>
-        <system>CruiseControl</system>
+        <system>Jenkins</system>
         <url>${ci.base.url}/oscar_framework_${branch}</url>
     </ciManagement>
 
     <scm>
-        <connection>scm:svn:${project.scm.url}</connection>
-        <developerConnection>scm:svn:${project.scm.url}</developerConnection>
-        <url>${scm.base.url}/oscar/${branch}</url>
+        <connection>scm:git:${project.scm.url}</connection>
+        <developerConnection>scm:git:${project.scm.url}</developerConnection>
+        <url>${project.scm.url}</url>
     </scm>
 
 	<repositories>                
