@@ -559,6 +559,81 @@ oscar.confirm = function(props,content,callbacks) {
 	$dlg.append($buttonPanel);
 }
 
+/**
+ * Method: parseText
+ * This method will take a String argument and look for URLs, email links and images and return anchor or image tags.
+ * 
+ * Usage: oscar.Util.parseText(String)
+ */
+
+oscar.Util.parseText = function(input) {
+	/** 
+	 * internal functions for parsing images, email links and urls.
+	 */
+	var fns={
+	    makeTag:function(tag) {
+	        return document.createElement(tag);
+	    },
+	    _isurl:function(text) {
+	        var isUrl = false;
+	        if(text.indexOf("http://") >-1 ) {
+	            isUrl = true;
+	        }
+	        else if( text.indexOf("https://") > -1) {
+	            isUrl = true;
+	        }
+	        return isUrl;
+	    },
+	    url:function(input) {
+	        if(input.indexOf("http://") ==0 ||
+	            input.indexOf("https://") ==0) {
+	            var elem = this.makeTag("span");
+	            var anchor = this.makeTag("a");
+	            elem.appendChild(anchor);
+	            anchor.href = input;
+	            anchor.innerHTML = input;
+	            anchor.target = "_new";
+	            input = elem.innerHTML;
+	        }
+	        return input;
+	    },
+	    
+	    email: function(input) {
+	        if(input.indexOf("@") > -1) {
+	            var elem = this.makeTag("span");
+	            var anchor = this.makeTag("a");
+	            elem.appendChild(anchor);
+	            anchor.href="mailto:" + input;
+	            anchor.innerHTML = input;
+	            input = elem.innerHTML;
+	        }
+	        return input;
+	    },
+	    image:function (input) {
+	        if(input.indexOf(".png") > -1 ||
+	            input.indexOf(".gif") > -1 ||
+	            input.indexOf(".jpg") > -1 ||
+	            input.indexOf(".jpeg") > -1) {
+	            var elem = this.makeTag("span");
+	            var image = this.makeTag("img");
+	            elem.appendChild(image);
+	            image.src = input;
+	            input = elem.innerHTML;
+	        }
+	        return input;
+	    }
+	        
+	};
+	var arr = input.split(" ");
+    for(var i=0;i<arr.length;i++) {
+        var index = arr[i];
+        arr[i] = fns.email(arr[i]);
+        arr[i] = fns.image(arr[i]);
+        arr[i] = fns.url(arr[i]);
+    }    
+    return arr.join(" ");
+}
+
 
 /**
  * Override the default OL pink color for broken images
