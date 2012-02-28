@@ -574,16 +574,6 @@ oscar.Util.parseText = function(input) {
 	    makeTag:function(tag) {
 	        return document.createElement(tag);
 	    },
-	    _isurl:function(text) {
-	        var isUrl = false;
-	        if(text.indexOf("http://") >-1 ) {
-	            isUrl = true;
-	        }
-	        else if( text.indexOf("https://") > -1) {
-	            isUrl = true;
-	        }
-	        return isUrl;
-	    },
 	    url:function(input) {
 	        if(input.indexOf("http://") ==0 ||
 	            input.indexOf("https://") ==0) {
