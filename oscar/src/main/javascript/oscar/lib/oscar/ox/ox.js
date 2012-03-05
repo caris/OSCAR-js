@@ -435,7 +435,7 @@ oscar.ox.Layer = oscar.BaseClass( {
 					    var header = document.createElement("div");
 					    header.innerHTML = feature.attributes['title'];
 					    var p = document.createElement("p");
-					    p.innerHTML = feature.attributes['description'];
+					    p.innerHTML = oscar.Util.parseText(feature.attributes['description']);
 					    pHolder.appendChild(header);
 					    pHolder.appendChild(p);
 						html = p.innerHTML;
@@ -476,11 +476,11 @@ oscar.ox.Layer = oscar.BaseClass( {
 					    var header = document.createElement("div");
 					    header.innerHTML = feature.attributes['name'];
 					    var p = document.createElement("p");
-					    p.innerHTML = feature.attributes['description'];
+					    p.innerHTML = oscar.Util.parseText(feature.attributes['description']);
 					    pHolder.appendChild(header);
 					    pHolder.appendChild(p);
 					    
-						html = feature.attributes['description'];
+						html = oscar.Util.parseText(feature.attributes['description']);
 						var popup = new oscar.FramedCloud("id", feature.geometry
 		                    .getBounds().getCenterLonLat(), null, pHolder.innerHTML, null,
 		                    true);
