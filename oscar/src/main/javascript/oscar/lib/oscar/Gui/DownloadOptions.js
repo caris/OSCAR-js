@@ -203,15 +203,14 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 			}
 		}
 
-		
-		var id = oscar.Util.Metadata.getFeatureTypesById(this.capabilities.capabilities,this.feature.record.id);
+		var id = oscar.Util.Metadata.getFeatureTypesById(this.capabilities.capabilities,this.feature.div.data("id"));
 
 		this.makeFormatList(div,outputFormats);
 		this.makeCRSList(div,id.srss);
 		this.defaultOptions.operationUrl = GetFeatureOp.dcp.http.get;
-		this.defaultOptions.id = this.feature.record.id;
-		this.defaultOptions.bbox = this.feature.record.bbox;
-		this.defaultOptions.title = this.feature.record.title || this.feature.record.id;
+		this.defaultOptions.id = this.feature.div.data("id");
+		this.defaultOptions.bbox = this.feature.div.data("bbox");
+		this.defaultOptions.title = this.feature.div.data("title") || this.feature.div.data("id");
 		
 	},
 	
