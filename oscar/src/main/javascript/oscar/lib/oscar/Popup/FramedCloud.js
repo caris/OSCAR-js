@@ -1,7 +1,7 @@
 /*
  * CARIS oscar - Open Spatial Component ARchitecture
  *
- * Copyright 2011 CARIS <http://www.caris.com>
+ * Copyright 2012 CARIS <http://www.caris.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -142,7 +142,7 @@ oscar.FramedCloud = oscar.BaseClass(OpenLayers.Popup.FramedCloud, {
 	 * lonlat - {OpenLayers.LonLat} a longitude and latitude pair. The position on the map the popup will be shown.
 	 * contentSize - {OpenLayers.Size} a width/height pair size of the content.
 	 * contentHTML - {String} the HTML content to be displayed inside the popup.
-	 * anchor - {Object} object to which we’ll anchor the popup.
+	 * anchor - {Object} object to which weï¿½ll anchor the popup.
 	 * closeBox - {Boolean} whether to display a close box inside the popup. 
 	 * closeBoxCallback - {Function} Function to be called on closeBox click.
 	 */
