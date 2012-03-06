@@ -243,29 +243,8 @@
                 </configuration>                        
             </plugin>	
 			<plugin>
-                <groupId>com.google.code.maven-license-plugin</groupId>
-                <artifactId>maven-license-plugin</artifactId>               
-                <version>1.4.0</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
-					    <phase>compile</phase>
-                    </execution>
-                </executions>
-                <configuration>
-                    <header>src/etc/license.txt</header>
-                    <quiet>false</quiet>
-                    <failIfMissing>true</failIfMissing>
-                    <includes>
-                       <include>src/main/javascript/oscar/**/*.js</include>
-                    </includes>
-					<properties>
-                        <year>2012</year>
-                    </properties>
-                    <encoding>UTF-8</encoding>
-                </configuration>
+                <groupId>com.mycila.maven-license-plugin</groupId>
+                <artifactId>maven-license-plugin</artifactId>
             </plugin>
         </plugins>
         <resources>
