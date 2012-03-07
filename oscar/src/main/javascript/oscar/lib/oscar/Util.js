@@ -19,8 +19,13 @@
  * Class: oscar.debug
  */
 oscar.debug = {
-    canOutput:function() {
-    	return (window.console)?true:false;
+	canOutput:function() {
+    	var canOutput = false;
+    	try {
+    		canOutput = (window.console)?true:false; 
+    	} catch (err){}
+    	
+    	return canOutput 
     },
     error : function(obj) {
     	if(this.canOutput()) {
