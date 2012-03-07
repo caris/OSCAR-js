@@ -289,7 +289,17 @@ oscar.Control.ThemeManager = oscar.BaseClass(OpenLayers.Control, {
 	 * Parameters: 
 	 * theme - {<oscar.ox.Theme>}
 	 */
-	drawTheme : function(theme) {		
+	drawTheme : function(theme) {
+
+		//Look for an overview map and destroy it.
+		try {
+            var overviewControl = this.map.getControlsByClass("oscar.Control.OverviewMap")[0] ||
+            	this.map.getControlsByClass("OpenLayers.Control.OverviewMap")[0];
+            if(overviewControl) {
+            	overviewControl.destroy();
+            }
+        } catch (err){}
+        
 		// Lets get the current view port so we can show the new theme in the
 		// same location.
 		var viewPort = {
