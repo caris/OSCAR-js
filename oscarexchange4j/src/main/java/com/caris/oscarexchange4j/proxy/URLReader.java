@@ -137,7 +137,9 @@ public class URLReader implements Reader {
                 log.error("Error attempting to read from the resource.",e);
             } finally {
                 try {
+                	if(in != null) {
                     in.close();
+                	}
                 } catch (IOException e) {
                     log.error("Error attempting to close the connection.",e);
                 }    
