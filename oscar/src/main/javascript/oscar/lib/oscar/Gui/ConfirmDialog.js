@@ -58,10 +58,6 @@ oscar.Gui.ConfirmDialog = oscar.BaseClass(oscar.Gui.Dialog, {
 		this.setHeader(header);
 		this.setContent(content);
 		this.show();
-		if(console) {
-			console.warn("oscar.Gui.AlertDialog has been scheduled to be removed. Please see oscar.confirm for a replacement.")
-		}
-
 	},
 	
 	/**

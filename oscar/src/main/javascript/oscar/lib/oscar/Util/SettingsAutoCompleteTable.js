@@ -314,10 +314,6 @@ oscar.Util.SettingsAutoCompleteTable = oscar.BaseClass({
             oDS: settingsDataSource,
             oDT: settingsDataTable
         };
-        
-		if(console) {
-			console.warn("oscar.Util.SettingsAutoCompleteTable has been scheduled to be removed.")
-		}
     },
     
     /*

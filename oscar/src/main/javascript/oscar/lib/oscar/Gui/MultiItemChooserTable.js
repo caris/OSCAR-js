@@ -200,10 +200,6 @@ oscar.Gui.MultiItemChooserTable = oscar.BaseClass({
 		if (this.checkAllDisplay) this.buildCheckAll();
 		this.buildPaginator();
 		this.buildTableChooser();
-
-		if(console) {
-			console.warn("oscar.Gui.MultiItemChooserTable has been scheduled to be removed.")
-		}		
 		
 	},
 	

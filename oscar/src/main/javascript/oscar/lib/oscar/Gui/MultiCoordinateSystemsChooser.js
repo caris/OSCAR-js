@@ -80,9 +80,6 @@ oscar.Gui.MultiCoordinateSystemsChooser = oscar.BaseClass(oscar.Gui.MultiItemCho
 			]);
 		// load the selected SRSs
 		this.getItems("");
-		if(console) {
-			console.warn("oscar.Gui.MultiCoordinateSystemChooser has been scheduled to be removed.")
-		}
 	},
  
 	 /**

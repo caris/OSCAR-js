@@ -55,10 +55,6 @@ oscar.Util.StatusChecker = oscar.BaseClass( {
         this.badImgUrl = badImgUrl;
         this.goodStatus = goodStatus;
         this.badStatus = badStatus;
-        
-		if(console) {
-			console.warn("oscar.Util.StatusChecker has been scheduled to be removed.")
-		}
     },
 
     /**

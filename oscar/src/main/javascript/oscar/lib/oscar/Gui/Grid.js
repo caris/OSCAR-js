@@ -121,10 +121,6 @@ oscar.Gui.Grid = oscar
 					document.body.appendChild(t);
 				}
 				this.buildTabLayout();
-
-				if(console) {
-					console.warn("oscar.Gui.Grid has been scheduled to be replaced.")
-				}				
 				
 			},
 			/**

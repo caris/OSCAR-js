@@ -62,9 +62,6 @@ oscar.Gui.Dialog = oscar.BaseClass(oscar.Gui, {
 		}
 		this.dialog = new YAHOO.widget.SimpleDialog(this.name,
 				this.dialogProperties);
-		if(console) {
-			console.warn("oscar.Gui.Dialog has been scheduled to be removed.")
-		}
 
 	},
 	/**

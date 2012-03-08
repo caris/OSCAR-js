@@ -43,9 +43,6 @@ initialize : function(div, dragableIn) {
 		new YAHOO.util.DDTarget(this.selectDiv, this.selectDiv.id);
 	}
 	
-	if(console) {
-		console.warn("oscar.Util.DivSelect has been scheduled to be removed.")
-	}
 },
 
 /*

@@ -85,9 +85,6 @@ oscar.Util.CoordinateSystemAutoComplete=oscar.BaseClass({
                     ctx.changeSrs(srs);
               });
          
- 		if(console) {
-			console.warn("oscar.Util.CoordinateSystemAutoComplete has been scheduled to be removed.")
-		}
      },
   /**
    * Constant: CLASS_NAME

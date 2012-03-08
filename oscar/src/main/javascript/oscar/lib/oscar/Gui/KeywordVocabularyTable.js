@@ -75,10 +75,6 @@ oscar.Gui.KeywordVocabularyTable = oscar.BaseClass({
 		this.tableContent = {keywords:{}, vocabularies:{}};
 		YAHOO.widget.DataTable.Formatter.customBtnFormatter = this.customBtnFormatter;
 		this.buildKeywordVocabularyTable(this.preSavedKeywords, this.preSavedVocabularies);
-		if(console) {
-			console.warn("oscar.Gui.KeywordVocabularyTable has been scheduled to be removed.")
-		}
-
 	},
 	
 	/**

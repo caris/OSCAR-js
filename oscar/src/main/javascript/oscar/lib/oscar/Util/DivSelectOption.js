@@ -42,10 +42,6 @@ oscar.Util.DivSelectOption = oscar.BaseClass( {
         this.inputTagName = optionInputTagName;
         this.listName = optionListName;
         this.showListName = optionShowListName;
-        
-		if(console) {
-			console.warn("oscar.Util.DivOption has been scheduled to be removed.")
-		}
     },
 
     /**

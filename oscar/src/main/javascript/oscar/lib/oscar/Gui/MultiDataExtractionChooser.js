@@ -94,10 +94,6 @@ oscar.Gui.MultiDataExtractionChooser = oscar.BaseClass( {
 			return null;
 		}
 		
-		if(console) {
-			console.warn("oscar.Gui.MultiDataExtractionChooser has been scheduled to be removed.")
-		}
-		
 	},
 	
 	/**

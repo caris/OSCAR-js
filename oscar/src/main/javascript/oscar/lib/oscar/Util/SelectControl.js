@@ -36,9 +36,6 @@ oscar.Util.SelectControl = oscar.BaseClass( {
         this.available = availableOptions;
         this.selected = selectedOptions;
 
-        if(console) {
-			console.warn("oscar.Util.SelectControl has been scheduled to be removed.")
-		}
     },
 
     /**
