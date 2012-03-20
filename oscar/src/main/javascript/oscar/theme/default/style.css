@@ -1411,7 +1411,7 @@ td#oscarLayoutFooterContainer {
 
 .result .wfs {
 	background-image: url("img/toolbarSprites.png");
-	background-position: -425px -49px;
+	background-position: -457px -49px;
 	background-repeat: no-repeat;
 	width: 32px;
 	height: 15px;
@@ -1427,7 +1427,7 @@ td#oscarLayoutFooterContainer {
 
 .result .wcs {
 	background-image: url("img/toolbarSprites.png");
-	background-position: -457px -49px;
+	background-position: -457px -65px;
 	background-repeat: no-repeat;
 	width: 32px;
 	height: 15px;
@@ -1478,7 +1478,7 @@ td#oscarLayoutFooterContainer {
 	width: 31px;
 	height: 31px;
 	background-image: url("img/toolbarSprites.png");
-	background-position: -299px -64px;
+	background-position: -273px -64px;
 	background-repeat: no-repeat;
 	cursor: pointer;
 	display: inline-block;
@@ -1510,7 +1510,7 @@ td#oscarLayoutFooterContainer {
 }
 
 .oscarGuiDownloadWFS .dContainer,.oscarGuiDownloadWCS .dContainer {
-	width: 60px;
+	width: 67px;
 	height: 16px;
 	position: absolute;
 	right: 0;
@@ -1564,10 +1564,10 @@ td#oscarLayoutFooterContainer {
 
 .dMetadata {
 	background-image: url("img/toolbarSprites.png");
-	background-position: -457px -32px;
+	background-position: -393px -49px;
 	background-repeat: no-repeat;
-	width: 41px;
-	height: 16px;
+	width: 32px;
+	height: 14px;
 	cursor: pointer;
 	margin-left: 3px;
 	position: absolute;
@@ -1577,10 +1577,10 @@ td#oscarLayoutFooterContainer {
 
 .ui-icon-disk-save {
 	background-image: url("img/toolbarSprites.png") !important;
-	background-position: -282px -49px !important;
+	background-position: -361px -49px !important;
 	background-repeat: no-repeat !important;
-	width: 15px;
-	height: 15px;
+	width: 32px;
+	height: 14px;
 	display: block;
 	cursor: pointer;
 	position: absolute;
@@ -1589,14 +1589,15 @@ td#oscarLayoutFooterContainer {
 
 .dCoverage {
 	background-image: url("img/toolbarSprites.png");
-	background-position: -425px -32px;
+	background-position: -425px -49px;
 	background-repeat: no-repeat;
-	width: 16px;
-	height: 16px;
+	width: 32px;
+	height: 14px;
 	cursor: pointer;
 	position: absolute;
 	top: 0;
 	left: 0;
+	margin-right:2px;
 }
 
 .ui-dialog {
