@@ -262,7 +262,7 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 				return false;
 				
 			}
-		}).css("width","210px");
+		}).css("width","190px");
 		
 		oscar.jQuery(input).addClass("foramtListWidth");
 		
@@ -340,7 +340,7 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 
 		};
 		
-		$$(input).css("width","210px");
+		$$(input).css("width","190px");
 		
 		var button = document.createElement("button");
 		button.innerHTML = oscar.i18n("srsCodeColumnLabel");

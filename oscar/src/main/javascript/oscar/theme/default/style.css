@@ -1501,12 +1501,14 @@ td#oscarLayoutFooterContainer {
 .queuePanel {
 	height: 255px !important;
 	overflow-y: auto;
-	padding: 4 0 0 0 !important;
+	padding: 0 0 0 0 !important;
 }
 
 .oscarGuiDownloadWFS,.oscarGuiDownloadWCS {
 	background-color: #1f5594;
 	z-index: 9999;
+	width:100%;
+	
 }
 
 .oscarGuiDownloadWFS .dContainer,.oscarGuiDownloadWCS .dContainer {
@@ -1524,6 +1526,7 @@ td#oscarLayoutFooterContainer {
 	font-weight: normal;
 	height: 18px;
 	position: relative;
+	width:100%;
 }
 
 .downloadCancelled {
