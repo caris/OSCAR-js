@@ -162,7 +162,9 @@ oscar.Handler.WFS = oscar.BaseClass(oscar.Handler, {
 		}
 		var formatOptions = {extractAttributes:true};
 		formatOptions.srsName = oscar.Util.EpsgConversion.epsgToUrn(theme.srs);
-		formatOptions.xy = (this.map.projection.proj.projName=="longlat")? false :true;
+        if(serviceEntry.version != "1.0.0") {
+            formatOptions.xy = (this.map.projection.proj.projName=="longlat")? false :true;
+        }
         formatOptions.autoConfig = true;
         formatOptions.singleFeatureType = false
 		var protocol = new OpenLayers.Protocol.WFS({

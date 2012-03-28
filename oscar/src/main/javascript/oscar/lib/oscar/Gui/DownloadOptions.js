@@ -194,14 +194,9 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 	getOptions_WFS:function(div) {
 		this.defaultOptions.service="WFS";
 		var GetFeatureOp = oscar.Util.Metadata.getOperation(this.capabilities.capabilities,"GetFeature");
-		var outputFormats = null;
-		for(var p in GetFeatureOp.parameters) {
-			var parameter = GetFeatureOp.parameters[p];
-			if(parameter.name.toLowerCase() == "outputformat") {
-				outputFormats = parameter.values;
-				break;
-			}
-		}
+		
+		outputFormats = oscar.Util.Metadata.getParameters(
+				this.capabilities.capabilities, "GetFeature", ["outputFormat","formats"])
 
 		var id = oscar.Util.Metadata.getFeatureTypesById(this.capabilities.capabilities,this.feature.div.data("id"));
 
@@ -486,9 +481,7 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 			}
 
 		};
-		/**
-		 * Archie only at the moment
-		 */
+
 		var request = new OpenLayers.Request.GET( {
 			url :url,
             params:params,
@@ -569,7 +562,9 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 						version:version,
 						featureType:typeNames
 				};
-				options.xy = (projection.proj.projName=="longlat")? false :true;
+				if(version != "1.0.0") {
+					options.xy = (projection.proj.projName=="longlat")? false :true;
+				}
 				if(crs) {
 					options.srsName = crs;
 				}

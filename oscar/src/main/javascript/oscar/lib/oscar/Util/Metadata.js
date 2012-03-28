@@ -21,10 +21,10 @@
  * Methods to extract items from a capabilities document.
  */
 oscar.Util.Metadata = {
-	WFS :"WFS",
-	WMS :"WMS",
-	WMTS :"WMTS",
-	WCS :"WCS",
+	WFS : "WFS",
+	WMS : "WMS",
+	WMTS : "WMTS",
+	WCS : "WCS",
 	/**
 	 * APIMethod: getServiveTitle
 	 * 
@@ -36,13 +36,14 @@ oscar.Util.Metadata = {
 	 */
 	getServiceTitle : function(capabilities) {
 		var service = this.getService(capabilities);
-		var title = service.title || service.Title || service.serviceType || oscar.i18n("NotAvailable");
+		var title = service.title || service.Title || service.serviceType
+				|| oscar.i18n("NotAvailable");
 		if (title.length == 0) {
 			title = oscar.i18n("NotAvailable");
 		}
-		if(typeof title == 'object') {
+		if (typeof title == 'object') {
 			var defaultTitle = title[OpenLayers.Lang.getCode()] || title['en'];
-			title = defaultTitle; 
+			title = defaultTitle;
 		}
 		return title;
 	},
@@ -58,9 +59,11 @@ oscar.Util.Metadata = {
 	getServiceAbstract : function(capabilities) {
 		var serviceAbstract = null;
 		if (capabilities.serviceIdentification) {
-			serviceAbstract = capabilities.serviceIdentification['abstract'] || oscar.i18n("NotAvailable");
+			serviceAbstract = capabilities.serviceIdentification['abstract']
+					|| oscar.i18n("NotAvailable");
 		} else {
-			serviceAbstract = capabilities.service['abstract'] || oscar.i18n("NotAvailable");
+			serviceAbstract = capabilities.service['abstract']
+					|| oscar.i18n("NotAvailable");
 		}
 		return serviceAbstract;
 	},
@@ -76,7 +79,8 @@ oscar.Util.Metadata = {
 	getServiceKeywords : function(capabilities) {
 		var serviceKeywords = null;
 		if (capabilities.serviceIdentification) {
-			serviceKeywords = capabilities.serviceIdentification.keywords || oscar.i18n("NotAvailable");
+			serviceKeywords = capabilities.serviceIdentification.keywords
+					|| oscar.i18n("NotAvailable");
 		}
 		return serviceKeywords;
 
@@ -99,9 +103,10 @@ oscar.Util.Metadata = {
 			return "WFS";
 		} else if (serviceType.contains("WMTS")) {
 			return "WMTS";
-		} else if (serviceType.contains("WCS")){
+		} else if (serviceType.contains("WCS")) {
 			return "WCS";
-		} else return serviceType;
+		} else
+			return serviceType;
 
 	},
 	/**
@@ -150,20 +155,19 @@ oscar.Util.Metadata = {
 	 * 
 	 * Parameter:
 	 * 
-	 * capabilities
-	 * id
-	 */	
-	getFeatureTypesById : function(capabilities,id) {
-		for(var f in capabilities.featureTypeList.featureTypes) {
+	 * capabilities id
+	 */
+	getFeatureTypesById : function(capabilities, id) {
+		for ( var f in capabilities.featureTypeList.featureTypes) {
 			var feature = capabilities.featureTypeList.featureTypes[f];
-			if(feature.name == id) {
+			if (feature.name == id) {
 				return feature;
 			}
 		}
 		return null;
 
 	},
-	
+
 	/**
 	 * APIMethod: getCoverages
 	 * 
@@ -182,25 +186,42 @@ oscar.Util.Metadata = {
 	/**
 	 * APIMethod: getParameters
 	 * 
-	 * Parameters: 
-	 * capabilities - Capabilities object. 
-	 * operationString - Name of the operation string, i.e. "GetFeature".
-	 * parameterName - Name of the parameter, i.e. "outputFormat".
+	 * Parameters: capabilities - Capabilities object. operationString - Name of
+	 * the operation string, i.e. "GetFeature". parameterName - Name of the
+	 * parameter, i.e. "outputFormat".
 	 */
 	getParameters : function(capabilities, operationString, parameterName) {
 		var operation = null;
 		if (capabilities.operationsMetadata) {
 			operation = capabilities.operationsMetadata[operationString];
+		} else if (capabilities.capability.request) {
+			operation = capabilities.capability.request[operationString]
+					|| capabilities.capability.request[operationString
+							.toLowerCase()];
 		}
-		if (operation.parameters) {
+		if (operation.parameters) { // ows 1.1.0 or greater
 			for ( var i = 0; i < operation.parameters.length; i++) {
+				var op = operation.parameters[i];
+				for ( var j = 0; j < parameterName.length; j++) {
+					if (op.name.toLowerCase() == parameterName[j].toLowerCase()) {
+						return op.values;
+					}
+				}
 				if (operation.parameters[i].name == parameterName) {
 					return operation.parameters[i].values;
 				}
-
 			}
-
+		} else { // ows 1.0.0 support
+			for ( var p in operation) {
+				for ( var i = 0; i < parameterName.length; i++) {
+					if (p.toLowerCase() == parameterName[i].toLowerCase()) {
+						return operation[p];
+					}
+				}
+			}
 		}
+
+		return [];
 	},
 
 	/**
@@ -236,7 +257,7 @@ oscar.Util.Metadata = {
 	 */
 	getThemes : function(capabilities) {
 		return capabilities.themes;
-	},	
+	},
 
 	/**
 	 * APIMethod: getOperation
@@ -247,7 +268,8 @@ oscar.Util.Metadata = {
 	 * 
 	 * capabilities - {object} Capabilities Object
 	 * 
-	 * operation - {String} Name of the Operation (GetFeature, GetMap, GetTile, etc.)
+	 * operation - {String} Name of the Operation (GetFeature, GetMap, GetTile,
+	 * etc.)
 	 */
 	getOperation : function(capabilities, operation) {
 		if (capabilities.operationsMetadata) {
@@ -260,6 +282,7 @@ oscar.Util.Metadata = {
 	},
 	/**
 	 * Method: getServiceHref
+	 * 
 	 * @deprecated - Use getOperationHref
 	 */
 
@@ -277,7 +300,8 @@ oscar.Util.Metadata = {
 	 * 
 	 * capabilities - {Object}
 	 * 
-	 * operation - {String} Name of the Operation (GetFeature, GetMap, GetTile, etc.)
+	 * operation - {String} Name of the Operation (GetFeature, GetMap, GetTile,
+	 * etc.)
 	 * 
 	 */
 	getOperationHref : function(capabilities, operation) {
@@ -334,5 +358,5 @@ oscar.Util.Metadata = {
 	/**
 	 * Constant CLASS_NAME
 	 */
-	CLASS_NAME :"oscar.Util.Metadata"
+	CLASS_NAME : "oscar.Util.Metadata"
 };

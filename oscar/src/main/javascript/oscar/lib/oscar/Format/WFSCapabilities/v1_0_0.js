@@ -36,10 +36,21 @@ oscar.Format.WFSCapabilities.v1_0_0 = oscar.BaseClass(
 				OpenLayers.Format.WFSCapabilities.v1_0_0.prototype.initialize
 						.apply(this, [ options ]);
 			},
-			
+			read_cap_LatLongBoundingBox : function(featureType, node) {
+				var maxX = this.getAttributeNS(node, "", "maxx");
+				var maxY = this.getAttributeNS(node, "", "maxy");
+				var minX = this.getAttributeNS(node, "", "minx");
+				var minY = this.getAttributeNS(node, "", "miny");
+				featureType.wgs84BoundingBox = {
+					north : maxY,
+					south : minY,
+					east : maxX,
+					west : minX
+				};
+			},
+
 			/**
-			 * Constant: CLASS_NAME
-			 * - oscar.Format.WFSCapabilities.v1_0_0
+			 * Constant: CLASS_NAME - oscar.Format.WFSCapabilities.v1_0_0
 			 */
-			CLASS_NAME :"oscar.Format.WFSCapabilities.v1_0_0"
+			CLASS_NAME : "oscar.Format.WFSCapabilities.v1_0_0"
 		});
