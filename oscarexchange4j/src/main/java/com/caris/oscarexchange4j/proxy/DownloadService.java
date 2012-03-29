@@ -27,24 +27,43 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * 
+ * Proxy service to obtain files from a server.
  * @author tcoburn
  * 
  */
 public class DownloadService implements Reader {
 
+    /**
+     * Url to be used when making the request.
+     */
     private String url;
 
+    /**
+     * Map used to store response headers.
+     */
     private Map<String, List<String>> responseHeaders;
 
+    /**
+     * Sets the url used for the request.
+     * @param url
+     */
     public void setUrl(String url) {
         this.url = url;
     }
 
+    /**
+     * Returns the url used for the request.
+     * @return
+     */
     public String getUrl() {
         return this.url;
     }
 
+    /**
+     * Makes a connection to the url, reads the stream into a byte array and returns it
+     * @return byte[] byte array containing the content of the response.
+     * @throws Exception
+     */
     public byte[] run() throws Exception {
         URL url = new URL(this.url);
         HttpURLConnection uc = (HttpURLConnection) url.openConnection();
@@ -65,6 +84,9 @@ public class DownloadService implements Reader {
         return buffer.toByteArray();
     }
 
+    /* (non-Javadoc)
+     * @see com.caris.oscarexchange4j.proxy.Reader#makeRequest(javax.servlet.http.HttpServletRequest)
+     */
     @Override
     public Response makeRequest(HttpServletRequest httpServletRequest) {
         return null;
