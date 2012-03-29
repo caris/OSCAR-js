@@ -572,7 +572,7 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 				var sFilter = new OpenLayers.Filter.Spatial( {
 			        type :OpenLayers.Filter.Spatial.BBOX,
 			        value:bbox,
-			        projection:oscar.Util.EpsgConversion.epsgToUrn(projection.projCode)
+			        projection:projection.projCode
 			    });
 				var data = OpenLayers.Format.XML.prototype.write.apply(
 			            format, [format.writeNode("wfs:GetFeature",{filter:sFilter})]
