@@ -25,7 +25,7 @@ import org.junit.Test;
 public class TestDownloadService {
     @Test
     public void testDownloadService() throws Exception {
-        String testString = new String("some random works that are not so random.");
+        String testString = new String("some random words that are not so random.");
         byte[] byteResponse = testString.getBytes();
         
         DownloadService ds = EasyMock.createMock(DownloadService.class);
