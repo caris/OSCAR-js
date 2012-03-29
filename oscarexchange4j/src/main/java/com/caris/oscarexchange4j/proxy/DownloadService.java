@@ -17,48 +17,64 @@
  */
 package com.caris.oscarexchange4j.proxy;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+
 /**
  * 
  * @author tcoburn
- *
+ * 
  */
 public class DownloadService implements Reader {
-	
-	private String url;
 
-	public void setUrl(String url) {
-		this.url = url;
-	}
-	
-	public String getUrl() {
-		return this.url;
-	}
-	
-	public String run() throws Exception {
-		URL url = new URL(this.url);
+    private String url;
 
-		HttpURLConnection uc = (HttpURLConnection)url.openConnection();
-		uc.connect();
-		
-		        
-		String line;
-		StringBuffer page= new StringBuffer();
+    private Map<String, List<String>> responseHeaders;
 
-		BufferedReader in = new BufferedReader(new InputStreamReader(uc.getInputStream()));
-		while ((line = in.readLine()) != null){
-		   page.append(line + "\n");
-		}
-		return page.toString();
-	}
+    public void setUrl(String url) {
+        this.url = url;
+    }
 
-	@Override
-	public Response makeRequest(HttpServletRequest httpServletRequest) {
-		return null;
-	}
+    public String getUrl() {
+        return this.url;
+    }
+
+    public byte[] run() throws Exception {
+        URL url = new URL(this.url);
+        HttpURLConnection uc = (HttpURLConnection) url.openConnection();
+        uc.connect();
+        this.responseHeaders=uc.getHeaderFields();
+        BufferedInputStream in = new BufferedInputStream(uc.getInputStream());
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+
+        int nRead;
+        byte[] data = new byte[16384];
+
+        while ((nRead = in.read(data, 0, data.length)) != -1) {
+            buffer.write(data, 0, nRead);
+        }
+
+        buffer.flush();
+        uc.disconnect();
+        return buffer.toByteArray();
+    }
+
+    @Override
+    public Response makeRequest(HttpServletRequest httpServletRequest) {
+        return null;
+    }
+
+    /**
+     * Returns a Map<String, List<String> object containing the headers of the response.
+     * @return Returns a Map<String, List<String> object containing the headers of the response.
+     */
+    public Map<String, List<String>> getResponseHeaders() {
+        return responseHeaders;
+    }
 }
