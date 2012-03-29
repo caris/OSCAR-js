@@ -334,6 +334,8 @@ OpenLayers.Util.applyDefaults(oscar.Lang.getDictionary("es"), {
 	
 	"DownloadQueue" : "Cola de descarga",
 	
-	"Crop" : "Recortar"
+	"Crop" : "Recortar",
+	
+	"AddToQueue": "Cola de descarga"
 		
 });

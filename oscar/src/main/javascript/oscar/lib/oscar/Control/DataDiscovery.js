@@ -116,7 +116,7 @@ oscar.Control.DataDiscovery = oscar.BaseClass(oscar.Control.DragPanel, {
 	 */
     setMap:function(map) {
 	    oscar.Control.prototype.setMap.apply(this,[map]);
-	    this.map.events.on({"moveend":function(e){this.displayResults();},scope:this});
+	    this.map.events.on({"moveend":this.displayResults,scope:this});
 	    this.checkLayer();
 	},
 	
@@ -399,15 +399,21 @@ oscar.Control.DataDiscovery = oscar.BaseClass(oscar.Control.DragPanel, {
 	 * Called when the control is deactivated
 	 */
 	deactivate:function() {
-		if(this.layer) {
+		this.map.events.un({"moveend":this.displayResults,scope:this});
+		
+		if(this.layer &&
+				this.layer.map != null) {
 		 this.map.removeLayer(this.layer);
 		 this.layer = null;
 		}
+        if(this.div) {
+            oscar.jQuery(this.div).fadeOut();
+      }
+        oscar.jQuery(this.div).empty();
+        
+        
 		
         oscar.Control.prototype.deactivate.apply(this);
-        if(this.div) {
-              oscar.jQuery(this.div).fadeOut();
-        }
     },
     /**
      * Method: queueDownload

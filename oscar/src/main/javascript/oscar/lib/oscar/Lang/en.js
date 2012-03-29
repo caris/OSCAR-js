@@ -330,5 +330,7 @@ OpenLayers.Util.applyDefaults(oscar.Lang.getDictionary("en"), {
 	
 	"DownloadQueue" : "Queue",
 	
-	"Crop" : "Crop"
+	"Crop" : "Crop",
+	
+	"AddToQueue": "Queue"
 });

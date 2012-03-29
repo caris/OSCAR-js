@@ -334,5 +334,7 @@ OpenLayers.Util.applyDefaults(oscar.Lang.getDictionary("fr"), {
 	
 	"DownloadQueue" : "File d'attente de t\u00e9l\u00e9chargement",
 	
-	"Crop" : "Rognage"
+	"Crop" : "Rognage",
+	
+	"AddToQueue": "File d'attente de t\u00e9l\u00e9chargement"
 });

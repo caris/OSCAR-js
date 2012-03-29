@@ -76,6 +76,7 @@ oscar.Control.DataExtractor = oscar.BaseClass(oscar.Control, {
     deactivate : function() {
     	if(this.ctrl) {
 	    	this.ctrl.deactivate();
+	    	this.ctrl =null;
     	}
         oscar.Control.prototype.deactivate.apply(this);
         
