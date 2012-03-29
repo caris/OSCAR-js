@@ -146,12 +146,12 @@ oscar.Handler.WFS = oscar.BaseClass(oscar.Handler, {
 	},
 	
 	
-    buildProtocol:function(serviceEntry, geom, theme) {
-        
+	buildProtocol:function(serviceEntry, geom, theme) {
+
         var sFilter = new OpenLayers.Filter.Spatial( {
 	        type :OpenLayers.Filter.Spatial.BBOX,
 	        value:this.getBounds(geom),
-	        projection :oscar.Util.EpsgConversion.epsgToUrn(theme.srs)
+	        projection :theme.srs
 	    });
         
         var featTypes = [];
@@ -161,7 +161,7 @@ oscar.Handler.WFS = oscar.BaseClass(oscar.Handler, {
             featTypes.push(feat);
 		}
 		var formatOptions = {extractAttributes:true};
-		formatOptions.srsName = oscar.Util.EpsgConversion.epsgToUrn(theme.srs);
+		formatOptions.srsName = theme.srs;
         if(serviceEntry.version != "1.0.0") {
             formatOptions.xy = (this.map.projection.proj.projName=="longlat")? false :true;
         }
@@ -175,6 +175,7 @@ oscar.Handler.WFS = oscar.BaseClass(oscar.Handler, {
 	        featureNS:serviceEntry.schema.targetNamespace,
 	        formatOptions:formatOptions,
 	        filter:sFilter,
+	        featurePrefix:"",
 	        scope:this
 	    });
 
