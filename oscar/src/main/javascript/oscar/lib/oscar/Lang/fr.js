@@ -326,7 +326,7 @@ OpenLayers.Util.applyDefaults(oscar.Lang.getDictionary("fr"), {
 	
 	"DataDiscoverySearchToolTip": "Recherche de donn\u00e9es dans la carte",
 	
-	"DataDiscoverySearchTitle" : "D\u00e9tection des donn\u00e9es",
+	"DataDiscoverySearchTitle" : "T\u00e9l\u00e9chargement des donn\u00e9es",
 	
 	"Search": "Chercher",
 	
