@@ -1343,6 +1343,10 @@ td#oscarLayoutFooterContainer {
 	font-size: 10px;
 }
 
+.ui-menu-item {
+	text-align:left;
+}
+
 .ui-menu-item a {
 	font-size: 10px;
 }
