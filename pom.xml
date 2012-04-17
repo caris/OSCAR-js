@@ -60,6 +60,11 @@
 	
     <pluginRepositories>                
         <pluginRepository>
+            <name>Maven Plugin Repository</name>
+            <id>central</id>
+            <url>http://repo1.maven.org/maven2</url>     
+        </pluginRepository> 
+        <pluginRepository>
             <name>oss.sonatype.org</name>
             <id>oss.sonatype.org</id>
             <url>http://oss.sonatype.org/content/groups/public</url>
@@ -68,7 +73,7 @@
             <name>nexus.codehouse.org</name>
             <id>nexus.codehouse.org</id>
             <url>http://nexus.codehaus.org/content/groups/snapshots-group</url>
-        </pluginRepository>		
+        </pluginRepository>	               
     </pluginRepositories>
 	
     <distributionManagement>
