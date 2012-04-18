@@ -132,7 +132,6 @@
 							<!-- files to include, path relative to output's directory or absolute 
 								path -->
 							<includes>
-								<include>**/SingleFile.js</include>
 								<include>**/oscar.js</include>
 								<include>**/Util.js</include>
 								<include>**/Types/BaseClass.js</include>
