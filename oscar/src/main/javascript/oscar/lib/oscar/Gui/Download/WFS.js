@@ -135,8 +135,10 @@ oscar.Gui.Download.WFS = oscar.BaseClass(oscar.Gui.Download, {
 			filename+="kml";
 		} else if (format.toLowerCase().contains("json")) {
 			filename+="json";
-		} else { //shapefile
+		} else if (format.toLowerCase().contains("shape")) {
 			filename+="zip";
+		} else { //anything else
+			filename+=format.toLowerCase();
 		}
 		
 		this.downloadFromService(this.url,filename);
