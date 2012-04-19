@@ -205,7 +205,7 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 		var opURL = null
 		try {
 			opUrl = GetFeatureOp.dcp.http.get;
-		} catch(e) {
+		} catch(e) { // wfs 1.0.0 doesn't have dcp so this will throw a null error... 
 			opUrl =  GetFeatureOp.href.get;
 		}
 		this.defaultOptions.operationUrl = opUrl;
