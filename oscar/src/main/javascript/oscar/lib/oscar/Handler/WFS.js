@@ -227,25 +227,27 @@ oscar.Handler.WFS = oscar.BaseClass(oscar.Handler, {
 				
 			},
 			"featureunselected":function(evt) {
-                
 				var feature = evt.feature;
 	            feature.layer.map.removePopup(feature.popup);
 	            feature.popup=null;
+			},
+            "beforefeatureremoved":function(evt) {
+                feature = evt.feature;
+                if (feature.popup) {
+                    feature.layer.map.removePopup(feature.popup);
+                    feature.popup=null;
+                }
 			},
 			"loadstart":function() {
 				this.showDialog();
 			},
 			"loadend":function() {
-                var x = this.layer.features;
-                for(var i=0;i<x.length;i++) {
-                   // console.log(x[i].fid);
-                }
 				this.events.triggerEvent("requestComplete");
 			},
 			scope:this
 		});
         
-		this.map.addLayer(this.layer)
+		this.map.addLayer(this.layer);
 	},
     /**
      * Method: getBounds
@@ -310,6 +312,13 @@ oscar.Handler.WFS = oscar.BaseClass(oscar.Handler, {
 			}catch (err){}
 
 	},
+
+    clean:function() {
+        if (this.layer) {
+            this.layer.removeAllFeatures();
+		}
+    },	
+	
 	/**
 	 * Constant: CLASS_NAME
 	 * - oscar.Handler.WFS

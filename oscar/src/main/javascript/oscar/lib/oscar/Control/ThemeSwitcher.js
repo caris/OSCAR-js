@@ -206,26 +206,35 @@ oscar.Control.ThemeSwitcher = oscar.BaseClass(oscar.Control.DragPanel, {
 	addThemes : function(ox) {
 		this.ox = ox;
 		this.buildMenu();
-        this.changeTheme(0);
-        return;
-    
-		try {
-		  var requestedThemeName  = this.themeManager.argParser.args["theme"];
-		  for(var item in this.ox.themes) {
+		
+		/*
+		 * Check to see if there is a specific theme being requested
+		 * from a permalink
+		 */
+         if(this.themeManager.argParser) {
+            var requestedThemeName = this.themeManager.argParser.args["theme"];
+            for(var item in this.ox.themes) {
 			  var theme = this.ox.themes[item];
 			  if(theme.name == requestedThemeName) {
 				  themeFound = true;
-				  this.changeTheme(item);
-					var center = new OpenLayers.LonLat(parseFloat(this.themeManager.argParser.args.lon),
-                            parseFloat(this.themeManager.argParser.args.lat));
-					this.map.setCenter(center,parseInt(this.themeManager.argParser.args.zoom));
-				  return;
+                  this.themeSelect[0].selectedIndex=item;
+                  this.themeManager.autoDraw=false;
+                  var scope = this;
+                  this.changeTheme(item,function() {
+                    var center = new OpenLayers.LonLat(parseFloat(scope.themeManager.argParser.args.lon),
+                            parseFloat(scope.themeManager.argParser.args.lat));
+                    var zoom = parseInt(scope.themeManager.argParser.args.zoom);
+                    var options = {
+                        zoom:zoom
+                    };
+                    scope.themeManager.doDraw(center,options);
+                    }
+                  );
+                  return;
 			  }
-		  }
-		  throw {message:"Requested theme not found, draw default theme."};
-		} catch (err) {
-			this.changeTheme(0);
-		}
+            }
+         }
+         this.changeTheme(0);
 	},
 	
 	/**
@@ -236,15 +245,14 @@ oscar.Control.ThemeSwitcher = oscar.BaseClass(oscar.Control.DragPanel, {
 	 * 
 	 * - val <Number> array index of the theme to draw.
 	 */	
-	changeTheme : function(val,options) {
-
+	changeTheme : function(val,callback) {
         if(this.activeTheme != null) { //check to see if it's already active
            if(this.activeTheme == val) return;
         }
         this.activeTheme = val;
         
 
-        this.themeManager.drawTheme(this.ox.themes[val]);            
+        this.themeManager.drawTheme(this.ox.themes[val],callback);            
 		this.events.triggerEvent("switchthemes",this.ox.themes[val]);
 	},
 	updateToolbar:function(theme) {

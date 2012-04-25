@@ -94,20 +94,7 @@ oscar.Gui.Download.WFS = oscar.BaseClass(oscar.Gui.Download, {
      $$(this.transformedDiv).append(downloadButton);
 
      downloadButton.click(function(e) {
-    	 var filename = scope.title + ".";
-		 var format = new String(scope.parameters["outputFormat"]);
-    	 
-		 if(format.contains("gml")) {
-			 filename+="xml";
-		 } else if (format.contains("kml")) {
-			 filename+="kml";
-		 } else if (format.contains("json")) {
-			 filename+="json";
-		 } else { //shapefile
-			 filename+="zip";
-		 }
-    	 
-    	 scope.downloadFromService(scope.url,filename);
+    	 scope.prepDownloadParams();
 	 });
      
      this.content.appendChild(this.txt);
@@ -132,6 +119,31 @@ oscar.Gui.Download.WFS = oscar.BaseClass(oscar.Gui.Download, {
      
      return this.div;
     },
+    
+    /**
+     * Method: prepDownloadParams
+     * 
+     * Method for preparing the parameters for the download functionality.
+     */
+    prepDownloadParams: function() {
+		var filename = this.title + ".";
+		var format = new String(this.parameters["outputFormat"]);
+		
+		if(format.toLowerCase().contains("gml")) {
+			filename+="xml";
+		} else if (format.toLowerCase().contains("kml")) {
+			filename+="kml";
+		} else if (format.toLowerCase().contains("json")) {
+			filename+="json";
+		} else if (format.toLowerCase().contains("shape")) {
+			filename+="zip";
+		} else { //anything else
+			filename+=format.toLowerCase();
+		}
+		
+		this.downloadFromService(this.url,filename);
+    },
+    
     
     /**
      * Method: disableClick

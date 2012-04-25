@@ -1,0 +1,51 @@
+<html>
+<head>
+<script src="../../../Loader.js"></script>
+<script type="text/javascript">
+function test_prepDownloadParams_GMLUpperCase(t) {
+    var url = "http://whatever.com";
+    var params = {
+            outputFormat:"GML2"
+    }
+    var gui = new oscar.Gui.Download.WFS(url,params,{
+        title:"TEXAS",
+        downloadFromService:function(url,filename) {
+            t.eq(filename.contains("xml"),true,"xml filename created properly");
+        }
+    });
+    gui.prepDownloadParams();
+}
+function test_prepDownloadParams_ShapeCamelCase(t) {
+    var url = "http://whatever.com";
+    var params = {
+            outputFormat:"ShApEfIlE"
+    }
+    var gui = new oscar.Gui.Download.WFS(url,params,{
+        title:"TEXAS",
+        downloadFromService:function(url,filename) {
+            t.eq(filename.contains("zip"),true,"shape filename created properly");
+        }
+    });
+    gui.prepDownloadParams();
+}
+
+function test_prepDownloadParams_csv(t) {
+    var url = "http://whatever.com";
+    var params = {
+            outputFormat:"csv"
+    }
+    var gui = new oscar.Gui.Download.WFS(url,params,{
+        title:"TEXAS",
+        downloadFromService:function(url,filename) {
+            t.eq(filename.contains("csv"),true,"csv filename created properly");
+        }
+    });
+    gui.prepDownloadParams();
+}
+
+
+</script>
+<body>
+
+</body>
+</html>
