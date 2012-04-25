@@ -396,7 +396,7 @@ oscar.ox.Layer = oscar.BaseClass( {
 					format: OpenLayers.Format.WFST,
 					formatOptions: {
 						extractStyles:false,
-						externalProjection:new OpenLayers.Projection("EPSG:4326"),
+						externalProjection:new OpenLayers.Projection("EPSG:4326")
 					},
 					styleMap: new OpenLayers.StyleMap({
 			            "default": style,
