@@ -63,7 +63,8 @@ var $_oscaryuiscripts = [
     "../yui/build/resize/resize-min.js",
     "../yui/build/tabview/tabview-min.js"
 ];
-    
+
+
 $_oscarscriptdependencies = $_oscarscripts.concat($_oscaryuiscripts);
     
 $_oscarscriptdependencies.push("oscar.js");
@@ -72,12 +73,23 @@ $_oscarscriptdependencies.push("yuiDependencies.js");
 window["oscar"] = {
     loadStartAt:new Date().getTime(),
     injectJs:yepnope.injectJs,
-    injectCss:yepnope.injectCss
+    injectCss:yepnope.injectCss,
+    readyCallbacks:[]
 };
-oscar.onready = function() {
-    var usageString = "Usage: \n\n";
-    usageString+="Include the following script on your page. \n\n oscar.onready = function() {\n \t'page initialization here'\n} \n\n ";
-    alert(usageString);
+oscar._isReady = function() {   
+    var scope = this;
+    $$(document).ready(function() {
+        
+        var cb = null;
+        while((cb = scope.readyCallbacks.shift()) != null) {
+            cb.call(scope);
+        }
+    });
+};
+
+oscar.onReady = function(fn) {
+    
+    this.readyCallbacks.push(fn);
 };
 
 
@@ -95,11 +107,15 @@ oscar.onready = function() {
         loadUtility.loadScript = function() {
             var scriptToLoad = $_oscarscriptdependencies.shift();
             var scope = this;
-            if(scriptToLoad!=null)
-            
-                oscar.injectJs(this.host + scriptToLoad,function(){scope.loadScript()});
-            else
-                setTimeout("oscar.onready()",0);
+            if(scriptToLoad!=null) {
+                var s = scriptToLoad;
+                if(scriptToLoad.indexOf("http")== -1) {
+                    scriptToLoad=this.host + scriptToLoad;
+                }
+                oscar.injectJs(scriptToLoad,function(){scope.loadScript()});
+            } else {
+                setTimeout("oscar._isReady()",0);
+                }
         }
         var css =null;
         while((css = $_oscarcssdependencies.shift())!= null) {
