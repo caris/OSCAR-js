@@ -396,7 +396,7 @@ oscar.ox.Layer = oscar.BaseClass( {
 					format: OpenLayers.Format.WFST,
 					formatOptions: {
 						extractStyles:false,
-						externalProjection:new OpenLayers.Projection("EPSG:4326")
+						externalProjection:new OpenLayers.Projection(this.parameters.srs)
 					},
 					styleMap: new OpenLayers.StyleMap({
 			            "default": style,
@@ -459,7 +459,7 @@ oscar.ox.Layer = oscar.BaseClass( {
 					format: OpenLayers.Format.JSON,
 					formatOptions: {
 						extractStyles:false,
-						externalProjection:new OpenLayers.Projection("EPSG:4326"),
+						externalProjection:new OpenLayers.Projection(this.parameters.srs),
                         read:function(json,filter) {
                             var obj = OpenLayers.Format.JSON.prototype.read.apply(this,[json,filter]);
                             if(!obj.features) {
