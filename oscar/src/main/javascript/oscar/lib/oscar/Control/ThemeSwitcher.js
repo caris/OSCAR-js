@@ -251,9 +251,9 @@ oscar.Control.ThemeSwitcher = oscar.BaseClass(oscar.Control.DragPanel, {
         }
         this.activeTheme = val;
         
-
+        this.events.triggerEvent("switchthemes",this.ox.themes[val]);
         this.themeManager.drawTheme(this.ox.themes[val],callback);            
-		this.events.triggerEvent("switchthemes",this.ox.themes[val]);
+		
 	},
 	updateToolbar:function(theme) {
 		this.toolbar.applyTheme(theme);
