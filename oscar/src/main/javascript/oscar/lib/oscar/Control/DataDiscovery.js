@@ -188,6 +188,7 @@ oscar.Control.DataDiscovery = oscar.BaseClass(oscar.Control.DragPanel, {
          reset.click(function() {
  	    	scope.txt.val("");
 	    	scope.map.zoomToMaxExtent();
+	    	scope.displayResults();
          });
 	     
 	     var br = $$("<br>").attr("clear","left");
