@@ -572,6 +572,8 @@ oscar.confirm = function(props,content,callbacks) {
  */
 
 oscar.Util.parseText = function(input) {
+	if(input == null) return "";
+	
 	/** 
 	 * internal functions for parsing images, email links and urls.
 	 */

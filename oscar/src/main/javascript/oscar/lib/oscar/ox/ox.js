@@ -610,6 +610,11 @@ oscar.ox.Layer = oscar.BaseClass( {
 				break;		
 			case "kml" :
 				olLayer = null;
+				var style = new OpenLayers.Style({
+                    externalGraphic: this.parameters.iconUri,
+                    pointRadius:20
+                });
+                
 				olLayer = new OpenLayers.Layer.GML(this.name,this.urls[0],{
 					setMap:function() {
 						OpenLayers.Layer.GML.prototype.setMap.apply(this,arguments);
@@ -619,14 +624,29 @@ oscar.ox.Layer = oscar.BaseClass( {
 					formatOptions: {
 						extractStyles:true,
 						externalProjection:new OpenLayers.Projection("EPSG:4326")
-					}
+					},
+					styleMap: new OpenLayers.StyleMap({
+			            "default": style,
+			            "select": new OpenLayers.Style({pointRadius: 35})
+			        })
 				});
+                
 				olLayer.events.on({
+                    "beforefeaturesadded":function(evt) {
+                        for(var f in evt.features) {
+                            var feat = evt.features[f];
+                            if(feat.geometry.CLASS_NAME != "OpenLayers.Geometry.Point") {
+                                var lonlat = feat.geometry.getBounds().getCenterLonLat();
+                                var point = new OpenLayers.Geometry.Point(lonlat.lon,lonlat.lat);
+                                feat.geometry = point;
+                            }
+                        }
+                    },
 					"featureselected":function(evt) {
 					    var feature = evt.feature;
 					    var pHolder = document.createElement("div");
 					    var header = document.createElement("div");
-					    header.innerHTML = feature.attributes['name'];
+					    header.innerHTML =  oscar.Util.parseText(feature.attributes['name']);
 					    var p = document.createElement("p");
 					    p.innerHTML = oscar.Util.parseText(feature.attributes['description']);
 					    pHolder.appendChild(header);
