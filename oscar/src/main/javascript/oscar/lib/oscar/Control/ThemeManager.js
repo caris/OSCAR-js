@@ -312,6 +312,11 @@ oscar.Control.ThemeManager = oscar.BaseClass(OpenLayers.Control, {
 		}
 
 		this.activeTheme = theme;
+		
+        $$(this.map.div).css({
+            "backgroundColor":this.activeTheme.backgroundColor
+        });
+		
 		this.layers = this.activeTheme.layers;
 		var numZoomLevels = 16;
 		try {
