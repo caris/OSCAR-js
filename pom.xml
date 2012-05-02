@@ -44,17 +44,17 @@
         <repository>
             <name>CARIS Snapshots</name>
             <id>nexus.caris.com.snapshots</id>
-            <url>http://nexus.caris.priv/nexus/content/repositories/public-snapshots/</url>            
+            <url>http://nexus.caris.com/nexus/content/repositories/public-snapshots/</url>            
         </repository>	
         <repository>
             <name>CARIS Releases</name>
             <id>nexus.caris.com.releases</id>
-            <url>http://nexus.caris.priv/nexus/content/repositories/public-releases/</url>            
+            <url>http://nexus.caris.priv/nexus/content/repositories/releases</url>            
         </repository>	
         <repository>
             <name>CARIS Vendor</name>
             <id>nexus.caris.com</id>
-            <url>http://nexus.caris.priv/nexus/content/repositories/public-vendor/</url>
+            <url>http://nexus.caris.com/nexus/content/repositories/public-vendor/</url>
         </repository>			
     </repositories>	
 	
