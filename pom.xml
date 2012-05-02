@@ -4,7 +4,7 @@
     <groupId>com.caris</groupId>
     <artifactId>oscar_framework</artifactId>
     <name>Oscar Framework</name>
-    <version>12.0.0-RC2</version>
+    <version>12.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <description>This is the CARIS JavaScript map library. It currently
         extends the Openlayers library and uses YUI and jQuery UI to make
@@ -49,7 +49,7 @@
         <repository>
             <name>CARIS Releases</name>
             <id>nexus.caris.com.releases</id>
-            <url>http://nexus.caris.priv/nexus/content/repositories/releases</url>            
+            <url>http://nexus.caris.com/nexus/content/repositories/public-releases</url>            
         </repository>	
         <repository>
             <name>CARIS Vendor</name>
