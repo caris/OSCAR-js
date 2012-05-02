@@ -1377,12 +1377,12 @@ td#oscarLayoutFooterContainer {
 	padding: 2px 2px 2px 2px !important;
 }
 
-.searchPanel .search {
+.searchPanel input.search {
 	background-image: url("img/search.png");
 	background-repeat: no-repeat;
 	float: left;
 	text-indent: 18px;
-	font-size: 1.4 em;
+	font-size: 1em;
 }
 
 .searchPanel .reset {
