@@ -99,7 +99,6 @@ oscar.Control.DataExtractor = oscar.BaseClass(oscar.Control, {
             coverages = oscar.Util.Metadata.getCoverages(capabilities);
             for (var c in coverages) {
                 var coverage = coverages[c];
-                console.log(coverage);
                 var bbox = this.getBoundingBox(coverage.wgs84BoundingBox,"EPSG:4326");
                 var record = {
                 	"id":coverage.identifier,
