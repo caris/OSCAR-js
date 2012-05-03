@@ -59,10 +59,7 @@ oscar.Gui.Download = oscar.BaseClass(oscar.Gui, {
 			iFilename.tyle="text";
 			iFilename.value = filename;
 			form.appendChild(iFilename);
-			var iFrame = document.createElement("iframe");
-			oscar.jQuery(iFrame).addClass("dmIFrame");
-			document.body.appendChild(iFrame);
-			iFrame.appendChild(form);
+			document.body.appendChild(form);
 			form.submit();
    	 } else {
    		 	window.open(url, "abc123","width=640,height=480,menuBar=yes,location=false,scrollbars=yes");
