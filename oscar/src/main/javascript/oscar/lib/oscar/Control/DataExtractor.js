@@ -99,7 +99,8 @@ oscar.Control.DataExtractor = oscar.BaseClass(oscar.Control, {
             coverages = oscar.Util.Metadata.getCoverages(capabilities);
             for (var c in coverages) {
                 var coverage = coverages[c];
-                var bbox = this.getBoundingBox(coverage.wgs84BoundingBox);
+                console.log(coverage);
+                var bbox = this.getBoundingBox(coverage.wgs84BoundingBox,"EPSG:4326");
                 var record = {
                 	"id":coverage.identifier,
                 	"title":coverage.title,
@@ -133,7 +134,7 @@ oscar.Control.DataExtractor = oscar.BaseClass(oscar.Control, {
             features = oscar.Util.Metadata.getFeatureTypes(capabilities);
             for (var f in features) {
                 var feature = features[f];
-                var bbox = this.getBoundingBox(feature.wgs84BoundingBox);
+                var bbox = this.getBoundingBox(feature.wgs84BoundingBox,feature.srs);
                 var record = {
                     "id":feature.name,
                     "title":feature.title,
@@ -167,10 +168,10 @@ oscar.Control.DataExtractor = oscar.BaseClass(oscar.Control, {
         var objBbox = new OpenLayers.Bounds(
                 bbox.west, bbox.south, bbox.east,
                 bbox.north);
-        if(this.map.projection.projCode!="EPSG:4326") {
-            var proj = new OpenLayers.Projection("EPSG:4326");
-            objBbox.transform(proj,this.map.projection);
-        }
+		if(this.map.projection.projCode!=srs) {
+		    var proj = new OpenLayers.Projection(srs);
+		    objBbox.transform(proj,this.map.projection);
+		}
 
         return objBbox;
     },
