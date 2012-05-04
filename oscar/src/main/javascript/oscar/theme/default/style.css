@@ -1377,13 +1377,20 @@ td#oscarLayoutFooterContainer {
 	padding: 2px 2px 2px 2px !important;
 }
 
-.searchPanel input.search {
-	background-image: url("img/search.png");
-	background-repeat: no-repeat;
-	float: left;
-	text-indent: 18px;
-	font-size: 1em;
+.searchPanel .magnifyingGlass {
+	background-image:url("img/search.png");
+	background-repeat:no-repeat;
+	width:15px;
+	height:15px;
+	float:left;
+	margin-right:4px;
+	margin-top:2px;
 }
+.searchPanel input.search{
+	float:left;
+	font-size:0.9em;
+}
+
 
 .searchPanel .reset {
 	background-image: url("img/toolbarSprites.png");
