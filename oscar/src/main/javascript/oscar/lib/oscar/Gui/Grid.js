@@ -182,7 +182,7 @@ oscar.Gui.Grid = oscar
 					});
 				}
 				this.tabView.selectTab(0);
-				this.events.triggerEvent("gridready", this.features);
+				this.events.triggerEvent("gridready", this.layer);
 			},
 			/**
 			 * APIMethod: buildTabLayout

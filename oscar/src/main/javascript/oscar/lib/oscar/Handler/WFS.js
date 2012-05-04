@@ -94,6 +94,7 @@ oscar.Handler.WFS = oscar.BaseClass(oscar.Handler, {
 					includeXY :true
 				});
 		this.events.register("requestComplete", this, this.requestComplete);
+		this.events.register("clean", this, this.clean);
 	},
 	/**
 	 * APIMethod: execute 
