@@ -133,7 +133,8 @@ oscar.Control.DataExtractor = oscar.BaseClass(oscar.Control, {
             features = oscar.Util.Metadata.getFeatureTypes(capabilities);
             for (var f in features) {
                 var feature = features[f];
-                var bbox = this.getBoundingBox(feature.wgs84BoundingBox,feature.srs);
+                var srs = feature.srss[0] || feature.srs;
+                var bbox = this.getBoundingBox(feature.wgs84BoundingBox,srs);
                 var record = {
                     "id":feature.name,
                     "title":feature.title,
@@ -163,17 +164,16 @@ oscar.Control.DataExtractor = oscar.BaseClass(oscar.Control, {
      * Method: getBoundingBox
      * Takes a bbox object and returns a projected bounding box if need be.
      */
-    getBoundingBox:function(bbox) {
-        var objBbox = new OpenLayers.Bounds(
-                bbox.west, bbox.south, bbox.east,
-                bbox.north);
-		if(this.map.projection.projCode!=srs) {
-		    var proj = new OpenLayers.Projection(srs);
-		    objBbox.transform(proj,this.map.projection);
-		}
-
-        return objBbox;
-    },
+	getBoundingBox:function(bbox,srs) {
+	    var objBbox = new OpenLayers.Bounds(
+	            bbox.west, bbox.south, bbox.east,
+	            bbox.north);
+	    if(this.map.projection.projCode!=srs) {
+	        var proj = new OpenLayers.Projection(srs);
+	        objBbox.transform(proj,this.map.projection);
+	    }
+	    return objBbox;
+	},
     /**
      * Method: requestFail
      * Called when a capabilities request fails to load.
