@@ -133,7 +133,7 @@ oscar.Control.DataExtractor = oscar.BaseClass(oscar.Control, {
             features = oscar.Util.Metadata.getFeatureTypes(capabilities);
             for (var f in features) {
                 var feature = features[f];
-                var srs = feature.srss[0] || feature.srs;
+                var srs = feature.srs || feature.srss[0];
                 var bbox = this.getBoundingBox(feature.wgs84BoundingBox,srs);
                 var record = {
                     "id":feature.name,
