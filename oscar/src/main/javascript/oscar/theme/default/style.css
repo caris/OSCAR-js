@@ -542,13 +542,15 @@ div.olControlMousePosition {
 }
 
 .oscarControlOverviewMapMinimizeButton {
-	right: 0;
-	bottom: 0;
+	right: 2;
+	bottom: 2;
+    background:url('img/overviewWindow_collapse.png')
 }
 
 .oscarControlOverviewMapMaximizeButton {
-	right: 0;
-	bottom: 0;
+	right: 2;
+	bottom: 2;
+	background:url('img/overviewWindow_expand.png')
 }
 
 .oscarControlOverviewMapExtentRectangle {
