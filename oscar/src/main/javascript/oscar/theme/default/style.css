@@ -541,17 +541,20 @@ div.olControlMousePosition {
 	-moz-border-radius: 1em 0 0 0;
 }
 
-.oscarControlOverviewMapMinimizeButton {
-	right: 2;
-	bottom: 2;
-    background:url('img/overviewWindow_collapse.png')
+.oscarControlOverviewMapMinimizeButton{
+	position:absolute !important;
+	bottom:0;
+	right:0;
+	background:url('img/overviewWindow_collapse.png');
 }
 
-.oscarControlOverviewMapMaximizeButton {
-	right: 2;
-	bottom: 2;
-	background:url('img/overviewWindow_expand.png')
+.oscarControlOverviewMapMaximizeButton{
+	position:absolute !important;
+	bottom:0;
+	right:0;
+	background:url('img/overviewWindow_expand.png');
 }
+
 
 .oscarControlOverviewMapExtentRectangle {
 	overflow: hidden;
