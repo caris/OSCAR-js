@@ -36,28 +36,11 @@ oscar.Control.OverviewMap= oscar.BaseClass(OpenLayers.Control.OverviewMap, {
     initialize: function(options) {
         OpenLayers.Control.OverviewMap.prototype.initialize.apply(this, arguments);
 	},
-	/**
-	 * APIMethod: setMap
-	 * 
-	 * Parameters: OpenLayers.Map
-	 * 
-	 * Sets the map object reference in the control
-	 */
-    setMap:function(map) {
-        OpenLayers.Control.prototype.setMap.apply(this,[map]);
-        
-        this.map.events.register("addlayer",this,function(evt){
-            console.log(evt.layer);
-        });
-
-    
-    },
-    
     /**
-     * APIMethod: draw
-     * 
-     * Draws the control on screen.
-     */
+         * APIMethod: draw
+         * 
+         * Draws the control on screen.
+         */
     draw:function() {
         var layers = [];
         for(var l in this.map.layers) {
