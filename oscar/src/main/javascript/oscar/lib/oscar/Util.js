@@ -40,6 +40,24 @@ oscar.debug = {
 oscar.Util = {};
 
 /**
+*
+* APIMethod: isFeatureInArray
+* Returns true of a feature name is found in the array
+* Parameters: 
+* - featureName {String}
+* - selectedFeatures - array of feature names {String}
+*
+**/
+oscar.Util.isFeatureInArray = function(featureName,selectedFeatures) {
+    for(var i in selectedFeatures) {
+        if(featureName == selectedFeatures[i])
+        return true;
+    }
+    return false;
+};
+
+
+/**
  * Method: createFormElement
  * @deprecated
  * 

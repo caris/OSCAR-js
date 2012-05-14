@@ -99,6 +99,7 @@ oscar.Control.DataExtractor = oscar.BaseClass(oscar.Control, {
             coverages = oscar.Util.Metadata.getCoverages(capabilities);
             for (var c in coverages) {
                 var coverage = coverages[c];
+                if(!oscar.Util.isFeatureInArray(coverage.identifier,service.identifiers)) continue;
                 var bbox = this.getBoundingBox(coverage.wgs84BoundingBox,"EPSG:4326");
                 var record = {
                 	"id":coverage.identifier,
@@ -133,7 +134,12 @@ oscar.Control.DataExtractor = oscar.BaseClass(oscar.Control, {
             features = oscar.Util.Metadata.getFeatureTypes(capabilities);
             for (var f in features) {
                 var feature = features[f];
-                var srs = feature.srs || feature.srss[0];
+                if(!oscar.Util.isFeatureInArray(feature.name,service.identifiers)) continue;
+                /*
+                 * if there is more than one srs then it is 1.1.0 or higher and the the
+                 * wgs84boundingbox element is in EPSG:4326
+                 */
+                var srs = feature.srs || "EPSG:4326";
                 var bbox = this.getBoundingBox(feature.wgs84BoundingBox,srs);
                 var record = {
                     "id":feature.name,

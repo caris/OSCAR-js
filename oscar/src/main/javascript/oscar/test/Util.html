@@ -223,6 +223,19 @@
        t.eq(oscar.Util.convertFormat("application/xyz"),"XYZ","Convert to XYZ successfully");
 
    }
+	function test_isFeatureInArray_true(t) {
+		t.plan(1);
+		var masterArray =["cs:Buildings","cs:Forest","cs:River"];
+		var item = "cs:Forest"
+		t.eq(oscar.Util.isFeatureInArray(item,masterArray),true,"cs:Forest Found");
+	}
+
+	function test_isFeatureInArray_false(t) {
+		t.plan(1);
+		var masterArray =["cs:Buildings","cs:Forest","cs:River"];
+		var item = "cs:Land"
+		t.eq(oscar.Util.isFeatureInArray(item,masterArray),false,"cs:Land Not Found");
+	}    
 </script>
 <body>
 </body>
