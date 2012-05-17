@@ -371,17 +371,11 @@ oscar.Control.ThemeManager = oscar.BaseClass(OpenLayers.Control, {
 		OpenLayers.Util.extend(this.map, options);
         
         var scope = this;
-        scope.count=0;
-        /**
-         * counter is to stop from staying in the loop when IE loads
-         * the crs from cache.
-         */
+        
         var waitTillReady = function() {
-            scope.count++;
-            if(scope.map.projection.proj.readyToUse || scope.count > 5) {
-                scope.count=0;
+        
+            if(scope.map.projection.proj.readyToUse) {
                 window.clearTimeout(scope.interval);
-
                 scope.activeTheme.buildMap(scope.map);
                 if(callback) {
                     callback.call();
