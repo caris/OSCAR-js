@@ -77,7 +77,6 @@
                                  <artifactItem>
                                      <groupId>osgeo</groupId>
                                      <artifactId>proj4js</artifactId>
-                                     <version>1.0-0</version>
                                      <type>jar</type>
                                      <overWrite>false</overWrite>
                                      <outputDirectory>${project.build.directory}/scripts/proj4js</outputDirectory>
