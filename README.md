@@ -1,5 +1,5 @@
-# OSCAR-js
-OSCAR-js (Open Spatial Component Architecture) is a JavaScript Map API that was created to help build [CARIS Spatial Fusion Viewer] (http://www.caris.com/products/sfe/SFE-Viewer/). 
+# CARIS OSCAR-js
+CARIS OSCAR-js (Open Spatial Component Architecture) is a JavaScript Map API that was created to help build [CARIS Spatial Fusion Viewer] (http://www.caris.com/products/sfe/SFE-Viewer/). 
 It has been spun-off as an open-source project (licensed under [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0.html))
 to allow for public contributions and forking.
 
