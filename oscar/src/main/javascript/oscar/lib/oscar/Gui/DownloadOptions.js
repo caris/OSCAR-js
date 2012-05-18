@@ -255,6 +255,16 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 			select:function(event,ul) {
 				this.value = ul.item.label;
 				scope.defaultOptions.format = ul.item.value;
+				if(ul.item.value == "application/bag") {
+					var ref = oscar.Util.CoordinateReferences.getReference(scope.gridBaseCRS);
+					$$(".crsInput").attr("disabled", "disabled");
+					$$(".crsButton").attr("disabled", "disabled");
+					$$(".crsInput").val(ref.description);
+					scope.defaultOptions.crs = scope.gridBaseCRS;                    
+				} else {
+					$$(".crsInput").removeAttr("disabled");
+					$$(".crsButton").removeAttr("disabled");
+				}
 				return false;
 			},
 			focus:function(event,ui) {
@@ -308,6 +318,7 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 
 		var input = document.createElement("input");
 		input.type = "text";
+		$$(input).addClass("crsInput");
 		crsDiv.appendChild(input);
 		oscar.jQuery(input).autocomplete({
 			minLength:0,
@@ -345,6 +356,7 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 		
 		var button = document.createElement("button");
 		button.innerHTML = oscar.i18n("srsCodeColumnLabel");
+		$$(button).addClass("crsButton");
         crsDiv.appendChild(button);
         oscar.jQuery(button).insertAfter( input ).button({
         	icons: {
@@ -470,11 +482,10 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 				"version" :version
 			});
 			var coverageDescription = reader.read(resp.responseXML);
-			var gridBaseCRS=null;
 			var fields = null;
 
 			try {
-				gridBaseCRS = coverageDescription.coverageDescription.domain.spatialDomain.gridCRS.gridBaseCRS;
+				this.gridBaseCRS = coverageDescription.coverageDescription.domain.spatialDomain.gridCRS.gridBaseCRS;
 				var fields = coverageDescription.coverageDescription.range.fields;
 				supportedCRSs = coverageDescription.coverageDescription.supportedCRS;
 				supportedFormats = coverageDescription.coverageDescription.supportedFormats;
