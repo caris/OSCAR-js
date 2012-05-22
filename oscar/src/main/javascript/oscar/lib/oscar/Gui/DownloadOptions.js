@@ -255,7 +255,7 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 			select:function(event,ul) {
 				this.value = ul.item.label;
 				scope.defaultOptions.format = ul.item.value;
-				if(ul.item.value == "application/bag") {
+				if(ul.item.value.indexOf("bag") > -1) {
 					var ref = oscar.Util.CoordinateReferences.getReference(scope.gridBaseCRS);
 					$$(".crsInput").attr("disabled", "disabled");
 					$$(".crsButton").attr("disabled", "disabled");
