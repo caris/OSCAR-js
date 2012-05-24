@@ -289,7 +289,7 @@ oscar.Control.ThemeManager = oscar.BaseClass(OpenLayers.Control, {
 	 * Parameters: 
 	 * theme - {<oscar.ox.Theme>}
 	 */
-	drawTheme : function(theme) {
+	drawTheme : function(theme,callback) {
 
 		//Look for an overview map and destroy it.
 		try {
@@ -312,6 +312,11 @@ oscar.Control.ThemeManager = oscar.BaseClass(OpenLayers.Control, {
 		}
 
 		this.activeTheme = theme;
+		
+		$$(this.map.div).css({
+		    "backgroundColor":this.activeTheme.backgroundColor
+		});
+		
 		this.layers = this.activeTheme.layers;
 		var numZoomLevels = 16;
 		try {
@@ -364,20 +369,20 @@ oscar.Control.ThemeManager = oscar.BaseClass(OpenLayers.Control, {
 		options.numZoomLevels = numZoomLevels;
 
 		OpenLayers.Util.extend(this.map, options);
-		
-		var numLayers = this.activeTheme.layers.length;
         
         var scope = this;
         
         var waitTillReady = function() {
+        
             if(scope.map.projection.proj.readyToUse) {
                 window.clearTimeout(scope.interval);
                 scope.activeTheme.buildMap(scope.map);
+                if(callback) {
+                    callback.call();
+                }
 
                 var defaultCover=null;
-
                 if(!scope.autoDraw) {return};
-                
                 if((defaultCover = scope.activeTheme.getDefaultCover())){
                     scope.doDraw(defaultCover);
                 } else if (viewPort.project) {

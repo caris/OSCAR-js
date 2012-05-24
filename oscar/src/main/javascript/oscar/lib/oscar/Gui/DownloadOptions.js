@@ -201,8 +201,14 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 		var id = oscar.Util.Metadata.getFeatureTypesById(this.capabilities.capabilities,this.feature.div.data("id"));
 
 		this.makeFormatList(div,outputFormats);
-		this.makeCRSList(div,id.srss);
-		this.defaultOptions.operationUrl = GetFeatureOp.dcp.http.get;
+		this.makeCRSList(div,id.srss || [id.srs]);
+		var opURL = null
+		try {
+			opUrl = GetFeatureOp.dcp.http.get;
+		} catch(e) { // wfs 1.0.0 doesn't have dcp so this will throw a null error... 
+			opUrl =  GetFeatureOp.href.get;
+		}
+		this.defaultOptions.operationUrl = opUrl;
 		this.defaultOptions.id = this.feature.div.data("id");
 		this.defaultOptions.bbox = this.feature.div.data("bbox");
 		this.defaultOptions.title = this.feature.div.data("title") || this.feature.div.data("id");
@@ -249,6 +255,16 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 			select:function(event,ul) {
 				this.value = ul.item.label;
 				scope.defaultOptions.format = ul.item.value;
+				if(ul.item.value.indexOf("bag") > -1) {
+					var ref = oscar.Util.CoordinateReferences.getReference(scope.gridBaseCRS);
+					$$(".crsInput").attr("disabled", "disabled");
+					$$(".crsButton").attr("disabled", "disabled");
+					$$(".crsInput").val(ref.description);
+					scope.defaultOptions.crs = scope.gridBaseCRS;                    
+				} else {
+					$$(".crsInput").removeAttr("disabled");
+					$$(".crsButton").removeAttr("disabled");
+				}
 				return false;
 			},
 			focus:function(event,ui) {
@@ -302,6 +318,7 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 
 		var input = document.createElement("input");
 		input.type = "text";
+		$$(input).addClass("crsInput");
 		crsDiv.appendChild(input);
 		oscar.jQuery(input).autocomplete({
 			minLength:0,
@@ -339,6 +356,7 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 		
 		var button = document.createElement("button");
 		button.innerHTML = oscar.i18n("srsCodeColumnLabel");
+		$$(button).addClass("crsButton");
         crsDiv.appendChild(button);
         oscar.jQuery(button).insertAfter( input ).button({
         	icons: {
@@ -464,11 +482,10 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 				"version" :version
 			});
 			var coverageDescription = reader.read(resp.responseXML);
-			var gridBaseCRS=null;
 			var fields = null;
 
 			try {
-				gridBaseCRS = coverageDescription.coverageDescription.domain.spatialDomain.gridCRS.gridBaseCRS;
+				this.gridBaseCRS = coverageDescription.coverageDescription.domain.spatialDomain.gridCRS.gridBaseCRS;
 				var fields = coverageDescription.coverageDescription.range.fields;
 				supportedCRSs = coverageDescription.coverageDescription.supportedCRS;
 				supportedFormats = coverageDescription.coverageDescription.supportedFormats;

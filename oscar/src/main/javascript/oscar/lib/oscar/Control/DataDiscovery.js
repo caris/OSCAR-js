@@ -174,21 +174,23 @@ oscar.Control.DataDiscovery = oscar.BaseClass(oscar.Control.DragPanel, {
 		 var reset = $$("<div></div>");
 		 this.resultsPanel = $$("<div></div>").addClass("resultsPanel");
 		 reset.addClass("oscar_Gui_MultiItemChooserTable_resetTable_disabled");
+		 reset.addClass("reset");
+		 var $mGlass = $$("<span></span>");
+		 $mGlass.addClass("magnifyingGlass");
+		 searchPanel.append($mGlass);
 		 searchPanel.append(textEntryPanel);
 		 searchPanel.append(this.resultsPanel);
-
-         this.txt = $$("<input>").attr("type","text").addClass("search");
-         this.txt.css("width","210px");
-	     textEntryPanel.append(this.txt);
-	     textEntryPanel.append(reset);
-	     
-	     var scope = this;
-	     
-	     
-         reset.click(function() {
- 	    	scope.txt.val("");
-	    	scope.map.zoomToMaxExtent();
-         });
+		
+		 this.txt = $$("<input>").attr("type","text").addClass("search");
+		 this.txt.css("width","200px");
+		 textEntryPanel.append(this.txt);
+		 textEntryPanel.append(reset);
+		 
+		 var scope = this;
+		
+		 reset.click(function() {
+			 scope.reset();
+		 });
 	     
 	     var br = $$("<br>").attr("clear","left");
 	     textEntryPanel.append(br);
@@ -229,6 +231,28 @@ oscar.Control.DataDiscovery = oscar.BaseClass(oscar.Control.DragPanel, {
          this.getResults();
 	},
 	
+    /**
+     * Method: unselectFeature
+     * Removes the feature from the map and unselects any feature from the list.
+     */
+	unselectFeature:function() {
+		this.resultsPanel.children().each(function() {
+			$$(this).removeClass("selected");
+		});
+		this.layer.removeAllFeatures();
+	},
+	/**
+	 * Method: reset
+	 * Resets the search options and zooms the map to the max extent.
+	 */
+	reset:function() {
+	    this.unselectFeature();
+	    this.txt.val("");
+	    this.map.zoomToMaxExtent();
+	    this.displayResults();
+	},
+	
+	
 	/**
 	 * Method: getResults
 	 * 
@@ -252,9 +276,7 @@ oscar.Control.DataDiscovery = oscar.BaseClass(oscar.Control.DragPanel, {
             }
             $recDiv.click(function() {
                 var $this = $$(this);
-                scope.resultsPanel.children().each(function() {
-                    $$(this).removeClass("selected");
-                });
+                scope.unselectFeature();
                 $this.addClass("selected");
                 scope.discoverPanel.accordion("activate",1);
                 scope.drawFeature($this);
@@ -264,40 +286,6 @@ oscar.Control.DataDiscovery = oscar.BaseClass(oscar.Control.DragPanel, {
             this.resultsPanel.append($recDiv);
         }
         this.displayResults();
-		return;
-		
-		 var scope = this;
-		 var filterFunction = function(table,query) {
-			 var viewPort = scope.map.getExtent();
-			 var results = [];
-			 for(var r in table.records) {
-				 var result = {};
-				 result.record = table.records[r];
-				 result.div = $$("<div></div>").html(result.record.title || result.record.id).addClass("result");
-				 var dataTypeDiv = $$("<div></div>");
-				 result.div.prepend(dataTypeDiv);
-				 dataTypeDiv.addClass(result.record.dataType);
-				 results.push(result);
-				 var getFn = function(result) {
-		                return function() {
-		                	for(var r in this.results) {
-		                		this.results[r].div.removeClass("selected");
-		                	}
-		                	this.discoverPanel.accordion("activate",1);
-		                	result.div.addClass("selected");
-		                    this.drawFeature(result);
-		                }
-		            }
-               
-               result.div.click(getFn(result).bind(scope));
-			 }
-			 return results;
-		 }
-		 
-
-		 this.results = this.database.search("sources","",filterFunction);
-		 this.displayResults();
-		
 	},
 	/**
 	 * Method: displayResults

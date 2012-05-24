@@ -383,7 +383,159 @@ oscar.ox.Layer = oscar.BaseClass( {
             };
             var formatType = this.parameters.formatType.toLowerCase();
 			switch (formatType) {
-			case "georss" :
+			case "gml2" :
+				var style = new OpenLayers.Style({externalGraphic: this.parameters.iconUri,pointRadius:20});
+                style.isDefault=true;
+			    
+				olLayer = null;
+				olLayer = new OpenLayers.Layer.GML(this.name,this.urls[0],{
+					setMap:function(map) {
+						OpenLayers.Layer.GML.prototype.setMap.apply(this,arguments);
+						this.formatOptions.internalProjection = this.map.projection;
+					},
+					format: OpenLayers.Format.WFST,
+					formatOptions: {
+						extractStyles:false,
+						externalProjection:new OpenLayers.Projection(this.parameters.srs)
+					},
+					styleMap: new OpenLayers.StyleMap({
+			            "default": style,
+			            "select": new OpenLayers.Style({pointRadius: 35})
+			        })
+				});
+                
+				olLayer.events.on({
+                    "beforefeaturesadded":function(evt) {
+                        for(var feature in evt.features) {
+                            var feat = evt.features[feature];
+                            var lonlat = feat.geometry.getBounds().getCenterLonLat();
+                            var point = new OpenLayers.Geometry.Point(lonlat.lon,lonlat.lat);
+                            feat.geometry = point;
+                            feat.style = style.defaultStyle;
+                        }
+                    },
+					"featureselected":function(evt) {
+					    var feature = evt.feature;
+                        var $tbl = $$("<table></table>");
+                        $tbl.addClass("popup-table");
+                        for(var att in feature.attributes) {
+                            var attribute = feature.attributes[att];
+                            if(attribute == null || attribute.length == 0) continue;
+                            var $row = $$("<tr></tr>");
+                            var $cell1 = $$("<td></td>").html(oscar.i18n(att));
+                            var $cell2 = $$("<td></td>").html(oscar.Util.parseText(attribute));
+                            $row.append($cell1);
+                            $row.append($cell2);
+                            $tbl.append($row);
+                        }
+                        var $div = $$("<div></div>");
+                        $div.append($tbl);
+                        var lonlat = new OpenLayers.LonLat(feature.geometry.x,feature.geometry.y);
+						var popup = new oscar.FramedCloud("id", lonlat, null, $div.html(), null, true);
+						popup.autoSize=true;
+						feature.popup = popup;
+						feature.layer.map.addPopup(popup);
+					},
+					"featureunselected":function(evt) {
+						var feature = evt.feature;
+			            feature.layer.map.removePopup(feature.popup);
+			            feature.popup=null;
+					},
+					
+					scope:this
+				});					
+				
+				break;	
+            case "geojson" :
+				var style = new OpenLayers.Style({externalGraphic: this.parameters.iconUri,pointRadius:20});
+                style.isDefault=true;
+			    
+				olLayer = null;
+				olLayer = new OpenLayers.Layer.GML(this.name,this.urls[0],{
+					setMap:function(map) {
+						OpenLayers.Layer.GML.prototype.setMap.apply(this,arguments);
+						this.formatOptions.internalProjection = this.map.projection;
+					},
+					format: OpenLayers.Format.JSON,
+					formatOptions: {
+						extractStyles:false,
+						externalProjection:new OpenLayers.Projection(this.parameters.srs),
+                        read:function(json,filter) {
+                            var obj = OpenLayers.Format.JSON.prototype.read.apply(this,[json,filter]);
+                            if(!obj.features) {
+                                var feature = obj;
+                                obj = {};
+                                obj.features =[feature];
+
+                            }
+                            for(var i=0;i<obj.features.length;i++) {
+                                var feature = obj.features[i];
+                                var geometry = feature.geometry;
+                                switch(geometry.type) {
+                                    case "Polygon":
+                                        var linearRing = new OpenLayers.Geometry.LinearRing();
+                                        for (var j=0;j<geometry.coordinates.length;j++) {
+                                            var coord = geometry.coordinates[j];
+                                            for(var a in coord) {
+                                                linearRing.addComponent(new OpenLayers.Geometry.Point(coord[a][0],coord[a][1]));
+                                            }
+                                        }
+                                        var polygon = new OpenLayers.Geometry.Polygon(linearRing);
+                                        var lonlat = polygon.getBounds().getCenterLonLat();
+                                        var point = new OpenLayers.Geometry.Point(lonlat.lon,lonlat.lat);
+                                        obj.features[i].geometry = point;
+                                    break;
+                                    case "Point":
+                                        var point = new OpenLayers.Geometry.Point(geometry.coordinates[0],geometry.coordinates[1]);
+                                        feature.geometry = point;
+                                    break
+                                }
+
+                                obj.features[i].style = style.defaultStyle;
+                            }
+                            return obj.features;
+                        }
+					},
+					styleMap: new OpenLayers.StyleMap({
+			            "default": style,
+			            "select": new OpenLayers.Style({pointRadius: 35})
+			        })
+				});
+                
+				olLayer.events.on({
+					"featureselected":function(evt) {
+					    var feature = evt.feature;
+                        var $tbl = $$("<table></table>");
+                        $tbl.addClass("popup-table");
+                        for(var prop in feature.properties) {
+                            var property = feature.properties[prop];
+                            if(property == null || property.length == 0) continue;
+                            var $row = $$("<tr></tr>");
+                            var $cell1 = $$("<td></td>").html(oscar.i18n(prop));
+                            var $cell2 = $$("<td></td>").html(oscar.Util.parseText(property));
+                            $row.append($cell1);
+                            $row.append($cell2);
+                            $tbl.append($row);
+                        }
+                        var $div = $$("<div></div>");
+                        $div.append($tbl);
+                        var lonlat = new OpenLayers.LonLat(feature.geometry.x,feature.geometry.y);
+						var popup = new oscar.FramedCloud("id", lonlat, null, $div.html(), null, true);
+						popup.autoSize=true;
+						feature.popup = popup;
+						feature.layer.map.addPopup(popup);
+					},
+					"featureunselected":function(evt) {
+						var feature = evt.feature;
+			            feature.layer.map.removePopup(feature.popup);
+			            feature.popup=null;
+					},
+					
+					scope:this
+				});					
+				
+				break;                
+			case "georss_simple" :
 				var style = new OpenLayers.Style({externalGraphic: this.parameters.iconUri});
 				var rule = new OpenLayers.Rule({
 			        symbolizer: {pointRadius: 30},
@@ -424,7 +576,7 @@ oscar.ox.Layer = oscar.BaseClass( {
 					},
 					styleMap: new OpenLayers.StyleMap({
 			            "default": style,
-			            "select": new OpenLayers.Style({pointRadius: 35})
+			            "select": new OpenLayers.Style({pointRadius: 20})
 			        })
 				});
 				
@@ -455,9 +607,14 @@ oscar.ox.Layer = oscar.BaseClass( {
 					scope:this
 				});					
 				
-				break;			
+				break;		
 			case "kml" :
 				olLayer = null;
+				var style = new OpenLayers.Style({
+				    externalGraphic: this.parameters.iconUri,
+				    pointRadius:20
+				});
+				
 				olLayer = new OpenLayers.Layer.GML(this.name,this.urls[0],{
 					setMap:function() {
 						OpenLayers.Layer.GML.prototype.setMap.apply(this,arguments);
@@ -467,31 +624,46 @@ oscar.ox.Layer = oscar.BaseClass( {
 					formatOptions: {
 						extractStyles:true,
 						externalProjection:new OpenLayers.Projection("EPSG:4326")
-					}
+				},
+				styleMap: new OpenLayers.StyleMap({
+				    "default": style,
+				    "select": new OpenLayers.Style({pointRadius: 35})
+				    })
 				});
+				
 				olLayer.events.on({
-					"featureselected":function(evt) {
-					    var feature = evt.feature;
-					    var pHolder = document.createElement("div");
-					    var header = document.createElement("div");
-					    header.innerHTML = feature.attributes['name'];
-					    var p = document.createElement("p");
-					    p.innerHTML = oscar.Util.parseText(feature.attributes['description']);
-					    pHolder.appendChild(header);
-					    pHolder.appendChild(p);
-					    
-						html = oscar.Util.parseText(feature.attributes['description']);
-						var popup = new oscar.FramedCloud("id", feature.geometry
-		                    .getBounds().getCenterLonLat(), null, pHolder.innerHTML, null,
-		                    true);
-						popup.autoSize=true;
-						feature.popup = popup;
-						feature.layer.map.addPopup(popup);
-					},
-					"featureunselected":function(evt) {
+				    "beforefeaturesadded":function(evt) {
+				    for(var f in evt.features) {
+				        var feat = evt.features[f];
+				        if(feat.geometry.CLASS_NAME != "OpenLayers.Geometry.Point") {
+				            var lonlat = feat.geometry.getBounds().getCenterLonLat();
+				            var point = new OpenLayers.Geometry.Point(lonlat.lon,lonlat.lat);
+				            feat.geometry = point;
+				        }
+				    }
+				},
+				"featureselected":function(evt) {
+				    var feature = evt.feature;
+				    var pHolder = document.createElement("div");
+				    var header = document.createElement("div");
+				    header.innerHTML =  oscar.Util.parseText(feature.attributes['name']);
+				    var p = document.createElement("p");
+				    p.innerHTML = oscar.Util.parseText(feature.attributes['description']);
+				    pHolder.appendChild(header);
+				    pHolder.appendChild(p);
+				    
+					html = oscar.Util.parseText(feature.attributes['description']);
+					var popup = new oscar.FramedCloud("id", feature.geometry
+				        .getBounds().getCenterLonLat(), null, pHolder.innerHTML, null,
+				        true);
+					popup.autoSize=true;
+					feature.popup = popup;
+					feature.layer.map.addPopup(popup);
+				},
+				"featureunselected":function(evt) {
 						var feature = evt.feature;
-			            feature.layer.map.removePopup(feature.popup);
-			            feature.popup=null;
+				        feature.layer.map.removePopup(feature.popup);
+				        feature.popup=null;
 					},
 					
 					scope:this

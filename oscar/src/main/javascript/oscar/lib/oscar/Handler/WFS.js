@@ -94,6 +94,7 @@ oscar.Handler.WFS = oscar.BaseClass(oscar.Handler, {
 					includeXY :true
 				});
 		this.events.register("requestComplete", this, this.requestComplete);
+		this.events.register("clean", this, this.clean);
 	},
 	/**
 	 * APIMethod: execute 
@@ -158,6 +159,9 @@ oscar.Handler.WFS = oscar.BaseClass(oscar.Handler, {
         
         for(var el in serviceEntry.identifiers) {
 			var feat = serviceEntry.identifiers[el];
+            if(feat.indexOf(serviceEntry.schema.targetPrefix) > -1) {
+                feat = feat.split(":")[1];
+            }
             featTypes.push(feat);
 		}
 		var formatOptions = {extractAttributes:true};
@@ -173,9 +177,9 @@ oscar.Handler.WFS = oscar.BaseClass(oscar.Handler, {
 	        featureType:featTypes.toString(),
 	        geometryName:serviceEntry.schema.featureTypes[0].properties[0].name,
 	        featureNS:serviceEntry.schema.targetNamespace,
+            featurePrefix:serviceEntry.schema.targetPrefix,
 	        formatOptions:formatOptions,
 	        filter:sFilter,
-	        featurePrefix:"",
 	        scope:this
 	    });
 
@@ -227,25 +231,27 @@ oscar.Handler.WFS = oscar.BaseClass(oscar.Handler, {
 				
 			},
 			"featureunselected":function(evt) {
-                
 				var feature = evt.feature;
 	            feature.layer.map.removePopup(feature.popup);
 	            feature.popup=null;
+			},
+            "beforefeatureremoved":function(evt) {
+                feature = evt.feature;
+                if (feature.popup) {
+                    feature.layer.map.removePopup(feature.popup);
+                    feature.popup=null;
+                }
 			},
 			"loadstart":function() {
 				this.showDialog();
 			},
 			"loadend":function() {
-                var x = this.layer.features;
-                for(var i=0;i<x.length;i++) {
-                   // console.log(x[i].fid);
-                }
 				this.events.triggerEvent("requestComplete");
 			},
 			scope:this
 		});
         
-		this.map.addLayer(this.layer)
+		this.map.addLayer(this.layer);
 	},
     /**
      * Method: getBounds
@@ -310,6 +316,13 @@ oscar.Handler.WFS = oscar.BaseClass(oscar.Handler, {
 			}catch (err){}
 
 	},
+
+    clean:function() {
+        if (this.layer) {
+            this.layer.removeAllFeatures();
+		}
+    },	
+	
 	/**
 	 * Constant: CLASS_NAME
 	 * - oscar.Handler.WFS

@@ -14,14 +14,14 @@
     </description>
 
     <properties>
-        <branch>12.0</branch>
+        <branch>master</branch>
         <project.scm.url>https://github.com/caris/OSCAR-js.git</project.scm.url>
     </properties>
 
     <parent>
         <groupId>com.caris.pom</groupId>
         <artifactId>caris-opensource-pom</artifactId>
-        <version>3</version>
+        <version>5</version>
     </parent>
 
     <issueManagement>
@@ -49,7 +49,7 @@
         <repository>
             <name>CARIS Releases</name>
             <id>nexus.caris.com.releases</id>
-            <url>http://nexus.caris.com/nexus/content/repositories/public-releases/</url>            
+            <url>http://nexus.caris.com/nexus/content/repositories/public-releases</url>            
         </repository>	
         <repository>
             <name>CARIS Vendor</name>

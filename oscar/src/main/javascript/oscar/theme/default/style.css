@@ -541,15 +541,20 @@ div.olControlMousePosition {
 	-moz-border-radius: 1em 0 0 0;
 }
 
-.oscarControlOverviewMapMinimizeButton {
-	right: 0;
-	bottom: 0;
+.oscarControlOverviewMapMinimizeButton{
+	position:absolute !important;
+	bottom:0;
+	right:0;
+	background:url('img/overviewWindow_collapse.png');
 }
 
-.oscarControlOverviewMapMaximizeButton {
-	right: 0;
-	bottom: 0;
+.oscarControlOverviewMapMaximizeButton{
+	position:absolute !important;
+	bottom:0;
+	right:0;
+	background:url('img/overviewWindow_expand.png');
 }
+
 
 .oscarControlOverviewMapExtentRectangle {
 	overflow: hidden;
@@ -1377,13 +1382,20 @@ td#oscarLayoutFooterContainer {
 	padding: 2px 2px 2px 2px !important;
 }
 
-.searchPanel .search {
-	background-image: url("img/search.png");
-	background-repeat: no-repeat;
-	float: left;
-	text-indent: 18px;
-	font-size: 1.4 em;
+.searchPanel .magnifyingGlass {
+	background-image:url("img/search.png");
+	background-repeat:no-repeat;
+	width:15px;
+	height:15px;
+	float:left;
+	margin-right:4px;
+	margin-top:2px;
 }
+.searchPanel input.search{
+	float:left;
+	font-size:0.9em;
+}
+
 
 .searchPanel .reset {
 	background-image: url("img/toolbarSprites.png");
