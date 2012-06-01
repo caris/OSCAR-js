@@ -30,15 +30,23 @@ function test_parseText_Image(t) {
 
 function test_parseText_Url(t) {
     t.plan(2);
-	var blob = "Visit the website http://ucode.caris.com";
-	var valid_result = 'Visit the website <a href="http://ucode.caris.com" target="_new">http://ucode.caris.com</a>';
-	var result = oscar.Util.parseText(blob);
+    var blob = "Visit the website http://ucode.caris.com";
+    var valid_result = 'Visit the website <a target="_new" href="http://ucode.caris.com">http://ucode.caris.com</a>';
+    var result = oscar.Util.parseText(blob);
     t.eq(result,valid_result,"Valid Parse");
     
     blob = "Visit the website https://ucode.caris.com";
-	valid_result = 'Visit the website <a href="https://ucode.caris.com" target="_new">https://ucode.caris.com</a>';
-	result = oscar.Util.parseText(blob);
+    valid_result = 'Visit the website <a target="_new" href="https://ucode.caris.com">https://ucode.caris.com</a>';
+    result = oscar.Util.parseText(blob);
     t.eq(result,valid_result,"Valid Parse");
+}
+
+function test_parseText_emptyValue(t) {
+    t.plan(1);
+    var blob = null;
+    var result = oscar.Util.parseText(blob);
+    t.eq(result,"","Null input returned empty string");
+    
 }
 
 

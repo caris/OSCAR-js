@@ -51,7 +51,8 @@ function test_buildProtocol_1_0_0_merc(t) {
             ]
         }
         ],
-        targetNamespace:"cs"
+        targetNamespace:"http://www.caris.com/cs",
+        targetPrefix:"cs"
     };
     var handler = new oscar.Handler.WFS();
     handler.map = map;
@@ -79,7 +80,8 @@ function test_buildProtocol_1_1_0_longlat(t) {
             ]
         }
         ],
-        targetNamespace:"cs"
+        targetNamespace:"http://www.caris.com/cs",
+        targetPrefix:"cs"
     };
     var handler = new oscar.Handler.WFS();
     handler.map = map;
@@ -107,7 +109,8 @@ function test_buildProtocol_1_1_0_merc(t) {
             ]
         }
         ],
-        targetNamespace:"cs"
+        targetNamespace:"http://www.caris.com/cs",
+        targetPrefix:"cs"
     };
     var handler = new oscar.Handler.WFS();
     handler.map = map;
@@ -116,7 +119,7 @@ function test_buildProtocol_1_1_0_merc(t) {
 }
 
 function test_FeatureNSandSRS(t) {
-    t.plan(3);
+    t.plan(5);
     var theme = {srs:"EPSG:4326"}
     var geom = new OpenLayers.Bounds(-63.984375,18.984375,-2.8125,65.390625).toGeometry();
     var mapProjection = new OpenLayers.Projection("EPSG:900913");
@@ -127,7 +130,7 @@ function test_FeatureNSandSRS(t) {
     se.url="http://whatever";
     se.version="1.1.0"
     se.serviceType="WFS";
-    se.identifiers=["cs:Buildings"];
+    se.identifiers=["cs:Buildings","cs:Roads"];
     se.schema={
         featureTypes:[
         {
@@ -136,15 +139,17 @@ function test_FeatureNSandSRS(t) {
             ]
         }
         ],
-        targetNamespace:"cs"
+        targetNamespace:"http://www.caris.com/cs",
+        targetPrefix:"cs"
     };
     var handler = new oscar.Handler.WFS();
     handler.map = map;
     var protocol = handler.buildProtocol(se,geom,theme);
-    t.eq(protocol.featurePrefix,"","Feature Prefix is an empty string.");   
+    t.eq(protocol.featureType,"Buildings,Roads","Feature Type is Buildings,Roads");
+    t.eq(protocol.featureNS,"http://www.caris.com/cs","Feature Namespace is http://www.caris.com/cs");
+    t.eq(protocol.featurePrefix,"cs","Feature Prefix cs.");   
     t.eq(protocol.srsName,"EPSG:4326","Proper SRS Name.");
     t.eq(protocol.filter.projection,"EPSG:4326","Proper SRS Name.");
-    
 }
 </script>
 <body>
