@@ -21,7 +21,7 @@
     <parent>
         <groupId>com.caris.pom</groupId>
         <artifactId>caris-opensource-pom</artifactId>
-        <version>5-SNAPSHOT</version>
+        <version>6-SNAPSHOT</version>
     </parent>
 
     <issueManagement>
@@ -76,14 +76,6 @@
         </pluginRepository>	               
     </pluginRepositories>
 	
-    <distributionManagement>
-        <site>
-            <id>com.caris.oscar.site</id>
-            <name>Oscar Maven site</name>
-            <url>${site.base.url}/oscar_framework_${branch}</url>
-        </site>
-    </distributionManagement>
-
     <modules>
         <module>oscar</module>
         <module>oscarexchange4j</module>
