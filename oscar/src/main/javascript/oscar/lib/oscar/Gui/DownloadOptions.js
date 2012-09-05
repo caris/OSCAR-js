@@ -638,7 +638,7 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 			if(this.map.getProjectionObject().projCode != "EPSG:4326") {
 				var sProj = this.map.getProjectionObject();
 				var dProj = new OpenLayers.Projection("EPSG:4326");
-				localBbox=bounds.transform(sProj,dProj).toArray();
+				localBbox=bounds.clone().transform(sProj,dProj).toArray();
 				sProj = null;
 				dProj = null;
 			} else {
