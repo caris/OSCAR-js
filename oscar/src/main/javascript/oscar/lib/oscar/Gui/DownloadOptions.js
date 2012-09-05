@@ -408,8 +408,21 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 			if(i==0) {
 				input.attr("checked",true);
 			}
+            input.click(function(e) {
+                var $this = $$(this);
+                var currentFields = scope.defaultOptions.field;
+                var field = $this.data("field");
+                var index = $$.inArray(field,currentFields);
+                if(index != -1)  {
+                   currentFields.splice(index,1);
+                } else {
+                   currentFields.push(field); 
+                }
+                scope.defaultOptions.field=currentFields;
+            });
 			var lbl = $$("<label>");
 			lbl.text(arr[i]);
+            input.data("field",arr[i]);
 			$$(fieldItem).append(input);
 			$$(fieldItem).append(lbl);
 			$$(d).append(fieldItem);
@@ -430,7 +443,7 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
         });
 		
 		
-        this.defaultOptions.field = arr[0]
+        this.defaultOptions.field = new Array(arr[0]);
 		
 	},	
 	/**
@@ -636,6 +649,13 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 			if (urn.indexOf("::") == -1) {
 				urn = oscar.Util.EpsgConversion.epsgToUrn(urn);
 			}
+            var rngSubset = this.defaultOptions.field;
+            if(rngSubset.length > 1) {
+                rngSubset = rngSubset.join(";");
+            } else {
+                rngSubset = rngSubset.join(" ");
+            }
+
     		var localparams = {
     			request:"GetCoverage",
     			store:this.defaultOptions.store,
@@ -644,7 +664,7 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
     			RangeSubset:"contents",
     			BoundingBox:localBbox + ","+ sUrn,
     			format:this.defaultOptions.format,
-    			RangeSubset:this.defaultOptions.field
+    			RangeSubset:rngSubset
     		}
     		OpenLayers.Util.extend(localparams,params);
     		var url = buildUrl(this.defaultOptions.operationUrl,localparams);
