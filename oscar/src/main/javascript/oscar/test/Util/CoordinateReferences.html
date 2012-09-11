@@ -26,10 +26,11 @@ function test_CoordinateReferences_getReference(t) {
 
 function test_CoordinateReferences_getReference_NoReferenceFound(t) {
     t.plan(3);
-    var coordRef = oscar.Util.CoordinateReferences.getReference("EPSG:7415");
-    t.eq(coordRef.code,"EPSG:7415", "Returned nonreferenced epsg value");
+    var coordRef = oscar.Util.CoordinateReferences.getReference("EPSG:abcd");
+    console.log(coordRef);
+    t.eq(coordRef.code,"EPSG:abcd", "Returned nonreferenced epsg value");
     t.eq(coordRef.description,coordRef.code, "Description value matches code value.");
-    t.eq(coordRef.urn,"urn:ogc:def:crs:EPSG::7415","Urn value valid");
+    t.eq(coordRef.urn,"urn:ogc:def:crs:EPSG::abcd","Urn value valid");
 }
 
 </script>
