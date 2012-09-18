@@ -15133,7 +15133,7 @@ oscar.Util.CoordinateReferences = {
 		return {
 			code :epsg,
 			urn :oscar.Util.EpsgConversion.epsgToUrn(epsg),
-			description :""
+			description :epsg
 		};
 
 	},
