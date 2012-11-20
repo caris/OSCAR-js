@@ -312,7 +312,10 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 		$$(crsDiv).css("margin-top","5px");
 		var crsReferences = []
 		for(var i=0;i<crss.length;i++) {
-			crsReferences.push(oscar.Util.CoordinateReferences.getReference(crss[i]));
+			var crs = oscar.Util.CoordinateReferences.getReference(crss[i]);
+			//create an instance of the projection so it is ready for use later.
+			new OpenLayers.Projection(crs.code);
+			crsReferences.push(crs);
 		}
 		$$(crsDiv).append($$("<label></label>").html(oscar.i18n("srsCodeColumnLabel") +":").addClass("heading"));
 
@@ -499,6 +502,7 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 
 			try {
 				this.gridBaseCRS = coverageDescription.coverageDescription.domain.spatialDomain.gridCRS.gridBaseCRS;
+				this.gridOrigin = coverageDescription.coverageDescription.domain.spatialDomain.gridCRS.gridOrigin;
 				var fields = coverageDescription.coverageDescription.range.fields;
 				supportedCRSs = coverageDescription.coverageDescription.supportedCRS;
 				supportedFormats = coverageDescription.coverageDescription.supportedFormats;
@@ -649,6 +653,7 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 			if (urn.indexOf("::") == -1) {
 				urn = oscar.Util.EpsgConversion.epsgToUrn(urn);
 			}
+			
             var rngSubset = this.defaultOptions.field;
             if(rngSubset.length > 1) {
                 rngSubset = rngSubset.join(";");
@@ -666,6 +671,14 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
     			format:this.defaultOptions.format,
     			RangeSubset:rngSubset
     		}
+			/*
+			* If the urn value is the same as the gridBaseCRS value then include the grid origin,
+			* otherwise leave it out of the request as the spec states it will default to 0,0.
+			*/
+			if (urn == this.gridBaseCRS) {
+				localparams.GridOrigin=this.gridOrigin.split(" ").join(",")
+			}
+			
     		OpenLayers.Util.extend(localparams,params);
     		var url = buildUrl(this.defaultOptions.operationUrl,localparams);
     	    downloadService = new oscar.Gui.Download.WCS(url,null,{title:this.defaultOptions.title});
