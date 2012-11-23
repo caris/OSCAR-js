@@ -1475,8 +1475,8 @@ td#oscarLayoutFooterContainer {
 }
 
 .buttonsPanel {
-	padding-top: 10px;
-	text-align: right;
+	margin-top:10px;
+	text-align:left;
 }
 
 .crop {

@@ -450,6 +450,40 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 		
 	},	
 	/**
+	* Method: makeResolutionFields
+	* This method creates the gui elements to display resolution values in the download options panel.
+	*/
+	makeResolutionFields:function(div) {
+		var offsets = this.gridOffsets.split(" ");
+	
+		var $resolutionDiv = $$("<div></div>");
+		var $xLabel = $$("<label>").html(oscar.i18n("resolution-x") + ":&nbsp;");
+		$xLabel.addClass("heading");
+		this.$xText = $$("<input type='text' id='' size='5'>");
+		var $yLabel = $$("<label>").html(oscar.i18n("resolution-y") + ":&nbsp;");
+		$yLabel.addClass("heading");
+		this.$yText = $$("<input type='text' id='' size='5'>");
+		var $meters = $$("<label></label>").html("&nbsp;"+oscar.i18n("units:meters"));
+		$meters.addClass("heading");
+		$resolutionDiv.append($xLabel);
+		$resolutionDiv.append(this.$xText);
+
+		
+		$resolutionDiv.append($meters);
+		$resolutionDiv.append($$("<br/>"));
+		$resolutionDiv.append($yLabel);
+		$resolutionDiv.append(this.$yText);
+		$resolutionDiv.append($meters.clone());
+		$$(div).append($resolutionDiv);
+		var offsetX = parseFloat(offsets[0]);
+		var offsetY = parseFloat(offsets[1]);
+		var projection = new OpenLayers.Projection(this.gridBaseCRS);
+		offsetX *= oscar.Util.getMetersConversionFactor(projection);
+		offsetY *= oscar.Util.getMetersConversionFactor(projection);
+		this.$xText.val(offsetX);
+		this.$yText.val(offsetY);
+	},	
+	/**
 	 * This function will build the download options for a Web Coverage Service
 	 * Supports:
 	 *  - Format
@@ -502,13 +536,23 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 
 			try {
 				this.gridBaseCRS = coverageDescription.coverageDescription.domain.spatialDomain.gridCRS.gridBaseCRS;
-				this.gridOrigin = coverageDescription.coverageDescription.domain.spatialDomain.gridCRS.gridOrigin;
+				if(coverageDescription.coverageDescription.domain.spatialDomain.gridCRS.gridOrigin) {
+					this.gridOrigin = coverageDescription.coverageDescription.domain.spatialDomain.gridCRS.gridOrigin;
+				} else {
+					this.gridOrigin= "0 0";
+				}
+				if(coverageDescription.coverageDescription.domain.spatialDomain.gridCRS.gridOffsets) {
+					this.gridOffsets = coverageDescription.coverageDescription.domain.spatialDomain.gridCRS.gridOffsets;
+				} else {
+					this.gridOffsets = "0 0";
+				}
 				var fields = coverageDescription.coverageDescription.range.fields;
 				supportedCRSs = coverageDescription.coverageDescription.supportedCRS;
 				supportedFormats = coverageDescription.coverageDescription.supportedFormats;
 				this.makeFormatList(div,supportedFormats);
 				this.makeCRSList(div,supportedCRSs);
 				this.makeFieldList(div,fields);
+				this.makeResolutionFields(div);
 			} catch(err) {
 				alert(err.message);
 				alert("error in response");
@@ -671,13 +715,29 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
     			format:this.defaultOptions.format,
     			RangeSubset:rngSubset
     		}
+
 			/*
-			* If the urn value is the same as the gridBaseCRS value then include the grid origin,
-			* otherwise leave it out of the request as the spec states it will default to 0,0.
+			* If the urn value is the same as the gridBaseCRS value then include the grid origin
 			*/
 			if (urn == this.gridBaseCRS) {
 				localparams.GridOrigin=this.gridOrigin.split(" ").join(",")
+			} 
+			
+			//inject the new grid offset values.
+			var destProjection = new OpenLayers.Projection(oscar.Util.EpsgConversion.urnToEpsg(urn));
+			var resX = parseFloat(this.$xText.val());
+			var resY = parseFloat(this.$yText.val());
+			if (resX > 10000|| resY > 10000) {
+				alert(oscar.i18n("resolutionTooHigh"));
+				return;
+			} else if (resX < 0 || resY < 0) {
+				alert(oscar.i18n("resolutionTooLow"));
+				return;
 			}
+			resX /= oscar.Util.getMetersConversionFactor(destProjection);
+			resY /= oscar.Util.getMetersConversionFactor(destProjection);
+			
+			localparams.GridOffsets=resX + "," + resY;
 			
     		OpenLayers.Util.extend(localparams,params);
     		var url = buildUrl(this.defaultOptions.operationUrl,localparams);

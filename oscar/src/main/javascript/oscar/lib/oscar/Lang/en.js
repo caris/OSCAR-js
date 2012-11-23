@@ -332,5 +332,15 @@ OpenLayers.Util.applyDefaults(oscar.Lang.getDictionary("en"), {
 	
 	"Crop" : "Crop",
 	
-	"AddToQueue": "Queue"
+	"AddToQueue": "Queue",
+	
+	"units:meters": "metres",
+	
+	"resolution-x": "Resolution x",
+	
+	"resolution-y": "Resolution y",
+	
+	"resolutionTooHigh":"The Resolution value is too high, please adjust the value.",
+	
+	"resolutionTooLow":"The Resolution value is too low, please adjust the value."
 });

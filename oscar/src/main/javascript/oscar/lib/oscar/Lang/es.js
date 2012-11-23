@@ -336,6 +336,16 @@ OpenLayers.Util.applyDefaults(oscar.Lang.getDictionary("es"), {
 	
 	"Crop" : "Recortar",
 	
-	"AddToQueue": "Cola de descarga"
+	"AddToQueue": "Cola de descarga",
+	
+	"units:meters": "metros",
+	
+	"resolution-x": "Resoluci\u00f3n x",
+	
+	"resolution-y": "Resoluci\u00f3n y",
+	
+	"resolutionTooHigh":"El valor de Resoluci\u00f3n es demasiado alta, ajuste el valor.",
+	
+	"resolutionTooLow":"El valor de Resoluci\u00f3n es demasiado bajo, ajuste el valor."
 		
 });

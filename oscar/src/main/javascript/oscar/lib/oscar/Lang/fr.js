@@ -336,5 +336,15 @@ OpenLayers.Util.applyDefaults(oscar.Lang.getDictionary("fr"), {
 	
 	"Crop" : "Rognage",
 	
-	"AddToQueue": "File d'attente de t\u00e9l\u00e9chargement"
+	"AddToQueue": "File d'attente de t\u00e9l\u00e9chargement",
+	
+	"units:meters": "m\u00e8tres",
+	
+	"resolution-x": "R\u00e9solution x",
+	
+	"resolution-y": "R\u00e9solution y",
+	
+	"resolutionTooHigh":"La valeur de R\u00e9solution est trop \u00e9lev\u00e9, s'il vous pla\u00eet ajuster la valeur.",
+	
+	"resolutionTooLow":"La valeur est trop faible R\u00e9solution, s'il vous pla\u00eet ajuster la valeur."
 });
