@@ -405,7 +405,6 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 			   currentFields.push(field); 
 			}
 			scope.defaultOptions.field=currentFields;
-			console.log(scope.defaultOptions.field);
 		}); 
 		
 		return $input;
