@@ -1469,14 +1469,18 @@ td#oscarLayoutFooterContainer {
 	color: #fff !important;
 }
 
-.oscarControlDataDiscovery label.heading {
+.oscarControlDataDiscovery label.heading, .oscarControlDataDiscovery td.heading,.oscarControlDataDiscovery button.heading {
 	font-size: 11px !important;
 	color: #fff !important;
 }
 
+.oscarControlDataDiscovery button.heading {
+	color: #000 !important;
+}
+
 .buttonsPanel {
-	padding-top: 10px;
-	text-align: right;
+	margin-top:10px;
+	text-align:left;
 }
 
 .crop {

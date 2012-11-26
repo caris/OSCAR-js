@@ -235,7 +235,23 @@
 		var masterArray =["cs:Buildings","cs:Forest","cs:River"];
 		var item = "cs:Land"
 		t.eq(oscar.Util.isFeatureInArray(item,masterArray),false,"cs:Land Not Found");
-	}    
+	}  
+	
+	/**
+	* Test the getMetersConversionFactor based on a projection.
+	*/
+	function test_getMetersConversionFactor(t) {
+		var epsg28355 = new OpenLayers.Projection("EPSG:28355");
+		var epsg32065 = new OpenLayers.Projection("EPSG:32065");
+		var epsg4326 = new OpenLayers.Projection("EPSG:4326");
+	
+		t.delay_call(3,function() {
+			t.plan(3);
+			t.eq(0.3048006096012192,oscar.Util.getMetersConversionFactor(epsg32065),epsg32065.projCode + " conversion factor of " + oscar.Util.getMetersConversionFactor(epsg32065) + " returned.");
+			t.eq(1,oscar.Util.getMetersConversionFactor(epsg28355),epsg28355.projCode + " conversion factor of " + oscar.Util.getMetersConversionFactor(epsg28355) + " returned.");
+			t.eq(111118.97383794768 ,oscar.Util.getMetersConversionFactor(epsg4326),epsg4326.projCode + " conversion factor of " + oscar.Util.getMetersConversionFactor(epsg4326) + " returned.");
+		});
+	}	
 </script>
 <body>
 </body>

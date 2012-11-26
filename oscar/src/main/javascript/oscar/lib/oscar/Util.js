@@ -40,6 +40,25 @@ oscar.debug = {
 oscar.Util = {};
 
 /**
+* APIMethod:getMetersConversionFactor
+* Uses the projection to obtain a conversion factor value to display units in meters.
+* Parameters:
+* - projection ( OpenLayers.Projection)
+*
+*/
+oscar.Util.getMetersConversionFactor = function(projection) {
+	var proj = projection.proj;
+	if(proj.projName == "longlat") {
+		return OpenLayers.INCHES_PER_UNIT.degrees * OpenLayers.METERS_PER_INCH;
+	} else if(proj.to_meter) {
+		return proj.to_meter;
+	} else {
+		return 1;
+	}
+}
+
+
+/**
 *
 * APIMethod: isFeatureInArray
 * Returns true of a feature name is found in the array

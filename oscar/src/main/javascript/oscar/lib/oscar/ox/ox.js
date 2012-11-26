@@ -791,6 +791,8 @@ oscar.ox.Layer = oscar.BaseClass( {
 			params.layers = layerNamesArr;
 			params.format = (this.format) ? this.format : "image/png";
 			params.transparent = true;
+			if (this.parameters.version)
+				params.version = this.parameters.version;
 			olLayer = new OpenLayers.Layer.WMS(this.name, this.urls, params, {
 				wrapDateLine :false,
 				buffer :0,

@@ -118,7 +118,7 @@ OpenLayers.Util.applyDefaults(oscar.Lang.getDictionary("es"), {
 
 	"MeasurementToole" :"Herramienta de medici\u00f3n",
 
-	"srsCodeColumnLabel" :"Sistema de coordenadas",
+	"srsCodeColumnLabel" :"Sistema de referencia de coordenadas",
 
 	"srsDescriptionColumnLabel" :"Descripci\u00f3n",
 
@@ -336,6 +336,16 @@ OpenLayers.Util.applyDefaults(oscar.Lang.getDictionary("es"), {
 	
 	"Crop" : "Recortar",
 	
-	"AddToQueue": "Cola de descarga"
+	"AddToQueue": "Cola de descarga",
+	
+	"units:meters": "metros",
+	
+	"resolution-x": "Resoluci\u00f3n x",
+	
+	"resolution-y": "Resoluci\u00f3n y",
+	
+	"resolutionTooHigh":"El valor de la resoluci\u00f3n es muy alto, por favor ajuste el valor",
+	
+	"resolutionTooLow":"El valor de la resoluci\u00f3n es muy bajo, por favor ajuste el valor."
 		
 });
