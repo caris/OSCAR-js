@@ -344,7 +344,7 @@ OpenLayers.Util.applyDefaults(oscar.Lang.getDictionary("fr"), {
 	
 	"resolution-y": "R\u00e9solution y",
 	
-	"resolutionTooHigh":"La valeur de R\u00e9solution est trop \u00e9lev\u00e9, s'il vous pla\u00eet ajuster la valeur.",
+	"resolutionTooHigh":"La valeur de la r\u00e9solution est trop \u00e9lev\u00e9e, s'il vous pla\u00eet ajustez la valeur.",
 	
-	"resolutionTooLow":"La valeur est trop faible R\u00e9solution, s'il vous pla\u00eet ajuster la valeur."
+	"resolutionTooLow":"La valeur de la r\u00e9solution est trop faible, s'il vous pla\u00eet ajustez la valeur."
 });
