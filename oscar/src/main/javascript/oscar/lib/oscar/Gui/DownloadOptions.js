@@ -379,6 +379,54 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 		
 	},
 	/**
+	* Method: _createFieldCheckout
+	* This method creates the checkbox to display the available fields for the coverage.
+	* Parameters:
+	* - field - a JSON object representing a field
+	*/
+	_createFieldCheckbox:function(field) {
+		var scope = this;
+		var $input = $$("<input type='checkbox'>");
+		var id = OpenLayers.Util.createUniqueID(field.identifier);
+		$input.attr("id",id);
+		$input.attr("value",field.identifier);
+		$input.data("field",field.identifier);
+		$input.click(function() {
+			var $this = $$(this);
+			var currentFields = scope.defaultOptions.field;
+			var field = "#" + $this.attr("id");
+			var index = $$.inArray(field,currentFields);
+			if(index != -1)  {
+			   currentFields.splice(index,1);
+			} else {
+			   currentFields.push(field); 
+			}
+			scope.defaultOptions.field=currentFields;
+		}); 
+		
+		return $input;
+	
+	},
+	/**
+	* Method: _createInterpolationMethodList
+	* This method creates the selection dropdown lists showing the interpolation methods
+	* available for the field.
+	* Parameters:
+	* - field - a JSON object representing a field
+	*/
+	_createInterploationMethodList:function(field) {
+		var $selection = $$("<select></select>");
+		var id = OpenLayers.Util.createUniqueID(field.identifier);
+		$selection.attr("id",id);
+		for(m in field.interpolationMethods.methods) {
+			var method = field.interpolationMethods.methods[m];
+			var $option = $$("<option></option").html(method);
+			$selection.append($option);
+		}
+		
+		return $selection;
+	},
+	/**
 	 * Method: makeFieldList
 	 * 
 	 * Creates a button to display a list to select fields for extraction from 
@@ -386,52 +434,82 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 	 */
 	makeFieldList:function(div,fields) {
 		var scope = this;
-		var fieldDiv = document.createElement("div");
+		//create the div to contain the field list
+		var $fieldDiv = $$("<div></div>");
+		var $fieldButton = $$("<button></button>").html(oscar.i18n("Fields"));
+		$fieldButton.addClass("heading");
 		
-        $$(fieldDiv).css({position:'relative','margin-top':'5px'});
-		div.appendChild(fieldDiv);
-		var arr = [];
-		for(var i in fields) {
-			arr.push(fields[i].identifier);
-		}
-		
-		$$(fieldDiv).append($$("<label></label>").html(oscar.i18n("Fields") +": ").addClass("heading"));
-		var fieldAdjustment = document.createElement("a");
-		fieldAdjustment.innerHTML = oscar.i18n("Fields");
-		fieldDiv.appendChild(fieldAdjustment);
-		var d = $$("<div></div>");
-		$$(d).addClass("ui-fields");
-		$$(d).hide();
-		for(var i=0;i<arr.length;i++) {
-			var fieldItem = $$("<div>");
-			var input = $$("<input type='checkbox'>");
+		var $table = $$("<table></table>");
+		$table.css("display","none");
+		for(i in fields) {
+			var field = fields[i];
+			var $row = $$("<tr></tr>");
+			var $inputCell = $$("<td></td>");
+			var $fieldCell =$inputCell.clone().html(field.identifier);
+			$fieldCell.addClass("heading");
+			var $selectionCell = $inputCell.clone();
+
+			var $selection = this._createInterploationMethodList(field);
+
+			var $input = this._createFieldCheckbox(field);
+
+			$input.data("selection","#"+$selection.attr("id"));
+
 			if(i==0) {
-				input.attr("checked",true);
+				$input.attr("checked",true);
+				this.defaultOptions.field = new Array("#"+$input.attr("id"));
 			}
-			var lbl = $$("<label>");
-			lbl.text(arr[i]);
-			$$(fieldItem).append(input);
-			$$(fieldItem).append(lbl);
-			$$(d).append(fieldItem);
+
+			$row.append($inputCell);
+			$inputCell.append($input);
+			$row.append($fieldCell);
+			$row.append($selectionCell);
+			$selectionCell.append($selection);
+			
+			$table.append($row);
 		}
 		
+		$fieldDiv.append($table);
+		$$(div).append($fieldButton);
+		$fieldButton.click(function() {
+			$table.slideToggle("slow");
+		});
 		
 		
-		
-		oscar.jQuery(d).insertAfter(fieldAdjustment);
-		oscar.jQuery(fieldAdjustment).button({
-        	icons: {
-        		primary: "ui-icon-triangle-1-s"
-        	},
-        	text: false
-        }).click(function() {
-        	oscar.jQuery(d).fadeToggle("slow");
-    		
-        });
-		
-		
-        this.defaultOptions.field = arr[0]
-		
+		$$(div).append($fieldDiv);
+	},		
+	/**
+	* Method: makeResolutionFields
+	* This method creates the gui elements to display resolution values in the download options panel.
+	*/
+	makeResolutionFields:function(div) {
+		var offsets = this.gridOffsets.split(" ");
+	
+		var $resolutionDiv = $$("<div></div>");
+		var $xLabel = $$("<label>").html(oscar.i18n("resolution-x") + ":&nbsp;");
+		$xLabel.addClass("heading");
+		this.$xText = $$("<input type='text' id='' size='5'>");
+		var $yLabel = $$("<label>").html(oscar.i18n("resolution-y") + ":&nbsp;");
+		$yLabel.addClass("heading");
+		this.$yText = $$("<input type='text' id='' size='5'>");
+		var $meters = $$("<label></label>").html("&nbsp;"+oscar.i18n("units:meters"));
+		$meters.addClass("heading");
+		$resolutionDiv.append($xLabel);
+		$resolutionDiv.append(this.$xText);
+
+		$resolutionDiv.append($meters);
+		$resolutionDiv.append($$("<br/>"));
+		$resolutionDiv.append($yLabel);
+		$resolutionDiv.append(this.$yText);
+		$resolutionDiv.append($meters.clone());
+		$$(div).append($resolutionDiv);
+		var offsetX = parseFloat(offsets[0]);
+		var offsetY = parseFloat(offsets[1]);
+		var projection = new OpenLayers.Projection(this.gridBaseCRS);
+		offsetX *= oscar.Util.getMetersConversionFactor(projection);
+		offsetY *= oscar.Util.getMetersConversionFactor(projection);
+		this.$xText.val(offsetX);
+		this.$yText.val(offsetY);
 	},	
 	/**
 	 * This function will build the download options for a Web Coverage Service
@@ -486,12 +564,23 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 
 			try {
 				this.gridBaseCRS = coverageDescription.coverageDescription.domain.spatialDomain.gridCRS.gridBaseCRS;
+				if(coverageDescription.coverageDescription.domain.spatialDomain.gridCRS.gridOrigin) {
+					this.gridOrigin = coverageDescription.coverageDescription.domain.spatialDomain.gridCRS.gridOrigin;
+				} else {
+					this.gridOrigin= "0 0";
+				}
+				if(coverageDescription.coverageDescription.domain.spatialDomain.gridCRS.gridOffsets) {
+					this.gridOffsets = coverageDescription.coverageDescription.domain.spatialDomain.gridCRS.gridOffsets;
+				} else {
+					this.gridOffsets = "0 0";
+				}
 				var fields = coverageDescription.coverageDescription.range.fields;
 				supportedCRSs = coverageDescription.coverageDescription.supportedCRS;
 				supportedFormats = coverageDescription.coverageDescription.supportedFormats;
 				this.makeFormatList(div,supportedFormats);
 				this.makeCRSList(div,supportedCRSs);
 				this.makeFieldList(div,fields);
+				this.makeResolutionFields(div);
 			} catch(err) {
 				alert(err.message);
 				alert("error in response");
@@ -636,16 +725,58 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 			if (urn.indexOf("::") == -1) {
 				urn = oscar.Util.EpsgConversion.epsgToUrn(urn);
 			}
+			
+			var fields = this.defaultOptions.field;
+			var fieldsArray = new Array();
+			for(f in fields) {
+				var field = fields[f];
+				var $input = $$(field); 
+				var select = $$($input.data("selection"));
+				fieldsArray.push($input.val() + ":" + select.val());
+			}
+			var rngSubset="";
+            if(fieldsArray.length > 1) {
+                rngSubset = fieldsArray.join(";");
+            } else {
+                rngSubset = fieldsArray.join(" ");
+            }
+
     		var localparams = {
     			request:"GetCoverage",
     			store:this.defaultOptions.store,
     			GridBaseCRS:urn,
     			identifier:this.defaultOptions.id,
-    			RangeSubset:"contents",
     			BoundingBox:localBbox + ","+ sUrn,
-    			format:this.defaultOptions.format,
-    			RangeSubset:this.defaultOptions.field
+    			format:this.defaultOptions.format
+    			
     		}
+			if (fieldsArray.length > 0) {
+				localparams.RangeSubset = rngSubset;
+			}
+
+			/*
+			* If the urn value is the same as the gridBaseCRS value then include the grid origin
+			*/
+			if (urn == this.gridBaseCRS) {
+				localparams.GridOrigin=this.gridOrigin.split(" ").join(",")
+			} 
+			
+			//inject the new grid offset values.
+			var destProjection = new OpenLayers.Projection(oscar.Util.EpsgConversion.urnToEpsg(urn));
+			var resX = parseFloat(this.$xText.val());
+			var resY = parseFloat(this.$yText.val());
+			if (resX > 10000|| resY > 10000) {
+				alert(oscar.i18n("resolutionTooHigh"));
+				return;
+			} else if (resX < 0 || resY < 0) {
+				alert(oscar.i18n("resolutionTooLow"));
+				return;
+			}
+			resX /= oscar.Util.getMetersConversionFactor(destProjection);
+			resY /= oscar.Util.getMetersConversionFactor(destProjection);
+			
+			localparams.GridOffsets=resX + "," + resY;
+			
     		OpenLayers.Util.extend(localparams,params);
     		var url = buildUrl(this.defaultOptions.operationUrl,localparams);
     	    downloadService = new oscar.Gui.Download.WCS(url,null,{title:this.defaultOptions.title});

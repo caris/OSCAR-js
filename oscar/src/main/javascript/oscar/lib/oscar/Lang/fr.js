@@ -118,7 +118,7 @@ OpenLayers.Util.applyDefaults(oscar.Lang.getDictionary("fr"), {
 
 	"MeasurementToole" :"Outil de mesure",
 
-	"srsCodeColumnLabel" :"Syst\u010dme de coordonn\u00e9es",
+	"srsCodeColumnLabel" :"Syst\u00e8me de r\u00e9f\u00e9rence de coordonn\u00e9es",
 
 	"srsDescriptionColumnLabel" :"Description",
 
@@ -336,5 +336,15 @@ OpenLayers.Util.applyDefaults(oscar.Lang.getDictionary("fr"), {
 	
 	"Crop" : "Rognage",
 	
-	"AddToQueue": "File d'attente de t\u00e9l\u00e9chargement"
+	"AddToQueue": "File d'attente de t\u00e9l\u00e9chargement",
+	
+	"units:meters": "m\u00e8tres",
+	
+	"resolution-x": "R\u00e9solution x",
+	
+	"resolution-y": "R\u00e9solution y",
+	
+	"resolutionTooHigh":"La valeur de la r\u00e9solution est trop \u00e9lev\u00e9e, s'il vous pla\u00eet ajustez la valeur.",
+	
+	"resolutionTooLow":"La valeur de la r\u00e9solution est trop faible, s'il vous pla\u00eet ajustez la valeur."
 });

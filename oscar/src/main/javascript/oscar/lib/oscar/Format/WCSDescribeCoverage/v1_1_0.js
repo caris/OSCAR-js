@@ -250,9 +250,23 @@ oscar.Format.WCSDescribeCoverage.v1_1_0 = oscar.BaseClass(
 				this.runChildNodes(field, node);
 				obj.fields.push(field);
 			},
+			read_cap_InterpolationMethods:function(obj,node) {
+				if (!obj.interpolationMethods) {
+					obj.interpolationMethods={methods:[],defaultMethod:""};
+				}
+				this.runChildNodes(obj.interpolationMethods,node);
+			},
+			read_cap_InterpolationMethod:function(obj,node) {
+				
+				var value = this.getChildValue(node);
+				obj.methods.push(value);
+			},
+			read_cap_Default:function(obj,node) {
+				obj.defaultMethod = this.getChildValue(node);
+			},
 			/**
 			 * Constant: CLASS_NAME
-			 * - oscar.Format.WCSDescribeCoverage.v1_0_0
+			 * - oscar.Format.WCSDescribeCoverage.v1_1_0
 			 */
-			CLASS_NAME :"oscar.Format.WCSDescribeCoverage.v1_0_0"
+			CLASS_NAME :"oscar.Format.WCSDescribeCoverage.v1_1_0"
 		});
