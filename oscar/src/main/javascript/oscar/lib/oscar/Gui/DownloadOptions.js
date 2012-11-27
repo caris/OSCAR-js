@@ -426,6 +426,10 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 			var $option = $$("<option></option").html(method);
 			$selection.append($option);
 		}
+		//hide the interpolation method list if none are available.
+		if(field.interpolationMethods.methods.length == 0) {
+			$selection.css("display","none");
+		}
 		
 		return $selection;
 	},
@@ -736,7 +740,13 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 				var field = fields[f];
 				var $input = $$(field); 
 				var select = $$($input.data("selection"));
-				fieldsArray.push($input.val() + ":" + select.val());
+				var selectValue = select.val();
+				
+				if(select.val()!= null) {
+					fieldsArray.push($input.val() + ":" + select.val());
+				} else {
+					fieldsArray.push($input.val());
+				}
 			}
 			var rngSubset="";
             if(fieldsArray.length > 1) {
