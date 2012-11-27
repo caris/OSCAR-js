@@ -421,9 +421,16 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 		var $selection = $$("<select></select>");
 		var id = OpenLayers.Util.createUniqueID(field.identifier);
 		$selection.attr("id",id);
+		var defaultMethod = "";
+		if(field.interpolationMethods.defaultMethod) {
+			defaultMethod = field.interpolationMethods.defaultMethod;
+		}
 		for(m in field.interpolationMethods.methods) {
 			var method = field.interpolationMethods.methods[m];
 			var $option = $$("<option></option").html(method);
+			if(method == defaultMethod) {
+				$option.attr("selected",true);
+			}
 			$selection.append($option);
 		}
 		//hide the interpolation method list if none are available.
