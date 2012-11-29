@@ -22,7 +22,6 @@
 var $_oscarcssdependencies = [
     "../jquery/css/smoothness/jquery-ui-1.8.16.custom.css"
     ,"../yui/build/fonts/fonts-min.css"
-    ,"../yui/build/fonts/fonts-min.css"
     ,"../yui/build/button/assets/skins/sam/button.css"
     ,"../yui/build/autocomplete/assets/skins/sam/autocomplete.css"
     ,"../yui/build/container/assets/skins/sam/container.css"
@@ -71,11 +70,15 @@ $_oscarscriptdependencies.push("oscar.js");
 $_oscarscriptdependencies.push("yuiDependencies.js");
 
 window["oscar"] = {
-    loadStartAt:new Date().getTime(),
     injectJs:yepnope.injectJs,
     injectCss:yepnope.injectCss,
     readyCallbacks:[]
 };
+
+/**
+*Method: _isReady
+* Internal function call to begin performing call backs
+*/
 oscar._isReady = function() {   
     var scope = this;
     $$(document).ready(function() {
@@ -87,6 +90,18 @@ oscar._isReady = function() {
     });
 };
 
+/**
+* APIMethod: getScriptLocation
+* Returns the relative path to the oscar script directory
+*/
+oscar.getScriptLocation = function() {
+	return oscar._scriptLocation;
+}
+
+/**
+*APIMethod: oscar.onReady
+* Called when all dependencies have been loaded and oscar is ready to be used.
+*/
 oscar.onReady = function(fn) {
     
     this.readyCallbacks.push(fn);
