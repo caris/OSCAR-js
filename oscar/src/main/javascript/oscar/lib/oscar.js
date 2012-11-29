@@ -175,4 +175,4 @@
 /**
  * Constant: VERSION_NUMBER
  */
-oscar.VERSION_NUMBER = "10.1.0-SNAPSHOT";
+oscar.VERSION_NUMBER = "12.0.2";
