@@ -312,7 +312,10 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 		$$(crsDiv).css("margin-top","5px");
 		var crsReferences = []
 		for(var i=0;i<crss.length;i++) {
-			crsReferences.push(oscar.Util.CoordinateReferences.getReference(crss[i]));
+			var crs = oscar.Util.CoordinateReferences.getReference(crss[i]);
+			//create an instance of the projection so it is ready for use later.
+			new OpenLayers.Projection(crs.code);
+			crsReferences.push(crs);
 		}
 		$$(crsDiv).append($$("<label></label>").html(oscar.i18n("srsCodeColumnLabel") +":").addClass("heading"));
 
@@ -418,10 +421,21 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 		var $selection = $$("<select></select>");
 		var id = OpenLayers.Util.createUniqueID(field.identifier);
 		$selection.attr("id",id);
+		var defaultMethod = "";
+		if(field.interpolationMethods.defaultMethod) {
+			defaultMethod = field.interpolationMethods.defaultMethod;
+		}
 		for(m in field.interpolationMethods.methods) {
 			var method = field.interpolationMethods.methods[m];
 			var $option = $$("<option></option").html(method);
+			if(method == defaultMethod) {
+				$option.attr("selected",true);
+			}
 			$selection.append($option);
+		}
+		//hide the interpolation method list if none are available.
+		if(field.interpolationMethods.methods.length == 0) {
+			$selection.css("display","none");
 		}
 		
 		return $selection;
@@ -497,6 +511,7 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 		$resolutionDiv.append($xLabel);
 		$resolutionDiv.append(this.$xText);
 
+		
 		$resolutionDiv.append($meters);
 		$resolutionDiv.append($$("<br/>"));
 		$resolutionDiv.append($yLabel);
@@ -714,7 +729,7 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 			if(this.map.getProjectionObject().projCode != "EPSG:4326") {
 				var sProj = this.map.getProjectionObject();
 				var dProj = new OpenLayers.Projection("EPSG:4326");
-				localBbox=bounds.transform(sProj,dProj).toArray();
+				localBbox=bounds.clone().transform(sProj,dProj).toArray();
 				sProj = null;
 				dProj = null;
 			} else {
@@ -732,7 +747,13 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 				var field = fields[f];
 				var $input = $$(field); 
 				var select = $$($input.data("selection"));
-				fieldsArray.push($input.val() + ":" + select.val());
+				var selectValue = select.val();
+				
+				if(select.val()!= null) {
+					fieldsArray.push($input.val() + ":" + select.val());
+				} else {
+					fieldsArray.push($input.val());
+				}
 			}
 			var rngSubset="";
             if(fieldsArray.length > 1) {
