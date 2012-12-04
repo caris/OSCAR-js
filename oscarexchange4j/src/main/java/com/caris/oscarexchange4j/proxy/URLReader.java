@@ -87,9 +87,9 @@ public class URLReader implements Reader {
             int oneByte;
             String methodName;
             String urlString = request.getParameter("url");
-            
+            urlString = urlString.replace(" ", "%20");
+			//encoding any space characters with %20
             URL url = new URL(urlString);
-            
             con =(HttpURLConnection) url.openConnection();
             
             methodName = request.getMethod();
