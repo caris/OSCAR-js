@@ -7,7 +7,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * 	http://www.apache.org/licenses/LICENSE-2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -95,8 +95,8 @@ public class URLReader implements Reader {
         try {
             int oneByte;
             String methodName;
-            String urlString = request.getParameter("url");
-            urlString = urlString.replace(" ", "%20");
+            String urlString = encodeSpaces(request.getParameter("url"));
+
             // encoding any space characters with %20
             URL url = new URL(urlString);
             con = (HttpURLConnection) url.openConnection();
@@ -172,6 +172,22 @@ public class URLReader implements Reader {
         } finally {
         }
         return resp;
+    }
+
+    /**
+     * 
+     * @param url
+     *            The url to encode
+     * @return A string with the spaces encoded with %20
+     * @throws IOException
+     */
+    protected String encodeSpaces(String url) throws IOException {
+        if (url != null) {
+            return url.replace(" ", "%20");
+        } else {
+            throw new IOException(url + " is an invalid url.");
+        }
+
     }
 
 }
