@@ -179,15 +179,9 @@ public class URLReader implements Reader {
      * @param url
      *            The url to encode
      * @return A string with the spaces encoded with %20
-     * @throws IOException
      */
-    protected String encodeSpaces(String url) throws IOException {
-        if (url != null) {
-            return url.replace(" ", "%20");
-        } else {
-            throw new IOException(url + " is an invalid url.");
-        }
-
+    protected String encodeSpaces(String url) {
+        return url.replace(" ", "%20");
     }
 
 }
