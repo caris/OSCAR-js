@@ -299,38 +299,6 @@
 			</build>
 		</profile>
 		<profile>
-<<<<<<< HEAD
-			<id>naturaldocs</id>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.codehaus.mojo.naturaldocs</groupId>
-						<artifactId>naturaldocs-maven-plugin</artifactId>
-						<version>1.0-SNAPSHOT</version>
-						<executions>
-							<execution>
-								<phase>compile</phase>
-								<goals>
-									<goal>generate</goal>
-								</goals>
-							</execution>
-						</executions>
-						<configuration>
-							<naturalDocsHome>D:\Development Tools\NaturalDocs-1.51</naturalDocsHome>
-							<input>src/main/javascript/oscar</input>
-							<project>
-								src/main/documentation/settings
-							</project>
-							<output>target/scripts/oscar/documentation</output>
-							<outputFormat>FramedHTML</outputFormat>
-							<rebuild>true</rebuild>
-						</configuration>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-	</profiles>
-=======
             <id>naturaldocs</id>
             <build>
                 <plugins>
@@ -359,5 +327,4 @@
             </build>
         </profile>
     </profiles>
->>>>>>> master
 </project>
