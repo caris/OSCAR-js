@@ -7,7 +7,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * 	http://www.apache.org/licenses/LICENSE-2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -29,8 +29,6 @@ import java.util.Enumeration;
 
 import javax.servlet.http.HttpServletRequest;
 
-
-
 import org.apache.log4j.Logger;
 
 /**
@@ -42,7 +40,7 @@ public class URLReader implements Reader {
      * This is the logger object.
      */
     Logger log = Logger.getLogger(this.getClass().getName());
-    
+
     /**
      * The url object used for the request
      */
@@ -50,16 +48,21 @@ public class URLReader implements Reader {
 
     /**
      * This is a constructor for the URLReader class
+     * 
      * @param url
-     * @throws MalformedURLException 
+     * @throws MalformedURLException
      */
-    public URLReader(String connectionString) throws MalformedURLException { //replace spaces with %20
+    public URLReader(String connectionString) throws MalformedURLException { // replace
+                                                                             // spaces
+                                                                             // with
+                                                                             // %20
         connectionString = connectionString.replace(" ", "%20");
         this.url = new URL(connectionString);
     }
 
     /**
      * This is a constructor for the URLReader class
+     * 
      * @param url
      */
     public URLReader(URL url) {
@@ -68,30 +71,36 @@ public class URLReader implements Reader {
 
     /**
      * Returns an HttpConnection object based on the classes URL.
+     * 
      * @return
      * @throws IOException
      */
     public HttpURLConnection getConnection() throws IOException {
         return (HttpURLConnection) this.url.openConnection();
     }
-	/* (non-Javadoc)
-	 * @see com.caris.oscarexchange4j.proxy.Reader#makeRequest(javax.servlet.http.HttpServletRequest)
-	 */
-	@Override
-	public Response makeRequest(HttpServletRequest request){
-		Response resp = new Response();
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.caris.oscarexchange4j.proxy.Reader#makeRequest(javax.servlet.http
+     * .HttpServletRequest)
+     */
+    @Override
+    public Response makeRequest(HttpServletRequest request) {
+        Response resp = new Response();
         BufferedInputStream webToProxyBuf = null;
         HttpURLConnection con;
-        
-        try{
+
+        try {
             int oneByte;
             String methodName;
-            String urlString = request.getParameter("url");
-            
+            String urlString = encodeSpaces(request.getParameter("url"));
+
+            // encoding any space characters with %20
             URL url = new URL(urlString);
-            
-            con =(HttpURLConnection) url.openConnection();
-            
+            con = (HttpURLConnection) url.openConnection();
+
             methodName = request.getMethod();
             con.setRequestMethod(methodName);
             con.setDoOutput(true);
@@ -99,64 +108,80 @@ public class URLReader implements Reader {
             HttpURLConnection.setFollowRedirects(false);
             con.setUseCaches(true);
 
-            for( Enumeration<String> e = request.getHeaderNames() ; e.hasMoreElements();){
+            for (Enumeration<String> e = request.getHeaderNames(); e
+                    .hasMoreElements();) {
                 String headerName = e.nextElement().toString();
-           //When the request is forwarded, copying the current host header field in the servletRequest will cause 
-           // a valid host header field
-                if (!headerName.equals("accept-encoding")&&!headerName.equals("host")){
-                    con.setRequestProperty(headerName, request.getHeader(headerName));
+                // When the request is forwarded, copying the current host
+                // header field in the servletRequest will cause
+                // a valid host header field
+                if (!headerName.equals("accept-encoding")
+                        && !headerName.equals("host")) {
+                    con.setRequestProperty(headerName,
+                            request.getHeader(headerName));
                 }
             }
-            
+
             con.connect();
-            
-            if(methodName.equals("POST")){
-                BufferedInputStream clientToProxyBuf = new BufferedInputStream(request.getInputStream());
-                BufferedOutputStream proxyToWebBuf     = new BufferedOutputStream(con.getOutputStream());
-                
-                while ((oneByte = clientToProxyBuf.read()) != -1) 
+
+            if (methodName.equals("POST")) {
+                BufferedInputStream clientToProxyBuf = new BufferedInputStream(
+                        request.getInputStream());
+                BufferedOutputStream proxyToWebBuf = new BufferedOutputStream(
+                        con.getOutputStream());
+
+                while ((oneByte = clientToProxyBuf.read()) != -1)
                     proxyToWebBuf.write(oneByte);
-                
+
                 proxyToWebBuf.flush();
                 proxyToWebBuf.close();
                 clientToProxyBuf.close();
             }
-            
+
             resp.setContentType(con.getContentType());
             StringBuffer input = new StringBuffer();
-            BufferedReader in=null;
+            BufferedReader in = null;
             try {
-                in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-                String line=null;
-            
-                while((line = in.readLine()) != null) {
+                in = new BufferedReader(new InputStreamReader(
+                        con.getInputStream()));
+                String line = null;
+
+                while ((line = in.readLine()) != null) {
                     input.append(line);
                     input.append(System.getProperty("line.separator"));
                 }
             } catch (IOException e) {
-                log.error("Error attempting to read from the resource.",e);
+                log.error("Error attempting to read from the resource.", e);
             } finally {
                 try {
-                	if(in != null) {
-                    in.close();
-                	}
+                    if (in != null) {
+                        in.close();
+                    }
                 } catch (IOException e) {
-                    log.error("Error attempting to close the connection.",e);
-                }    
+                    log.error("Error attempting to close the connection.", e);
+                }
             }
-            if(webToProxyBuf != null) {
-            	webToProxyBuf.close();
+            if (webToProxyBuf != null) {
+                webToProxyBuf.close();
             }
             con.disconnect();
             resp.setBytes(input.toString().getBytes());
-            
-        }catch(Exception e){
+
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
+        } finally {
         }
-        finally{
-        }
-		return resp;
+        return resp;
+    }
+
+    /**
+     * 
+     * @param url
+     *            The url to encode
+     * @return A string with the spaces encoded with %20
+     */
+    protected String encodeSpaces(String url) {
+        return url.replace(" ", "%20");
     }
 
 }
