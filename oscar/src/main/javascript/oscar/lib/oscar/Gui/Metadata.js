@@ -204,7 +204,13 @@ oscar.Gui.Metadata = oscar
 					service :"WCS",
 					request :"GetCapabilities"
 				};
-				OpenLayers.loadURL(url, params, this, success, fail);
+				OpenLayers.Request.GET({
+					url:url,
+					params:params,
+					success:success,
+					fail:fail,
+					scope:this
+				});
 			},
 			/**
 			 * APIMethod: loadWMSCapabilities 
@@ -237,8 +243,13 @@ oscar.Gui.Metadata = oscar
 					service :"WMS",
 					request :"GetCapabilities"
 				};
-				OpenLayers.loadURL(url, params, this, success, fail);
-
+				OpenLayers.Request.GET({
+					url:url,
+					params:params,
+					success:success,
+					fail:fail,
+					scope:this
+				});
 			},
 			/**
 			 * APIMethod: loadWMTSCapabilities 
@@ -271,8 +282,13 @@ oscar.Gui.Metadata = oscar
 					service :"WMTS",
 					request :"GetCapabilities"
 				};
-				OpenLayers.loadURL(url, params, this, success, fail);
-
+				OpenLayers.Request.GET({
+					url:url,
+					params:params,
+					success:success,
+					fail:fail,
+					scope:this
+				});
 			},
 			/**
 			 * APIMethod: loadWFSCapabilities 
@@ -305,7 +321,13 @@ oscar.Gui.Metadata = oscar
 					service :"WFS",
 					request :"GetCapabilities"
 				};
-				OpenLayers.loadURL(url, params, this, success, fail);
+				OpenLayers.Request.GET({
+					url:url,
+					params:params,
+					success:success,
+					fail:fail,
+					scope:this
+				});
 			},
 			/**
 			 * APIMethod: renderService 
