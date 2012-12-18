@@ -88,7 +88,12 @@ oscar.Control.OXFConfigManager = oscar.BaseClass(OpenLayers.Control, {
 	 * 
 	 */
 	load : function(source) {
-		OpenLayers.loadURL(source, null, this, this.success, this.failure)
+		OpenLayers.Request.GET({
+			url:source,
+			success:this.success,
+			fail:this.failure,
+			scope:this
+		});
 	},
 	
 	/**
@@ -105,7 +110,8 @@ oscar.Control.OXFConfigManager = oscar.BaseClass(OpenLayers.Control, {
         //lets seee if we have an xml file
         var cType = transport.getResponseHeader("Content-Type");
         var reader=null;
-        if( transport.getResponseHeader("Content-Type").contains("xml")) {
+        var contentType = new String(transport.getResponseHeader("Content-Type"));
+        if( contentType.indexOf("xml") > -1) {
         	reader = new oscar.Format.OXF.XML();
         	try{
                 this.ox = reader.read(transport.responseXML);
