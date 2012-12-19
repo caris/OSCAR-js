@@ -329,7 +329,7 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
             	var term = request.term;
             	var match = [];
             	for (var i in crsReferences) {
-            	    if(crsReferences[i].code.toLowerCase().contains(term.toLowerCase())) {
+            		if(crsReferences[i].code.toLowerCase().indexOf(term.toLowerCase())!=-1) {
             	    	match.push(crsReferences[i]);
             	    }
             	}

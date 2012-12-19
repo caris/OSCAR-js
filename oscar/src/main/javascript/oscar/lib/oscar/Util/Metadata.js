@@ -97,13 +97,13 @@ oscar.Util.Metadata = {
 	getServiceType : function(capabilities) {
 		var service = this.getService(capabilities);
 		var serviceType = service.name || service.serviceType;
-		if (serviceType.contains("WMS")) {
+		if (serviceType.indexOf("WMS")!=-1) {
 			return "WMS"
-		} else if (serviceType.contains("WFS")) {
+		} else if (serviceType.indexOf("WFS")!=-1) {
 			return "WFS";
-		} else if (serviceType.contains("WMTS")) {
+		} else if (serviceType.indexOf("WMTS")!=-1) {
 			return "WMTS";
-		} else if (serviceType.contains("WCS")) {
+		} else if (serviceType.indexOf("WCS")!=-1) {
 			return "WCS";
 		} else
 			return serviceType;

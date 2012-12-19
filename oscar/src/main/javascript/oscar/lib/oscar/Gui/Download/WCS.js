@@ -107,7 +107,7 @@ oscar.Gui.Download.WCS = oscar.BaseClass(oscar.Gui.Download, {
 				});
         this.events.register("xmlReceived", this, this.checkExternalRequests);
         this.events.register("xslReceived", this, this.checkExternalRequests);
-        this.isEMLDownload = this.url.contains("store=false"); 
+        this.isEMLDownload = (this.url.indexOf("store=false")!=-1)? true:false; 
         
         
     },
