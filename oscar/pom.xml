@@ -152,6 +152,8 @@
 								<include>**/Control/DragPanel.js</include>
 								<include>**/Control/DataDiscovery.js</include>
 								<include>**/Control/Multi.js</include>
+								<include>**/Control/MeasurementTools.js</include>
+								<include>**/Control/SelectionTools.js</include>
 								<include>**/Control/PanZoom.js</include>
 								<include>**/Control/PanZoomBar.js</include>
 								<include>**/Control/ToolBar.js</include>

@@ -16,177 +16,105 @@
  * limitations under the License.
  */
 /**
- * Class: oscar.Control.Multi
- * This control is the base class for controls which contain a sub-menu with controls.  
+ * Class: oscar.Control.Multi This control is the base class for controls which
+ * contain a sub-menu with controls.
  * 
- * Inherits from: 
- * - <oscar.Control>
+ * Inherits from: - <oscar.Control>
  * 
  */
 
-oscar.Control['Multi'] = oscar
-		.BaseClass(
-				oscar.Control,
-				{
-					type :OpenLayers.Control.TYPE_TOOL,
-					className :"MeasureToolBar",
-					parent :null,
-					size :new OpenLayers.Size(32, 32),
-					/**
-					 * Property: controls
-					 * {Array (Object)} Array containing the sub menu controls.
-					 */
-					controls : null,
-					subMenu :null,
-					subMenuWidth : null,
-					subMenuPosition :null,
-					/**
-					 * Constructor: oscar.Control.Multi
-					 * 
-					 * Parameters: 
-					 * options - {Object} An optional object whose properties will be set on this instance.
-					 */
-					initialize : function(options) {
-						this.controls=[];
-						OpenLayers.Control.prototype.initialize.apply(this,
-								[ options ]);
-					},
-					/**
-					 * APIMethod: activate
-					 * Called when the control is activated.
-					 */
-					activate : function() {
-						OpenLayers.Control.prototype.activate.apply(this,
-								arguments);
-						this.initSubMenu();
-					},
-					/**
-					 * APIMethod: deactivate
-					 * Called when the control is deactivated.
-					 */
-					deactivate : function() {
-						try {
-							var finishedFn = function(obj) {
-								return function() {
-									try {
-										obj.panel_div.removeChild(obj.subMenu)
-									} catch (err) {
-									}
-								};
-							}
-							oscar.jQuery(this.subMenu).fadeOut("fast",
-									finishedFn(this));
-						} catch (err) {
-						}
-					},
-					/**
-					 * Method: initSubMenu
-					 * This method creates the element used for the sub menu.
-					 */
-					initSubMenu : function() {
-						this.subMenuPosition = new OpenLayers.Pixel(
-								this.panel_div.offsetLeft,
-								this.panel_div.offsetHeight + 20);
-						this.subMenu = document.createElement("div");
-						oscar.jQuery(this.subMenu).addClass("subMenu");
-						this.panel_div.appendChild(this.subMenu);
-						var leftBookEnd = document.createElement("div");
-						oscar.jQuery(leftBookEnd).addClass("subMenuBookEnd");
-						this.subMenu.appendChild(leftBookEnd)
-						oscar.jQuery(this.subMenu).hide();
-						oscar.jQuery(this.subMenu).fadeIn("fast");
-						this.subMenuWidth = this.subMenu.offsetWidth;
-					},
-					/**
-					 * Method: createSubMenuItem
-					 * This method is used to create an element for a control to be added to the sub menu.
-					 */
-					createSubMenuItem : function() {
-						var clickFn = function(obj) {
-							return function(e) {
-								OpenLayers.Event.stop(e, true);
-							}
+oscar.Control.MultiControl = oscar.BaseClass(oscar.Control, {
+	parent : null,
+	initialize : function(options) {
+		OpenLayers.Control.prototype.initialize.apply(this, [ options ]);
 
-						}
-						var item = document.createElement("span");
-						oscar.jQuery(item).addClass('subTool');
-						OpenLayers.Event.observe(item, "click", clickFn(this));
+	},
+	draw : function() {
+		OpenLayers.Control.prototype.draw.apply(this, arguments);
 
-						return item;
+		$$(this.div).dblclick(function(evt) {
+			evt.stopPropagation();
+		})
+		$$(this.div).mousedown(function(evt) {
+			evt.stopPropagation();
+		})
+		$$(this.div).hide();
 
-					},
-					/**
-					 * Method: addToSubMenu
-					 * Adds the element to the SubMenu.
-					 * 
-					 * Parameters:
-					 * elem - The clicked subtool HTML Span element.
-					 */
-					addToSubMenu : function(elem) {
-						this.subMenu.appendChild(elem);
-						this.subMenuWidth += elem.offsetWidth;
-						var pos = null;
-						var easyPosition = function(subMenu) {
-							var offsetParent = subMenu.offsetParent;
-							var parent = subMenu.parentNode;
-							return offsetParent.offsetWidth - parent.offsetLeft- (parent.offsetWidth / 2);
-						}
+		$$(this.div).addClass("subMenu");
 
-						var hardPosition = function(subMenu) {
-							var offsetParent = subMenu.offsetParent;
-							var realParentWidth = 0;
-							for(var i = 0;i<offsetParent.childNodes.length;i++) {
-								var node = offsetParent.childNodes[i];
-								realParentWidth += node.offsetWidth;
-							}
-							//realParentWidth-= (offsetParent.offsetLeft + (offsetParent.offsetWidth/2));
-							return (realParentWidth/2);
-						}
-						if(document.documentMode && document.documentMode == 8 || oscar.Util.getBrowserName() != "msie") {
-							pos = easyPosition(this.subMenu);
-						} else {
-							pos = hardPosition(this.subMenu);
-						}
-						
-						
-						//console.log(pos.left);
-						oscar.jQuery(this.subMenu).css("position","absolute");
-						oscar.jQuery(this.subMenu).css("top","33px");
-						//oscar.jQuery(this.subMenu).css("left",(0 - this.subMenuWidth + 18)+"px");
-						oscar.jQuery(this.subMenu).css("right",pos + "px");
-						oscar.jQuery(this.subMenu).css("width",this.subMenuWidth+"px");
-						oscar.jQuery(this.subMenu).css("z-index","1999");
-						//this.calcPosition();
-						return;
-						
-						this.subMenu.setAttribute("style",
-								"position:relative;top:" + 33 + "px;left:"
-										+ (0 - this.subMenuWidth + 18)
-										+ "px;width:" + this.subMenuWidth
-										+ "px");						
+		var scope = this;
+		setTimeout(function() {
+			scope.updateSize();
+		}, 0)
 
-					},
-					/**
-					 * Method: calcPosition
-					 * This method calculates the position for the sub menu
-					 * in relation to its parent container.
-					 */
-					calcPosition : function() {
-						var innerWidth = 0;
-						var maxHeight = 0;
-						for ( var i = 0; i < this.subMenu.childNodes.length; i++) {
-							innerWidth += this.subMenu.childNodes[i].clientWidth;
-							maxHeight = (maxHeight < this.subMenu.childNodes[i].clientHeight) ? this.subMenu.childNodes[i].clientHeight
-									: maxHeight;
-						}
-						var position = this.subMenuPosition.x - innerWidth
-								+ (this.size.w / 4);
-						//this.subMenu.style.left = position;
-					},
-					
-					/**
-					 * Constant: CLASS_NAME
-					 * - oscar.Control.Multi
-					 */
-					CLASS_NAME :"oscar.Control.Multi"
-				});
+		var leftBookEnd = $$("<div></div>");
+		leftBookEnd.addClass("subMenuBookEnd");
+		$$(this.div).append(leftBookEnd);
+
+		return this.div;
+	},
+	/**
+	 * Method: updateSize
+	 */
+	updateSize : function() {
+		var $parent = $$(this.parent.panel_div);
+		var $toolbar = $parent.parent();
+
+		var $this = $$(this.div);
+		$this.fadeIn();
+		var width = 0;
+		$this.children().each(function() {
+			width += $$(this).outerWidth() + 2;
+		})
+		$this.width(width);
+
+		var left = $parent.width() / 2;
+		left += $toolbar.position().left - width + $parent.position().left;
+		$this.css("left", left);
+		$this.css("top", $toolbar.position().top + $toolbar.height() + 2);
+
+	},
+
+	addMuliControl : function(elem) {
+		var scope = this;
+		elem.data("active", false);
+		elem.toggleClass("toolInactive");
+		elem.click(function() {
+
+			var $this = $$(this);
+			$this.parent().children().each(function() {
+				var $child = $$(this);
+				if ($child.hasClass("toolActive")) {
+					console.log('found it');
+					$child.removeClass("toolActive");
+					$child.addClass("toolInactive");
+				}
+
+			})
+			$this.removeClass("toolInactive");
+			$this.addClass("toolActive");
+			var tool = $this.data("tool");
+			var ctrl = scope.controls[tool];
+			scope.toggleControl(ctrl)
+		});
+		$$(this.div).append(elem);
+	},
+
+	/**
+	 * Method: toggleControl
+	 * 
+	 * Toggles the active control
+	 */
+	toggleControl : function(ctrl) {
+		if (this.popup) {
+			this.map.removePopup(this.popup);
+		}
+		for ( var key in this.controls) {
+			var control = this.controls[key];
+			control.deactivate();
+		}
+		ctrl.activate();
+		this.activeControl = ctrl;
+	},
+	CLASS_NAME : "oscar.Control.MultiControl"
+});

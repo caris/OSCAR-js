@@ -21,6 +21,7 @@
 
 var $_oscarcssdependencies = [
     "../jquery/css/smoothness/jquery-ui-1.8.16.custom.css"
+	,"theme/default/style.css"
     ,"../yui/build/fonts/fonts-min.css"
     ,"../yui/build/button/assets/skins/sam/button.css"
     ,"../yui/build/autocomplete/assets/skins/sam/autocomplete.css"

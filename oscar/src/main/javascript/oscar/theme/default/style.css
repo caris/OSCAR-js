@@ -588,6 +588,7 @@ div.olControlMousePosition {
 	background-position: 0 -32px;
 	width: 17px;
 	height: 32px;
+	float:left;
 }
 
 .oscarControlToolBar .toolBarBookendRight {
@@ -595,6 +596,7 @@ div.olControlMousePosition {
 	background-position: -51px -32px;
 	width: 16px;
 	height: 32px;
+	float:left;
 }
 
 .oscarControlToolBar .oscarControlPreviousViewItemActive {

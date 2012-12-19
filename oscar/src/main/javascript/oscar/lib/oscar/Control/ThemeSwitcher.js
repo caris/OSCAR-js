@@ -387,7 +387,7 @@ oscar.Control.ThemeSwitcher = oscar.BaseClass(oscar.Control.DragPanel, {
 				scope:this
 			});
             break;   
-        case "OpenLayers.Layer.GML":
+        case "OpenLayers.Layer.Vector":
         	this.displayLayer(layer);
             break;                
         }
@@ -525,12 +525,12 @@ oscar.Control.ThemeSwitcher = oscar.BaseClass(oscar.Control.DragPanel, {
 
     },
     /**
-     * Method: showGMLLayer
+     * Method: showVectorLayer
      * 
      * This method allows the display of the POI layers which are 
-     * based on the OpenLayers.Layer.GML layer.
+     * based on the OpenLayers.Layer.Vector layer.
      */
-    showGMLLayer: function(layer) {
+    showVectorLayer: function(layer) {
     	var layerDiv = $("LT_" + layer.id);
         var layerTitle =layer.name;
         var randomId = OpenLayers.Util.createUniqueID(layerTitle);
@@ -579,8 +579,8 @@ oscar.Control.ThemeSwitcher = oscar.BaseClass(oscar.Control.DragPanel, {
         case "OpenLayers.Layer.WMTS":
             this.showWMTSLayer(layer);
             break;
-        case "OpenLayers.Layer.GML":
-        	this.showGMLLayer(layer);
+        case "OpenLayers.Layer.Vector":
+        	this.showVectorLayer(layer);
         	break;
         }
         
