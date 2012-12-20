@@ -95,6 +95,7 @@ oscar.Control.Toolbar = oscar.BaseClass(OpenLayers.Control.Panel, {
 
 	},
 	applyTheme : function(theme) {
+		this.removeExistingControls();
 		var ctrls = [];
 		if (this.displayMeasurements) {
 			ctrls.push(new oscar.Control.Measure());
@@ -112,6 +113,13 @@ oscar.Control.Toolbar = oscar.BaseClass(OpenLayers.Control.Panel, {
 
 		this.addControls(ctrls);
 	},
+	removeExistingControls : function() {
+		while (this.controls.length != 0) {
+			var control = this.controls.pop();
+			control.deactivate();
+			this.map.removeControl(control);
+		}
 
+	},
 	CLASS_NAME : "oscar.Control.ToolBar"
 });
