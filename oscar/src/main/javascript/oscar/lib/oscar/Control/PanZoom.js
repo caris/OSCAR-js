@@ -59,44 +59,24 @@ oscar.Control.PanZoom = oscar.BaseClass(OpenLayers.Control.PanZoom, {
 	},
 
 	/**
-	 * Method: _addButton Adds a button to the control.
+	 * Method: _addButton
 	 * 
 	 * Parameters: id - {String} img - {String} xy - {<OpenLayers.Pixel>} sz - {<OpenLayers.Size>}
 	 * 
-	 * Returns: btn - {DOMElement} A Div (an alphaImageDiv, to be precise) that
+	 * Returns: {DOMElement} A Div (an alphaImageDiv, to be precise) that
 	 * contains the image of the button, and has all the proper event handlers
 	 * set.
 	 */
 	_addButton : function(id, img, xy, sz) {
+		// var imgLocation = OpenLayers.Util.getImageLocation(img);
 		var imgLocation = oscar.getImagePath() + "panzoom/" + img;
 		var btn = OpenLayers.Util.createAlphaImageDiv(this.id + "_" + id, xy,
 				sz, imgLocation, "absolute");
-		oscar.jQuery(btn).addClass("panZoomPointer");
+		btn.style.cursor = "pointer";
 		// we want to add the outer div
 		this.div.appendChild(btn);
-
-		OpenLayers.Event.observe(btn, "mousedown", OpenLayers.Function
-				.bindAsEventListener(this.buttonDown, btn));
-		OpenLayers.Event.observe(btn, "dblclick", OpenLayers.Function
-				.bindAsEventListener(this.doubleClick, btn));
-		OpenLayers.Event.observe(btn, "click", OpenLayers.Function
-				.bindAsEventListener(this.doubleClick, btn));
 		btn.action = id;
-		btn.map = this.map;
-
-		if (!this.slideRatio) {
-			var slideFactorPixels = this.slideFactor;
-			var getSlideFactor = function() {
-				return slideFactorPixels;
-			};
-		} else {
-			var slideRatio = this.slideRatio;
-			var getSlideFactor = function(dim) {
-				return this.map.getSize()[dim] * slideRatio;
-			};
-		}
-
-		btn.getSlideFactor = getSlideFactor;
+		btn.className = "olButton";
 
 		// we want to remember/reference the outer div
 		this.buttons.push(btn);
