@@ -131,9 +131,9 @@ oscar.Control.SelectionTools = oscar.BaseClass(oscar.Control.MultiControl, {
 		}
 		var ctx = this;
 		this.ignoreDblClick = window.setTimeout(idcFn, this.threshold);
-		if (this.processor)
-			this.processor.execute(geom, this.theme);
-		else if (this.callback) {
+		if(this.parent.processor)
+			this.parent.processor.execute(geom, this.parent.theme);
+		else if (this.callback) { 
 			this.callback(geom);
 		}
 	},

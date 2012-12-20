@@ -68,6 +68,9 @@ oscar.Control.Select = oscar.BaseClass(oscar.Control, {
 
 			this.map.removeControl(this.tools);
 		}
+		if (this.processor) {
+			this.processor.events.triggerEvent("clean");
+		}
 		OpenLayers.Control.prototype.deactivate.apply(this, arguments);
 	},
 	/**

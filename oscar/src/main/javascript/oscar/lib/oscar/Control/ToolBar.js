@@ -25,6 +25,8 @@
  */
 oscar.Control.Toolbar = oscar.BaseClass(OpenLayers.Control.Panel, {
 	displayMeasurements : true,
+	EVENT_TYPES : [ "selection", "extraction", "measurement",
+							"activate", "deactivate" ],
 	initialize : function(options) {
 		OpenLayers.Control.Panel.prototype.initialize.apply(this, [ options ]);
 		this.leftCap = $$("<div></div>");
