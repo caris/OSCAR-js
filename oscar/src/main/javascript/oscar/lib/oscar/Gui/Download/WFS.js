@@ -129,13 +129,13 @@ oscar.Gui.Download.WFS = oscar.BaseClass(oscar.Gui.Download, {
 		var filename = this.title + ".";
 		var format = new String(this.parameters["outputFormat"]);
 		
-		if(format.toLowerCase().contains("gml")) {
+		if(format.toLowerCase().indexOf("gml") > -1) {
 			filename+="xml";
-		} else if (format.toLowerCase().contains("kml")) {
+		} else if (format.toLowerCase().indexOf("kml") > -1) {
 			filename+="kml";
-		} else if (format.toLowerCase().contains("json")) {
+		} else if (format.toLowerCase().indexOf("json") > -1) {
 			filename+="json";
-		} else if (format.toLowerCase().contains("shape")) {
+		} else if (format.toLowerCase().indexOf("shape") > -1) {
 			filename+="zip";
 		} else { //anything else
 			filename+=format.toLowerCase();

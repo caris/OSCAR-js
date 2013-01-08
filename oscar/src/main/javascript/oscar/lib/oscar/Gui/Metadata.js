@@ -687,7 +687,7 @@ oscar.Gui.Metadata = oscar
 			 */
 			checkUrls : function(param1, param2) {
 				try {
-					return param1.toLowerCase().contains(param2.toLowerCase());
+					return param1.toLowerCase().indexOf(param2.toLowerCase() > -1);
 				} catch (err) {
 					return false;
 				}

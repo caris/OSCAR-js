@@ -287,11 +287,11 @@ oscar.Util.buildWFSFilterForRequest = function(geometry, srs, wfsVersion, proper
 
 oscar.Util.getDataFormatter = function(dataFormatType, options) {
 	var dft = dataFormatType.toLowerCase();
-	if (dft.contains("gml2") || dft.contains("gml/2"))
+	if (dft.indexOf("gml2") > -1 || dft.indexOf("gml/2") > -1)
 		return new OpenLayers.Format.GML(options);
-	else if (dft.contains("kml"))
+	else if (dft.indexOf("kml") > -1)
 		return new OpenLayers.Format.KML(options);
-	else if (dft.contains("json"))
+	else if (dft.indexOf("json") > -1)
 		return new OpenLayers.Format.GeoJSON(options);
 	else if (dft == "georss_simple" || dft == "georss_geo")
 		return new OpenLayers.Format.GeoRSS(options);
