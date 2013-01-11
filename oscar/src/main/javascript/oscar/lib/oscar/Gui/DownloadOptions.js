@@ -789,7 +789,7 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 			if (resX > 10000|| resY > 10000) {
 				alert(oscar.i18n("resolutionTooHigh"));
 				return;
-			} else if (resX < 0 || resY < 0) {
+			} else if (resX < -10000 || resY < -10000) {
 				alert(oscar.i18n("resolutionTooLow"));
 				return;
 			}
