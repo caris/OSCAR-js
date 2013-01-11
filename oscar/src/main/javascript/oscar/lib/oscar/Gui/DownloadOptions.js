@@ -497,7 +497,7 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 	* This method creates the gui elements to display resolution values in the download options panel.
 	*/
 	makeResolutionFields:function(div) {
-		var offsets = this.gridOffsets.split(" ");
+		var offsets = oscar.Util.getGridOffsets(this.gridOffsets);
 	
 		var $resolutionDiv = $$("<div></div>");
 		var $xLabel = $$("<label>").html(oscar.i18n("resolution-x") + ":&nbsp;");
@@ -518,8 +518,8 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 		$resolutionDiv.append(this.$yText);
 		$resolutionDiv.append($meters.clone());
 		$$(div).append($resolutionDiv);
-		var offsetX = parseFloat(offsets[0]);
-		var offsetY = parseFloat(offsets[1]);
+		var offsetX = offsets[0];
+		var offsetY = offsets[1];
 		var projection = new OpenLayers.Projection(this.gridBaseCRS);
 		offsetX *= oscar.Util.getMetersConversionFactor(projection);
 		offsetY *= oscar.Util.getMetersConversionFactor(projection);
