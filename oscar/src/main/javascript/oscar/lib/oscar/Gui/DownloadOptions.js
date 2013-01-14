@@ -579,6 +579,12 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 
 			try {
 				this.gridBaseCRS = coverageDescription.coverageDescription.domain.spatialDomain.gridCRS.gridBaseCRS;
+				
+				this.gridType = "urn:ogc:def:method:WCS:1.1:2dSimpleGrid";
+				if(coverageDescription.coverageDescription.domain.spatialDomain.gridCRS.gridType) {
+					this.gridType = coverageDescription.coverageDescription.domain.spatialDomain.gridCRS.gridType;
+				}
+				
 				if(coverageDescription.coverageDescription.domain.spatialDomain.gridCRS.gridOrigin) {
 					this.gridOrigin = coverageDescription.coverageDescription.domain.spatialDomain.gridCRS.gridOrigin;
 				} else {
@@ -768,7 +774,8 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
     			GridBaseCRS:urn,
     			identifier:this.defaultOptions.id,
     			BoundingBox:localBbox + ","+ sUrn,
-    			format:this.defaultOptions.format
+    			format:this.defaultOptions.format,
+				gridType:this.gridType
     			
     		}
 			if (fieldsArray.length > 0) {
