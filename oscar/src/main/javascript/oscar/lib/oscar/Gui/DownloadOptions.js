@@ -793,13 +793,7 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 			var destProjection = new OpenLayers.Projection(oscar.Util.EpsgConversion.urnToEpsg(urn));
 			var resX = parseFloat(this.$xText.val());
 			var resY = parseFloat(this.$yText.val());
-			if (resX > 10000|| resY > 10000) {
-				alert(oscar.i18n("resolutionTooHigh"));
-				return;
-			} else if (resX < -10000 || resY < -10000) {
-				alert(oscar.i18n("resolutionTooLow"));
-				return;
-			}
+			
 			resX /= oscar.Util.getMetersConversionFactor(destProjection);
 			resY /= oscar.Util.getMetersConversionFactor(destProjection);
 			
