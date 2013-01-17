@@ -497,7 +497,7 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 	* This method creates the gui elements to display resolution values in the download options panel.
 	*/
 	makeResolutionFields:function(div) {
-		var offsets = this.gridOffsets.split(" ");
+		var offsets = oscar.Util.getGridOffsets(this.gridOffsets);
 	
 		var $resolutionDiv = $$("<div></div>");
 		var $xLabel = $$("<label>").html(oscar.i18n("resolution-x") + ":&nbsp;");
@@ -518,8 +518,8 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 		$resolutionDiv.append(this.$yText);
 		$resolutionDiv.append($meters.clone());
 		$$(div).append($resolutionDiv);
-		var offsetX = parseFloat(offsets[0]);
-		var offsetY = parseFloat(offsets[1]);
+		var offsetX = offsets[0];
+		var offsetY = offsets[1];
 		var projection = new OpenLayers.Projection(this.gridBaseCRS);
 		offsetX *= oscar.Util.getMetersConversionFactor(projection);
 		offsetY *= oscar.Util.getMetersConversionFactor(projection);
@@ -579,6 +579,12 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 
 			try {
 				this.gridBaseCRS = coverageDescription.coverageDescription.domain.spatialDomain.gridCRS.gridBaseCRS;
+				
+				this.gridType = "urn:ogc:def:method:WCS:1.1:2dSimpleGrid";
+				if(coverageDescription.coverageDescription.domain.spatialDomain.gridCRS.gridType) {
+					this.gridType = coverageDescription.coverageDescription.domain.spatialDomain.gridCRS.gridType;
+				}
+				
 				if(coverageDescription.coverageDescription.domain.spatialDomain.gridCRS.gridOrigin) {
 					this.gridOrigin = coverageDescription.coverageDescription.domain.spatialDomain.gridCRS.gridOrigin;
 				} else {
@@ -768,7 +774,8 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
     			GridBaseCRS:urn,
     			identifier:this.defaultOptions.id,
     			BoundingBox:localBbox + ","+ sUrn,
-    			format:this.defaultOptions.format
+    			format:this.defaultOptions.format,
+				gridType:this.gridType
     			
     		}
 			if (fieldsArray.length > 0) {
@@ -786,13 +793,7 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 			var destProjection = new OpenLayers.Projection(oscar.Util.EpsgConversion.urnToEpsg(urn));
 			var resX = parseFloat(this.$xText.val());
 			var resY = parseFloat(this.$yText.val());
-			if (resX > 10000|| resY > 10000) {
-				alert(oscar.i18n("resolutionTooHigh"));
-				return;
-			} else if (resX < 0 || resY < 0) {
-				alert(oscar.i18n("resolutionTooLow"));
-				return;
-			}
+			
 			resX /= oscar.Util.getMetersConversionFactor(destProjection);
 			resY /= oscar.Util.getMetersConversionFactor(destProjection);
 			
