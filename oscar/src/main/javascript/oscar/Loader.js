@@ -20,7 +20,7 @@
 
 
 var $_oscarcssdependencies = [
-    "../jquery/css/smoothness/jquery-ui-1.8.16.custom.css"
+    "../jquery/jquery/css/smoothness/jquery-ui-1.10.0.custom.min.css"
     ,"theme/default/style.css"
     ,"../yui/build/fonts/fonts-min.css"
     ,"../yui/build/button/assets/skins/sam/button.css"
@@ -36,8 +36,9 @@ var $_oscarcssdependencies = [
 
 
 var $_oscarscripts = [
-    "../jquery/js/jquery-1.6.2.min.js"
-    ,"../jquery/js/jquery-ui-1.8.16.custom.min.js"
+    "../jquery/jquery/js/jquery-1.9.0.js"
+    ,"../jquery/jquery/js/jquery-ui-1.10.0.custom.min.js"
+	,"../jquery/plugins/stalker/jquery.stalker.js"
     ,"../proj4js/lib/proj4js-compressed.js"
     ,"../openlayers/OpenLayers.js"
 ];

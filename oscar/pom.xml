@@ -29,6 +29,13 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
+			<groupId>jquery</groupId>
+			<artifactId>stalker</artifactId>
+			<version>1.0.0</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
 			<groupId>yahoo</groupId>
 			<artifactId>yui</artifactId>
 			<type>jar</type>
@@ -69,12 +76,21 @@
 								<artifactItem>
 									<groupId>jquery</groupId>
 									<artifactId>jqueryui</artifactId>
-									<version>1.8.16</version>
+									<version>1.10.0</version>
 									<type>jar</type>
 									<overWrite>false</overWrite>
 									<outputDirectory>${project.build.directory}/scripts/jquery</outputDirectory>
 									<includes>**</includes>
 								</artifactItem>
+								<artifactItem>
+									<groupId>jquery</groupId>
+									<artifactId>stalker</artifactId>
+									<version>1.0.0</version>
+									<type>jar</type>
+									<overWrite>false</overWrite>
+									<outputDirectory>${project.build.directory}/scripts/jquery/plugins/stalker</outputDirectory>
+									<includes>**</includes>
+								</artifactItem>								
 								<artifactItem>
 									<groupId>osgeo</groupId>
 									<artifactId>proj4js</artifactId>
