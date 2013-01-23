@@ -161,6 +161,7 @@
 								<include>**/Gui/ServicePanel.js</include>
 								<include>**/Gui/ClickableLabel.js</include>
 								<include>**/Gui/ComboBox.js</include>
+								<include>**/Gui/LinkedLists.js</include>
 								<include>**/Handler.js</include>
 								<include>**/Handler/WFS.js</include>
 								<include>**/Control.js</include>
