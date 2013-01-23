@@ -85,7 +85,6 @@ oscar.Control.MultiControl = oscar.BaseClass(oscar.Control, {
 			$this.parent().children().each(function() {
 				var $child = $$(this);
 				if ($child.hasClass("toolActive")) {
-					console.log('found it');
 					$child.removeClass("toolActive");
 					$child.addClass("toolInactive");
 				}
