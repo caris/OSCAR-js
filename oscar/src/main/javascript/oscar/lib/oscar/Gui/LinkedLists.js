@@ -6,6 +6,9 @@ oscar.Gui.LinkedLists = new oscar.BaseClass(oscar.Gui,{
 		oscar.Gui.prototype.initialize.apply(this,[options]);
 		this.connectionClass=OpenLayers.Util.createUniqueID("connection");
 	},
+	filter:function() {
+		return true;
+	},
 	draw:function() {
 		var sourceId = OpenLayers.Util.createUniqueID("source");
 		var destinationId = OpenLayers.Util.createUniqueID("destination");
@@ -69,7 +72,9 @@ oscar.Gui.LinkedLists = new oscar.BaseClass(oscar.Gui,{
 			var available = scope.sourceList.children();
 			available.each(function() {
 				scope.destinationList.append($$(this));
+				scope.filter($$(this));
 			});
+			scope.destinationList.sortable('refresh');
 			return false;
 		});
 		this.toTheRight.css("float","center");
@@ -84,6 +89,7 @@ oscar.Gui.LinkedLists = new oscar.BaseClass(oscar.Gui,{
 			var available = scope.destinationList.children();
 			available.each(function() {
 				scope.sourceList.append($$(this));
+				scope.filter($$(this));
 			});
 			return false;
 		});
@@ -101,7 +107,9 @@ oscar.Gui.LinkedLists = new oscar.BaseClass(oscar.Gui,{
 		}
 
 		li.addClass("ui-state-default");
-
+		if(this.filter) {
+			this.filter(li);
+		}
 		if(!this.isSelected(li)) {
 			this.sourceList.append(li);
 		}
@@ -124,18 +132,27 @@ oscar.Gui.LinkedLists = new oscar.BaseClass(oscar.Gui,{
 		return li;
 	},
 	sortable:function() {
+		var scope=this;
 		$$(this.sourceList).sortable({
 		connectWith:"."+this.connectionClass,
 		dropOnEmpty:true,
 		cursor: "move",
-		receive:this.receiveCallback
+		receive:function(event,ui) {
+			scope.filter(ui.item);
+		}
 	}).disableSelection();
 	
 	$$(this.destinationList).sortable({
 		connectWith:"."+this.connectionClass,
 		dropOnEmpty: true,
-		cursor: "move"
+		cursor: "move",
+		receive:function(event,ui) {
+			scope.filter(ui.item);
+		}
 	}).disableSelection();
+	},
+	getAvailable:function() {
+		return this.sourceList.children();
 	},
 	getSelected:function() {
 		return this.destinationList.children();
@@ -159,11 +176,14 @@ oscar.Gui.LinkedLists = new oscar.BaseClass(oscar.Gui,{
 		else 
 			return false;
 	},
-	appendHelp:function(str) {
-		var helpDiv = $$("<div></div>").html(str);
-		helpDiv.addClass("help2");
-		
-		$$(this.div).after(helpDiv);
+	showHelp:function(str) {
+		if(!this.helpDiv) {
+			this.helpDiv = $$("<div></div>");
+			this.helpDiv.addClass("help2");
+			$$(this.div).after(this.helpDiv);
+		}
+		this.helpDiv.html("");
+		this.helpDiv.html(oscar.i18n(str));
 		
 	},
 	CLASS_NAME:"oscar.Gui.LinkedLists"

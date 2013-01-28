@@ -1701,10 +1701,6 @@ td#oscarLayoutFooterContainer {
 	position:relative;
 	width:430px;
 	height:225px;
-	border:1px solid black;
-	-webkit-border-radius: 4px;
-	-moz-border-radius: 4px;
-	border-radius: 4px;
 }
 
 .oscarGuiLinkedLists .sourceDiv {
