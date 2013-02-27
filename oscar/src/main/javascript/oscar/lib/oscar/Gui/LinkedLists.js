@@ -78,7 +78,7 @@ oscar.Gui.LinkedLists = new oscar.BaseClass(oscar.Gui,{
 			return false;
 		});
 		this.toTheRight.css("float","center");
-		this.toTheLeft = $$("<button onclick='return false;'></button>").html(oscar.i18n("MoveAllToTheRight"));
+		this.toTheLeft = $$("<button onclick='return false;'></button>").html(oscar.i18n("MoveAllToTheLeft"));
 		this.toTheLeft.button({
 			icons: {
 				primary:"ui-icon-seek-prev"

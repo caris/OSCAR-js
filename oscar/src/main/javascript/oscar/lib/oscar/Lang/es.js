@@ -346,6 +346,10 @@ OpenLayers.Util.applyDefaults(oscar.Lang.getDictionary("es"), {
 	
 	"resolutionTooHigh":"El valor de la resoluci\u00f3n es muy alto, por favor ajuste el valor",
 	
-	"resolutionTooLow":"El valor de la resoluci\u00f3n es muy bajo, por favor ajuste el valor."
+	"resolutionTooLow":"El valor de la resoluci\u00f3n es muy bajo, por favor ajuste el valor.",
+	
+	"MoveAllToTheLeft":"Mover todo hacia la izquierda.",
+	
+	"MoveAllToTheRight":"Mover todo hacia la derecha."
 		
 });
