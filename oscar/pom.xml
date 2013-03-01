@@ -28,6 +28,11 @@
 			<artifactId>jqueryui</artifactId>
 			<scope>provided</scope>
 		</dependency>
+<dependency>
+  <groupId>jquery</groupId>
+  <artifactId>layout</artifactId>
+  <version>1.3.0-rc30.79</version>
+</dependency>
 		<dependency>
 			<groupId>jquery</groupId>
 			<artifactId>stalker</artifactId>
@@ -91,6 +96,15 @@
 									<outputDirectory>${project.build.directory}/scripts/jquery/plugins/stalker</outputDirectory>
 									<includes>**</includes>
 								</artifactItem>								
+								<artifactItem>
+									<groupId>jquery</groupId>
+									<artifactId>layout</artifactId>
+									<version>1.3.0-rc30.79</version>
+									<overWrite>false</overWrite>
+									<outputDirectory>${project.build.directory}/scripts/jquery/plugins/layout</outputDirectory>
+									<includes>**</includes>
+								</artifactItem>								
+
 								<artifactItem>
 									<groupId>osgeo</groupId>
 									<artifactId>proj4js</artifactId>
