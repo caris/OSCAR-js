@@ -278,7 +278,7 @@ oscar.Control.DataDiscovery = oscar.BaseClass(oscar.Control.DragPanel, {
                 var $this = $$(this);
                 scope.unselectFeature();
                 $this.addClass("selected");
-                scope.discoverPanel.accordion("activate",1);
+                scope.discoverPanel.accordion("option", "active",1);
                 scope.drawFeature($this);
                 
             });
@@ -409,7 +409,7 @@ oscar.Control.DataDiscovery = oscar.BaseClass(oscar.Control.DragPanel, {
      */
     queueDownload:function(service) {
 
-    	this.discoverPanel.accordion("activate",2);
+    	this.discoverPanel.accordion("option", "active",2);
 
     	if(this.queuePanel.children().length>0) {
             this.queuePanel.prepend(service.draw());

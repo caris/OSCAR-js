@@ -346,9 +346,9 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 				return false;
 				
 			}
-		}).data("autocomplete")._renderItem=function(ul,item) {
+		}).data("uiAutocomplete")._renderItem=function(ul,item) {
 	        var li = document.createElement("li");
-            return oscar.jQuery(li).data( "item.autocomplete", item )
+            return oscar.jQuery(li).data( "ui-autocomplete-item", item )
             .append( "<a>" + item.code + "<br>" + item.description + "</a>" )
             .appendTo( ul );
             
@@ -786,13 +786,7 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 			var destProjection = new OpenLayers.Projection(oscar.Util.EpsgConversion.urnToEpsg(urn));
 			var resX = parseFloat(this.$xText.val());
 			var resY = parseFloat(this.$yText.val());
-			if (resX > 10000|| resY > 10000) {
-				alert(oscar.i18n("resolutionTooHigh"));
-				return;
-			} else if (resX < 0 || resY < 0) {
-				alert(oscar.i18n("resolutionTooLow"));
-				return;
-			}
+			
 			resX /= oscar.Util.getMetersConversionFactor(destProjection);
 			resY /= oscar.Util.getMetersConversionFactor(destProjection);
 			
