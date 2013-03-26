@@ -92,14 +92,20 @@ oscar.Control.DataExtractor = oscar.BaseClass(oscar.Control, {
 	    	    service:"WCS",
 	    	    version:"1.1.0"
 	    }
+		
+		if(service.version) {
+			params.version = service.version;
+		}
         var success= function(response) {
         	var reader = new oscar.Format.WCSCapabilities();
             var capabilities = reader.read(response.responseXML);
             var capIndex = this.database.addRecord("capabilities", {capabilities:capabilities});
             coverages = oscar.Util.Metadata.getCoverages(capabilities);
-            for (var c in coverages) {
+           for (var c in coverages) {
                 var coverage = coverages[c];
-                if(!oscar.Util.isFeatureInArray(coverage.identifier,service.identifiers)) continue;
+				if(service.identifers)  {
+					if(!oscar.Util.isFeatureInArray(coverage.identifier,service.identifiers)) continue;
+				}
                 var bbox = this.getBoundingBox(coverage.wgs84BoundingBox,"EPSG:4326");
                 var record = {
                 	"id":coverage.identifier,

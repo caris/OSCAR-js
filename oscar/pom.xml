@@ -221,11 +221,13 @@
 								<include>**/Format/WCSCapabilities/v1_0_0.js</include>
 								<include>**/Format/WCSCapabilities/v1_1_0.js</include>
 								<include>**/Format/WCSCapabilities/v1_1_1.js</include>
+								<include>**/Format/WCSCapabilities/v1_1_2.js</include>
 								<include>**/Format/WCSDescribeCoverage.js</include>
 								<include>**/Format/WCSDescribeCoverage/v1.js</include>
 								<include>**/Format/WCSDescribeCoverage/v1_0_0.js</include>
 								<include>**/Format/WCSDescribeCoverage/v1_1_0.js</include>
 								<include>**/Format/WCSDescribeCoverage/v1_1_1.js</include>
+								<include>**/Format/WCSDescribeCoverage/v1_1_2.js</include>
 								<include>**/Format/WMTSCapabilities.js</include>
 								<include>**/Format/WMTSCapabilities/v1.js</include>
 								<include>**/Format/WMTSCapabilities/v1_0_0.js</include>

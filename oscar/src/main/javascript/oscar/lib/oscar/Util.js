@@ -668,6 +668,32 @@ oscar.Util.parseText = function(input) {
     return arr.join(" ");
 }
 
+/**
+* APIMethod: getGridOffsets
+* Returns the correct offsets from a WCS DescribeCoverage operation
+*/
+oscar.Util.getGridOffsets = function(offsetsAsString) {
+	var validOffsets = [];
+	var offsets = offsetsAsString.split(" "); 
+	//x offset
+	validOffsets.push(parseFloat(offsets[0]));
+
+	//y offset
+	var yOffsetIndex = (offsets.length==2)? 1 : 3;
+	validOffsets.push(parseFloat(offsets[yOffsetIndex]));
+
+	return validOffsets;
+}
+
+/**
+* APIMethod: isGeographicCRS
+* Returns true / false if a CRS is geographic. If false then the CRS 
+* is assumed to be projected
+*
+**/
+oscar.Util.isGeographicCRS = function(projection) {
+	return ($$.trim(projection.proj.projName)=="longlat")? true :false;
+}
 
 /**
  * Override the default OL pink color for broken images

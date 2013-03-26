@@ -467,11 +467,11 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 
 			var $input = this._createFieldCheckbox(field);
 
-			$input.data("selection","#"+$selection.attr("id"));
+			$input.data("selection",$selection);
 
 			if(i==0) {
 				$input.attr("checked",true);
-				this.defaultOptions.field = new Array("#"+$input.attr("id"));
+				this.defaultOptions.field = new Array($input);
 			}
 
 			$row.append($inputCell);
@@ -497,7 +497,7 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 	* This method creates the gui elements to display resolution values in the download options panel.
 	*/
 	makeResolutionFields:function(div) {
-		var offsets = this.gridOffsets.split(" ");
+		var offsets = oscar.Util.getGridOffsets(this.gridOffsets);
 	
 		var $resolutionDiv = $$("<div></div>");
 		var $xLabel = $$("<label>").html(oscar.i18n("resolution-x") + ":&nbsp;");
@@ -722,31 +722,25 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
     		downloadService = new oscar.Gui.Download.WFS(this.defaultOptions.operationUrl,params,{title:this.defaultOptions.title});
     		break;
     	case "WCS":
-    		var urn = oscar.Util.EpsgConversion.epsgToUrn("ESPG:4326");
-    		var bounds = this.defaultOptions.bbox;
-    		var localBbox = null;
-			var sUrn = oscar.Util.EpsgConversion.epsgToUrn("EPSG:4326");
-			if(this.map.getProjectionObject().projCode != "EPSG:4326") {
-				var sProj = this.map.getProjectionObject();
-				var dProj = new OpenLayers.Projection("EPSG:4326");
-				localBbox=bounds.clone().transform(sProj,dProj).toArray();
-				sProj = null;
-				dProj = null;
-			} else {
-				localBbox = bounds.toArray();
-			}
+			var bounds = this.defaultOptions.bbox;
+			var projection = new OpenLayers.Projection(this.defaultOptions.crs);
+			var urn = oscar.Util.EpsgConversion.epsgToUrn(projection.projCode);
+			var t = new OpenLayers.Projection("EPSG:3857");
+			var isGeographicCRS = oscar.Util.isGeographicCRS(projection);
+			//do I need to transform the boundingbox
+			if(projection.projCode != this.map.getProjectionObject().projCode) { //perform transformation
+				bounds = bounds.clone().transform(this.map.getProjectionObject(),projection);
+			} 
 			
-			var urn = this.defaultOptions.crs;
-			if (urn.indexOf("::") == -1) {
-				urn = oscar.Util.EpsgConversion.epsgToUrn(urn);
-			}
+
+			var localBBOX = bounds.toArray(isGeographicCRS);
 			
+			//get the requested fields / bands to build the range subset
 			var fields = this.defaultOptions.field;
 			var fieldsArray = new Array();
 			for(f in fields) {
-				var field = fields[f];
-				var $input = $$(field); 
-				var select = $$($input.data("selection"));
+				var $input = fields[f]; 
+				var select = $input.data("selection");
 				var selectValue = select.val();
 				
 				if(select.val()!= null) {
@@ -755,26 +749,23 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 					fieldsArray.push($input.val());
 				}
 			}
+			
 			var rngSubset="";
             if(fieldsArray.length > 1) {
                 rngSubset = fieldsArray.join(";");
             } else {
                 rngSubset = fieldsArray.join(" ");
             }
-
-    		var localparams = {
+			
+			var localparams = {
     			request:"GetCoverage",
     			store:this.defaultOptions.store,
     			GridBaseCRS:urn,
     			identifier:this.defaultOptions.id,
-    			BoundingBox:localBbox + ","+ sUrn,
+    			BoundingBox:localBBOX + ","+ urn,
     			format:this.defaultOptions.format
-    			
     		}
-			if (fieldsArray.length > 0) {
-				localparams.RangeSubset = rngSubset;
-			}
-
+			
 			/*
 			* If the urn value is the same as the gridBaseCRS value then include the grid origin
 			*/
@@ -783,19 +774,24 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 			} 
 			
 			//inject the new grid offset values.
-			var destProjection = new OpenLayers.Projection(oscar.Util.EpsgConversion.urnToEpsg(urn));
 			var resX = parseFloat(this.$xText.val());
 			var resY = parseFloat(this.$yText.val());
 			
-			resX /= oscar.Util.getMetersConversionFactor(destProjection);
-			resY /= oscar.Util.getMetersConversionFactor(destProjection);
+			resX /= oscar.Util.getMetersConversionFactor(projection);
+			resY /= oscar.Util.getMetersConversionFactor(projection);
+			//if(isGeographicCRS) {
+			//	localparams.GridOffsets=resY + "," + resX;
+			//} else {
+			//	localparams.GridOffsets=resX + "," + resY;
+			//}
 			
 			localparams.GridOffsets=resX + "," + resY;
 			
-    		OpenLayers.Util.extend(localparams,params);
+			OpenLayers.Util.extend(localparams,params);
     		var url = buildUrl(this.defaultOptions.operationUrl,localparams);
+
     	    downloadService = new oscar.Gui.Download.WCS(url,null,{title:this.defaultOptions.title});
-    		break;
+    		break;	
     	}
     	if(downloadService) {
     		this.events.triggerEvent("serviceReady",downloadService);

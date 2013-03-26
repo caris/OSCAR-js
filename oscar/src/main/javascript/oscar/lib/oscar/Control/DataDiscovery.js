@@ -304,7 +304,7 @@ oscar.Control.DataDiscovery = oscar.BaseClass(oscar.Control.DragPanel, {
                 mapViewPort.intersectsBounds($this.data("bbox")));
             
             var textFound = (query.length == 0 || 
-					$this.data("id").toLowerCase().indexOf(query.toLowerCase()!=-1) || 
+					$this.data("id").toLowerCase().indexOf(query.toLowerCase()) !=-1 || 
 					$this.data("title").toLowerCase().indexOf(query.toLowerCase())!=-1
 			);
             
