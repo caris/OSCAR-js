@@ -725,7 +725,6 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 			var bounds = this.defaultOptions.bbox;
 			var projection = new OpenLayers.Projection(this.defaultOptions.crs);
 			var urn = oscar.Util.EpsgConversion.epsgToUrn(projection.projCode);
-			var t = new OpenLayers.Projection("EPSG:3857");
 			var isGeographicCRS = oscar.Util.isGeographicCRS(projection);
 			//do I need to transform the boundingbox
 			if(projection.projCode != this.map.getProjectionObject().projCode) { //perform transformation
@@ -782,11 +781,6 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 			
 			resX /= oscar.Util.getMetersConversionFactor(projection);
 			resY /= oscar.Util.getMetersConversionFactor(projection);
-			//if(isGeographicCRS) {
-			//	localparams.GridOffsets=resY + "," + resX;
-			//} else {
-			//	localparams.GridOffsets=resX + "," + resY;
-			//}
 			
 			localparams.GridOffsets=resX + "," + resY;
 			
