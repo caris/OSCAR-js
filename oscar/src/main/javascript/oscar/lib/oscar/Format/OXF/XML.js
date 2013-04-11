@@ -65,6 +65,13 @@ oscar.Format.OXF.XML = oscar.BaseClass(OpenLayers.Format.XML, {
             },
             "theme":function(node,obj) {
                 var theme = new oscar.ox.Theme();
+
+				theme.parameters = {};
+				var nZoom = parseInt(node.getAttribute("numzoomlevels"));
+				theme.parameters.numzoomlevels = (isNaN(nZoom))?16:nZoom;
+				var bColor = node.getAttribute("bgColor");
+				theme.parameters.backgroundColor = (bColor==null)? "#fff":bColor;
+				
                 obj.addTheme(theme);
                 this.readChildNodes(node,theme);
             
