@@ -132,7 +132,10 @@ oscar.Gui.ClickableLabel = oscar.BaseClass(oscar.Gui, {
 			throw "Invalid style: " + this.style;
 			return;
 		}
-		this.container.onmouseup = this.clicked.bind(this);
+		var scope = this;
+		$$(this.container).mouseup(function(){
+			scope.clicked();
+		});
 	},
 	/**
 	 * Method: clicked
