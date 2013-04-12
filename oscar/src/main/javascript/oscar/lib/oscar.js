@@ -175,4 +175,4 @@
 /**
  * Constant: VERSION_NUMBER
  */
-oscar.VERSION_NUMBER = "12.0-SNAPSHOT";
+oscar.VERSION_NUMBER = "12.0.5-GA";
