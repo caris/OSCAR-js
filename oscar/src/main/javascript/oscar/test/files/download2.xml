@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration version="2.0">
+    <themes>
+        <theme bgColor="#f00" numzoomlevels="22">
+            <name>Download Example</name>
+            <srs>EPSG:4326</srs>
+            <covers>               
+				<cover type="DEFAULT" minX="174.77859" minY="-41.29045" maxX="174.79940" maxY="-41.25569" />
+            </covers>
+            <layers>
+                <layer>
+                    <name>CARIS World Map</name>
+                    <urls>
+                        <url>http://sfs.caris.com/spatialfusionserver/services/ows/wms/world</url>
+                        <url>http://server.caris.com/spatialfusionserver/services/ows/wms/world</url>
+                    </urls>
+                    <format>image/png</format>
+                    <layerType>WMS</layerType>
+                    <dataLayers>
+                        <dataLayer>
+                            <layerName>World</layerName>
+                        </dataLayer>
+                        <dataLayer>
+                            <layerName>Ocean</layerName>
+                        </dataLayer>
+                    </dataLayers>
+                    <parameter name="buffer" value="2" />
+                </layer>
+                <layer>
+                    <name>New Zealand Gridded Bathymetry</name>
+                    <urls>
+                        <url>http://sfs.caris.com/spatialfusionserver/services/ows/wms/bathymetry_wms</url>
+                        <url>http://server.caris.com/spatialfusionserver/services/ows/wms/bathymetry_wms</url>
+                    </urls>
+                    <format>image/png</format>
+                    <layerType>WMS</layerType>
+                    <dataLayers>
+                        <dataLayer>
+                            <layerName>Gridded_Bathymetry</layerName>
+                        </dataLayer>
+                        <dataLayer>
+                            <layerName>Gridded_Bathymetry_Surface_Areas</layerName>
+                        </dataLayer>
+                    </dataLayers>
+                    <parameter name="buffer" value="2" />
+                </layer>
+                </layers>
+            <services>
+                <service type="extraction">
+                    <serviceEntry type="WCS" version="1.1.0" format="application/json">
+                        <url>http://server.caris.com/spatialfusionserver/services/ows/wcs/bathymetry_wcs</url>                        
+                        <identifiers>
+                      	    <identifier>production.02000001</identifier>
+							<identifier>production.02000002</identifier>
+							<identifier>production.02000003</identifier>
+							<identifier>production.02000004</identifier>
+							<identifier>production.02000005</identifier>
+							<identifier>production.02000006</identifier>
+							<identifier>production.02000007</identifier>
+							<identifier>production.02000008</identifier>
+							<identifier>production.02000009</identifier>
+							<identifier>production.02000010</identifier>
+							<identifier>production.02000011</identifier>
+							<identifier>production.02000012</identifier>
+							<identifier>production.02000013</identifier>
+							<identifier>production.02000014</identifier>
+							<identifier>production.02000015</identifier>
+							<identifier>production.02000016</identifier>
+							<identifier>production.02000017</identifier>
+							<identifier>production.02000018</identifier>
+							<identifier>production.02000019</identifier>
+							<identifier>production.02000020</identifier>
+							<identifier>production.02000021</identifier>
+							<identifier>production.02000022</identifier>
+							<identifier>production.02000023</identifier>
+							<identifier>production.02000024</identifier>
+							<identifier>production.02000026</identifier>
+							<identifier>production.02000027</identifier>
+							<identifier>production.02000028</identifier>
+							<identifier>production.02000029</identifier>
+							<identifier>production.02000030</identifier>
+							<identifier>production.02000031</identifier>
+                        </identifiers>
+					</serviceEntry>
+                </service>
+            </services>                
+        </theme>
+		<theme>
+            <name>Download Example</name>
+        </theme>
+    </themes>
+</configuration>
