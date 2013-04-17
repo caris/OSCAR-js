@@ -40,7 +40,7 @@ var $_oscarscripts = [
     ,"../jquery/jquery/js/jquery-ui-1.10.0.custom.min.js"
 	,"../jquery/plugins/stalker/jquery.stalker.js"
 	,"../jquery/plugins/layout/js/jquery.layout-latest.min.js"
-    ,"../proj4js/lib/proj4js-compressed.js"
+    ,"../proj4js/lib/proj4js.js"
     ,"../openlayers/OpenLayers.js"
 ];
 
