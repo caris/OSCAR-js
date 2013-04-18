@@ -294,11 +294,9 @@ oscar.Gui.Download.WCS = oscar.BaseClass(oscar.Gui.Download, {
     gotoUrl:function(classType, url) {
         switch(classType) {
             case "dCoverage":
-                var iFrame = document.createElement("iframe");
-                oscar.jQuery(iFrame).addClass("dmIFrame");
-                document.body.appendChild(iFrame);
-                iFrame.src = url;
-               break;
+                var filename = url.substring(url.lastIndexOf("/")+1);
+				this.downloadFromService(url,filename);
+                break;
             case "dMetadata":
                 this.downloadFromService(url,"metadata.xml");
                 break;
