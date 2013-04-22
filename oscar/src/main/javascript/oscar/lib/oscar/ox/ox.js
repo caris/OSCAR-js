@@ -473,7 +473,7 @@ oscar.ox.Layer = oscar.BaseClass( {
                         format: new OpenLayers.Format.KML({
 							extractStyles:true,
 							externalProjection:new OpenLayers.Projection("EPSG:4326")
-						}),
+						})
                     }),
 					styleMap: new OpenLayers.StyleMap({
 						"default": style,
