@@ -197,14 +197,20 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 		
 		outputFormats = oscar.Util.Metadata.getParameters(
 				this.capabilities.capabilities, "GetFeature", ["outputFormat","formats"])
+				
+		var formats = [];
+		
+		for(var prop in outputFormats) {
+			formats.push(prop);
+		}
 
 		var id = oscar.Util.Metadata.getFeatureTypesById(this.capabilities.capabilities,this.feature.div.data("id"));
 
-		this.makeFormatList(div,outputFormats);
+		this.makeFormatList(div,formats);
 		this.makeCRSList(div,id.srss || [id.srs]);
 		var opURL = null
 		try {
-			opUrl = GetFeatureOp.dcp.http.get;
+			opUrl = GetFeatureOp.dcp.http.get[0].url || GetFeatureOp.dcp.http.get;
 		} catch(e) { // wfs 1.0.0 doesn't have dcp so this will throw a null error... 
 			opUrl =  GetFeatureOp.href.get;
 		}

@@ -112,7 +112,7 @@
 									<type>jar</type>
 									<overWrite>false</overWrite>
 									<outputDirectory>${project.build.directory}/scripts/proj4js</outputDirectory>
-									<includes>lib/**</includes>
+									<includes>build/license.txt,lib/**</includes>
 								</artifactItem>
 								<artifactItem>
 									<groupId>yahoo</groupId>
@@ -211,11 +211,6 @@
 								<include>**/Format/OXF.js</include>
 								<include>**/Format/OXF/v2.js</include>
 								<include>**/Format/OXF/XML.js</include>
-								<include>**/Format/WFSCapabilities.js</include>
-								<include>**/Format/WFSCapabilities/v1.js</include>
-								<include>**/Format/WFSCapabilities/v1_0_0.js</include>
-								<include>**/Format/WFSCapabilities/v1_1_0.js</include>
-								<include>**/Format/WFSCapabilities/v2_0_0.js</include>
 								<include>**/Format/WCSCapabilities.js</include>
 								<include>**/Format/WCSCapabilities/v1.js</include>
 								<include>**/Format/WCSCapabilities/v1_0_0.js</include>

@@ -4,12 +4,12 @@
 <xsl:template match="owcs:Coverages"  xmlns:geonet="http://www.fao.org/geonetwork" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dct="http://purl.org/dc/terms/" xmlns:owcs="http://www.opengis.net/wcs/1.1/ows">
     <div><xsl:apply-templates/></div>
 </xsl:template>
-<xsl:template match="owcs:Coverage" xmlns:owcs="http://www.opengis.net/wcs/1.1/ows">
+<xsl:template match="owcs:Coverage" xmlns:owcs="http://www.opengis.net/wcs/1.1/ows" xmlns:xlink="http://www.w3.org/1999/xlink">
 	<xsl:apply-templates/>
 </xsl:template>
 <xsl:template match="owcs:Identifier"  xmlns:owcs="http://www.opengis.net/wcs/1.1/ows">
 </xsl:template>
-<xsl:template match="owcs:Reference"  xmlns:owcs="http://www.opengis.net/wcs/1.1/ows">
+<xsl:template match="owcs:Reference"  xmlns:owcs="http://www.opengis.net/wcs/1.1/ows" xmlns:xlink="http://www.w3.org/1999/xlink">
     <xsl:variable name="role">
         <xsl:choose>
             <xsl:when test="(contains(@xlink:role,'coverage'))">dCoverage</xsl:when>
@@ -20,7 +20,7 @@
     <xsl:element name="span">
         <xsl:attribute name="class"><xsl:value-of select="$role"/></xsl:attribute>
         <xsl:attribute name="href"><xsl:value-of select="@xlink:href"/></xsl:attribute>
-        <xsl:text/>
+		<xsl:text/>
     </xsl:element>
 </xsl:template>
 <!-- WCS 1.1.1 -->

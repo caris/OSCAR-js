@@ -103,9 +103,7 @@ oscar.Control.DataExtractor = oscar.BaseClass(oscar.Control, {
             coverages = oscar.Util.Metadata.getCoverages(capabilities);
            for (var c in coverages) {
                 var coverage = coverages[c];
-				if(service.identifers)  {
-					if(!oscar.Util.isFeatureInArray(coverage.identifier,service.identifiers)) continue;
-				}
+				if(service.identifiers.length > 0 && !oscar.Util.isFeatureInArray(coverage.identifier,service.identifiers)) continue;
                 var bbox = this.getBoundingBox(coverage.wgs84BoundingBox,"EPSG:4326");
                 var record = {
                 	"id":coverage.identifier,
@@ -134,19 +132,25 @@ oscar.Control.DataExtractor = oscar.BaseClass(oscar.Control, {
      */    
     load_wfs: function(service) {
         var success= function(response) {
-        	var reader = new oscar.Format.WFSCapabilities();
+        	var reader = new OpenLayers.Format.WFSCapabilities();
             var capabilities = reader.read(response.responseXML);
             var capIndex = this.database.addRecord("capabilities", {capabilities:capabilities});
             features = oscar.Util.Metadata.getFeatureTypes(capabilities);
             for (var f in features) {
                 var feature = features[f];
-                if(!oscar.Util.isFeatureInArray(feature.name,service.identifiers)) continue;
-                /*
+				if(service.identifiers.length > 0 && !oscar.Util.isFeatureInArray(feature.name,service.identifiers))  continue;
+				/*
                  * if there is more than one srs then it is 1.1.0 or higher and the the
                  * wgs84boundingbox element is in EPSG:4326
                  */
                 var srs = feature.srs || "EPSG:4326";
-                var bbox = this.getBoundingBox(feature.wgs84BoundingBox,srs);
+                var bounds = {
+					west:feature.bounds.left,
+					east:feature.bounds.right,
+					south:feature.bounds.bottom,
+					north:feature.bounds.top
+				}
+                var bbox = this.getBoundingBox(bounds,srs);
                 var record = {
                     "id":feature.name,
                     "title":feature.title,
