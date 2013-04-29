@@ -585,6 +585,13 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 
 			try {
 				this.gridBaseCRS = coverageDescription.coverageDescription.domain.spatialDomain.gridCRS.gridBaseCRS;
+				
+				this.gridType = "urn:ogc:def:method:WCS:1.1:2dSimpleGrid";
+				if(coverageDescription.coverageDescription.domain.spatialDomain.gridCRS.gridType) {
+					this.gridType = coverageDescription.coverageDescription.domain.spatialDomain.gridCRS.gridType;
+				}
+
+				
 				if(coverageDescription.coverageDescription.domain.spatialDomain.gridCRS.gridOrigin) {
 					this.gridOrigin = coverageDescription.coverageDescription.domain.spatialDomain.gridCRS.gridOrigin;
 				} else {
@@ -744,10 +751,11 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 			var fields = this.defaultOptions.field;
 			var fieldsArray = new Array();
 			for(f in fields) {
-				var $input = fields[f]; 
-				var select = $input.data("selection");
+				var field = fields[f];
+				var $input = $$(field); 
+				var select = $$($input.data("selection"));
 				var selectValue = select.val();
-				
+
 				if(select.val()!= null) {
 					fieldsArray.push($input.val() + ":" + select.val());
 				} else {
@@ -768,8 +776,13 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
     			GridBaseCRS:urn,
     			identifier:this.defaultOptions.id,
     			BoundingBox:localBBOX + ","+ urn,
-    			format:this.defaultOptions.format
+    			format:this.defaultOptions.format,
+				gridType:this.gridType
     		}
+			
+			if (fieldsArray.length > 0) {
+				localparams.RangeSubset = rngSubset;
+			}
 			
 			/*
 			* If the urn value is the same as the gridBaseCRS value then include the grid origin
