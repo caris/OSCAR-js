@@ -742,8 +742,7 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 			//do I need to transform the boundingbox
 			if(projection.projCode != this.map.getProjectionObject().projCode) { //perform transformation
 				bounds = bounds.clone().transform(this.map.getProjectionObject(),projection);
-			} 
-			
+			}
 
 			var localBBOX = bounds.toArray(isGeographicCRS);
 			
@@ -800,8 +799,20 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 			
 			resX /= oscar.Util.getMetersConversionFactor(projection);
 			resY /= oscar.Util.getMetersConversionFactor(projection);
+			var offsetArray = [];
+			if (isGeographicCRS) {
+				offsetArray.push(resY);
+				offsetArray.push(resX);
+			} else {
+				offsetArray.push(resX);
+				offsetArray.push(resY);
+			}
 			
-			localparams.GridOffsets=resX + "," + resY;
+			if(this.gridType == "urn:ogc:def:method:WCS:1.1:2dGridIn2dCrs") {
+				offsetArray.splice(1,0,0);
+				offsetArray.splice(1,0,0);
+			}
+			localparams.GridOffsets = offsetArray.toString();
 			
 			OpenLayers.Util.extend(localparams,params);
     		var url = buildUrl(this.defaultOptions.operationUrl,localparams);
