@@ -20,6 +20,8 @@
         <dependency>
             <groupId>osgeo</groupId>
             <artifactId>proj4js</artifactId>
+            <!-- Intentionally overloaded, fixed in version 8 of POMs -->
+            <version>1.0-2</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
