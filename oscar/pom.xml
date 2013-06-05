@@ -103,11 +103,10 @@
 									<outputDirectory>${project.build.directory}/scripts/jquery/plugins/layout</outputDirectory>
 									<includes>**</includes>
 								</artifactItem>								
-
 								<artifactItem>
 									<groupId>osgeo</groupId>
 									<artifactId>proj4js</artifactId>
-									<version>1.0-0</version>
+									<version>1.0-2</version>
 									<type>jar</type>
 									<overWrite>false</overWrite>
 									<outputDirectory>${project.build.directory}/scripts/proj4js</outputDirectory>
