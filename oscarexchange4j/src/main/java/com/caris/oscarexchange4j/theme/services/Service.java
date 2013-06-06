@@ -24,7 +24,7 @@ public interface Service {
      * enum of service types.
      */
     public enum ServiceType {
-        SERVICE, SELECTION, EXTRACTION
+        SERVICE, SELECTION, EXTRACTION, CATALOGUE
     };
 
     /**

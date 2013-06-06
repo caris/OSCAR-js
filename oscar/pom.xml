@@ -5,11 +5,11 @@
 	<name>oscar</name>
 	<packaging>jar</packaging>
 	<groupId>com.caris</groupId>
-	<version>13.0-RC1</version>
+	<version>13.1-SNAPSHOT</version>
 	<parent>
 		<groupId>com.caris</groupId>
 		<artifactId>oscar_framework</artifactId>
-		<version>13.0-RC1</version>
+		<version>13.1-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 	<dependencies>
@@ -28,24 +28,28 @@
 			<artifactId>jqueryui</artifactId>
 			<scope>provided</scope>
 		</dependency>
-<dependency>
-  <groupId>jquery</groupId>
-  <artifactId>layout</artifactId>
-  <version>1.3.0-rc30.79</version>
-</dependency>
+        <dependency>
+          <groupId>jquery</groupId>
+          <artifactId>layout</artifactId>
+          <version>1.3.0-rc30.79</version>
+        </dependency>
 		<dependency>
 			<groupId>jquery</groupId>
 			<artifactId>stalker</artifactId>
 			<version>1.0.0</version>
 			<scope>provided</scope>
 		</dependency>
-
 		<dependency>
 			<groupId>yahoo</groupId>
 			<artifactId>yui</artifactId>
 			<type>jar</type>
 			<scope>provided</scope>
 		</dependency>
+        <dependency>
+          <groupId>jsts</groupId>
+          <artifactId>jsts</artifactId>
+          <version>0.13.2</version>
+        </dependency>        
 	</dependencies>
 	<build>
 		<finalName>oscar</finalName>
@@ -124,6 +128,15 @@
 									<destFileName />
 									<includes>build/**</includes>
 								</artifactItem>
+                                <artifactItem>
+									<groupId>jsts</groupId>
+									<artifactId>jsts</artifactId>
+									<version>0.13.2</version>
+									<type>jar</type>
+									<overWrite>false</overWrite>
+									<outputDirectory>${project.build.directory}/scripts/jsts</outputDirectory>
+									<destFileName />
+								</artifactItem>                                
 							</artifactItems>
 							<outputDirectory>${project.build.directory}</outputDirectory>
 							<overWriteReleases>false</overWriteReleases>

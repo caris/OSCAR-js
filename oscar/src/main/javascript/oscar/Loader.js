@@ -42,6 +42,8 @@ var $_oscarscripts = [
 	,"../jquery/plugins/layout/js/jquery.layout-latest.min.js"
     ,"../proj4js/lib/proj4js.js"
     ,"../openlayers/OpenLayers.js"
+    ,"../jsts/js/javascript.util.js"
+    ,"../jsts/js/jsts.js"
 ];
 
 
