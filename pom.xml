@@ -14,14 +14,14 @@
     </description>
 
     <properties>
-        <branch>13.0</branch>
+        <branch>13.1</branch>
         <project.scm.url>https://github.com/caris/OSCAR-js.git</project.scm.url>
     </properties>
 
     <parent>
         <groupId>com.caris.pom</groupId>
         <artifactId>caris-opensource-pom</artifactId>
-        <version>7</version>
+        <version>9</version>
     </parent>
 
     <issueManagement>

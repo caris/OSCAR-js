@@ -28,11 +28,11 @@
 			<artifactId>jqueryui</artifactId>
 			<scope>provided</scope>
 		</dependency>
-        <dependency>
-          <groupId>jquery</groupId>
-          <artifactId>layout</artifactId>
-          <version>1.3.0-rc30.79</version>
-        </dependency>
+		<dependency>
+			<groupId>jquery</groupId>
+			<artifactId>layout</artifactId>
+			<version>1.3.0-rc30.79</version>
+		</dependency>
 		<dependency>
 			<groupId>jquery</groupId>
 			<artifactId>stalker</artifactId>
@@ -40,16 +40,16 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
+			<groupId>bjornharrtell</groupId>
+			<artifactId>jsts</artifactId>
+			<version>0.13.2</version>
+		</dependency>
+		<dependency>
 			<groupId>yahoo</groupId>
 			<artifactId>yui</artifactId>
 			<type>jar</type>
 			<scope>provided</scope>
-		</dependency>
-        <dependency>
-          <groupId>jsts</groupId>
-          <artifactId>jsts</artifactId>
-          <version>0.13.2</version>
-        </dependency>        
+		</dependency>        
 	</dependencies>
 	<build>
 		<finalName>oscar</finalName>
@@ -99,7 +99,7 @@
 									<overWrite>false</overWrite>
 									<outputDirectory>${project.build.directory}/scripts/jquery/plugins/stalker</outputDirectory>
 									<includes>**</includes>
-								</artifactItem>								
+								</artifactItem>
 								<artifactItem>
 									<groupId>jquery</groupId>
 									<artifactId>layout</artifactId>
@@ -107,7 +107,7 @@
 									<overWrite>false</overWrite>
 									<outputDirectory>${project.build.directory}/scripts/jquery/plugins/layout</outputDirectory>
 									<includes>**</includes>
-								</artifactItem>								
+								</artifactItem>
 
 								<artifactItem>
 									<groupId>osgeo</groupId>
@@ -128,15 +128,15 @@
 									<destFileName />
 									<includes>build/**</includes>
 								</artifactItem>
-                                <artifactItem>
-									<groupId>jsts</groupId>
+								<artifactItem>
+									<groupId>bjornharrtell</groupId>
 									<artifactId>jsts</artifactId>
 									<version>0.13.2</version>
 									<type>jar</type>
 									<overWrite>false</overWrite>
 									<outputDirectory>${project.build.directory}/scripts/jsts</outputDirectory>
 									<destFileName />
-								</artifactItem>                                
+								</artifactItem>
 							</artifactItems>
 							<outputDirectory>${project.build.directory}</outputDirectory>
 							<overWriteReleases>false</overWriteReleases>
@@ -342,32 +342,34 @@
 			</build>
 		</profile>
 		<profile>
-            <id>naturaldocs</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.codehaus.mojo.naturaldocs</groupId>
-                        <artifactId>naturaldocs-maven-plugin</artifactId>
-                        <version>1.0-SNAPSHOT</version>
-                        <executions>
-                            <execution>
-                                <phase>compile</phase>
-                                <goals>
-                                    <goal>generate</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                        <configuration>
-                            <naturalDocsHome>D:\Program Files\Natural Docs\NaturalDocs-1.4</naturalDocsHome>
-                            <input>src/main/javascript/oscar</input>
-                            <project>src/main/documentation/settings</project>
-                            <output>target/scripts/oscar/documentation</output>
-                            <outputFormat>FramedHTML</outputFormat>
-                            <rebuild>true</rebuild>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
+			<id>naturaldocs</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.codehaus.mojo.naturaldocs</groupId>
+						<artifactId>naturaldocs-maven-plugin</artifactId>
+						<version>1.0-SNAPSHOT</version>
+						<executions>
+							<execution>
+								<phase>compile</phase>
+								<goals>
+									<goal>generate</goal>
+								</goals>
+							</execution>
+						</executions>
+						<configuration>
+							<naturalDocsHome>D:\Program Files\Natural Docs\NaturalDocs-1.4</naturalDocsHome>
+							<input>src/main/javascript/oscar</input>
+							<project>
+								src/main/documentation/settings
+							</project>
+							<output>target/scripts/oscar/documentation</output>
+							<outputFormat>FramedHTML</outputFormat>
+							<rebuild>true</rebuild>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 </project>

@@ -1,7 +1,7 @@
-/*
+/**
  * CARIS oscar - Open Spatial Component ARchitecture
  *
- * Copyright 2012 CARIS <http://www.caris.com>
+ * Copyright 2013 CARIS <http://www.caris.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,20 +15,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-(function() {
-    oscar._imgPath = null;
-    oscar._scriptName=null;
-    oscar._getScriptLocation = function() {
-        return this._scriptLocation;
-    };
-    oscar.getImagePath=function() {
-     return oscar._getScriptLocation() + "images/";
-    }	
-    oscar.jQuery = jQuery.noConflict();
-    window.$$ = oscar.jQuery;
-    oscar.DownloadHost=null;
-})();
-/**
- * Constant: VERSION_NUMBER
- */
-oscar.VERSION_NUMBER = "13.1-SNAPSHOT";
+package com.caris.oscarexchange4j.theme.services;
+
+public class CatalogueService extends I_Service {
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.caris.oscarexchange4j.theme.services.I_Service#getServiceType()
+     */
+    @Override
+    public ServiceType getServiceType() {
+        return Service.ServiceType.CATALOGUE;
+    }
+
+}

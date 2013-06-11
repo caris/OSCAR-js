@@ -129,6 +129,8 @@ public class Services {
             return new SelectionService();
         case EXTRACTION:
             return new ExtractionService();
+        default:
+            break;
         }
         return null;
     }

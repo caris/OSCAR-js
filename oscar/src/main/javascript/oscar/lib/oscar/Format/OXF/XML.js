@@ -16,11 +16,11 @@
  * limitations under the License.
  */
 oscar.Format.OXF.XML = oscar.BaseClass(OpenLayers.Format.XML, {
-	/**
-	 * Property: defaultPrefix
-	 * 
-	 * default namespace for the xml nodes.
-	 */
+    /**
+     * Property: defaultPrefix
+     * 
+     * default namespace for the xml nodes.
+     */
     defaultPrefix:"ox",
     /**
      * Constructor: new oscar.Format.OXF.XML()
@@ -65,6 +65,13 @@ oscar.Format.OXF.XML = oscar.BaseClass(OpenLayers.Format.XML, {
             },
             "theme":function(node,obj) {
                 var theme = new oscar.ox.Theme();
+
+                theme.parameters = {};
+                var nZoom = parseInt(node.getAttribute("numzoomlevels"));
+                theme.parameters.numzoomlevels = (isNaN(nZoom))?16:nZoom;
+                var bColor = node.getAttribute("bgColor");
+                theme.parameters.backgroundColor = (bColor==null)? "#fff":bColor;
+                
                 obj.addTheme(theme);
                 this.readChildNodes(node,theme);
             
@@ -78,18 +85,18 @@ oscar.Format.OXF.XML = oscar.BaseClass(OpenLayers.Format.XML, {
             },
 
             "covers":function(node,obj){
-            	var covers = [];
-            	this.readChildNodes(node,covers)
+                var covers = [];
+                this.readChildNodes(node,covers)
                 obj.covers = covers;
             },
             "cover":function(node,cArr){
-            	var cover = {};
-            	cover.type = node.getAttribute("type");
-            	cover.minX = parseFloat(node.getAttribute("minX"));
-            	cover.minY = parseFloat(node.getAttribute("minY"));
-            	cover.maxX = parseFloat(node.getAttribute("maxX"));
-            	cover.maxY = parseFloat(node.getAttribute("maxY"));
-            	cArr.push(cover);
+                var cover = {};
+                cover.type = node.getAttribute("type");
+                cover.minX = parseFloat(node.getAttribute("minX"));
+                cover.minY = parseFloat(node.getAttribute("minY"));
+                cover.maxX = parseFloat(node.getAttribute("maxX"));
+                cover.maxY = parseFloat(node.getAttribute("maxY"));
+                cArr.push(cover);
             },
             "layers":function(node,obj){
                 this.readChildNodes(node,obj);
