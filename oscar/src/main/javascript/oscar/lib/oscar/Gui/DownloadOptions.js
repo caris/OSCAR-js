@@ -403,18 +403,21 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 		$input.click(function() {
 			var $this = $$(this);
 			var currentFields = scope.defaultOptions.field;
-			var field = "#" + $this.attr("id");
-			var index = $$.inArray(field,currentFields);
-			if(index != -1)  {
-			   currentFields.splice(index,1);
-			} else {
-			   currentFields.push(field); 
-			}
-			scope.defaultOptions.field=currentFields;
+            var fieldFound = false;
+            for(var i=0;i<currentFields.length;i++) {
+                var selectedField = currentFields[i];
+                if($this.attr("id") == selectedField.attr("id")) {
+                    fieldFound = true;
+                    currentFields.splice(i,1);
+                    break;
+                }
+            }
+            if(!fieldFound) {
+                currentFields.push($this);
+            }
+            scope.defaultOptions.field=currentFields
 		}); 
-		
 		return $input;
-	
 	},
 	/**
 	* Method: _createInterpolationMethodList
