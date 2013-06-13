@@ -23,6 +23,9 @@ import java.util.List;
 import com.caris.oscarexchange4j.theme.services.Service.ServiceType;
 
 public class Services {
+    
+    private List<CatalogueService> catalogue;
+    
     private List<SelectionService> selection;
 
     private List<ExtractionService> extraction;
@@ -47,6 +50,8 @@ public class Services {
             this.addSelectionService((SelectionService) service);
         else if (service.getServiceType() == I_Service.ServiceType.EXTRACTION)
             this.addExtractionService((ExtractionService) service);
+        else if(service.getServiceType().equals(I_Service.ServiceType.CATALOGUE))
+            this.addCatalogueService((CatalogueService) service);
     }
 
     /* (non-Javadoc)
@@ -101,6 +106,14 @@ public class Services {
 
         this.selection.add(service);
 
+    }
+    
+    private void addCatalogueService(CatalogueService service) {
+        if(this.catalogue == null)
+            this.catalogue = new ArrayList<CatalogueService>();
+        
+        this.catalogue.add(service);
+        
     }
 
     /**
