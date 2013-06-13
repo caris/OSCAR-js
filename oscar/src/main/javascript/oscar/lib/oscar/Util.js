@@ -40,6 +40,36 @@ oscar.debug = {
 oscar.Util = {};
 
 /**
+* Takes two geometries and combines them into a single geometry
+**/
+oscar.Util.mergeGeometries =function(geomA, geomB) {
+    var reader = new jsts.io.WKTReader();
+    var gom,strFeatB,union;
+    strFeatA = reader.read(geomA.toString());
+    strFeatB = reader.read(geomB.toString());
+    union = strFeatA.union(strFeatB);
+    var parser = new jsts.io.OpenLayersParser();
+    return parser.write(union);
+}
+
+/**
+* Loops through an array of existing geometries and attempts to merge a new geometry into them.
+* Returns true if the merge was successful, false otherwise.
+**/
+oscar.Util.mergeToExistingGeometry = function(geometries, geometry) {
+    for(var g in geometries) {
+        var existingGeometry = geometries[g];
+        if(existingGeometry.intersects(geometry)) {
+            geometries[g] = oscar.Util.mergeGeometries(existingGeometry,geometry);
+            return true;
+        }
+    }
+    return false;
+
+}
+
+
+/**
 * APIMethod:getMetersConversionFactor
 * Uses the projection to obtain a conversion factor value to display units in meters.
 * Parameters:

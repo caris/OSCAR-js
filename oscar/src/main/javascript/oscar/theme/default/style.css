@@ -1764,3 +1764,34 @@ td#oscarLayoutFooterContainer {
 	left:25%;
 	top:25%;
 }
+
+/** Styles for oscar.Gui.CatalogueResults **/
+
+.oscarGuiCatalogueResults {}
+
+.oscarGuiCatalogueResults .result {
+    word-wrap:break-word;
+    height:75px;
+    overflow:hidden;
+    position:relative;
+    cursor:pointer;
+}
+
+.oscarGuiCatalogueResults .result.over {
+    background-color:#004580;
+}
+
+.oscarGuiCatalogueResults .result .title, .oscarGuiCatalogueResults .result .abs {
+     font-family: sans-serif !important;
+     font-weight:bold;
+     color:#aeaeae;
+}
+
+.oscarGuiCatalogueResults .result .title {
+    font-size:16px !important;
+    color:#004580;
+}
+
+.oscarGuiCatalogueResults .title.over, .oscarGuiCatalogueResults .abs.over {
+    color:#fff;
+}
