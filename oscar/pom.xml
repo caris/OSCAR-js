@@ -16,39 +16,30 @@
 		<dependency>
 			<groupId>osgeo</groupId>
 			<artifactId>openlayers</artifactId>
-			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>osgeo</groupId>
 			<artifactId>proj4js</artifactId>
-			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>jquery</groupId>
 			<artifactId>jqueryui</artifactId>
-			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>jquery</groupId>
 			<artifactId>layout</artifactId>
-			<version>1.3.0-rc30.79</version>
 		</dependency>
 		<dependency>
 			<groupId>jquery</groupId>
 			<artifactId>stalker</artifactId>
-			<version>1.0.0</version>
-			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>bjornharrtell</groupId>
 			<artifactId>jsts</artifactId>
-			<version>0.13.2</version>
 		</dependency>
 		<dependency>
 			<groupId>yahoo</groupId>
 			<artifactId>yui</artifactId>
-			<type>jar</type>
-			<scope>provided</scope>
 		</dependency>        
 	</dependencies>
 	<build>
@@ -75,8 +66,6 @@
 								<artifactItem>
 									<groupId>osgeo</groupId>
 									<artifactId>openlayers</artifactId>
-									<version>2.12.0</version>
-									<type>jar</type>
 									<overWrite>false</overWrite>
 									<outputDirectory>${project.build.directory}/scripts/openlayers</outputDirectory>
 									<includes>OpenLayers.js, theme/**, img/**,
@@ -85,8 +74,6 @@
 								<artifactItem>
 									<groupId>jquery</groupId>
 									<artifactId>jqueryui</artifactId>
-									<version>1.10.0</version>
-									<type>jar</type>
 									<overWrite>false</overWrite>
 									<outputDirectory>${project.build.directory}/scripts/jquery</outputDirectory>
 									<includes>**</includes>
@@ -94,8 +81,6 @@
 								<artifactItem>
 									<groupId>jquery</groupId>
 									<artifactId>stalker</artifactId>
-									<version>1.0.0</version>
-									<type>jar</type>
 									<overWrite>false</overWrite>
 									<outputDirectory>${project.build.directory}/scripts/jquery/plugins/stalker</outputDirectory>
 									<includes>**</includes>
@@ -103,7 +88,6 @@
 								<artifactItem>
 									<groupId>jquery</groupId>
 									<artifactId>layout</artifactId>
-									<version>1.3.0-rc30.79</version>
 									<overWrite>false</overWrite>
 									<outputDirectory>${project.build.directory}/scripts/jquery/plugins/layout</outputDirectory>
 									<includes>**</includes>
@@ -112,8 +96,6 @@
 								<artifactItem>
 									<groupId>osgeo</groupId>
 									<artifactId>proj4js</artifactId>
-									<version>1.0-0</version>
-									<type>jar</type>
 									<overWrite>false</overWrite>
 									<outputDirectory>${project.build.directory}/scripts/proj4js</outputDirectory>
 									<includes>build/license.txt,lib/**</includes>
@@ -121,8 +103,6 @@
 								<artifactItem>
 									<groupId>yahoo</groupId>
 									<artifactId>yui</artifactId>
-									<version>2.8.2r1</version>
-									<type>jar</type>
 									<overWrite>false</overWrite>
 									<outputDirectory>${project.build.directory}/scripts/yui</outputDirectory>
 									<destFileName />
@@ -131,8 +111,6 @@
 								<artifactItem>
 									<groupId>bjornharrtell</groupId>
 									<artifactId>jsts</artifactId>
-									<version>0.13.2</version>
-									<type>jar</type>
 									<overWrite>false</overWrite>
 									<outputDirectory>${project.build.directory}/scripts/jsts</outputDirectory>
 									<destFileName />
