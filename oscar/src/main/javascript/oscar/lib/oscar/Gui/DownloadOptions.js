@@ -755,13 +755,14 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 			for(f in fields) {
 				var field = fields[f];
 				var $input = $$(field); 
+                var fieldName = encodeURI($input.val());
 				var select = $$($input.data("selection"));
 				var selectValue = select.val();
 
 				if(select.val()!= null) {
-					fieldsArray.push($input.val() + ":" + select.val());
+					fieldsArray.push(fieldName + ":" + select.val());
 				} else {
-					fieldsArray.push($input.val());
+					fieldsArray.push(fieldName);
 				}
 			}
 			
