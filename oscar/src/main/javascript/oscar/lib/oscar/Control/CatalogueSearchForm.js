@@ -16,38 +16,37 @@
  * limitations under the License.
  */
 /**
- * Class: oscar.Control.SearchForm 
+ * Class: oscar.Control.CatalogueSearchForm 
  * 
  * Inherits from:  
  * - <oscar.Control>
  * 
  */
 
-oscar.Control.SearchForm = oscar.BaseClass(oscar.Control,{
+oscar.Control.CatalogueSearchForm = oscar.BaseClass(oscar.Control,{
     EVENT_TYPES:["search"],
     form:null,
     basicSearch:true,
     handler:null,
     ui:null,
     initialize:function(options) {
-        this.EVENT_TYPES = oscar.Control.SearchForm.prototype.EVENT_TYPES.concat(oscar.Control.prototype.EVENT_TYPES);
+        this.EVENT_TYPES = oscar.Control.CatalogueSearchForm.prototype.EVENT_TYPES.concat(oscar.Control.prototype.EVENT_TYPES);
         oscar.Control.prototype.initialize.apply(this,[options]);
         this.events.register("search",this,this.search);
         
     },
     setMap:function(map) {
         oscar.Control.prototype.setMap.apply(this,[map]);
-        this.map.events.on({
-            "moveend":function(e) {
-                //this.button.click();
-            },
-            scope:this
-        });
     },
     draw:function() {
         this.div = oscar.Control.prototype.draw.apply(this,arguments);
         this.form = $$("<form onSubmit='return false;'></form>");
         this.input = $$("<input type='text' id='q' size='50' value=''>");
+        this.input.button().css({
+            'text-align' : 'left',
+            'outline' : 'none',
+            'cursor' : 'text'
+        });
         if(this.defaultText) {
             this.input.val(this.defaultText);
         }
@@ -69,8 +68,10 @@ oscar.Control.SearchForm = oscar.BaseClass(oscar.Control,{
             } else {}//advanced
             scope.events.triggerEvent("search",criteria);
         });
+        
+        
         $$(this.div).append(this.form);
         return this.div;
     },
-    CLASS_NAME:"oscar.Control.SearchForm"
+    CLASS_NAME:"oscar.Control.CatalogueSearchForm"
 });

@@ -196,7 +196,7 @@
                                         <include>**/Control/RangeSelect.js</include>
                                         <include>**/Control/Point.js</include>
                                         <include>**/Control/Select.js</include>
-                                <include>**/Control/SearchForm.js</include>
+                                <include>**/Control/CatalogueSearchForm.js</include>
                                         <include>**/Control/Print.js</include>
                                         <include>**/Control/DataExtractor.js</include>
                                         <include>**/Control/Measure.js</include>
