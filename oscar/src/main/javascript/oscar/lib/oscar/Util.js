@@ -49,11 +49,11 @@ oscar.Util = {};
  */
 oscar.Util.extractGeometriesFromFeatures = function(features) {
 	var geometryArray=[];
-	do {
+	while(features.length > 0) {
 		var feature = features.shift();
 		var geometry = feature.geometry;
 		geometryArray.push(geometry);
-	} while(features.length > 0)
+	} 
 	
 	
 	return geometryArray;
@@ -68,12 +68,12 @@ oscar.Util.extractGeometriesFromFeatures = function(features) {
  */
 oscar.Util.combineGeometries = function(geoms) {
 	var merged = []
-	do {
+	while(geoms.length > 0) {
 		var geometry = geoms.shift();
 		if(!oscar.Util.mergeToExistingGeometry(merged,geometry)) {
 			merged.push(geometry);
 		}
-	} while(geoms.length > 0)
+	} 
 	return merged;
 }
 
