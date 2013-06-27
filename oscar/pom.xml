@@ -29,6 +29,10 @@
                <groupId>jquery</groupId>
                <artifactId>layout</artifactId>
           </dependency>
+		<dependency>
+		   <groupId>jquery</groupId>
+		   <artifactId>slimscroll</artifactId>
+		</dependency>
           <dependency>
                <groupId>jquery</groupId>
                <artifactId>stalker</artifactId>
@@ -100,6 +104,13 @@
                                              <outputDirectory>${project.build.directory}/scripts/proj4js</outputDirectory>
                                              <includes>build/license.txt,lib/**</includes>
                                         </artifactItem>
+										<artifactItem>
+											<groupId>jquery</groupId>
+											<artifactId>slimscroll</artifactId>
+											<overWrite>false</overWrite>
+											<outputDirectory>${project.build.directory}/scripts/jquery/plugins/slimScroll</outputDirectory>
+											<includes>**</includes>
+										</artifactItem>										
                                         <artifactItem>
                                              <groupId>yahoo</groupId>
                                              <artifactId>yui</artifactId>
