@@ -39,9 +39,50 @@ oscar.debug = {
  */
 oscar.Util = {};
 
+
 /**
-* Takes two geometries and combines them into a single geometry
-**/
+ * APIMethod: extractGeometriesFromFeatures
+ * This method takes an array of features and extracts the geometry objects
+ * from them and returns them in an array.
+ * 
+ * Returns an array of geometries.
+ */
+oscar.Util.extractGeometriesFromFeatures = function(features) {
+	var geometryArray=[];
+	do {
+		var feature = features.shift();
+		var geometry = feature.geometry;
+		geometryArray.push(geometry);
+	} while(features.length > 0)
+	
+	
+	return geometryArray;
+}
+
+/**
+ * APIMethod: combineGeometries
+ * This method take an array of <OpenLayers.Geometry> objects and attempts
+ * to combine them to fewer geometry objects.
+ * 
+ * Returns an array of geometry objects.
+ */
+oscar.Util.combineGeometries = function(geoms) {
+	var merged = []
+	do {
+		var geometry = geoms.shift();
+		if(!oscar.Util.mergeToExistingGeometry(merged,geometry)) {
+			merged.push(geometry);
+		}
+	} while(geoms.length > 0)
+	return merged;
+}
+
+/**
+ * APIMethod: mergeGeometries
+ * Takes two <OpenLayers.Geometry> objects and merges them to a single <OpenLayers.Geometry> object.
+ * 
+ * Returns the new geometry object.
+ */
 oscar.Util.mergeGeometries =function(geomA, geomB) {
     var reader = new jsts.io.WKTReader();
     var gom,strFeatB,union;
@@ -53,9 +94,10 @@ oscar.Util.mergeGeometries =function(geomA, geomB) {
 }
 
 /**
-* Loops through an array of existing geometries and attempts to merge a new geometry into them.
-* Returns true if the merge was successful, false otherwise.
-**/
+ * APIMethod: mergeToExistingGeometry
+ * Takes a geometry and attempts to merge it to a list of existing geometry objects.
+ * Returns true or false of the merge was successful.
+ */
 oscar.Util.mergeToExistingGeometry = function(geometries, geometry) {
     for(var g in geometries) {
         var existingGeometry = geometries[g];
@@ -723,6 +765,55 @@ oscar.Util.getGridOffsets = function(offsetsAsString) {
 **/
 oscar.Util.isGeographicCRS = function(projection) {
 	return ($$.trim(projection.proj.projName)=="longlat")? true :false;
+}
+
+/**
+ * APIMethod: boundsToFeatures
+ * This method taks an OpenLayers.Bounds object and convert it to a feature.
+ * Parameters:
+ * - bounds <OpenLayers.Bounds>
+ * - srcProjection <OpenLayers.Projection>
+ * - map <OpenLayers.Map>
+ */
+oscar.Util.boundsToFeatures = function(bbox,srcProjection,map) {
+	var features = [];
+	var mapMaxExtent = map.getMaxExtent();
+	var featureBounds = bbox.clone();
+	
+	if(map.getProjectionObject().getCode() != srcProjection.getCode()) {
+		featureBounds.transform(srcProjection,map.getProjectionObject());
+	}
+	
+	if(bbox.left > bbox.right) {
+		var boundsA = new OpenLayers.Bounds(
+			featureBounds.left,
+			featureBounds.bottom,
+			map.getMaxExtent().right,
+			featureBounds.top
+		);
+		var boundsB = new OpenLayers.Bounds(
+			map.getMaxExtent().left,
+			featureBounds.bottom,
+			featureBounds.right,
+			featureBounds.top
+		);
+		features.push(new OpenLayers.Feature.Vector(boundsA.toGeometry()));
+		features.push(new OpenLayers.Feature.Vector(boundsB.toGeometry()));
+	} else {
+		if(bbox.left > 0) {
+			featureBounds.left = Math.abs(featureBounds.left);
+		} else {
+			featureBounds.left = Math.abs(featureBounds.left)*-1;
+		}
+		if(bbox.right > 0) {
+			featureBounds.right = Math.abs(featureBounds.right);
+		} else {
+			featureBounds.right = Math.abs(featureBounds.right)*-1;
+		}
+		features.push(new OpenLayers.Feature.Vector(featureBounds.toGeometry()));
+	}
+	
+	return features;
 }
 
 /**
