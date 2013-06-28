@@ -31,7 +31,7 @@ oscar.Handler.CSW = new oscar.BaseClass(oscar.Handler,{
         service:"csw",
         version:"2.0.2",
         resultType:"results",
-        outputSchema:"http://www.isotc211.org/2005/gmd",
+        outputSchema:"http://www.opengis.net/cat/csw/2.0.2",
         maxRecords:110,
         startPosition:1
     },
@@ -91,7 +91,7 @@ oscar.Handler.CSW = new oscar.BaseClass(oscar.Handler,{
         });
         parameters.Query = {
                 ElementSetName : {
-                    value : "summary"
+                    value : "full"
                 },
                 Constraint : {
                     version : "1.1.0",
