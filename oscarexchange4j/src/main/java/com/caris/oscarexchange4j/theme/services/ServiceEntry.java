@@ -23,6 +23,9 @@ import java.util.Map;
 
 public class ServiceEntry {
 
+    /**
+     * Attributes for the service entry.
+     */
     Map<String, String> attributes;
 
     /**
@@ -65,6 +68,11 @@ public class ServiceEntry {
         return attributes;
     }
     
+    /**
+     * Adds an attribute to the attributes map.
+     * @param name
+     * @param value
+     */
     public void addAttribute(String name,String value) {
         if(this.attributes==null) 
             this.attributes= new HashMap<String, String>();
