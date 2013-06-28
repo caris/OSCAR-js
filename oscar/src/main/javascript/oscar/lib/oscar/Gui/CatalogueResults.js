@@ -323,12 +323,14 @@ var cswget = {
             }
         }
     },
-    abs:function(r) {
-        
+	abs:function(r) {
         if(r["abstract"]) {
             try {
                 if($$.isArray(r["abstract"])) {
-                    return r["abstract"][0].value;
+					if(r["abstract"][0].value) 
+						return r["abstract"][0].value;
+					else 
+						return r["abstract"][0];
                 } else {
                     return r["abstract"];
                 }
