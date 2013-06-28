@@ -800,15 +800,14 @@ oscar.Util.boundsToFeatures = function(bbox,srcProjection,map) {
 		features.push(new OpenLayers.Feature.Vector(boundsA.toGeometry()));
 		features.push(new OpenLayers.Feature.Vector(boundsB.toGeometry()));
 	} else {
-		if(bbox.left > 0) {
-			featureBounds.left = Math.abs(featureBounds.left);
-		} else {
-			featureBounds.left = Math.abs(featureBounds.left)*-1;
+		featureBounds.left = Math.abs(featureBounds.left);
+		if(bbox.left <= 0) {
+			featureBounds.left *= -1;
 		}
-		if(bbox.right > 0) {
-			featureBounds.right = Math.abs(featureBounds.right);
-		} else {
-			featureBounds.right = Math.abs(featureBounds.right)*-1;
+
+		featureBounds.right = Math.abs(featureBounds.right);
+		if(bbox.left <= 0) {
+			featureBounds.right *= -1;
 		}
 		features.push(new OpenLayers.Feature.Vector(featureBounds.toGeometry()));
 	}
