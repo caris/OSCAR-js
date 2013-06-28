@@ -44,7 +44,7 @@ oscar.Handler.CSW = new oscar.BaseClass(oscar.Handler,{
             includeXY :true
         });
         
-		if(this.catalogue.attributes.outputSchema) {
+		if(this.catalogue.attributes && this.catalogue.attributes.outputSchema) {
 			this.DEFAULT_SEARCH_PARAMETERS.outputSchema = this.catalogue.attributes.outputSchema;
 		}
 		
