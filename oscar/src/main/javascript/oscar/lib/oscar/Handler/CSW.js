@@ -43,6 +43,11 @@ oscar.Handler.CSW = new oscar.BaseClass(oscar.Handler,{
         false, {
             includeXY :true
         });
+        
+		if(this.catalogue.attributes.outputSchema) {
+			this.DEFAULT_SEARCH_PARAMETERS.outputSchema = this.catalogue.attributes.outputSchema;
+		}
+		
         if(options) {
             if(options.DEFAULT_SEARCH_PARAMETERS) {
                 OpenLayers.Util.extend(this.DEFAULT_SEARCH_PARAMETERS,options.DEFAULT_SEARCH_PARAMETERS);

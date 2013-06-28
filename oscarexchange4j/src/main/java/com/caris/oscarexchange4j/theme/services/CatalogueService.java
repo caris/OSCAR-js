@@ -18,6 +18,15 @@
 package com.caris.oscarexchange4j.theme.services;
 
 public class CatalogueService extends I_Service {
+    
+    /**
+     * 
+     */
+    public final static String OUTPUT_SCHEMA = "outputSchema";
+    /**
+     * 
+     */
+    public final static String DEFAULT_OUTPUT_SCHEMA = "http://www.opengis.net/cat/csw/2.0.2";
 
     /*
      * (non-Javadoc)
