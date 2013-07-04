@@ -1174,8 +1174,8 @@ td#oscarLayoutFooterContainer {
 
 .closeBox {
 	background-image: url('img/content_close.png');
-	width: 16px;
-	height: 16px;
+	width: 15px;
+	height: 15px;
 	display: inline-block;
 	margin-right: 3px;
 	cursor: pointer;

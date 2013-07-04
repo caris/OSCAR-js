@@ -81,8 +81,9 @@ oscar.Control.Permalink = oscar.BaseClass(OpenLayers.Control.Permalink,{
      */
     updateLink: function() {
 		OpenLayers.Control.Permalink.prototype.updateLink.apply(this);
-		if(this.permalinkPanel){
-			this.permalinkPanel.hide();
+		if(this.$panel){
+			//this.$panel.remove();
+			this.$panel.hide();
 		}
     },
     /**
@@ -108,36 +109,40 @@ oscar.Control.Permalink = oscar.BaseClass(OpenLayers.Control.Permalink,{
      *  
      */
 	_showPermalink: function(){
-		this.container = this.element.parentNode;
-		this.container.setAttribute("class","yui-skin-sam");
-		this.panel=document.getElementById("permalinkPanel");		
-		if(!this.panel){
-			this.panel=document.createElement("div");
-			this.panel.setAttribute("id","permalinkPanel");
-			var title=document.createElement("div")
-			title.innerHTML=this.panelTitle;
-			this.panel.appendChild(title);
-			var input=document.createElement("input");
-			this.panel.appendChild(input);
-            document.body.appendChild(this.panel);
-            			
+		//element is the anchor
+		var parent = $$(this.element).parent();
+		if(this.$panel == null) {
+			this.$panel = $$("<div></div>");
+			this.$closePanel = $$("<div></div>");
+			this.$closePanel.addClass("closeBox");
+			var scope = this;
+			this.$closePanel.click(function() {
+				scope.$panel.hide();
+			});
+			this.$panel.append(this.$closePanel);
+			this.$panel.attr("id","permalinkPanel");
+			var $title=$$("<div></div>").html(this.panelTitle);
+			this.$panel.append($title);
+			this.$input=$$("<input type='text'>");
+			this.$input.css("width","98%");
+			this.$panel.append(this.$input);
+			$$("body").append(this.$panel);
+			this.$panel.css({
+				"position":"absolute",
+				"zIndex":1500,
+				"width":400,
+				"height":80,
+				"backgroundColor":"#bbb"
+			});
+			this.$panel.position({
+				of:$$(this.element),
+				at:"right bottom",
+				my:"right top"
+			});			
 		}
-		this.permalinkPanel = new YAHOO.widget.Panel(this.panel, {
-		    width:"360px",
-			visible :false,
-			draggable :false,
-			constraintoviewport: true,
-			underlay: "none",
-			context :[this.panelContainer, "tl", "tl", ["beforeShow", "windowResize"], [this.panelOffset, 0]]
-		});
-		this.permalinkPanel.cfg.setProperty("zIndex","1500");	
-		this.permalinkPanel.render(this.panelContainer);
-		this.permalinkPanel.show();
-		var urlEl=this.panel.getElementsByTagName("input")[0];
-		urlEl.style.width="98%";
-		urlEl.value=this.element.href;
-		urlEl.onclick=this._selectAll(urlEl);
-		urlEl.click();
+		this.$input.val(this.element.href);
+		this.$panel.show();
+
 	},
 	/**
 	 * Method: _selectAll 
