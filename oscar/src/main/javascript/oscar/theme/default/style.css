@@ -599,11 +599,12 @@ div.olControlMousePosition {
 	float:left;
 }
 
-.oscarControlToolBar .oscarControlPreviousViewItemActive {
+.oscarControlToolBar .oscarControlPreviousViewItemActive, .oscarControlToolBar .oscarControlPreviousViewItemInactive {
 	background-image: url('img/toolbarSprites.png');
 	background-position: -17px -32px;
 	width: 17px !important;
 	height: 32px;
+	float:left;
 }
 
 .oscarControlToolBar .oscarControlMeasureItemInactive {

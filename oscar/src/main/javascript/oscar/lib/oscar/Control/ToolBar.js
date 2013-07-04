@@ -25,6 +25,7 @@
  */
 oscar.Control.Toolbar = oscar.BaseClass(OpenLayers.Control.Panel, {
 	displayMeasurements : true,
+	usePreviousView: true,
 	EVENT_TYPES : [ "selection", "extraction", "measurement",
 							"activate", "deactivate" ],
 	initialize : function(options) {
@@ -43,7 +44,9 @@ oscar.Control.Toolbar = oscar.BaseClass(OpenLayers.Control.Panel, {
 		}
 		this.div.innerHTML = "";
 		if (this.active) {
-			$$(this.div).append(this.leftCap);
+			if(!this.usePreviousView) {
+				$$(this.div).append(this.leftCap);
+			}
 			for ( var i = 0, len = this.controls.length; i < len; i++) {
 				this.div.appendChild(this.controls[i].panel_div);
 				var tooltipText = oscar.i18n("tooltip_"
@@ -99,6 +102,9 @@ oscar.Control.Toolbar = oscar.BaseClass(OpenLayers.Control.Panel, {
 	applyTheme : function(theme) {
 		this.removeExistingControls();
 		var ctrls = [];
+		if(this.usePreviousView) {
+			ctrls.push(new oscar.Control.PreviousView());
+		}
 		if (this.displayMeasurements) {
 			ctrls.push(new oscar.Control.Measure());
 		}
