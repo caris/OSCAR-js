@@ -167,8 +167,10 @@ oscar.Control.MeasurementTools = oscar
 						if (unit == -1)
 							return;
 						this.currentUnit = unit;
-						if (this.activeControl)
-							this.activeControl.displaySystem = unit;
+						
+						for ( var key in this.controls) {
+							this.controls[key].displaySystem = unit;
+						}
 
 					},
 
