@@ -82,7 +82,6 @@ oscar.Control.Permalink = oscar.BaseClass(OpenLayers.Control.Permalink,{
     updateLink: function() {
 		OpenLayers.Control.Permalink.prototype.updateLink.apply(this);
 		if(this.$panel){
-			//this.$panel.remove();
 			this.$panel.hide();
 		}
     },
