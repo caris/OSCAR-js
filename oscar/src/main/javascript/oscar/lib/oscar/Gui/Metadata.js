@@ -135,7 +135,7 @@ oscar.Gui.Metadata = oscar
 						this.loadWCSCapabilities(serviceEntry.url);
 						break;
 					case "WFS":
-						this.loadWFSCapabilities(serviceEntry.url);
+						this.loadWFSCapabilities(serviceEntry.url,serviceEntry.version);
 						break;
 					
 					}
@@ -297,21 +297,23 @@ oscar.Gui.Metadata = oscar
 			 * Parameters:
 			 * url - {String} URL String of the WFS service.
 			 */
-			loadWFSCapabilities : function(url) {
+			loadWFSCapabilities : function(url,version) {
 				var container = this.getLoadingDiv();
 				var success = function(resp) {
 					try {
-						var reader = new oscar.Format.WFSCapabilities();
+						var reader = new OpenLayers.Format.WFSCapabilities();
 						var doc = resp.responseXML;
 						var capabilities = reader.read(doc);
 						oscar.jQuery(container).removeClass("md_loadingActive");
 						this.renderService(container, capabilities);
 					} catch (err) {
+						console.log(err);
 						fail();
 					}
 
 				};
 				var fail = function(resp) {
+					console.log("here");
 					oscar.jQuery(container).removeClass("md_loadingActive");
 					oscar.jQuery(container).addClass("md_loadingFailed");
 					container.innerHTML = oscar.i18n("md_request_failed");
@@ -319,6 +321,7 @@ oscar.Gui.Metadata = oscar
 				}
 				var params = {
 					service :"WFS",
+					version:version,
 					request :"GetCapabilities"
 				};
 				OpenLayers.Request.GET({
