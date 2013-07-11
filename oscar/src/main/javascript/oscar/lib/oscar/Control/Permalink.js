@@ -121,6 +121,7 @@ oscar.Control.Permalink = oscar.BaseClass(OpenLayers.Control.Permalink,{
 			this.$panel.append(this.$closePanel);
 			this.$panel.attr("id","permalinkPanel");
 			var $title=$$("<div></div>").html(this.panelTitle);
+			$title.css("text-align","left");
 			this.$panel.append($title);
 			this.$input=$$("<input type='text'>");
 			this.$input.css("width","98%");
