@@ -313,7 +313,6 @@ oscar.Gui.Metadata = oscar
 
 				};
 				var fail = function(resp) {
-					console.log("here");
 					oscar.jQuery(container).removeClass("md_loadingActive");
 					oscar.jQuery(container).addClass("md_loadingFailed");
 					container.innerHTML = oscar.i18n("md_request_failed");
@@ -510,10 +509,7 @@ oscar.Gui.Metadata = oscar
 					for ( var i = 0; i < extractionService.length; i++) {
 						var serviceUrl = extractionService[i].url
 						if (this.checkUrls(href, serviceUrl)) {
-							for ( var identifier in extractionService[i].identifiers) {
-								dataLayers
-										.push(extractionService[i].identifiers[identifier]);
-							}
+							dataLayers.concat(ids);
 						}
 					}
 
@@ -534,10 +530,7 @@ oscar.Gui.Metadata = oscar
 					for ( var i = 0; i < services.length; i++) {
 						var serviceUrl = services[i].url
 						if (this.checkUrls(href, serviceUrl)) {
-							for ( var identifier in services[i].identifiers) {
-								dataLayers
-										.push(services[i].identifiers[identifier]);
-							}
+							dataLayers.push(ids);
 						}
 					}
 
@@ -581,21 +574,6 @@ oscar.Gui.Metadata = oscar
 					var row = document.createElement("div");
 					oscar.jQuery(row).css("height", "30px");
 					var id = ids[i];
-					if (this.showUsed) {
-						var checkNameFn = function(dataLayers, id) {
-							for ( var i = 0; i < dataLayers.length; i++) {
-								var dataLayer = dataLayers[i];
-								var idName = id.name || id.identifier || id.title;
-								if (dataLayer == idName) {
-									return true;
-								}
-							}
-							return false;
-						};
-						if (!checkNameFn(dataLayers, id)) {
-							continue;
-						}
-					}
 					
 					var title = null;
 					if(typeof id.title == 'object') {
