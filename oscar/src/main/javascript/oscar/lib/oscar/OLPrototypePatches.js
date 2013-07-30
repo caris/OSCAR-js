@@ -38,4 +38,4 @@ OpenLayers.Format.WFSCapabilities.v1_0_0.prototype.readers["wfs"]["LatLongBoundi
 	var miny= node.getAttribute("miny");
 	var bounds = new OpenLayers.Bounds(minx,miny,maxx,maxy);
 	obj.bounds = bounds;
-}
+};
