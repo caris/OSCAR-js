@@ -186,7 +186,7 @@ oscar.Gui.Metadata = oscar
 				var success = function(resp) {
 					try {
 						var reader = new oscar.Format.WCSCapabilities();
-						var doc = resp.responseXML || resp.responseText;
+						var doc = resp.responseXML;
 						var capabilities = reader.read(doc);
 						oscar.jQuery(container).removeClass("md_loadingActive");
 						this.renderService(container, capabilities);
@@ -224,7 +224,7 @@ oscar.Gui.Metadata = oscar
 				var success = function(resp) {
 					try {
 						var reader = new OpenLayers.Format.WMSCapabilities();
-						var doc = resp.responseXML || resp.responseText;
+						var doc = resp.responseXML;
 						var capabilities = reader.read(doc);
 						oscar.jQuery(container).removeClass("md_loadingActive");
 						this.renderService(container, capabilities);
@@ -263,7 +263,7 @@ oscar.Gui.Metadata = oscar
 				var success = function(resp) {
 					try {
 						var reader = new oscar.Format.WMTSCapabilities();
-						var doc = resp.responseXML || resp.responseText;
+						var doc = resp.responseXML;
 						var capabilities = reader.read(doc);
 						oscar.jQuery(container).removeClass("md_loadingActive");
 						this.renderService(container, capabilities);
@@ -302,7 +302,7 @@ oscar.Gui.Metadata = oscar
 				var success = function(resp) {
 					try {
 						var reader = new OpenLayers.Format.WFSCapabilities();
-						var doc = resp.responseXML || resp.responseText;
+						var doc = resp.responseXML;
 						var capabilities = reader.read(doc);
 						oscar.jQuery(container).removeClass("md_loadingActive");
 						this.renderService(container, capabilities);
