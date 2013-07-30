@@ -30,3 +30,12 @@ OpenLayers.Format.GML.v3.prototype.readers["gml"].outerBoundaryIs = function(nod
 	};
 
 
+OpenLayers.Format.WFSCapabilities.v1_0_0.prototype.readers["wfs"]["LatLongBoundingBox"]  = function(node,obj) {
+	var boundingBox = {};
+	var maxx= node.getAttribute("maxx");
+	var maxy= node.getAttribute("maxy");
+	var minx= node.getAttribute("minx");
+	var miny= node.getAttribute("miny");
+	var bounds = new OpenLayers.Bounds(minx,miny,maxx,maxy);
+	obj.bounds = bounds;
+}

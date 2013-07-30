@@ -140,10 +140,13 @@ oscar.Control.DataExtractor = oscar.BaseClass(oscar.Control, {
                 var feature = features[f];
 				if(service.identifiers.length > 0 && !oscar.Util.isFeatureInArray(feature.name,service.identifiers))  continue;
 				/*
-                 * if there is more than one srs then it is 1.1.0 or higher and the the
+                 * if the service version is 1.1.0 or higher then the
                  * wgs84boundingbox element is in EPSG:4326
                  */
-                var srs = feature.srs || "EPSG:4326";
+				var srs = feature.srs || "EPSG:4326";
+				if(service.version == "1.1.0") {
+					srs = "EPSG:4326";
+				}
                 var bounds = {
 					west:feature.bounds.left,
 					east:feature.bounds.right,

@@ -199,10 +199,14 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 				this.capabilities.capabilities, "GetFeature", ["outputFormat","formats"])
 				
 		var formats = [];
-		
-		for(var prop in outputFormats) {
-			formats.push(prop);
+		if($$.isArray(outputFormats)) {
+			formats = outputFormats;
+		} else {
+			for(var prop in outputFormats) {
+				formats.push(prop);
+			}
 		}
+
 
 		var id = oscar.Util.Metadata.getFeatureTypesById(this.capabilities.capabilities,this.feature.div.data("id"));
 
