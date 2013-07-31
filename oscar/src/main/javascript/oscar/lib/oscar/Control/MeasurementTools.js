@@ -236,26 +236,9 @@ oscar.Control.MeasurementTools = oscar
 					 * Parameters: event - {Object}
 					 */
 					handleMeasurements : function(event) {
-						var geometry = event.geometry;
-						var point = new OpenLayers.Geometry.Point(0, 0);
-						if (geometry.id
-								.indexOf("OpenLayers.Geometry.LineString") > -1) {
-							var components = geometry.components;
-							point = components[components.length - 1];
-						} else { // it's a polygon
-							var components = geometry.components[0].components;
-							point = components[components.length - 2];
-						}
-						
-						var lonlat = new OpenLayers.LonLat(point.x, point.y);
-						var pixel = this.map.getPixelFromLonLat(lonlat);
-						console.log(pixel);
-						pixel.offset({x:10,y:10});
-						lonlat = this.map.getLonLatFromPixel(pixel);
 						var units = event.units;
 						var order = event.order;
 						var measure = event.measure;
-						var element = document.getElementById('measureInfo');
 						var out = "";
 						if (measure.toFixed(2) == 0.00) {
 							return;
