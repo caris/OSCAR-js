@@ -144,7 +144,7 @@ oscar.Control.DataExtractor = oscar.BaseClass(oscar.Control, {
                  * wgs84boundingbox element is in EPSG:4326
                  */
 				var srs = feature.srs || "EPSG:4326";
-				if(service.version == "1.1.0") {
+				if(service.version != "1.0.0") {
 					srs = "EPSG:4326";
 				}
                 var bounds = {
