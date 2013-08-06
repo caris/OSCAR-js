@@ -32,10 +32,10 @@ oscar.Control.DragPanel = oscar.BaseClass(oscar.Control, {
 	 */
 	resizable :true,
 	/**
-	 * APIProperty: drawThemeSwitcher
+	 * APIProperty: drawPanel
 	 * {Boolean} whether the theme switcher should be drawn, default is true.
 	 */
-	drawThemeSwitcher:true,
+	drawPanel:true,
 
 	/**
 	 * APIProperty: closed
