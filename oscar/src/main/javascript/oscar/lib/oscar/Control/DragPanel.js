@@ -32,6 +32,12 @@ oscar.Control.DragPanel = oscar.BaseClass(oscar.Control, {
 	 */
 	resizable :true,
 	/**
+	 * APIProperty: drawThemeSwitcher
+	 * {Boolean} whether the theme switcher should be drawn, default is true.
+	 */
+	drawThemeSwitcher:true,
+
+	/**
 	 * APIProperty: closed
 	 * {Boolean} initial display of the panel, default is true
 	 */
@@ -167,12 +173,14 @@ oscar.Control.DragPanel = oscar.BaseClass(oscar.Control, {
 		oscar.jQuery(this.div).hide();
 		
 		var scope = this;
-		setTimeout(
-				function() {
-					oscar.jQuery(scope.div).fadeIn("fast");
-				},
-				0
-		);		
+		if (this.drawThemeSwitcher) {
+			setTimeout(
+					function() {
+						oscar.jQuery(scope.div).fadeIn("fast");
+					},
+					0
+			);	
+		}			
 
 		return this.div;
 	},
