@@ -130,7 +130,7 @@ oscar.Control.Permalink = oscar.BaseClass(OpenLayers.Control.Permalink,{
 			this.$panel.css({
 				"position":"absolute",
 				"zIndex":1500,
-				"width":400,
+				"width":600,
 				"height":80,
 				"backgroundColor":"#bbb"
 			});
