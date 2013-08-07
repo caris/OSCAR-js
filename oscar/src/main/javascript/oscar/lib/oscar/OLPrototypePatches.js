@@ -161,7 +161,7 @@ OpenLayers.Format.WFSCapabilities.v1_0_0.prototype.readers["wfs"]["LatLongBoundi
 		try {
 			this._object.responseType = "msxml-document";
 		} catch (err) {
-			alert(err);
+			//don't do anything because IE might break
 		}
 
 		this.readyState = cXMLHttpRequest.OPENED;
