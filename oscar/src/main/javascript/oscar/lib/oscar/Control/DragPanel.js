@@ -173,7 +173,7 @@ oscar.Control.DragPanel = oscar.BaseClass(oscar.Control, {
 		oscar.jQuery(this.div).hide();
 		
 		var scope = this;
-		if (this.drawThemeSwitcher) {
+		if (this.drawPanel) {
 			setTimeout(
 					function() {
 						oscar.jQuery(scope.div).fadeIn("fast");

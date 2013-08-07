@@ -318,7 +318,7 @@ OpenLayers.Util.applyDefaults(oscar.Lang.getDictionary("fr"), {
 	
 	"DownloadManagerTitle" : "Gestionnaire de t\u00e9l\u00e9chargement",
 	
-	"DownloadManagerToolTip" : "Recherche de données dans la carte",
+	"DownloadManagerToolTip" : "Recherche de donn\u00c3\u00a9es dans la carte",
 		
 	"metadataKeywordLabel" : "Mot-cl\u00e9",
 		
@@ -352,5 +352,5 @@ OpenLayers.Util.applyDefaults(oscar.Lang.getDictionary("fr"), {
 	
 	"MoveAllToTheRight":"D\u00e9placer tout vers la droite.",
 	
-	"showThemeSwitcher":"Afficher sélecteur de Thèmes"
+	"showThemeSwitcher":"Afficher s\u00e9lecteur de Th\u00e8mes"
 });
