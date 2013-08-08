@@ -135,7 +135,7 @@ oscar.Gui.Metadata = oscar
 						this.loadWCSCapabilities(serviceEntry.url);
 						break;
 					case "WFS":
-						this.loadWFSCapabilities(serviceEntry.url);
+						this.loadWFSCapabilities(serviceEntry.url,serviceEntry.version);
 						break;
 					
 					}
@@ -297,16 +297,17 @@ oscar.Gui.Metadata = oscar
 			 * Parameters:
 			 * url - {String} URL String of the WFS service.
 			 */
-			loadWFSCapabilities : function(url) {
+			loadWFSCapabilities : function(url,version) {
 				var container = this.getLoadingDiv();
 				var success = function(resp) {
 					try {
-						var reader = new oscar.Format.WFSCapabilities();
+						var reader = new OpenLayers.Format.WFSCapabilities();
 						var doc = resp.responseXML;
 						var capabilities = reader.read(doc);
 						oscar.jQuery(container).removeClass("md_loadingActive");
 						this.renderService(container, capabilities);
 					} catch (err) {
+						console.log(err);
 						fail();
 					}
 
@@ -319,6 +320,7 @@ oscar.Gui.Metadata = oscar
 				}
 				var params = {
 					service :"WFS",
+					version:version,
 					request :"GetCapabilities"
 				};
 				OpenLayers.Request.GET({
@@ -507,10 +509,7 @@ oscar.Gui.Metadata = oscar
 					for ( var i = 0; i < extractionService.length; i++) {
 						var serviceUrl = extractionService[i].url
 						if (this.checkUrls(href, serviceUrl)) {
-							for ( var identifier in extractionService[i].identifiers) {
-								dataLayers
-										.push(extractionService[i].identifiers[identifier]);
-							}
+							dataLayers.concat(ids);
 						}
 					}
 
@@ -531,10 +530,7 @@ oscar.Gui.Metadata = oscar
 					for ( var i = 0; i < services.length; i++) {
 						var serviceUrl = services[i].url
 						if (this.checkUrls(href, serviceUrl)) {
-							for ( var identifier in services[i].identifiers) {
-								dataLayers
-										.push(services[i].identifiers[identifier]);
-							}
+							dataLayers.push(ids);
 						}
 					}
 
@@ -578,21 +574,6 @@ oscar.Gui.Metadata = oscar
 					var row = document.createElement("div");
 					oscar.jQuery(row).css("height", "30px");
 					var id = ids[i];
-					if (this.showUsed) {
-						var checkNameFn = function(dataLayers, id) {
-							for ( var i = 0; i < dataLayers.length; i++) {
-								var dataLayer = dataLayers[i];
-								var idName = id.name || id.identifier || id.title;
-								if (dataLayer == idName) {
-									return true;
-								}
-							}
-							return false;
-						};
-						if (!checkNameFn(dataLayers, id)) {
-							continue;
-						}
-					}
 					
 					var title = null;
 					if(typeof id.title == 'object') {

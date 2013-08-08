@@ -16,9 +16,9 @@ oscar.Control.MeasurementTools = oscar
 					currentUnit : null,
 
 					/**
-					 * Property: popup
+					 * Property: dlg
 					 */
-					popup : null,
+					dlg: null,
 
 					sketchSymbolizers : {
 						"Point" : {
@@ -167,8 +167,10 @@ oscar.Control.MeasurementTools = oscar
 						if (unit == -1)
 							return;
 						this.currentUnit = unit;
-						if (this.activeControl)
-							this.activeControl.displaySystem = unit;
+						
+						for ( var key in this.controls) {
+							this.controls[key].displaySystem = unit;
+						}
 
 					},
 
@@ -187,8 +189,9 @@ oscar.Control.MeasurementTools = oscar
 						}
 					},
 					deactivate : function() {
-						if (this.popup) {
-							this.map.removePopup(this.popup);
+
+						if(this.dlg) {
+							this.dlg.remove();
 						}
 						var control;
 						for ( var key in this.controls) {
@@ -233,25 +236,9 @@ oscar.Control.MeasurementTools = oscar
 					 * Parameters: event - {Object}
 					 */
 					handleMeasurements : function(event) {
-						var geometry = event.geometry;
-						var point = new OpenLayers.Geometry.Point(0, 0);
-						if (geometry.id
-								.indexOf("OpenLayers.Geometry.LineString") > -1) {
-							var components = geometry.components;
-							point = components[components.length - 1];
-						} else { // it's a polygon
-							var components = geometry.components[0].components;
-							point = components[components.length - 2];
-						}
-
-						if (this.popup) {
-							this.map.removePopup(this.popup);
-						}
-						var lonlat = new OpenLayers.LonLat(point.x, point.y);
 						var units = event.units;
 						var order = event.order;
 						var measure = event.measure;
-						var element = document.getElementById('measureInfo');
 						var out = "";
 						if (measure.toFixed(2) == 0.00) {
 							return;
@@ -263,11 +250,22 @@ oscar.Control.MeasurementTools = oscar
 							out += measure.toFixed(2) + " " + units
 									+ "<sup>2</" + "sup>";
 						}
-
-						this.popup = new oscar.FramedCloud("id", lonlat, null,
-								out, null, true);
-						this.popup.autoSize = true;
-						this.map.addPopup(this.popup);
+						var scope = this;
+						if(!this.dlg) {
+						this.dlg = $$("<div></div>").html(out);
+						this.dlg.dialog({
+							height:75,
+							width:150,
+							close:function(e,ui) {
+								scope.dlg = null;
+							},
+							position: {
+								at:"left"
+							}
+						});
+						} else {
+							this.dlg.html(out);
+						}
 					},
 					CLASS_NAME : "oscar.Control.MeasurementTools"
 				});
