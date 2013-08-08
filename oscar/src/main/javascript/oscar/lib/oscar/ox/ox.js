@@ -383,158 +383,7 @@ oscar.ox.Layer = oscar.BaseClass( {
             };
             var formatType = this.parameters.formatType.toLowerCase();
 			switch (formatType) {
-			case "gml2" :
-				var style = new OpenLayers.Style({externalGraphic: this.parameters.iconUri,pointRadius:20});
-                style.isDefault=true;
-			    
-				olLayer = null;
-				olLayer = new OpenLayers.Layer.GML(this.name,this.urls[0],{
-					setMap:function(map) {
-						OpenLayers.Layer.GML.prototype.setMap.apply(this,arguments);
-						this.formatOptions.internalProjection = this.map.projection;
-					},
-					format: OpenLayers.Format.WFST,
-					formatOptions: {
-						extractStyles:false,
-						externalProjection:new OpenLayers.Projection(this.parameters.srs)
-					},
-					styleMap: new OpenLayers.StyleMap({
-			            "default": style,
-			            "select": new OpenLayers.Style({pointRadius: 35})
-			        })
-				});
-                
-				olLayer.events.on({
-                    "beforefeaturesadded":function(evt) {
-                        for(var feature in evt.features) {
-                            var feat = evt.features[feature];
-                            var lonlat = feat.geometry.getBounds().getCenterLonLat();
-                            var point = new OpenLayers.Geometry.Point(lonlat.lon,lonlat.lat);
-                            feat.geometry = point;
-                            feat.style = style.defaultStyle;
-                        }
-                    },
-					"featureselected":function(evt) {
-					    var feature = evt.feature;
-                        var $tbl = $$("<table></table>");
-                        $tbl.addClass("popup-table");
-                        for(var att in feature.attributes) {
-                            var attribute = feature.attributes[att];
-                            if(attribute == null || attribute.length == 0) continue;
-                            var $row = $$("<tr></tr>");
-                            var $cell1 = $$("<td></td>").html(oscar.i18n(att));
-                            var $cell2 = $$("<td></td>").html(oscar.Util.parseText(attribute));
-                            $row.append($cell1);
-                            $row.append($cell2);
-                            $tbl.append($row);
-                        }
-                        var $div = $$("<div></div>");
-                        $div.append($tbl);
-                        var lonlat = new OpenLayers.LonLat(feature.geometry.x,feature.geometry.y);
-						var popup = new oscar.FramedCloud("id", lonlat, null, $div.html(), null, true);
-						popup.autoSize=true;
-						feature.popup = popup;
-						feature.layer.map.addPopup(popup);
-					},
-					"featureunselected":function(evt) {
-						var feature = evt.feature;
-			            feature.layer.map.removePopup(feature.popup);
-			            feature.popup=null;
-					},
-					
-					scope:this
-				});					
-				
-				break;	
-            case "geojson" :
-				var style = new OpenLayers.Style({externalGraphic: this.parameters.iconUri,pointRadius:20});
-                style.isDefault=true;
-			    
-				olLayer = null;
-				olLayer = new OpenLayers.Layer.GML(this.name,this.urls[0],{
-					setMap:function(map) {
-						OpenLayers.Layer.GML.prototype.setMap.apply(this,arguments);
-						this.formatOptions.internalProjection = this.map.projection;
-					},
-					format: OpenLayers.Format.JSON,
-					formatOptions: {
-						extractStyles:false,
-						externalProjection:new OpenLayers.Projection(this.parameters.srs),
-                        read:function(json,filter) {
-                            var obj = OpenLayers.Format.JSON.prototype.read.apply(this,[json,filter]);
-                            if(!obj.features) {
-                                var feature = obj;
-                                obj = {};
-                                obj.features =[feature];
-
-                            }
-                            for(var i=0;i<obj.features.length;i++) {
-                                var feature = obj.features[i];
-                                var geometry = feature.geometry;
-                                switch(geometry.type) {
-                                    case "Polygon":
-                                        var linearRing = new OpenLayers.Geometry.LinearRing();
-                                        for (var j=0;j<geometry.coordinates.length;j++) {
-                                            var coord = geometry.coordinates[j];
-                                            for(var a in coord) {
-                                                linearRing.addComponent(new OpenLayers.Geometry.Point(coord[a][0],coord[a][1]));
-                                            }
-                                        }
-                                        var polygon = new OpenLayers.Geometry.Polygon(linearRing);
-                                        var lonlat = polygon.getBounds().getCenterLonLat();
-                                        var point = new OpenLayers.Geometry.Point(lonlat.lon,lonlat.lat);
-                                        obj.features[i].geometry = point;
-                                    break;
-                                    case "Point":
-                                        var point = new OpenLayers.Geometry.Point(geometry.coordinates[0],geometry.coordinates[1]);
-                                        feature.geometry = point;
-                                    break
-                                }
-
-                                obj.features[i].style = style.defaultStyle;
-                            }
-                            return obj.features;
-                        }
-					},
-					styleMap: new OpenLayers.StyleMap({
-			            "default": style,
-			            "select": new OpenLayers.Style({pointRadius: 35})
-			        })
-				});
-                
-				olLayer.events.on({
-					"featureselected":function(evt) {
-					    var feature = evt.feature;
-                        var $tbl = $$("<table></table>");
-                        $tbl.addClass("popup-table");
-                        for(var prop in feature.properties) {
-                            var property = feature.properties[prop];
-                            if(property == null || property.length == 0) continue;
-                            var $row = $$("<tr></tr>");
-                            var $cell1 = $$("<td></td>").html(oscar.i18n(prop));
-                            var $cell2 = $$("<td></td>").html(oscar.Util.parseText(property));
-                            $row.append($cell1);
-                            $row.append($cell2);
-                            $tbl.append($row);
-                        }
-                        var $div = $$("<div></div>");
-                        $div.append($tbl);
-                        var lonlat = new OpenLayers.LonLat(feature.geometry.x,feature.geometry.y);
-						var popup = new oscar.FramedCloud("id", lonlat, null, $div.html(), null, true);
-						popup.autoSize=true;
-						feature.popup = popup;
-						feature.layer.map.addPopup(popup);
-					},
-					"featureunselected":function(evt) {
-						var feature = evt.feature;
-			            feature.layer.map.removePopup(feature.popup);
-			            feature.popup=null;
-					},
-					
-					scope:this
-				});					
-				
-				break;                
+			
 			case "georss_simple" :
 				var style = new OpenLayers.Style({externalGraphic: this.parameters.iconUri});
 				var rule = new OpenLayers.Rule({
@@ -555,31 +404,30 @@ oscar.ox.Layer = oscar.BaseClass( {
 			    style.addRules([elseRule]);
 			    
 				olLayer = null;
-				olLayer = new OpenLayers.Layer.GML(this.name,this.urls[0],{
-					setMap:function(map) {
-						OpenLayers.Layer.GML.prototype.setMap.apply(this,arguments);
-						this.formatOptions.internalProjection = this.map.projection;
-					},
-					format: OpenLayers.Format.GeoRSS,
-					formatOptions: {
-						extractStyles:false,
-						externalProjection:new OpenLayers.Projection("EPSG:4326"),
-						createFeatureFromItem: function(item) {
-			                var feature = OpenLayers.Format.GeoRSS.prototype
-			                        .createFeatureFromItem.apply(this, arguments);
-			                return feature;
-			                
-			                var thumbnail =			                        this.getElementsByTagNameNS(
-			                        item, "*", "thumbnail")[0].getAttribute("url");
-			                feature.attributes.thumbnail = thumbnail;
-		            	}						
-					},
-					styleMap: new OpenLayers.StyleMap({
-			            "default": style,
-			            "select": new OpenLayers.Style({pointRadius: 20})
-			        })
-				});
 				
+				olLayer = new OpenLayers.Layer.Vector(this.name, {
+					setMap:function() {
+						OpenLayers.Layer.Vector.prototype.setMap.apply(this,arguments);
+						this.protocol.format.internalProjection = this.map.projection;
+					},
+                    strategies: [new OpenLayers.Strategy.Fixed()],
+                    protocol: new OpenLayers.Protocol.HTTP({
+                        url: this.urls[0],
+                        format: new OpenLayers.Format.GeoRSS({
+							extractStyles:false,
+							externalProjection:new OpenLayers.Projection("EPSG:4326"),
+							createFeatureFromItem: function(item) {
+								var feature = OpenLayers.Format.GeoRSS.prototype.createFeatureFromItem.apply(this, arguments);
+								return feature;
+							}						
+						})
+                    }),
+					styleMap: new OpenLayers.StyleMap({
+						"default": style,
+						"select": new OpenLayers.Style({pointRadius: 35})
+				    })
+				});
+
 				olLayer.events.on({
 					"featureselected":function(evt) {
 					    var feature = evt.feature;
@@ -614,20 +462,22 @@ oscar.ox.Layer = oscar.BaseClass( {
 				    externalGraphic: this.parameters.iconUri,
 				    pointRadius:20
 				});
-				
-				olLayer = new OpenLayers.Layer.GML(this.name,this.urls[0],{
+				olLayer = new OpenLayers.Layer.Vector(this.name, {
 					setMap:function() {
-						OpenLayers.Layer.GML.prototype.setMap.apply(this,arguments);
-						this.formatOptions.internalProjection = this.map.projection;
+						OpenLayers.Layer.Vector.prototype.setMap.apply(this,arguments);
+						this.protocol.format.internalProjection = this.map.projection;
 					},
-					format: OpenLayers.Format.KML,
-					formatOptions: {
-						extractStyles:true,
-						externalProjection:new OpenLayers.Projection("EPSG:4326")
-				},
-				styleMap: new OpenLayers.StyleMap({
-				    "default": style,
-				    "select": new OpenLayers.Style({pointRadius: 35})
+                    strategies: [new OpenLayers.Strategy.Fixed()],
+                    protocol: new OpenLayers.Protocol.HTTP({
+                        url: this.urls[0],
+                        format: new OpenLayers.Format.KML({
+							extractStyles:true,
+							externalProjection:new OpenLayers.Projection("EPSG:4326")
+						})
+                    }),
+					styleMap: new OpenLayers.StyleMap({
+						"default": style,
+						"select": new OpenLayers.Style({pointRadius: 35})
 				    })
 				});
 				
@@ -667,7 +517,7 @@ oscar.ox.Layer = oscar.BaseClass( {
 					},
 					
 					scope:this
-				});				
+				});	
 				break;
 			case "youtube" :
 				onEvents = {
@@ -720,29 +570,32 @@ oscar.ox.Layer = oscar.BaseClass( {
 			        symbolizer: {pointRadius: 20}
 			    });
 			    
-			    style.addRules([elseRule]);				
-				olLayer = new OpenLayers.Layer.GML(this.name,this.urls[0], {
+			    style.addRules([elseRule]);
+				
+				olLayer = new OpenLayers.Layer.Vector(this.name, {
 					setMap:function() {
-						OpenLayers.Layer.GML.prototype.setMap.apply(this,arguments);
-						this.formatOptions.internalProjection = this.map.projection;
+						OpenLayers.Layer.Vector.prototype.setMap.apply(this,arguments);
+						this.protocol.format.internalProjection = this.map.projection;
 					},
-					format:OpenLayers.Format.GeoRSS,
-					formatOptions: {
-						externalProjection:new OpenLayers.Projection("EPSG:4326"),
-						createFeatureFromItem: function(item) {
-			                var feature = OpenLayers.Format.GeoRSS.prototype
-			                        .createFeatureFromItem.apply(this, arguments);
-			                var thumbnail =			                        this.getElementsByTagNameNS(
-			                        item, "*", "thumbnail")[0].getAttribute("url");
-			                feature.attributes.thumbnail = thumbnail;
-			                return feature;
-		            	}					
-					},
+                    strategies: [new OpenLayers.Strategy.Fixed()],
+                    protocol: new OpenLayers.Protocol.HTTP({
+                        url: this.urls[0],
+                        format: new OpenLayers.Format.GeoRSS({
+							externalProjection:new OpenLayers.Projection("EPSG:4326"),
+							createFeatureFromItem: function(item) {
+								var feature = OpenLayers.Format.GeoRSS.prototype.createFeatureFromItem.apply(this, arguments);
+								var thumbnail =	this.getElementsByTagNameNS(item, "*", "thumbnail")[0].getAttribute("url");
+								feature.attributes.thumbnail = thumbnail;
+								return feature;
+							}						
+						})
+                    }),
 					styleMap: new OpenLayers.StyleMap({
-			            "default": style,
-			            "select": new OpenLayers.Style({pointRadius: 35})
-			        })
+						"default": style,
+						"select": new OpenLayers.Style({pointRadius: 35})
+				    })
 				});
+
 				if(onEvents == null) {
 					onEvents = {
 						"featureselected":function(evt) {
@@ -767,22 +620,8 @@ oscar.ox.Layer = oscar.BaseClass( {
 				}
 				olLayer.events.on(onEvents);
 				break;
-			case "vessels":
-				return;
-				var pollInterval = this.parameters.pollInterval * 1000;
-					var externalProjection = null;
-				try {
-					externalProjection = new OpenLayers.Projection(this.parameters.projection);
-				} catch (err) {
-					externalProjection = new OpenLayers.Projection("EPSG:4326");
-				}
-				  
-				var ais = new oscar.Control.AIS(this.urls[0],pollInterval,{externalProjection:externalProjection,layerName:this.name});
-		        map.addControl(ais);
-		        ais.activate();
-		        return;
 			}
-		        break;
+		    break;
 		case "OSM":
 			olLayer = new OpenLayers.Layer.OSM(this.name);
 			break;

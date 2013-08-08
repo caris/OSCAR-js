@@ -96,14 +96,14 @@ oscar.Util.Metadata = {
 	 */
 	getServiceType : function(capabilities) {
 		var service = this.getService(capabilities);
-		var serviceType = service.name || service.serviceType;
-		if (serviceType.contains("WMS")) {
+		var serviceType = service.name || service.serviceType.value || service.serviceType;
+		if (serviceType.indexOf("WMS")!=-1) {
 			return "WMS"
-		} else if (serviceType.contains("WFS")) {
+		} else if (serviceType.indexOf("WFS")!=-1) {
 			return "WFS";
-		} else if (serviceType.contains("WMTS")) {
+		} else if (serviceType.indexOf("WMTS")!=-1) {
 			return "WMTS";
-		} else if (serviceType.contains("WCS")) {
+		} else if (serviceType.indexOf("WCS")!=-1) {
 			return "WCS";
 		} else
 			return serviceType;
@@ -200,6 +200,11 @@ oscar.Util.Metadata = {
 							.toLowerCase()];
 		}
 		if (operation.parameters) { // ows 1.1.0 or greater
+			for(var prop in operation.parameters) {
+				if($$.inArray(prop,parameterName)!= -1) {
+					return operation.parameters[prop];
+				}
+			}
 			for ( var i = 0; i < operation.parameters.length; i++) {
 				var op = operation.parameters[i];
 				for ( var j = 0; j < parameterName.length; j++) {

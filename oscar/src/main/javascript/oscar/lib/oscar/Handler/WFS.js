@@ -143,7 +143,13 @@ oscar.Handler.WFS = oscar.BaseClass(oscar.Handler, {
 		 var onFail = function(resp) {
 			 this.events.triggerEvent("requestComplete");
 		 }
-		 OpenLayers.loadURL(serviceEntry.url, params, this, onSuccess, onFail);		
+		 OpenLayers.Request.GET({
+			 url:serviceEntry.url,
+			 params:params,
+			 success:onSuccess,
+			 fail:onFail,
+			 scope:this
+		 });
 	},
 	
 	

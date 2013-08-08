@@ -287,11 +287,11 @@ oscar.Util.buildWFSFilterForRequest = function(geometry, srs, wfsVersion, proper
 
 oscar.Util.getDataFormatter = function(dataFormatType, options) {
 	var dft = dataFormatType.toLowerCase();
-	if (dft.contains("gml2") || dft.contains("gml/2"))
+	if (dft.indexOf("gml2") > -1 || dft.indexOf("gml/2") > -1)
 		return new OpenLayers.Format.GML(options);
-	else if (dft.contains("kml"))
+	else if (dft.indexOf("kml") > -1)
 		return new OpenLayers.Format.KML(options);
-	else if (dft.contains("json"))
+	else if (dft.indexOf("json") > -1)
 		return new OpenLayers.Format.GeoJSON(options);
 	else if (dft == "georss_simple" || dft == "georss_geo")
 		return new OpenLayers.Format.GeoRSS(options);
@@ -677,14 +677,23 @@ oscar.Util.getGridOffsets = function(offsetsAsString) {
 	var offsets = offsetsAsString.split(" "); 
 	//x offset
 	validOffsets.push(parseFloat(offsets[0]));
-	
+
 	//y offset
 	var yOffsetIndex = (offsets.length==2)? 1 : 3;
 	validOffsets.push(parseFloat(offsets[yOffsetIndex]));
-	
+
 	return validOffsets;
 }
 
+/**
+* APIMethod: isGeographicCRS
+* Returns true / false if a CRS is geographic. If false then the CRS 
+* is assumed to be projected
+*
+**/
+oscar.Util.isGeographicCRS = function(projection) {
+	return ($$.trim(projection.proj.projName)=="longlat")? true :false;
+}
 
 /**
  * Override the default OL pink color for broken images

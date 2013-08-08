@@ -342,5 +342,11 @@ OpenLayers.Util.applyDefaults(oscar.Lang.getDictionary("en"), {
 	
 	"resolutionTooHigh":"The Resolution value is too high, please adjust the value.",
 	
-	"resolutionTooLow":"The Resolution value is too low, please adjust the value."
+	"resolutionTooLow":"The Resolution value is too low, please adjust the value.",
+	
+	"MoveAllToTheLeft":"Move all items to the left.",
+	
+	"MoveAllToTheRight":"Move all items to the right.",
+	
+	"showThemeSwitcher":"Show Theme Switcher"
 });

@@ -16,8 +16,25 @@
  * limitations under the License.
  */
 /**
- * Class: SingleFile
+ * Class: oscar.Format.WCSCapabilities.v1_1_2
+ * 
+ * Reads a WCS Capabilities document version 1.1.2
+ * 
+ * Inherits from:
+ * 
+ * <oscar.Format.WCSCapabilities.v1_1_1>
+ * 
  */
-var oscar = {
-    singleFile: true
-};
+oscar.Format.WCSCapabilities.v1_1_2 = oscar.BaseClass(
+		oscar.Format.WCSCapabilities.v1_1_1, oscar.Format.OGC.wcs, {
+			/**
+			 * Constructor: oscar.Format.WCSCapabilities.v1_1_2
+			 */
+			initialize : function(options) {
+			},
+			/**
+			 * Constant: CLASS_NAME
+			 * - oscar.Format.WCSCapabilities.v1_1_2
+			 */
+			CLASS_NAME :"oscar.Format.WCSCapabilities.v1_1_2"
+		});

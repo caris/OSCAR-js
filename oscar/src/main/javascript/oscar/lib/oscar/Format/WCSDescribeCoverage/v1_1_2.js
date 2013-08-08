@@ -1,7 +1,7 @@
-/**
+/*
  * CARIS oscar - Open Spatial Component ARchitecture
  *
- * Copyright 2013 CARIS <http://www.caris.com>
+ * Copyright 2012 CARIS <http://www.caris.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,23 +15,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.caris.oscarexchange4j.proxy;
+/**
+ * Class: oscar.Format.WCSDescribeCoverage.v1_1_2
+ * 
+ * Reads a WCS DescribeCoverage document version 1.1.2
+ * 
+ * Inherits from:
+ * 
+ * <oscar.Format.WCSDescribeCoverage.v1_1_1>
+ */
+oscar.Format.WCSDescribeCoverage.v1_1_2 = oscar.BaseClass(
+		oscar.Format.WCSDescribeCoverage.v1_1_1, {
+			/**
+			 * Constructor
+			 */
+			initialize : function(options) {
+			},
 
-import org.junit.Test;
-
-import junit.framework.TestCase;
-
-public class TestResponse extends TestCase {
-	
-	/**
-	 * Test the setFilename method and make sure
-	 * it returns correctly.
-	 */
-	@Test
-	public void testSetFilename() {
-		Response r = new Response();
-		r.setFilename("Buildings.gml");
-		String filename = r.getFilename();
-		assertTrue(filename.equals("Buildings.gml"));
-	}
-}
+			/**
+			 * Constant: CLASS_NAME
+			 * - oscar.Format.WCSDescribeCoverage.v1_1_2
+			 */
+			CLASS_NAME :"oscar.Format.WCSDescribeCoverage.v1_1_2"
+		});

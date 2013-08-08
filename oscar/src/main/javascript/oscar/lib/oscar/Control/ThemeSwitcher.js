@@ -353,7 +353,13 @@ oscar.Control.ThemeSwitcher = oscar.BaseClass(oscar.Control.DragPanel, {
                 this.displayLayer(layer);
             };
             var fail = function(resp) {};
-            OpenLayers.loadURL(layer.url[0],params,this,success,fail);
+            OpenLayers.Request.GET({
+				url:layer.url[0],
+				params:params,
+				success:success,
+				fail:fail,
+				scope:this
+			});
              break;
         case "OpenLayers.Layer.WMTS":
             var baseUrl = layer.url;
@@ -374,9 +380,14 @@ oscar.Control.ThemeSwitcher = oscar.BaseClass(oscar.Control.DragPanel, {
             //clear out the parameters object as it is not needed. 
             params = null;
             
-            OpenLayers.loadURL(capabilitiesUrl,params,this,success,fail);
+            OpenLayers.Request.GET({
+				url:capabilitiesUrl,
+				success:success,
+				fail:fail,
+				scope:this
+			});
             break;   
-        case "OpenLayers.Layer.GML":
+        case "OpenLayers.Layer.Vector":
         	this.displayLayer(layer);
             break;                
         }
@@ -514,12 +525,12 @@ oscar.Control.ThemeSwitcher = oscar.BaseClass(oscar.Control.DragPanel, {
 
     },
     /**
-     * Method: showGMLLayer
+     * Method: showVectorLayer
      * 
      * This method allows the display of the POI layers which are 
-     * based on the OpenLayers.Layer.GML layer.
+     * based on the OpenLayers.Layer.Vector layer.
      */
-    showGMLLayer: function(layer) {
+    showVectorLayer: function(layer) {
     	var layerDiv = $("LT_" + layer.id);
         var layerTitle =layer.name;
         var randomId = OpenLayers.Util.createUniqueID(layerTitle);
@@ -568,8 +579,8 @@ oscar.Control.ThemeSwitcher = oscar.BaseClass(oscar.Control.DragPanel, {
         case "OpenLayers.Layer.WMTS":
             this.showWMTSLayer(layer);
             break;
-        case "OpenLayers.Layer.GML":
-        	this.showGMLLayer(layer);
+        case "OpenLayers.Layer.Vector":
+        	this.showVectorLayer(layer);
         	break;
         }
         

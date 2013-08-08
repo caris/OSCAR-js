@@ -107,7 +107,7 @@ oscar.Gui.Download.WCS = oscar.BaseClass(oscar.Gui.Download, {
 				});
         this.events.register("xmlReceived", this, this.checkExternalRequests);
         this.events.register("xslReceived", this, this.checkExternalRequests);
-        this.isEMLDownload = this.url.contains("store=false"); 
+        this.isEMLDownload = (this.url.indexOf("store=false")!=-1)? true:false; 
         
         
     },
@@ -266,7 +266,7 @@ oscar.Gui.Download.WCS = oscar.BaseClass(oscar.Gui.Download, {
         var scope = this;
         var fadeIn = function() {
         	scope.transformedDiv.innerHTML = pHolder.innerHTML;
-            var children = oscar.jQuery(scope.transformedDiv).children();
+            var children = oscar.jQuery(scope.transformedDiv).find("span");
             for(var i=0;i<children.length;i++) {
                 var child = children[i];
                 var href= child.attributes['href'].value;
@@ -294,11 +294,9 @@ oscar.Gui.Download.WCS = oscar.BaseClass(oscar.Gui.Download, {
     gotoUrl:function(classType, url) {
         switch(classType) {
             case "dCoverage":
-                var iFrame = document.createElement("iframe");
-                oscar.jQuery(iFrame).addClass("dmIFrame");
-                document.body.appendChild(iFrame);
-                iFrame.src = url;
-               break;
+                var filename = url.substring(url.lastIndexOf("/")+1);
+				this.downloadFromService(url,filename);
+                break;
             case "dMetadata":
                 this.downloadFromService(url,"metadata.xml");
                 break;

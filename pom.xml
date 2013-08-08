@@ -4,7 +4,7 @@
     <groupId>com.caris</groupId>
     <artifactId>oscar_framework</artifactId>
     <name>Oscar Framework</name>
-    <version>12.0.5-GA</version>
+    <version>13.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <description>This is the CARIS JavaScript map library. It currently
         extends the Openlayers library and uses YUI and jQuery UI to make
@@ -14,14 +14,14 @@
     </description>
 
     <properties>
-        <branch>master</branch>
+        <branch>13.0</branch>
         <project.scm.url>https://github.com/caris/OSCAR-js.git</project.scm.url>
     </properties>
 
     <parent>
         <groupId>com.caris.pom</groupId>
         <artifactId>caris-opensource-pom</artifactId>
-        <version>6</version>
+        <version>9</version>
     </parent>
 
     <issueManagement>
@@ -75,7 +75,7 @@
             <url>http://nexus.codehaus.org/content/groups/snapshots-group</url>
         </pluginRepository>	               
     </pluginRepositories>
-
+	
     <modules>
         <module>oscar</module>
         <module>oscarexchange4j</module>

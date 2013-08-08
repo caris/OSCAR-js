@@ -278,7 +278,7 @@ oscar.Control.DataDiscovery = oscar.BaseClass(oscar.Control.DragPanel, {
                 var $this = $$(this);
                 scope.unselectFeature();
                 $this.addClass("selected");
-                scope.discoverPanel.accordion("activate",1);
+                scope.discoverPanel.accordion("option", "active",1);
                 scope.drawFeature($this);
                 
             });
@@ -304,8 +304,8 @@ oscar.Control.DataDiscovery = oscar.BaseClass(oscar.Control.DragPanel, {
                 mapViewPort.intersectsBounds($this.data("bbox")));
             
             var textFound = (query.length == 0 || 
-					$this.data("id").toLowerCase().contains(query.toLowerCase()) || 
-					$this.data("title").toLowerCase().contains(query.toLowerCase())
+					$this.data("id").toLowerCase().indexOf(query.toLowerCase()) !=-1 || 
+					$this.data("title").toLowerCase().indexOf(query.toLowerCase())!=-1
 			);
             
             if(isInRange && textFound) {
@@ -369,7 +369,7 @@ oscar.Control.DataDiscovery = oscar.BaseClass(oscar.Control.DragPanel, {
 	 */
 	checkLayer:function() {
 		if(this.layer) return;
-		this.layer = new OpenLayers.Layer.Vector("Results");
+		this.layer = new OpenLayers.Layer.Vector("Results",{displayInLayerSwitcher:false});
 		this.layer.hidden = true;
 		var selectStyle = OpenLayers.Util.applyDefaults( this.styles.select, OpenLayers.Feature.Vector.style["select"]);
 		selectStyle.cursor = "";
@@ -409,7 +409,7 @@ oscar.Control.DataDiscovery = oscar.BaseClass(oscar.Control.DragPanel, {
      */
     queueDownload:function(service) {
 
-    	this.discoverPanel.accordion("activate",2);
+    	this.discoverPanel.accordion("option", "active",2);
 
     	if(this.queuePanel.children().length>0) {
             this.queuePanel.prepend(service.draw());

@@ -83,7 +83,7 @@ oscar.Gui.ComboBox = oscar.BaseClass(oscar.Gui,{
                 change:scope.change.bind(scope)
             });
            input.addClass( "ui-widget ui-widget-content ui-corner-left" );
-           input.data( "autocomplete" )._renderItem =scope.render.bind(scope);
+           input.data( "uiAutocomplete" )._renderItem =scope.render.bind(scope);
            this.button = document.createElement("button");
            this.button.setAttribute("type","button"); 
            this.button.innerHTML = "&nbsp";
@@ -151,7 +151,7 @@ oscar.Gui.ComboBox = oscar.BaseClass(oscar.Gui,{
        	 */ 
          onRender: function(ul,item){
         	 var li= document.createElement("li")
-             oscar.jQuery(li).data( "item.autocomplete", item )
+             oscar.jQuery(li).data( "ui-autocomplete-item", item )
               .append( "<a>" + item.label +"</a>" )
               .appendTo( ul );
          },
