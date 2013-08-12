@@ -64,7 +64,6 @@
             <plugin>
                 <groupId>net.alchim31.maven</groupId>
                 <artifactId>yuicompressor-maven-plugin</artifactId>
-                <version>1.1</version>
                 <configuration>
                     <jswarn>false</jswarn>
                     <nosuffix>true</nosuffix>
@@ -287,7 +286,6 @@
                     <plugin>
                         <groupId>net.alchim31.maven</groupId>
                         <artifactId>yuicompressor-maven-plugin</artifactId>
-                        <version>1.1</version>
                         <configuration>
                             <excludes>
                                 <exclude>**/*.pack.js</exclude>
