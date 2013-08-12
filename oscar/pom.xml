@@ -261,7 +261,6 @@
                                     <artifactId>yui</artifactId>
                                     <overWrite>false</overWrite>
                                     <outputDirectory>${project.build.directory}/scripts/yui</outputDirectory>
-                                    <destFileName />
                                     <includes>build/**</includes>
                                 </artifactItem>
                                 <artifactItem>
@@ -269,7 +268,6 @@
                                     <artifactId>jsts</artifactId>
                                     <overWrite>false</overWrite>
                                     <outputDirectory>${project.build.directory}/scripts/jsts</outputDirectory>
-                                    <destFileName />
                                 </artifactItem>
                                 </artifactItems>
                                 <outputDirectory>${project.build.directory}</outputDirectory>
