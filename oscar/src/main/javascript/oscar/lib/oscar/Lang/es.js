@@ -282,7 +282,7 @@ OpenLayers.Util.applyDefaults(oscar.Lang.getDictionary("es"), {
 
 	"oscar_control_extractor" :"Descargar \u00e1reas de inter\u00e9s",
 
-	"NoThemesAvailable" :"No hay temas disponibles",
+	"NoDataAvailable" :"No hay datos disponibles",
 	
 	"NotAvailable"	:"No disponible",
 
