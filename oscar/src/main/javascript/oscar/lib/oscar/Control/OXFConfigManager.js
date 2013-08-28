@@ -146,7 +146,7 @@ oscar.Control.OXFConfigManager = oscar.BaseClass(OpenLayers.Control, {
 	 */
 	failure : function(transport) {
 		new oscar.Gui.AlertDialog(oscar.i18n("Error"), oscar
-				.i18n("NoDataAvailable"), {
+				.i18n("NoThemesAvailable"), {
 			width :300,
 			height :100,
 			draggable :true

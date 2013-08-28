@@ -282,7 +282,7 @@ OpenLayers.Util.applyDefaults(oscar.Lang.getDictionary("en"), {
 
 	"oscar_control_extractor" :"Download areas of interest.",
 
-	"NoDataAvailable" :"No Data Available",
+	"NoThemesAvailable" :"No Themes Available",
 	
 	"NotAvailable"	:"Not Available",
 

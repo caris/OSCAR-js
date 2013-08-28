@@ -282,7 +282,7 @@ OpenLayers.Util.applyDefaults(oscar.Lang.getDictionary("fr"), {
 
 	"oscar_control_extractor" :"T\u00e9l\u00e9charger les zones d'int\u00e9r\u00eat",
 	
-	"NoDataAvailable" :"Aucune donn\u00e9e n'est disponible",
+	"NoThemesAvailable" :"Aucun th\u00e8me disponible",
 	
 	"NotAvailable"	:"Non disponible",
 
