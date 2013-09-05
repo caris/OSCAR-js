@@ -820,3 +820,15 @@ oscar.Util.boundsToFeatures = function(bbox,srcProjection,map) {
  */
 OpenLayers.Util.onImageLoadErrorColor = "transparent";
 
+oscar.Util.WizardFactory = function(protocol,link,options) {
+	switch(protocol) {
+		case "OGC:WCS-1.1.0-http-get-coverage":
+			return new oscar.Gui.Wizard.WebCoverageServiceDownload(protocol,link.url,options);
+		case "IENC":
+		case "Shapefile":
+		case "KML":
+			//return new oscar.Gui.Wizard.DirectDownload(protocol,link.url);
+		default:
+			return null;
+	}
+};

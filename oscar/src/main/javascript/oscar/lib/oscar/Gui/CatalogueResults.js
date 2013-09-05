@@ -27,6 +27,7 @@ oscar.Gui.CatalogueResults = new oscar.BaseClass(oscar.Gui,{
     EVENT_TYPES:["next","previous"],
     features:[],
     map:null,
+	buttons:[],
     initialize:function(options) {
         oscar.Gui.prototype.initialize.apply(this,[options]);
         this.events = new OpenLayers.Events(this, null, this.EVENT_TYPES,
@@ -142,14 +143,13 @@ oscar.Gui.CatalogueResults = new oscar.BaseClass(oscar.Gui,{
 				
 				var projection = new OpenLayers.Projection(crs.code);
 				var bbox = record.bounds.toArray(oscar.Util.isGeographicCRS(projection))
+				/**
 				if(oscar.Util.isGeographicCRS(projection)) {
-				record.bounds = new OpenLayers.Bounds(
-					bbox[1],
-					bbox[0],
-					bbox[3],
-					bbox[2]
-				);
+					console.log('flip me');
+					record.bounds = OpenLayers.Bounds.fromArray(bbox);
 				}
+				**/
+
 				projection = new OpenLayers.Projection("EPSG:4326");
 
                 var features = oscar.Util.boundsToFeatures(record.bounds,projection,this.map);
@@ -253,10 +253,41 @@ oscar.Gui.CatalogueResults = new oscar.BaseClass(oscar.Gui,{
         $abs.attr("title",abs);
         this.results.append($result);
         $result.data("record",record);
+		
+		/*
+			Display the link data here. We should create wizards to handle
+			the different protocol cases.
+		*/
+		$result.append(this.createLinksPanel(record));
+		
         this.attachMouseEvents($result,record);
         
 
     },
+	createLinksPanel:function(record) {
+		var $div = $$("<div></div>");
+		if(record.links == null ||
+			record.links.length == 0) return $div;
+		for(var i=0;i<record.links.length;i++) {
+			var link = record.links[i];
+			var wizard = oscar.Util.WizardFactory(link.protocol,link,{map:this.map,record:record});
+			if(wizard) {
+				var icon = wizard.icon || "ui-icon-disk";
+				$button = $$("<button></button").html(link.protocol);
+				$button.data("wizard",wizard);
+				$button.button({
+					icons: {
+						primary:icon
+					},
+					text:false
+				}).click(function() {
+					$$(this).data("wizard").launch();
+				});
+				$div.append($button);
+			}
+		}
+		return $div;
+	},
     attachMouseEvents:function($resultDiv,record) {
         $resultDiv.mouseenter(function(e) {
         if(record.features) {

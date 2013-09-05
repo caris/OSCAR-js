@@ -15,6 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * This file contains patches for OpenLayers objects
  */
@@ -48,8 +49,9 @@ OpenLayers.Format.WFSCapabilities.v1_0_0.prototype.readers["wfs"]["LatLongBoundi
 
 OpenLayers.Format.CSWGetRecords.v2_0_2.prototype.namespaces["gmd"] = "http://www.isotc211.org/2005/gmd";
 OpenLayers.Format.CSWGetRecords.v2_0_2.prototype.namespaces["gco"] = "http://www.isotc211.org/2005/gco";
-OpenLayers.Format.CSWGetRecords.v2_0_2.prototype.namespaces["gmi"] = "http://www.isotc211.org/2005/gmi"
-OpenLayers.Format.CSWGetRecords.v2_0_2.prototype.namespaces["srv"] = "http://www.isotc211.org/2005/srv"
+OpenLayers.Format.CSWGetRecords.v2_0_2.prototype.namespaces["gmi"] = "http://www.isotc211.org/2005/gmi";
+OpenLayers.Format.CSWGetRecords.v2_0_2.prototype.namespaces["srv"] = "http://www.isotc211.org/2005/srv";
+OpenLayers.Format.CSWGetRecords.v2_0_2.prototype.namespaces["dsc"] = "http://www.caris.com/dsc/1.0";
 OpenLayers.Format.CSWGetRecords.v2_0_2.prototype.readNode = function(node, obj) {
     if(!obj) {
         obj = {};
@@ -275,6 +277,23 @@ OpenLayers.Format.CSWGetRecords.v2_0_2.prototype.readers["srv"]={
 }
 };
 OpenLayers.Format.CSWGetRecords.v2_0_2.prototype.readers["srv"]["*"] = OpenLayers.Format.CSWGetRecords.v2_0_2.prototype.readers["gmd"]["*"];
+
+OpenLayers.Format.CSWGetRecords.v2_0_2.prototype.readers["dsc"] = {
+"DiscoveryBriefRecord":function(node,obj) {
+	var record = {type:"DiscoveryBriefRecord"};
+	this.readChildNodes(node,record);
+	obj.records.push(record);
+},
+"Link":function(node,obj) {
+	if(!obj.links) {
+		obj.links=[];
+	}
+	var link = {protocol:"",url:""};
+	link.protocol = this.getAttributeNS(node,"","protocol");
+	link.url = this.getChildValue(node);
+	obj.links.push(link);
+}
+}
 
 
 OpenLayers.Format.CSWGetRecords.v2_0_2.prototype.readers["gco"] = {

@@ -69,6 +69,9 @@ oscar.Control.DragPanel = oscar.BaseClass(oscar.Control, {
      * {String} Key or text to be used for the title of the panel.
      */	
 	titleText :"",
+	
+	EVENT_TYPES:["closed","minimized","maximized"],
+	events:null,
 	/**
 	 * Constructor: Creates a new instance of the DragPanel  control.
 	 * 
@@ -81,6 +84,8 @@ oscar.Control.DragPanel = oscar.BaseClass(oscar.Control, {
      * (end)
      */
 	initialize : function(options) {
+		this.EVENT_TYPES = oscar.Control.DragPanel.prototype.EVENT_TYPES.concat(OpenLayers.Control.prototype.EVENT_TYPES);
+		this.events = new OpenLayers.Events(this, null, this.EVENT_TYPES,false,{includeXY :true});	
 		oscar.Control.prototype.initialize.apply(this, [ options ]);
 	},
 	/**
@@ -124,7 +129,8 @@ oscar.Control.DragPanel = oscar.BaseClass(oscar.Control, {
 			var context = this;
 			OpenLayers.Event.observe(this.closeBox, "click", function(e) {
                 oscar.jQuery(context.div).fadeOut();
-				OpenLayers.Event.stop(e, true);
+				context.events.triggerEvent("closed");
+				//OpenLayers.Event.stop(e, true);
 			});
 			this.handle.appendChild(this.closeBox);
 		}
@@ -136,7 +142,8 @@ oscar.Control.DragPanel = oscar.BaseClass(oscar.Control, {
 			var context = this;
 			OpenLayers.Event.observe(this.minMax, "click", function(e) {
 				context.toggleContentDisplay();
-				OpenLayers.Event.stop(e, true);
+				
+				//OpenLayers.Event.stop(e, true);
 			});
 			oscar.jQuery(this.clicker).addClass("contentOpen");
 			this.handle.appendChild(this.minMax);
@@ -147,7 +154,6 @@ oscar.Control.DragPanel = oscar.BaseClass(oscar.Control, {
 
 		oscar.jQuery(this.content).addClass("content");
 			this.div.appendChild(this.content);
-
 			OpenLayers.Event.observe(this.div, "mousedown", function(e) {
 			OpenLayers.Event.stop(e, true);
 		});
@@ -156,9 +162,14 @@ oscar.Control.DragPanel = oscar.BaseClass(oscar.Control, {
 			containment :"parent",
 			start : function(event, ui) {
 				oscar.jQuery(this).addClass("olDragDown");
+				event.stopPropagation();
 			},
 			stop : function(event, ui) {
 				oscar.jQuery(this).removeClass("olDragDown");
+				event.stopPropagation();
+			},
+			drag : function(e,u) {
+				event.stopPropagation();
 			},
 			cancel :"div.content"
 		});

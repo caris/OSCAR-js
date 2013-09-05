@@ -69,6 +69,8 @@ oscar.Control.DataDiscovery = oscar.BaseClass(oscar.Control.DragPanel, {
 	
 	database:null,
 	
+	showAbstract:true,
+	
 	/**
 	 * APIProperty: styles
 	 * 
@@ -99,10 +101,16 @@ oscar.Control.DataDiscovery = oscar.BaseClass(oscar.Control.DragPanel, {
 	 * 
 	 *  db - {oscar.Util.Database} The database of results for searching.
 	 */
-    initialize:function(db) {
-	    oscar.Control.DragPanel.prototype.initialize.apply(this);
+    initialize:function(db,options) {
+	    oscar.Control.DragPanel.prototype.initialize.apply(this,[options]);
 	    this.database = db;
 	    this.database.events.on({"dbupdated":this.dbupdated,scope:this});
+		this.events.on({
+			"closed":function() {
+				this.deactivate();
+			},
+			scope:this
+		});
 	},
 	dbupdated:function(e) {
 	},
@@ -228,7 +236,11 @@ oscar.Control.DataDiscovery = oscar.BaseClass(oscar.Control.DragPanel, {
                 OpenLayers.Event.stop(e, true);
          });
          $$(this.content).append(this.discoverPanel);
+		 if(this.query) {
+			this.txt.val(this.query);
+		 }
          this.getResults();
+
 	},
 	
     /**
@@ -297,6 +309,7 @@ oscar.Control.DataDiscovery = oscar.BaseClass(oscar.Control.DragPanel, {
 	displayResults:function(e) {
         var scope = this;
         var query = this.txt.val().trim();
+		var validResults = [];
         this.resultsPanel.children().each(function() {
             var $this = $$(this);
             var mapViewPort = scope.map.getExtent();
@@ -310,11 +323,17 @@ oscar.Control.DataDiscovery = oscar.BaseClass(oscar.Control.DragPanel, {
             
             if(isInRange && textFound) {
                 $this.show();
+				validResults.push($this);
             } else {
                 $this.hide();
             }
         });
-	},	
+		setTimeout(function() {
+		if(validResults.length == 1) {
+			validResults[0].click();
+		}
+		},500);
+	},		
 	/**
 	 * Method: drawFeature
 	 * Once the feature is selected in the results panel this will display 
@@ -335,8 +354,10 @@ oscar.Control.DataDiscovery = oscar.BaseClass(oscar.Control.DragPanel, {
 	    var scope = this;
 	    setTimeout(function(){
 			var selectFeature = scope.map.getControlsByClass("oscar.Control.SelectFeature")[0];
-			selectFeature.ctrl.unselectAll();
-			selectFeature.ctrl.select(feat);
+			if(selectFeature) {
+				selectFeature.ctrl.unselectAll();
+				selectFeature.ctrl.select(feat);
+			}
 	    },0);
 	    
 	    var viewPort = this.map.getExtent();
@@ -344,7 +365,7 @@ oscar.Control.DataDiscovery = oscar.BaseClass(oscar.Control.DragPanel, {
 	    	this.map.zoomToExtent(bbox);
 	    }
 	    if(this.downloadOptions == null) {
-	    	this.downloadOptions = new oscar.Gui.DownloadOptions({db:this.database,map:this.map});
+	    	this.downloadOptions = new oscar.Gui.DownloadOptions({db:this.database,map:this.map,showAbstract:this.showAbstract});
 	    	this.downloadOptions.events.on({"serviceReady":this.queueDownload,scope:this});
 	    	this.downloadOptions.appendTo(this.optionsPanel);
 	    }

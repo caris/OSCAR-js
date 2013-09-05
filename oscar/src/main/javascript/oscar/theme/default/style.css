@@ -1838,8 +1838,14 @@ td#oscarLayoutFooterContainer {
 .oscarGuiCatalogueResults .result .title {
     font-size:16px !important;
     color:#004580;
+	white-space:nowrap;
 }
 
 .oscarGuiCatalogueResults .title.over, .oscarGuiCatalogueResults .abs.over {
     color:#fff;
+}
+
+.ui-icon-wcs-download {
+	background-image:url("img/oscar-ui-icons_888888_256x240.png") !important;
+	background-position: 0 0;
 }
