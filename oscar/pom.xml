@@ -94,6 +94,7 @@
                                 <include>**/Gui/ClickableLabel.js</include>
                                 <include>**/Gui/ComboBox.js</include>
                                 <include>**/Gui/LinkedLists.js</include>
+                                <include>**/Gui/Wizards.js</include>
                                 <include>**/Handler.js</include>
                                 <include>**/Handler/CSW.js</include>
                                 <include>**/Handler/WFS.js</include>
