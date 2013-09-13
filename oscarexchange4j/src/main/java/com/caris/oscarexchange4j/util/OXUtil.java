@@ -130,11 +130,11 @@ public class OXUtil {
 					20037508.34, 20037508.34 });
 			ss.setTileOrigin(new double[] { -20037508.34, 20037508.34 });
 			ss.setTileMatrixSet(ScaleSet.GoogleMapsCompatible);
-		} else if (tileMatrixSet.equals(ScaleSet.GlobalCRS84Scale)) {
+		} else if (tileMatrixSet.equals(ScaleSet.GoogleCRS84Quad)) {
 			ss = new ScaleSet();
-			ss.setTileFullExtent(new double[] { -180.00, -90, 180, 90 });
-			ss.setTileOrigin(new double[] { -90, 180 });
-			ss.setTileMatrixSet(ScaleSet.GlobalCRS84Scale);
+			ss.setTileFullExtent(new double[] { -180.00, -180.00, 180.00, 180.00 });
+			ss.setTileOrigin(new double[] { -180, 180 });
+			ss.setTileMatrixSet(ScaleSet.GoogleCRS84Quad);
 		}
 		return ss;
 	}
@@ -172,7 +172,7 @@ public class OXUtil {
 		case 3857:
 			return ScaleSet.GoogleMapsCompatible;
 		case 4326:
-			return ScaleSet.GlobalCRS84Scale;
+			return ScaleSet.GoogleCRS84Quad;
 		default:
 			return "EPSG:" + epsg;
 		}

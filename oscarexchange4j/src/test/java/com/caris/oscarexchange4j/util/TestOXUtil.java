@@ -17,23 +17,23 @@
  */
 package com.caris.oscarexchange4j.util;
 
+import static org.junit.Assert.*;
+
 import java.awt.Color;
+
+import org.junit.Test;
 
 import com.caris.oscarexchange4j.theme.CoverType;
 import com.caris.oscarexchange4j.util.OXUtil;
 
-import junit.framework.TestCase;
-
-/**
- * @author tcoburn
- * 
- */
-public class TestOXUtil extends TestCase {
+public class TestOXUtil {
+    @Test
     public void testCreateCoverTypeFromValidString() {
         CoverType type = OXUtil.createCoverType("DEFAULT");
         assertTrue(type.toString().equals("DEFAULT"));
     }
 
+    @Test
     public void testCreateCoverTypeFromInValidString() {
         CoverType type = OXUtil.createCoverType("TEST");
         assertTrue(type.toString().equals("DEFAULT"));
@@ -42,6 +42,7 @@ public class TestOXUtil extends TestCase {
     /**
      * Test converting a Color object to a hex string color.
      */
+    @Test
     public void testColorToHex() {
         Color color = new Color(255, 0, 0);
         String hexColor = OXUtil.ColorToHex(color);
@@ -51,16 +52,37 @@ public class TestOXUtil extends TestCase {
     /**
      * Test converting red, green, blue values to a hex string color;
      */
+    @Test
     public void testRGBToHex() {
         String hexColor = OXUtil.RGBToHex(0, 0, 255);
         assertEquals(hexColor, "0000ff");
     }
-    
+
+    @Test
     public void testLenghtOfHex() {
-        String hexColor = OXUtil.RGBToHex(0,0,0);
-        assertEquals(hexColor.length(),6);
+        String hexColor = OXUtil.RGBToHex(0, 0, 0);
+        assertEquals(hexColor.length(), 6);
         hexColor = OXUtil.ColorToHex(Color.BLACK);
-        assertEquals(hexColor.length(),6);
+        assertEquals(hexColor.length(), 6);
     }
 
+    /**
+     * Tests the result values for the GoogleCRS84 scale
+     */
+    @Test
+    public void getScaleSetForGoogleQuad() {
+        ScaleSet scaleSet = OXUtil.getScaleSet("EPSG:4326");
+
+        assertTrue(scaleSet.getTileMatrixSet().equals(ScaleSet.GoogleCRS84Quad));
+
+        double[] tileOrigin = scaleSet.getTileOrigin();
+        assertTrue(tileOrigin[0] == -180.00);
+        assertTrue(tileOrigin[1] == 180.00);
+
+        double[] fullExtent = scaleSet.getTileFullExtent();
+        assertTrue(fullExtent[0] == -180.00);
+        assertTrue(fullExtent[1] == -180.00);
+        assertTrue(fullExtent[2] == 180.00);
+        assertTrue(fullExtent[3] == 180.00);
+    }
 }
