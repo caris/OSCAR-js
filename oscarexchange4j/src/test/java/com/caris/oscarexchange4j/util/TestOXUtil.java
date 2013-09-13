@@ -17,23 +17,23 @@
  */
 package com.caris.oscarexchange4j.util;
 
+import static org.junit.Assert.*;
+
 import java.awt.Color;
+
+import org.junit.Test;
 
 import com.caris.oscarexchange4j.theme.CoverType;
 import com.caris.oscarexchange4j.util.OXUtil;
 
-import junit.framework.TestCase;
-
-/**
- * @author tcoburn
- * 
- */
-public class TestOXUtil extends TestCase {
+public class TestOXUtil {
+    @Test
     public void testCreateCoverTypeFromValidString() {
         CoverType type = OXUtil.createCoverType("DEFAULT");
         assertTrue(type.toString().equals("DEFAULT"));
     }
 
+    @Test
     public void testCreateCoverTypeFromInValidString() {
         CoverType type = OXUtil.createCoverType("TEST");
         assertTrue(type.toString().equals("DEFAULT"));
@@ -42,6 +42,7 @@ public class TestOXUtil extends TestCase {
     /**
      * Test converting a Color object to a hex string color.
      */
+    @Test
     public void testColorToHex() {
         Color color = new Color(255, 0, 0);
         String hexColor = OXUtil.ColorToHex(color);
@@ -51,16 +52,17 @@ public class TestOXUtil extends TestCase {
     /**
      * Test converting red, green, blue values to a hex string color;
      */
+    @Test
     public void testRGBToHex() {
         String hexColor = OXUtil.RGBToHex(0, 0, 255);
         assertEquals(hexColor, "0000ff");
     }
-    
-    public void testLenghtOfHex() {
-        String hexColor = OXUtil.RGBToHex(0,0,0);
-        assertEquals(hexColor.length(),6);
-        hexColor = OXUtil.ColorToHex(Color.BLACK);
-        assertEquals(hexColor.length(),6);
-    }
 
+    @Test
+    public void testLenghtOfHex() {
+        String hexColor = OXUtil.RGBToHex(0, 0, 0);
+        assertEquals(hexColor.length(), 6);
+        hexColor = OXUtil.ColorToHex(Color.BLACK);
+        assertEquals(hexColor.length(), 6);
+    }
 }
