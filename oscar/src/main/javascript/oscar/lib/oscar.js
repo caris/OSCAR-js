@@ -31,4 +31,4 @@
 /**
  * Constant: VERSION_NUMBER
  */
-oscar.VERSION_NUMBER = "13.0.2-RC1";
+oscar.VERSION_NUMBER = "13.0-SNAPSHOT";
