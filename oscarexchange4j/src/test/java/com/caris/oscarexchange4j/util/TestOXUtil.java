@@ -65,4 +65,24 @@ public class TestOXUtil {
         hexColor = OXUtil.ColorToHex(Color.BLACK);
         assertEquals(hexColor.length(), 6);
     }
+
+    /**
+     * Tests the result values for the GoogleCRS84 scale
+     */
+    @Test
+    public void getScaleSetForGoogleQuad() {
+        ScaleSet scaleSet = OXUtil.getScaleSet("EPSG:4326");
+
+        assertTrue(scaleSet.getTileMatrixSet().equals(ScaleSet.GoogleCRS84Quad));
+
+        double[] tileOrigin = scaleSet.getTileOrigin();
+        assertTrue(tileOrigin[0] == -180.00);
+        assertTrue(tileOrigin[1] == 180.00);
+
+        double[] fullExtent = scaleSet.getTileFullExtent();
+        assertTrue(fullExtent[0] == -180.00);
+        assertTrue(fullExtent[1] == -180.00);
+        assertTrue(fullExtent[2] == 180.00);
+        assertTrue(fullExtent[3] == 180.00);
+    }
 }
