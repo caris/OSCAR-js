@@ -25,7 +25,7 @@ public class ScaleSet {
 
 	/** Well Known Scale Sets **/
 	public static final String GoogleMapsCompatible = "GoogleMapsCompatible";
-	public static final String GlobalCRS84Scale = "GlobalCRS84Scale";
+	public static final String GoogleCRS84Quad = "GoogleCRS84Quad";
 	
 	/**
 	 * The name of the scale set.

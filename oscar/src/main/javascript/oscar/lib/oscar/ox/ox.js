@@ -644,6 +644,11 @@ oscar.ox.Layer = oscar.BaseClass( {
 		        url:this.urls[0],
 		        layer:this.dataLayers[0].layerName,
 		        matrixSet:this.tileMatrixSet,
+				tileOrigin:new OpenLayers.LonLat(this.tileOrigin[0],this.tileOrigin[1]),
+				tileFullExtent:new OpenLayers.Bounds(
+					this.tileFullExtent[0],this.tileFullExtent[1],
+					this.tileFullExtent[2],this.tileFullExtent[3]
+				),
 		        style:"default",
 		        requestEncoding:"REST",
 		        format:this.format,
