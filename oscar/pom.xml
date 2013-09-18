@@ -161,6 +161,10 @@
 								<include>**/Util/CoordinateReferences.js</include>
 								<include>**/Util/Transform.js</include>
 								<include>**/Util/Help.js</include>
+								<include>**/Util/PluginManager.js</include>
+								<include>**/Util/Plugin/Plugin.js</include>
+								<include>**/Util/Plugin/Download/Download.js</include>
+								<include>**/Util/Plugin/Download/WCSService.js</include>
 								<include>**/Lang.js</include>
 								<include>**/Lang/en.js</include>
 								<include>**/Lang/es.js</include>
