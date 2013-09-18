@@ -270,18 +270,20 @@ oscar.Gui.CatalogueResults = new oscar.BaseClass(oscar.Gui,{
 			record.links.length == 0) return $div;
 		for(var i=0;i<record.links.length;i++) {
 			var link = record.links[i];
-			var wizard = oscar.Util.WizardFactory(link.protocol,link,{map:this.map,record:record});
-			if(wizard) {
-				var icon = wizard.icon || "ui-icon-disk";
+			var plugin = oscar.getPluginManager().getPluginFor(link.protocol);
+			console.log(plugin);
+			if(plugin) {
+				var icon = plugin.getIcon() || "ui-icon-disk";
+				plugin.setOptions({link:link,map:this.map,record:record});
 				$button = $$("<button></button").html(link.protocol);
-				$button.data("wizard",wizard);
+				$button.data("plugin",plugin);
 				$button.button({
 					icons: {
 						primary:icon
 					},
 					text:false
 				}).click(function() {
-					$$(this).data("wizard").launch();
+					$$(this).data("plugin").play();
 				});
 				$div.append($button);
 			}
