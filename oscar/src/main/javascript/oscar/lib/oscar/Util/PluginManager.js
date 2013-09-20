@@ -16,22 +16,53 @@
  * limitations under the License.
  */
 
+/**
+ * Class: oscar.Util.PluginManager
+ * 
+ * This class is used to manage plugins
+ */
 oscar.Util.PluginManager = new oscar.BaseClass({
-	registeredPlugins:{},
-	initialize:function() {},
-	register:function(plugin) {
+	/**
+	 * APIProperty: registeredPlugins
+	 * 
+	 * This is a mapping of registered plugins
+	 */
+	registeredPlugins : {},
+	initialize : function() {
+	},
+	/**
+	 * APIMethod: register
+	 * 
+	 * This is the method to register a plugin
+	 * 
+	 * Parameter: plugin - The plugin to register
+	 */
+	register : function(plugin) {
 		this.registeredPlugins[plugin.getPluginType()] = plugin;
 	},
-	getPluginFor:function(protocolString){
-		var plugin = this.registeredPlugins[protocolString];
-		if(!plugin) {
+	/**
+	 * APIMethod: getPluginFor
+	 * 
+	 * Returns a plugin for the defined protocol string
+	 * 
+	 * Parameter:
+	 * 
+	 * getPluginType - The type of plugin
+	 */
+	getPluginFor : function(pluginType) {
+		var plugin = this.registeredPlugins[pluginType];
+		if (!plugin) {
 			return new oscar.Util.Plugin();
 		}
 		return plugin;
 	},
-	CLASS_NAME:"oscar.Util.PluginManager"
+	CLASS_NAME : "oscar.Util.PluginManager"
 });
 
+/**
+ * This sets creates a plugin manager in oscar by default and creates a
+ * getPluginManager method.
+ */
 oscar._pluginManager = new oscar.Util.PluginManager();
 oscar.getPluginManager = function() {
 	return oscar._pluginManager;

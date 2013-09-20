@@ -18,12 +18,18 @@
 
 /**
  * Class: oscar.Util.Plugin.Download
+ * 
  * This is the base class for all plugins related to downloading.
  * 
  */
-oscar.Util.Plugin.Download = new oscar.BaseClass(oscar.Util.Plugin,{
-	initialize:function(options) {
-		oscar.Util.Plugin.prototype.initialize.apply(this,[options]);
+oscar.Util.Plugin.Download = new oscar.BaseClass(oscar.Util.Plugin, {
+	/**
+	 * APIMethod: initialize
+	 * 
+	 * The initialize method
+	 */
+	initialize : function(options) {
+		oscar.Util.Plugin.prototype.initialize.apply(this, [ options ]);
 	},
-	CLASS_NAME:"oscar.Util.Plugin.Download"
+	CLASS_NAME : "oscar.Util.Plugin.Download"
 });

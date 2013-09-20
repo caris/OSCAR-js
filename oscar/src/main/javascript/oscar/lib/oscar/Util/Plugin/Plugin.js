@@ -15,22 +15,61 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+/**
+ * Class: oscar.Util.Plugin
+ * 
+ * This is a base class for all plugins.
+ */
 oscar.Util.Plugin = new oscar.BaseClass({
-	pluginType:null,
-	icon:null,
-	getIcon:function() {
+	/**
+	 * APIProperty: pluginType
+	 * 
+	 * A string to define what the plugin is for. This will be used for the
+	 * plugin registration
+	 * 
+	 */
+	pluginType : null,
+	/**
+	 * APIPropery: icon
+	 * 
+	 * A css class that defines the icon for this plugin. The class should
+	 * follow the jQueryUI icon styles
+	 */
+	icon : null,
+	/**
+	 * APIMethod: getIcon Returns the icon
+	 */
+	getIcon : function() {
 		return this.icon;
 	},
-	initialize:function(options) {
+	initialize : function(options) {
 		this.setOptions(options);
 	},
-	getPluginType:function() {
+	/**
+	 * APIMethod: getPluginType
+	 * 
+	 * Returns the plugin type
+	 */
+	getPluginType : function() {
 		return this.pluginType;
 	},
-	setOptions:function(options) {
+	/**
+	 * APIMethod: setOptions
+	 * 
+	 * This method will take a JSON class definition and apply the properties to
+	 * this object. Parameter: - options A JSON class
+	 * 
+	 */
+	setOptions : function(options) {
 		OpenLayers.Util.extend(this, options);
 	},
-	play:function(){},
-	CLASS_NAME:"oscar.Util.Plugin"
+
+	/**
+	 * APIMethod: play
+	 * 
+	 * This is the method that is called to run the plugin.
+	 */
+	play : function() {
+	},
+	CLASS_NAME : "oscar.Util.Plugin"
 });
