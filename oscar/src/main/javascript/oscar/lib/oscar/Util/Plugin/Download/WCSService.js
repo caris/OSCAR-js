@@ -112,7 +112,7 @@ oscar.Util.Plugin.Download.WCSService = new oscar.BaseClass(
 							.triggerEvent("closed");
 				} catch (err) {
 					/**
-					* If the control didn't exists the array would be empty. 
+					* If the control didn't exist the array would be empty. 
 					* Keep calm and carry on.
 					*/
 				}
