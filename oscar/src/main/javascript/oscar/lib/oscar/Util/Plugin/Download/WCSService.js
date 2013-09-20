@@ -111,6 +111,10 @@ oscar.Util.Plugin.Download.WCSService = new oscar.BaseClass(
 					this.map.getControlsByClass("oscar.Control.DataDiscovery")[0].events
 							.triggerEvent("closed");
 				} catch (err) {
+					/**
+					* If the control didn't exists the array would be empty. 
+					* Keep calm and carry on.
+					*/
 				}
 
 				var title = cswget.title(this.record)
