@@ -5,11 +5,11 @@
 	<name>oscar</name>
 	<packaging>jar</packaging>
 	<groupId>com.caris</groupId>
-	<version>13.0.1-GA</version>
+	<version>13.0.3-GA</version>
 	<parent>
 		<groupId>com.caris</groupId>
 		<artifactId>oscar_framework</artifactId>
-		<version>13.0.1-GA</version>
+		<version>13.0.3-GA</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 	<dependencies>
@@ -22,6 +22,7 @@
 			<groupId>osgeo</groupId>
 			<artifactId>proj4js</artifactId>
 			<scope>provided</scope>
+			<version>1.0-3</version>
 		</dependency>
 		<dependency>
 			<groupId>jquery</groupId>
