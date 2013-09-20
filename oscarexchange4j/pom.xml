@@ -7,7 +7,7 @@
     <parent>
         <groupId>com.caris</groupId>
         <artifactId>oscar_framework</artifactId>
-        <version>OSCAR 13.0.3-GA</version>
+        <version>13.0.3-GA</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     
