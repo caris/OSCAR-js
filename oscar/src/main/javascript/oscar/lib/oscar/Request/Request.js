@@ -38,11 +38,11 @@ oscar.Request=new oscar.BaseClass({
 		});
 	},
 	_success:function(resp) {
-		$$("*").css("cursor","auto");
+		$$("*").removeClass("olCursorWait");
 		this.success(resp);
 	},
 	_failure:function(resp) {
-		$$("*").css("cursor","auto");
+		$$("*").removeClass("olCursorWait");
 		this.events.triggerEvent("failure");
 	},
 	get:function() {
@@ -53,7 +53,7 @@ oscar.Request=new oscar.BaseClass({
 			failure:this._failure,
 			scope:this
 		});
-		$$("*").css("cursor","wait");
+		$$("*").addClass("olCursorWait");
 		OpenLayers.Request.GET(this.properties);
 		
 	},
