@@ -30,7 +30,7 @@ oscar.Request.OGC.WCS.FindCoverage=new oscar.BaseClass(oscar.Request.OGC.WCS,{
 				minx:bounds.left,
 				miny:bounds.bottom,
 				maxx:bounds.right,
-				max:bounds.top
+				maxy:bounds.top
 			});
 		}
 		if(crs) {
