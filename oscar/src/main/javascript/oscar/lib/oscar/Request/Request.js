@@ -37,22 +37,25 @@ oscar.Request=new oscar.BaseClass({
 				includeXY :false
 		});
 	},
-	success:function() {
-		this.events.triggerEvent("success");
+	_success:function(resp) {
+		$$("*").css("cursor","auto");
+		this.success(resp);
 	},
-	failure:function() {
+	_failure:function(resp) {
+		$$("*").css("cursor","auto");
 		this.events.triggerEvent("failure");
 	},
 	get:function() {
 		OpenLayers.Util.extend(this.properties,{
 			url:this.url,
 			params:this.params,
-			success:this.success,
-			failure:this.failure,
+			success:this._success,
+			failure:this._failure,
 			scope:this
 		});
-		
+		$$("*").css("cursor","wait");
 		OpenLayers.Request.GET(this.properties);
+		
 	},
 	CLASS_NAME:"oscar.Request"
 });
