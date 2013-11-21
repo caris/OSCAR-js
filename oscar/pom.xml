@@ -222,6 +222,7 @@
 								<include>**/Format/WCSDescribeCoverage/v1_1_0.js</include>
 								<include>**/Format/WCSDescribeCoverage/v1_1_1.js</include>
 								<include>**/Format/WCSDescribeCoverage/v1_1_2.js</include>
+								<include>**/Format/WCSFindCoverage/WCSFindCoverage.js</include>
 								<include>**/Format/WMTSCapabilities.js</include>
 								<include>**/Format/WMTSCapabilities/v1.js</include>
 								<include>**/Format/WMTSCapabilities/v1_0_0.js</include>
@@ -229,6 +230,11 @@
 								<include>**/Format/WFSDescribeFeatureType/v1.js</include>
 								<include>**/Format/WFSDescribeFeatureType/v1_0_0.js</include>
 								<include>**/Format/WFSDescribeFeatureType/v1_1_0.js</include>
+								<include>**/Request/Request.js</include>
+								<include>**/Request/OGC/OGC.js</include>
+								<include>**/Request/OGC/WCS/WCS.js</include>
+								<include>**/Request/OGC/WCS/DescribeCoverage.js</include>
+								<include>**/Request/OGC/WCS/FindCoverage.js</include>
 								<include>**/Util/ConfigManager.js</include>
 								<include>**/Util/ConfirmBox.js</include>
 								<include>**/Util/AlertBox.js</include>
