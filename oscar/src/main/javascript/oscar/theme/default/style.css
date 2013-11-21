@@ -1385,14 +1385,14 @@ td#oscarLayoutFooterContainer {
 }
 
 .searchPanel .magnifyingGlass {
-	background-image:url("img/search.png");
-	background-repeat:no-repeat;
-	width:15px;
-	height:15px;
-	float:left;
-	margin-right:4px;
-	margin-top:2px;
+    background-image:url("img/search.png");
+    background-repeat:no-repeat;
+    display:inline-block;
+    width: 16px;
+    height: 16px;
+    cursor:pointer;
 }
+
 .searchPanel input.search{
 	float:left;
 	font-size:0.9em;
