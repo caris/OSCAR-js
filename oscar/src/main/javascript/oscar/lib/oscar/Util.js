@@ -16,28 +16,20 @@
  * limitations under the License.
  */
 /**
- * Class: oscar.debug
+ * Function: oscar.debug
  */
-oscar.debug = {
-	canOutput:function() {
-    	var canOutput = false;
-    	try {
-    		canOutput = (window.console)?true:false; 
-    	} catch (err){}
-    	
-    	return canOutput 
-    },
-    error : function(obj) {
-    	if(this.canOutput()) {
-    		window.console.error(obj.message);
-    	}
-    }
+oscar.debug = function(msg) {
+	if(console) {
+		console.log(msg);
+	}
 };
 
 /**
  * Class: oscar.Util
  */
 oscar.Util = {};
+
+
 
 /**
 * APIMethod:getMetersConversionFactor
@@ -56,6 +48,27 @@ oscar.Util.getMetersConversionFactor = function(projection) {
 		return 1;
 	}
 }
+
+/**
+ * APIMethod: transform
+ * 
+ * Takes an OpenLayers.Bounds or OpenLayers.Geometry object and
+ * transforms it from the source projection to the destination
+ * projection.
+ * 
+ * Parameters:
+ *  - bounds <OpenLayers.Bounds> or <OpenLayers.Geometry>
+ *  - srcProjection <OpenLayers.Projection>
+ *  - destProjection <OpenLayers.Projection>
+ */
+
+oscar.Util.transform = function(geom,srcProjection, destProjection) {
+	if(srcProjection == destProjection) {
+		return geom;
+	} else {
+		return geom.transform(srcProjection,destProjection);
+	}
+};
 
 
 /**
