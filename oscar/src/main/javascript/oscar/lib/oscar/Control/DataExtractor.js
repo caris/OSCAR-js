@@ -36,6 +36,9 @@ oscar.Control.DataExtractor = oscar.BaseClass(oscar.Control, {
 	 * for quick searching.
 	 */
 	database:null,
+	
+	findCoverages:null,
+	
 	/**
 	 * Constructor: new oscar.Control.DataExtractor
 	 */
@@ -65,7 +68,7 @@ oscar.Control.DataExtractor = oscar.BaseClass(oscar.Control, {
         if(this.ctrl) {
             this.ctrl.activate();
         } else {
-           this.ctrl = new oscar.Control.DataDiscovery(this.database)
+           this.ctrl = new oscar.Control.DataDiscovery(this.findCoverages)
            this.map.addControl(this.ctrl);
         }
     },
@@ -87,6 +90,15 @@ oscar.Control.DataExtractor = oscar.BaseClass(oscar.Control, {
      * in the database.
      */
     load_wcs: function(service) {
+		// create an object here containing the parameters needed for the request
+		this.findCoverages =  {
+			request:"FindCoverage",
+			service:"WCS",
+			version:service.version,
+			url:service.url
+		}
+		return;
+		
 	    var params = {
 	    	    request:"GetCapabilities",
 	    	    service:"WCS",

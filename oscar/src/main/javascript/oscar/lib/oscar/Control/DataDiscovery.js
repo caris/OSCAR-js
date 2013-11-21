@@ -76,8 +76,15 @@ oscar.Control.DataDiscovery = oscar.BaseClass(oscar.Control.DragPanel, {
 	 */
 	
 	styles: {
+		"default": {
+			fillColor :"#09c",
+			fillOpacity:0,
+			strokeColor :"#FF0000",
+			strokeWidth :1,
+			strokeDashstyle :'solid'
+		},
 		select: {
-			fillColor :"#fff",
+			fillColor :"#09c",
 			strokeColor :"#000",
 			strokeWidth :1,
 			strokeDashstyle :'solid',
@@ -99,10 +106,9 @@ oscar.Control.DataDiscovery = oscar.BaseClass(oscar.Control.DragPanel, {
 	 * 
 	 *  db - {oscar.Util.Database} The database of results for searching.
 	 */
-    initialize:function(db) {
+    initialize:function(findCoverages) {
 	    oscar.Control.DragPanel.prototype.initialize.apply(this);
-	    this.database = db;
-	    this.database.events.on({"dbupdated":this.dbupdated,scope:this});
+		this.findCoverages = findCoverages;
 	},
 	dbupdated:function(e) {
 	},
@@ -116,7 +122,6 @@ oscar.Control.DataDiscovery = oscar.BaseClass(oscar.Control.DragPanel, {
 	 */
     setMap:function(map) {
 	    oscar.Control.prototype.setMap.apply(this,[map]);
-	    this.map.events.on({"moveend":this.displayResults,scope:this});
 	    this.checkLayer();
 	},
 	
@@ -171,45 +176,31 @@ oscar.Control.DataDiscovery = oscar.BaseClass(oscar.Control.DragPanel, {
 		 textEntryPanel.css({
 			 'padding':'2px 2px 2px 2px'
 		 });
-		 var reset = $$("<div></div>");
 		 this.resultsPanel = $$("<div></div>").addClass("resultsPanel");
-		 reset.addClass("oscar_Gui_MultiItemChooserTable_resetTable_disabled");
-		 reset.addClass("reset");
-		 var $mGlass = $$("<span></span>");
+		 var $mGlass = $$("<div></div>");
 		 $mGlass.addClass("magnifyingGlass");
-		 searchPanel.append($mGlass);
 		 searchPanel.append(textEntryPanel);
+		 textEntryPanel.append($mGlass);
 		 searchPanel.append(this.resultsPanel);
 		
 		 this.txt = $$("<input>").attr("type","text").addClass("search");
 		 this.txt.css("width","200px");
 		 textEntryPanel.append(this.txt);
-		 textEntryPanel.append(reset);
-		 
+	 
 		 var scope = this;
-		
-		 reset.click(function() {
-			 scope.reset();
+		 $mGlass.click(function() {
+			scope.getResults();
 		 });
-	     
+		 
+		 this.txt.keyup(function(e) {
+			if(e.keyCode && e.keyCode == 13) {
+				scope.getResults();
+			}
+		 });
 	     var br = $$("<br>").attr("clear","left");
 	     textEntryPanel.append(br);
 	     
          this.txt.focus(function() {this.value="";});
-         
-
-         this.txt.keyup(function(e) {
-             switch (e.keyCode) {
-	            case 13:
-	            case 16:
-	            case 16:
-	            case 17:
-	            case 18:
-	                return;
-	            }
-                scope.displayResults();
-         });
-			 
 		    
          var icons = {
                     header: "ui-icon-circle-arrow-e",
@@ -228,7 +219,6 @@ oscar.Control.DataDiscovery = oscar.BaseClass(oscar.Control.DragPanel, {
                 OpenLayers.Event.stop(e, true);
          });
          $$(this.content).append(this.discoverPanel);
-         this.getResults();
 	},
 	
     /**
@@ -239,19 +229,45 @@ oscar.Control.DataDiscovery = oscar.BaseClass(oscar.Control.DragPanel, {
 		this.resultsPanel.children().each(function() {
 			$$(this).removeClass("selected");
 		});
-		this.layer.removeAllFeatures();
+		
 	},
-	/**
-	 * Method: reset
-	 * Resets the search options and zooms the map to the max extent.
-	 */
-	reset:function() {
-	    this.unselectFeature();
-	    this.txt.val("");
-	    this.map.zoomToMaxExtent();
-	    this.displayResults();
+
+	displayResults:function(coverages) {
+		this.layer.removeAllFeatures();
+		this.resultsPanel.empty();
+        var scope=this;
+		for(var r=0;r<coverages.length;r++) {
+            var record = coverages[r];
+			if(record.bounds) {
+				record.feature = this.drawCoverage(record.bounds);
+			}
+			
+            var $recDiv = $$("<div></div>");
+            $recDiv.html(record.title || record.id).addClass("result");
+            var $dataType = $$("<div></div>");
+            $dataType.addClass("wcs");
+            $recDiv.prepend($dataType);
+			$recDiv.data("record",record);
+			
+            $recDiv.click(function() {
+                var $this = $$(this);
+                scope.unselectFeature();
+                $this.addClass("selected");
+                scope.discoverPanel.accordion("option", "active",1);
+				$this.data("record");
+                scope.loadCoverage($this.data("record"));
+                
+            });
+            this.resultsPanel.append($recDiv);
+        }
 	},
 	
+	drawCoverage:function(bounds) {
+		bounds = oscar.Util.transform(bounds,new OpenLayers.Projection("EPSG:4326"),this.map.getProjectionObject());
+		var feat = new OpenLayers.Feature.Vector(bounds.toGeometry());
+		this.layer.addFeatures(feat);
+		return feat;
+	},
 	
 	/**
 	 * Method: getResults
@@ -260,95 +276,35 @@ oscar.Control.DataDiscovery = oscar.BaseClass(oscar.Control.DragPanel, {
 	 */
 	
 	getResults:function() {
-        var scope=this;
-        var columns = this.database.tables["sources"].columns;
-		var records = this.database.tables["sources"].records;
-		for(var r=0;r<records.length;r++) {
-            var record = records[r];
-            var $recDiv = $$("<div></div>");
-            $recDiv.html(record.title || record.id).addClass("result");
-            var $dataType = $$("<div></div>");
-            $dataType.addClass(record.dataType);
-            $recDiv.prepend($dataType);
-            for(var c=0;c<columns.length;c++) {
-                var column = columns[c];
-                $recDiv.data(column,record[column]);
-            }
-            $recDiv.click(function() {
-                var $this = $$(this);
-                scope.unselectFeature();
-                $this.addClass("selected");
-                scope.discoverPanel.accordion("option", "active",1);
-                scope.drawFeature($this);
-                
-            });
-            $recDiv.hide();
-            this.resultsPanel.append($recDiv);
-        }
-        this.displayResults();
+		this.unselectFeature();
+		var query = this.txt.val().trim();	
+		var findCoverage = new oscar.Request.OGC.WCS.FindCoverage(
+			this.findCoverages.url,
+			this.map.getExtent(),
+			this.map.getProjection().toString(),
+			query
+		);
+		findCoverage.events.on({
+			"success":function(e) {
+				this.displayResults(e.coverages);
+			},
+			"failure":function(e) {
+				this.displayResults([]);
+			},
+			scope:this
+		});
+		findCoverage.get();
 	},
-	/**
-	 * Method: displayResults
-	 * 
-	 * Uses the array of results and validates it against any text entry
-	 * in the text field and the current extent of the map to decide if a
-	 * result should be displayed.
-	 */
-	displayResults:function(e) {
-        var scope = this;
-        var query = this.txt.val().trim();
-        this.resultsPanel.children().each(function() {
-            var $this = $$(this);
-            var mapViewPort = scope.map.getExtent();
-            var isInRange = (mapViewPort.containsBounds($this.data("bbox")) ||
-                mapViewPort.intersectsBounds($this.data("bbox")));
-            
-            var textFound = (query.length == 0 || 
-					$this.data("id").toLowerCase().indexOf(query.toLowerCase()) !=-1 || 
-					$this.data("title").toLowerCase().indexOf(query.toLowerCase())!=-1
-			);
-            
-            if(isInRange && textFound) {
-                $this.show();
-            } else {
-                $this.hide();
-            }
-        });
-	},	
-	/**
-	 * Method: drawFeature
-	 * Once the feature is selected in the results panel this will display 
-	 * the feature on the map while activating the Download Options panel.
-	 * 
-	 */
-	drawFeature:function($div) {
-        var bbox = $div.data("bbox");
-		if(this.layer && this.layer.features.length > 0) {
-			this.layer.removeAllFeatures();
-		}
-        var feat = new OpenLayers.Feature.Vector(bbox.toGeometry());
-        feat.div = $div;
-        this.layer.addFeatures(feat);
-	    this.layer.events.triggerEvent("loadend");
-	    
-	    
-	    var scope = this;
-	    setTimeout(function(){
-			var selectFeature = scope.map.getControlsByClass("oscar.Control.SelectFeature")[0];
-			selectFeature.ctrl.unselectAll();
-			selectFeature.ctrl.select(feat);
-	    },0);
-	    
-	    var viewPort = this.map.getExtent();
-	    if(viewPort.containsBounds(bbox)) {
-	    	this.map.zoomToExtent(bbox);
-	    }
-	    if(this.downloadOptions == null) {
-	    	this.downloadOptions = new oscar.Gui.DownloadOptions({db:this.database,map:this.map});
+	
+	loadCoverage:function(coverage) {
+
+		if(this.downloadOptions == null) {
+	    	this.downloadOptions = new oscar.Gui.DownloadOptions({map:this.map,serviceParams:this.findCoverages});
 	    	this.downloadOptions.events.on({"serviceReady":this.queueDownload,scope:this});
 	    	this.downloadOptions.appendTo(this.optionsPanel);
 	    }
-	    this.downloadOptions.setFeature(feat);
+	    this.downloadOptions.setCoverage(coverage);
+	
 	},
 	/**
 	 * Method: activate
@@ -360,7 +316,6 @@ oscar.Control.DataDiscovery = oscar.BaseClass(oscar.Control.DragPanel, {
 			  oscar.jQuery(this.div).fadeIn();
 		}
 		this.checkLayer();
-		this.displayResults();
 	},
 	/**
 	 * Method: checkLayer
@@ -368,26 +323,26 @@ oscar.Control.DataDiscovery = oscar.BaseClass(oscar.Control.DragPanel, {
 	 * to display features.
 	 */
 	checkLayer:function() {
-		if(this.layer) return;
 		this.layer = new OpenLayers.Layer.Vector("Results",{displayInLayerSwitcher:false});
 		this.layer.hidden = true;
+		var defaultStyle = OpenLayers.Util.applyDefaults(this.styles["default"],OpenLayers.Feature.Vector.style["default"]);
 		var selectStyle = OpenLayers.Util.applyDefaults( this.styles.select, OpenLayers.Feature.Vector.style["select"]);
 		selectStyle.cursor = "";
-
 		var temporaryStyle = OpenLayers.Util.applyDefaults( this.styles.temporary, OpenLayers.Feature.Vector.style["temporary"]);
 		this.layer.styleMap = new OpenLayers.StyleMap( {
+			"default":defaultStyle,
 			"select":selectStyle,
 			"temporary":temporaryStyle
 		});
 	    
-	    this.map.addLayer(this.layer);	    
+	    this.map.addLayer(this.layer);	
 	},
 	/**
 	 * Method: deactivate
 	 * Called when the control is deactivated
 	 */
 	deactivate:function() {
-		this.map.events.un({"moveend":this.displayResults,scope:this});
+		this.map.events.un({"moveend":this.getResults,scope:this});
 		
 		if(this.layer &&
 				this.layer.map != null) {
