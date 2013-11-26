@@ -245,7 +245,7 @@ div.olLayerDiv {
 .olControlScaleLine {
 	position: absolute;
 	left: 3px;
-	bottom: 70px;
+	bottom: 70px !important;
 	font-size: xx-small;
 }
 
@@ -271,7 +271,7 @@ div.olLayerDiv {
 }
 
 div.olControlMousePosition {
-	bottom: 50px;
+	bottom: 50px !important;
 	left: 3px;
 	display: block;
 	position: absolute;
