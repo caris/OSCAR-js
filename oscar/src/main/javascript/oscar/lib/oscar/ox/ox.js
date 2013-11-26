@@ -342,27 +342,26 @@ oscar.ox.Layer = oscar.BaseClass( {
 		switch (this.layerType) {
 		case "GOOGLE_PHYSICAL":
 			olLayer = new OpenLayers.Layer.Google("Google Physical", {
-				type :G_PHYSICAL_MAP,
+				type :google.maps.MapTypeId.TERRAIN,
 				sphericalMercator :true
 			});
 
 			break;
 		case "GOOGLE_STREETS":
 			olLayer = new OpenLayers.Layer.Google("Google Streets", {
-				type :G_NORMAL_MAP,
 				sphericalMercator :true
 			});
 			break;
 
 		case "GOOGLE_HYBRID":
 			olLayer = new OpenLayers.Layer.Google("Google Hybrid", {
-				type :G_HYBRID_MAP,
+				type :google.maps.MapTypeId.HYBRID,
 				sphericalMercator :true
 			});
 			break;
 		case "GOOGLE_SATELLITE":
 			olLayer = new OpenLayers.Layer.Google("Google Satellite", {
-				type :G_SATELLITE_MAP,
+				type :google.maps.MapTypeId.SATELLITE,
 				sphericalMercator :true
 			});
 			break;
