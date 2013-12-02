@@ -284,6 +284,16 @@ OpenLayers.Format.CSWGetRecords.v2_0_2.prototype.readers["dsc"] = {
 	this.readChildNodes(node,record);
 	obj.records.push(record);
 },
+"DiscoverySummaryRecord":function(node,obj) {
+	var record = {type:"DiscoverySummaryRecord"};
+	this.readChildNodes(node,record);
+	obj.records.push(record);
+},
+"DiscoveryRecord":function(node,obj) {
+	var record = {type:"DiscoveryRecord"};
+	this.readChildNodes(node,record);
+	obj.records.push(record);
+},
 "Link":function(node,obj) {
 	if(!obj.links) {
 		obj.links=[];
