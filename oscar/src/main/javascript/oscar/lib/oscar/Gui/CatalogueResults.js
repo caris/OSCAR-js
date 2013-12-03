@@ -271,7 +271,6 @@ oscar.Gui.CatalogueResults = new oscar.BaseClass(oscar.Gui,{
 		for(var i=0;i<record.links.length;i++) {
 			var link = record.links[i];
 			var plugin = oscar.getPluginManager().getPluginFor(link.protocol);
-			console.log(plugin);
 			if(plugin) {
 				var icon = plugin.getIcon() || "ui-icon-disk";
 				plugin.setOptions({link:link,map:this.map,record:record});
