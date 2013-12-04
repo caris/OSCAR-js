@@ -143,12 +143,10 @@ oscar.Gui.CatalogueResults = new oscar.BaseClass(oscar.Gui,{
 				
 				var projection = new OpenLayers.Projection(crs.code);
 				var bbox = record.bounds.toArray(oscar.Util.isGeographicCRS(projection))
-				/**
+
 				if(oscar.Util.isGeographicCRS(projection)) {
-					console.log('flip me');
 					record.bounds = OpenLayers.Bounds.fromArray(bbox);
 				}
-				**/
 
 				projection = new OpenLayers.Projection("EPSG:4326");
 
