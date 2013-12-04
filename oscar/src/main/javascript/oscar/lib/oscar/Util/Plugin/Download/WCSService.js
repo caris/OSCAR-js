@@ -136,4 +136,6 @@ oscar.Util.Plugin.Download.WCSService = new oscar.BaseClass(
 			CLASS_NAME : "oscar.Util.Plugin.Download.WCSService"
 		});
 
-oscar.getPluginManager().register(new oscar.Util.Plugin.Download.WCSService());
+oscar.getPluginManager().register(oscar.Util.Plugin.Download.WCSService.prototype.pluginType,
+	oscar.Util.Plugin.Download.WCSService
+);

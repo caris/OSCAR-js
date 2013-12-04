@@ -35,10 +35,14 @@ oscar.Util.PluginManager = new oscar.BaseClass({
 	 * 
 	 * This is the method to register a plugin
 	 * 
-	 * Parameter: plugin - The plugin to register
+	 * Parameter: 
+	 *	type - The type of plugin.
+	 *  pluginClass: The class of the plugin.
+	 * Ex: .register(oscar.Util.Plugin.Download.WCSService.prototype.pluginType,
+	 *               oscar.Util.Plugin.Download.WCSService);
 	 */
-	register : function(plugin) {
-		this.registeredPlugins[plugin.getPluginType()] = plugin;
+	register : function(type,pluginClass) {
+		this.registeredPlugins[type] = pluginClass;
 	},
 	/**
 	 * APIMethod: getPluginFor
@@ -54,7 +58,7 @@ oscar.Util.PluginManager = new oscar.BaseClass({
 		if (!plugin) {
 			return new oscar.Util.Plugin();
 		}
-		return plugin;
+		return new plugin();
 	},
 	CLASS_NAME : "oscar.Util.PluginManager"
 });
