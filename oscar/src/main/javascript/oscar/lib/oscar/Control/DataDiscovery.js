@@ -236,10 +236,16 @@ oscar.Control.DataDiscovery = oscar.BaseClass(oscar.Control.DragPanel, {
 		this.layer.removeAllFeatures();
 		this.resultsPanel.empty();
         var scope=this;
+		var resultsCoverage=null;
 		for(var r=0;r<coverages.length;r++) {
             var record = coverages[r];
 			if(record.bounds) {
-				record.feature = this.drawCoverage(record.bounds);
+				if(resultsCoverage) {
+					resultsCoverage.extend(record.bounds.clone());
+				} else {
+					resultsCoverage=record.bounds.clone()
+				}
+				record.feature = this.drawCoverage(record.bounds.clone());
 			}
 			
             var $recDiv = $$("<div></div>");
@@ -260,6 +266,9 @@ oscar.Control.DataDiscovery = oscar.BaseClass(oscar.Control.DragPanel, {
             });
             this.resultsPanel.append($recDiv);
         }
+		if(resultsCoverage) {
+			this.map.zoomToExtent(oscar.Util.transform(resultsCoverage,new OpenLayers.Projection("EPSG:4326"),this.map.getProjectionObject()));
+		}
 	},
 	
 	drawCoverage:function(bounds) {
