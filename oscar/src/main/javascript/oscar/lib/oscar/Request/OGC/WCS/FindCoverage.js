@@ -19,7 +19,7 @@
 /**
  * Class: FindCoverage
  * 
- * This class handler FindCoverage requests.
+ * This class handles FindCoverage requests.
  */
 oscar.Request.OGC.WCS.FindCoverage=new oscar.BaseClass(oscar.Request.OGC.WCS,{
 	version:"1.1.0",

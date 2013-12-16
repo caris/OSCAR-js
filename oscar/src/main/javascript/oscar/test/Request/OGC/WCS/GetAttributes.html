@@ -1,0 +1,45 @@
+<html>
+<head>
+<script src="../../../../Loader.js"></script>
+<script type="text/javascript">
+/**
+*
+* Going to test the transformation
+*
+**/
+function test_getAttributes(t) {
+	t.plan(1);
+	var request = new oscar.Request.OGC.WCS.GetAttributes("../../../files/GetAttributes.xml");
+	request.events.on({
+		"success":function($html) {
+			var $div = $$("<div></div>");
+			$div.append($html);
+			var rows = $div.find(".getAttributes-data");
+			t.eq(rows.length,11);
+		}
+	});
+	request.get();
+	
+	t.wait_result(2);
+}
+
+
+function test_getAttributesException(t) {
+	t.plan(1);
+	var request = new oscar.Request.OGC.WCS.GetAttributes("../../../files/GetAttributes-none.xml");
+	request.events.on({
+		"success":function($html) {
+			var $div = $$("<div></div>");
+			$div.append($html);
+			var error = $div.find(".iamerror");
+			t.eq(error.length,1);
+		}
+	});
+	request.get();
+	t.wait_result(2);
+}
+
+</script>
+<body>
+</body>
+</html>

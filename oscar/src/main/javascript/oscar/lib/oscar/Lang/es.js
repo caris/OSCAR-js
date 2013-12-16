@@ -352,6 +352,7 @@ OpenLayers.Util.applyDefaults(oscar.Lang.getDictionary("es"), {
 	
 	"MoveAllToTheRight":"Mover todo hacia la derecha.",
 	
-	"showThemeSwitcher":"Mostrar selector de Temas"
-		
+	"showThemeSwitcher":"Mostrar selector de Temas",
+	
+	"attributes":"Ver Atributos"
 });

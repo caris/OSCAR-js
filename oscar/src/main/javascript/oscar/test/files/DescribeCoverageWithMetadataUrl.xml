@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CoverageDescriptions
+    xsi:schemaLocation="http://www.opengis.net/wcs/1.1 http://tastlews.caris.priv:8080/spatialfusionserver/schemas/wcs/1.1/wcsDescribeCoverage.xsd"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns="http://www.opengis.net/wcs/1.1"
+    xmlns:ows="http://www.opengis.net/ows/1.1"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <CoverageDescription>
+        <ows:Title>EMP_PPH_Processed_RTK_RB_datum_22mar2012_xyz_0,5m</ows:Title>
+        <Identifier>pomc_40c.02000001</Identifier>
+        <ows:Metadata xlink:href="http://tastlews.caris.priv:8080/spatialfusionserver/services/ows/wcs/test?request=GetAttributes&amp;service=WCS&amp;version=1.1.0&amp;identifier=pomc_40c.02000001"/>
+        <Domain>
+            <SpatialDomain>
+                <ows:WGS84BoundingBox>
+                    <ows:LowerCorner>144.6152300609997 -38.31163483938883</ows:LowerCorner>
+                    <ows:UpperCorner>144.63978045925256 -38.2897705040013</ows:UpperCorner>
+                </ows:WGS84BoundingBox>
+                <ows:BoundingBox crs="urn:ogc:def:crs:EPSG::28355">
+                    <ows:LowerCorner>291497.2499997135 5756970.250000721</ows:LowerCorner>
+                    <ows:UpperCorner>293584.74999973376 5759344.750000731</ows:UpperCorner>
+                </ows:BoundingBox>
+                <ows:BoundingBox crs="urn:ogc:def:crs:OGC::imageCRS">
+                    <ows:LowerCorner>0.0 0.0</ows:LowerCorner>
+                    <ows:UpperCorner>4176.0 4750.0</ows:UpperCorner>
+                </ows:BoundingBox>
+                <GridCRS>
+                    <GridBaseCRS>urn:ogc:def:crs:EPSG::28355</GridBaseCRS>
+                    <GridType>urn:ogc:def:method:WCS:1.1:2dSimpleGrid</GridType>
+                    <GridOrigin>291497.24999971443 5759344.750000731</GridOrigin>
+                    <GridOffsets>0.5 -0.5</GridOffsets>
+                </GridCRS>
+            </SpatialDomain>
+        </Domain>
+        <Range>
+            <Field>
+                <Identifier>Depth</Identifier>
+                <Definition>
+                    <ows:AnyValue/>
+                </Definition>
+                <InterpolationMethods>
+                    <InterpolationMethod>nearest</InterpolationMethod>
+                    <InterpolationMethod>linear</InterpolationMethod>
+                    <InterpolationMethod>cubic</InterpolationMethod>
+                    <Default>nearest</Default>
+                </InterpolationMethods>
+            </Field>
+            <Field>
+                <Identifier>Deep</Identifier>
+                <Definition>
+                    <ows:AnyValue/>
+                </Definition>
+                <InterpolationMethods>
+                    <InterpolationMethod>nearest</InterpolationMethod>
+                    <InterpolationMethod>linear</InterpolationMethod>
+                    <InterpolationMethod>cubic</InterpolationMethod>
+                    <Default>nearest</Default>
+                </InterpolationMethods>
+            </Field>
+            <Field>
+                <Identifier>Density</Identifier>
+                <Definition>
+                    <ows:AnyValue/>
+                </Definition>
+                <InterpolationMethods>
+                    <InterpolationMethod>nearest</InterpolationMethod>
+                    <InterpolationMethod>linear</InterpolationMethod>
+                    <InterpolationMethod>cubic</InterpolationMethod>
+                    <Default>nearest</Default>
+                </InterpolationMethods>
+            </Field>
+            <Field>
+                <Identifier>Mean</Identifier>
+                <Definition>
+                    <ows:AnyValue/>
+                </Definition>
+                <InterpolationMethods>
+                    <InterpolationMethod>nearest</InterpolationMethod>
+                    <InterpolationMethod>linear</InterpolationMethod>
+                    <InterpolationMethod>cubic</InterpolationMethod>
+                    <Default>nearest</Default>
+                </InterpolationMethods>
+            </Field>
+            <Field>
+                <Identifier>Shoal</Identifier>
+                <Definition>
+                    <ows:AnyValue/>
+                </Definition>
+                <InterpolationMethods>
+                    <InterpolationMethod>nearest</InterpolationMethod>
+                    <InterpolationMethod>linear</InterpolationMethod>
+                    <InterpolationMethod>cubic</InterpolationMethod>
+                    <Default>nearest</Default>
+                </InterpolationMethods>
+            </Field>
+            <Field>
+                <Identifier>Std_Dev</Identifier>
+                <Definition>
+                    <ows:AnyValue/>
+                </Definition>
+                <InterpolationMethods>
+                    <InterpolationMethod>nearest</InterpolationMethod>
+                    <InterpolationMethod>linear</InterpolationMethod>
+                    <InterpolationMethod>cubic</InterpolationMethod>
+                    <Default>nearest</Default>
+                </InterpolationMethods>
+            </Field>
+        </Range>
+        <SupportedCRS>urn:ogc:def:crs:EPSG::28355</SupportedCRS>
+        <SupportedCRS>urn:ogc:def:crs:EPSG::4326</SupportedCRS>
+        <SupportedCRS>urn:ogc:def:crs:EPSG::900913</SupportedCRS>
+        <SupportedCRS>urn:ogc:def:crs:EPSG::3857</SupportedCRS>
+        <SupportedFormat>image/tiff; subtype=geotiff</SupportedFormat>
+        <SupportedFormat>application/x-bag</SupportedFormat>
+        <SupportedFormat>image/png</SupportedFormat>
+        <SupportedFormat>image/jpeg</SupportedFormat>
+        <SupportedFormat>text/csv</SupportedFormat>
+    </CoverageDescription>
+</CoverageDescriptions>

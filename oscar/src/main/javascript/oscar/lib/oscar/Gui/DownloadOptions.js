@@ -112,6 +112,11 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 	
 	buildDownloadOptions:function() {
 		
+		if(this.attrDlg) {
+			this.attrDlg.dialog("destroy");
+			this.attrDlg = null;
+		}
+		
 		var scope = this;
 		this.defaultOptions = {};
 		
@@ -178,7 +183,80 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 		this.getOptions_WCS(userConfigPanel);
 		
 	},
+		
+	linkToAttributes:function(url) {
+		var scope = this;
+		var $div=$$("#userConfigPanel");
+		var linkDiv = $$("<div></div>");
+		var linkButton = $$("<button></button>").html(oscar.i18n("attributes"));
+		linkButton.addClass("heading");
+		linkDiv.append(linkButton);
+		linkButton.click(function() {
+			scope.getAttributeList(url);
+		});
+		$div.append(linkDiv);
+	},
 	
+	getAttributeList:function(url) {
+		var request = new oscar.Request.OGC.WCS.GetAttributes(url);
+
+		request.events.on({
+			"success":function($html) {
+				
+				var $div = $$("<div></div>");
+				var $tblDiv = $$("<div></div>").html($html);
+				$tblDiv.css({
+					width:"100%",
+					height:"100px",
+					"overflow-y":"auto"
+				});
+				
+				
+				var x = $tblDiv.find("td").each(function() {
+					var $this = $$(this);
+					var content = $this.html();
+					$this.attr("title",content);
+					$this.html(content.substring(0,25));
+				});
+				$div.append($tblDiv);
+				if($tblDiv.find(".iamerror").length == 0) {
+					var $download = $$("<div></div")
+					var $save = $$("<button></button").html(oscar.i18n("saveButtonLabel"));
+					$download.css({
+						"margin-top":"10px",
+						"text-align":"left",
+						"cursor":"pointer"
+					});
+					$save.button({
+						text:false,
+						icons:{
+							primary:"ui-icon-disk"
+						}
+					}).click(function() {
+						var dService = new oscar.Gui.Download();
+						dService.downloadFromService(url);
+					});
+					
+					$download.append($save);
+					
+					$div.append($download);
+				}
+				this.attrDlg = $div.dialog({
+					title:this.coverage.title || this.coverage.identifier,
+					width:"400px",
+					position: {
+						my: "right bottom",
+						at: "right bottom",
+						of: $$(document)
+					}
+				})
+			},
+			scope:this
+		});
+		request.get();
+	},
+
+
 	/**
 	 * Method: makeFormatList
 	 * 
@@ -526,6 +604,7 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 		$loading.fadeOut();
 		
 		var coverageDescription = obj.coverageDescription;
+		var metadataUrl = coverageDescription.metadataUrl;
 		
 		var fields = null;
 		this.gridBaseCRS = coverageDescription.domain.spatialDomain.gridCRS.gridBaseCRS;
@@ -553,14 +632,12 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 		var fields = coverageDescription.range.fields;
 		supportedCRSs = coverageDescription.supportedCRS;
 		supportedFormats = coverageDescription.supportedFormats;
-		try {
+
+		this.linkToAttributes(metadataUrl);
 		this.makeFormatList(supportedFormats);
 		this.makeCRSList(supportedCRSs);
 		this.makeFieldList(fields);
 		this.makeResolutionFields();
-		} catch (err) {
-			console.log(err);
-		}
 	},
 	/**
 	 * Method: setFeature

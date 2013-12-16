@@ -235,6 +235,7 @@
 								<include>**/Request/OGC/WCS/WCS.js</include>
 								<include>**/Request/OGC/WCS/DescribeCoverage.js</include>
 								<include>**/Request/OGC/WCS/FindCoverage.js</include>
+								<include>**/Request/OGC/WCS/GetAttributes.js</include>
 								<include>**/Util/ConfigManager.js</include>
 								<include>**/Util/ConfirmBox.js</include>
 								<include>**/Util/AlertBox.js</include>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Attributes>
+    <Attribute name="OBJNAM"><![CDATA[EMP_PPH_Processed_RTK_RB_datum_22mar2012_xyz_0,5m]]></Attribute>
+    <Attribute name="SUREND"><![CDATA[20120322]]></Attribute>
+    <Attribute name="cretim"><![CDATA[20120606 125512.770]]></Attribute>
+    <Attribute name="hcosys"><![CDATA[PROJCS["EPSG:28355",
+    GEOGCS["unnamed",
+        DATUM["GR80",
+            SPHEROID["GR80",6378137,298.2572201434276],
+            TOWGS84[0,0,0,0,0,0,0]],
+        PRIMEM["Greenwich",0],
+        UNIT["degree",0.0174532925199433],
+        EXTENSION["Scaler","0,0,0,0.01,0.01,0.0001"],
+        EXTENSION["Source","CARIS"]],
+    PROJECTION["Transverse_Mercator"],
+    PARAMETER["latitude_of_origin",0],
+    PARAMETER["central_meridian",147],
+    PARAMETER["scale_factor",0.9996],
+    PARAMETER["false_easting",500000],
+    PARAMETER["false_northing",10000000],
+    UNIT["Meter",1]]]]></Attribute>
+    <Attribute name="idprnt"><![CDATA[7000000]]></Attribute>
+    <Attribute name="modtim"><![CDATA[20120828 114727.150]]></Attribute>
+    <Attribute name="srcfil"><![CDATA[emp_pph_processed_rtk_rb_datum_22mar2012_xyz_0,5m.csar]]></Attribute>
+    <Attribute name="srfcat"><![CDATA[Standard]]></Attribute>
+    <Attribute name="srfres"><![CDATA[0.5]]></Attribute>
+    <Attribute name="srftyp"><![CDATA[CSAR Grid (.csar)]]></Attribute>
+    <Attribute name="uidcre"><![CDATA[08000001 (dba)]]></Attribute>
+</Attributes>

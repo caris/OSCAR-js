@@ -1,0 +1,45 @@
+<html>
+<head>
+<script src="../../../../Loader.js"></script>
+<script type="text/javascript">
+/**
+*
+* Going to test the transformation
+*
+**/
+function test_DescribeCoverageRequest(t) {
+	var expected = {
+		title:"EMP_PPH_Processed_RTK_RB_datum_22mar2012_xyz_0,5m",
+		identifier:"pomc_40c.02000001",
+		metadataUrl:"http://tastlews.caris.priv:8080/spatialfusionserver/services/ows/wcs/test?request=GetAttributes&service=WCS&version=1.1.0&identifier=pomc_40c.02000001"
+	};
+	t.plan(3);
+	var request = new oscar.Request.OGC.WCS.DescribeCoverage("../../../files/DescribeCoverageWithMetadataUrl.xml");
+	request.events.on({
+		"success":function(coverage) {
+			var desc = coverage.coverageDescription;
+			t.eq(desc.title,
+				expected.title,
+				"Verifying title"
+			);
+			t.eq(desc.identifier,
+				expected.identifier,
+				"Verifying identifier"
+			);
+			t.eq(desc.metadataUrl,
+				expected.metadataUrl,
+				"Verifying metadata url"
+			);
+			
+		}
+	});
+	
+	request.get();
+	
+	t.wait_result(2);
+}
+
+</script>
+<body>
+</body>
+</html>

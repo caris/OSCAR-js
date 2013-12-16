@@ -85,6 +85,18 @@ oscar.Format.WCSDescribeCoverage.v1_1_0 = oscar.BaseClass(
 			read_cap_Identifier : function(obj, node) {
 				obj.identifier = this.getChildValue(node);
 			},
+			
+			/**
+			* Method: read_cap_Metadata
+			*
+			* Reads the Metadata node.
+			*
+			*/
+			read_cap_Metadata:function(obj,node) {
+				var href = this.getAttributeNS(node, "http://www.w3.org/1999/xlink",
+				"href");
+				obj.metadataUrl = href;
+			},
 			/**
 			 * Method:read_cap_Domain
 			 * 
