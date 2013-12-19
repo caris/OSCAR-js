@@ -37,12 +37,16 @@ oscar.Request=new oscar.BaseClass({
 				includeXY :false
 		});
 	},
-	_success:function(resp) {
-		$$("*").removeClass("olCursorWait");
+		_success:function(resp) {
+		try {
+			$$("*").removeClass("olCursorWait");
+		} catch (err) {console.log(err.message);}
 		this.success(resp);
 	},
 	_failure:function(resp) {
-		$$("*").removeClass("olCursorWait");
+		try {
+			$$("*").removeClass("olCursorWait");
+		} catch (err) {console.log(err.message);}
 		this.events.triggerEvent("failure");
 	},
 	get:function() {
@@ -53,7 +57,9 @@ oscar.Request=new oscar.BaseClass({
 			failure:this._failure,
 			scope:this
 		});
-		$$("*").addClass("olCursorWait");
+		try {
+			$$("*").addClass("olCursorWait");
+		} catch (err) {console.log(err.message);}
 		OpenLayers.Request.GET(this.properties);
 		
 	},
