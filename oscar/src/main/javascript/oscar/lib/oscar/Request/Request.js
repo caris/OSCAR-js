@@ -40,13 +40,13 @@ oscar.Request=new oscar.BaseClass({
 		_success:function(resp) {
 		try {
 			$$("*").removeClass("olCursorWait");
-		} catch (err) {console.log(err.message);}
+		} catch (err) {oscar.debug(err.message);}
 		this.success(resp);
 	},
 	_failure:function(resp) {
 		try {
 			$$("*").removeClass("olCursorWait");
-		} catch (err) {console.log(err.message);}
+		} catch (err) {oscar.debug(err.message);}
 		this.events.triggerEvent("failure");
 	},
 	get:function() {
@@ -59,7 +59,7 @@ oscar.Request=new oscar.BaseClass({
 		});
 		try {
 			$$("*").addClass("olCursorWait");
-		} catch (err) {console.log(err.message);}
+		} catch (err) {oscar.debug(err.message);}
 		OpenLayers.Request.GET(this.properties);
 		
 	},
