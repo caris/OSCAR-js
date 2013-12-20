@@ -354,5 +354,7 @@ OpenLayers.Util.applyDefaults(oscar.Lang.getDictionary("fr"), {
 	
 	"showThemeSwitcher":"Afficher s\u00e9lecteur de Th\u00e8mes",
 	
-	"attributes":"Voir Attributs"
+	"attributes":"Voir Attributs",
+	
+	"nocoverages":"Pas de couvertures ont \u00e9t\u00e9 trouv\u00e9es."
 });
