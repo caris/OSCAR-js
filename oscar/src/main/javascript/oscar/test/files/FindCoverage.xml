@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CoverageSummaries version="1.1.0"
+    xmlns="http://www.opengis.net/wcs/1.1" xmlns:ows="http://www.opengis.net/ows/1.1">
+    <CoverageSummary>
+        <ows:Title>19971111_NHXXANIIJMDN_VE_GG</ows:Title>
+        <Identifier>RWS40_c106.02332415</Identifier>
+        <ows:WGS84BoundingBox>
+            <ows:LowerCorner>5.0678953 52.3313803</ows:LowerCorner>
+            <ows:UpperCorner>5.0710024 52.3435521</ows:UpperCorner>
+        </ows:WGS84BoundingBox>
+    </CoverageSummary>
+    <CoverageSummary>
+        <ows:Title>19991122_RDIJWSM_IJMR_GG</ows:Title>
+        <Identifier>RWS40_c106.02351880</Identifier>
+        <ows:WGS84BoundingBox>
+            <ows:LowerCorner>5.0445042 52.3410409</ows:LowerCorner>
+            <ows:UpperCorner>5.1310104 52.3640299</ows:UpperCorner>
+        </ows:WGS84BoundingBox>
+    </CoverageSummary>
+    <CoverageSummary>
+        <ows:Title>19991217_RDIJWSM_GOOIMR_GG</ows:Title>
+        <Identifier>RWS40_c106.02351881</Identifier>
+        <ows:WGS84BoundingBox>
+            <ows:LowerCorner>5.1442009 52.307370999999996</ows:LowerCorner>
+            <ows:UpperCorner>5.2205363 52.3299656</ows:UpperCorner>
+        </ows:WGS84BoundingBox>
+    </CoverageSummary>
+    <CoverageSummary>
+        <ows:Title>19991215_RDIJWSM_GOOIMR_GG</ows:Title>
+        <Identifier>RWS40_c106.02351882</Identifier>
+        <ows:WGS84BoundingBox>
+            <ows:LowerCorner>5.2310937 52.3131876</ows:LowerCorner>
+            <ows:UpperCorner>5.2715322 52.3273891</ows:UpperCorner>
+        </ows:WGS84BoundingBox>
+    </CoverageSummary>
+    <CoverageSummary>
+        <ows:Title>19990419_RDIJWSM_IJMR_GG</ows:Title>
+        <Identifier>RWS40_c106.02351875</Identifier>
+        <ows:WGS84BoundingBox>
+            <ows:LowerCorner>5.1078863 52.3288339</ows:LowerCorner>
+            <ows:UpperCorner>5.1352802 52.3492355</ows:UpperCorner>
+        </ows:WGS84BoundingBox>
+    </CoverageSummary>
+    <CoverageSummary>
+        <ows:Title>19961120_NHXXANIIJMDN_VE_GG</ows:Title>
+        <Identifier>RWS40_c106.02348983</Identifier>
+        <ows:WGS84BoundingBox>
+            <ows:LowerCorner>5.0676164 52.3292899</ows:LowerCorner>
+            <ows:UpperCorner>5.0708568 52.3435047</ows:UpperCorner>
+        </ows:WGS84BoundingBox>
+    </CoverageSummary>
+    <CoverageSummary>
+        <ows:Title>19961125_NHXXANIIJMDN_AMSDRKNL_GG</ows:Title>
+        <Identifier>RWS40_c106.02348984</Identifier>
+        <ows:WGS84BoundingBox>
+            <ows:LowerCorner>5.0002424 52.3041286</ows:LowerCorner>
+            <ows:UpperCorner>5.0206377 52.3116522</ows:UpperCorner>
+        </ows:WGS84BoundingBox>
+    </CoverageSummary>
+    <CoverageSummary>
+        <ows:Title>19961126_NHXXANIIJMDN_AMSDRKNL_GG</ows:Title>
+        <Identifier>RWS40_c106.02348985</Identifier>
+        <ows:WGS84BoundingBox>
+            <ows:LowerCorner>5.0168226 52.3042872</ows:LowerCorner>
+            <ows:UpperCorner>5.0426548 52.3090231</ows:UpperCorner>
+        </ows:WGS84BoundingBox>
+    </CoverageSummary>
+    <CoverageSummary>
+        <ows:Title>19980121_ONXXANIHGAHM_AMSDRKNL_GG</ows:Title>
+        <Identifier>RWS40_c106.02351825</Identifier>
+        <ows:WGS84BoundingBox>
+            <ows:LowerCorner>5.0202093 52.2780558</ows:LowerCorner>
+            <ows:UpperCorner>5.0225721 52.2783473</ows:UpperCorner>
+        </ows:WGS84BoundingBox>
+    </CoverageSummary>
+    <CoverageSummary>
+        <ows:Title>19980121_ONXXANIHGAHM_AMSDRKNL_GG</ows:Title>
+        <Identifier>RWS40_c106.02351826</Identifier>
+        <ows:WGS84BoundingBox>
+            <ows:LowerCorner>5.0203595 52.2783143</ows:LowerCorner>
+            <ows:UpperCorner>5.0225613 52.2785754</ows:UpperCorner>
+        </ows:WGS84BoundingBox>
+    </CoverageSummary>
+    <CoverageSummary>
+        <ows:Title>19980121_ONXXANIHGAHM_AMSDRKNL_GG</ows:Title>
+        <Identifier>RWS40_c106.02351827</Identifier>
+        <ows:WGS84BoundingBox>
+            <ows:LowerCorner>5.0203409 52.2785261</ows:LowerCorner>
+            <ows:UpperCorner>5.0225089999999994 52.2787749</ows:UpperCorner>
+        </ows:WGS84BoundingBox>
+    </CoverageSummary>
+    <CoverageSummary>
+        <ows:Title>19980121_ONXXANIHGAHM_AMSDRKNL_GG</ows:Title>
+        <Identifier>RWS40_c106.02351828</Identifier>
+        <ows:WGS84BoundingBox>
+            <ows:LowerCorner>5.0204341 52.2787648</ows:LowerCorner>
+            <ows:UpperCorner>5.0225284 52.2790034</ows:UpperCorner>
+        </ows:WGS84BoundingBox>
+    </CoverageSummary>
+    <CoverageSummary>
+        <ows:Title>19980121_ONXXANIHGAHM_AMSDRKNL_GG</ows:Title>
+        <Identifier>RWS40_c106.02351829</Identifier>
+        <ows:WGS84BoundingBox>
+            <ows:LowerCorner>5.0204629 52.2789975</ows:LowerCorner>
+            <ows:UpperCorner>5.0224976 52.2792165</ows:UpperCorner>
+        </ows:WGS84BoundingBox>
+    </CoverageSummary>
+    <CoverageSummary>
+        <ows:Title>19980121_ONXXANIHGAHM_AMSDRKNL_GG</ows:Title>
+        <Identifier>RWS40_c106.02351830</Identifier>
+        <ows:WGS84BoundingBox>
+            <ows:LowerCorner>5.0205602 52.2792295</ows:LowerCorner>
+            <ows:UpperCorner>5.0225052 52.2794507</ows:UpperCorner>
+        </ows:WGS84BoundingBox>
+    </CoverageSummary>
+    <CoverageSummary>
+        <ows:Title>19980121_ONXXANIHGAHM_AMSDRKNL_GG</ows:Title>
+        <Identifier>RWS40_c106.02351831</Identifier>
+        <ows:WGS84BoundingBox>
+            <ows:LowerCorner>5.0205645 52.2794649</ows:LowerCorner>
+            <ows:UpperCorner>5.0224922 52.2796637</ows:UpperCorner>
+        </ows:WGS84BoundingBox>
+    </CoverageSummary>
+    <CoverageSummary>
+        <ows:Title>19980121_ONXXANIHGAHM_AMSDRKNL_GG</ows:Title>
+        <Identifier>RWS40_c106.02351832</Identifier>
+        <ows:WGS84BoundingBox>
+            <ows:LowerCorner>5.020683 52.2796888</ows:LowerCorner>
+            <ows:UpperCorner>5.0225009 52.2798741</ows:UpperCorner>
+        </ows:WGS84BoundingBox>
+    </CoverageSummary>
+    <CoverageSummary>
+        <ows:Title>19980121_ONXXANIHGAHM_AMSDRKNL_GG</ows:Title>
+        <Identifier>RWS40_c106.02351833</Identifier>
+        <ows:WGS84BoundingBox>
+            <ows:LowerCorner>5.0206918 52.2799203</ows:LowerCorner>
+            <ows:UpperCorner>5.0224814 52.2801024</ows:UpperCorner>
+        </ows:WGS84BoundingBox>
+    </CoverageSummary>
+    <CoverageSummary>
+        <ows:Title>19980121_ONXXANIHGAHM_AMSDRKNL_GG</ows:Title>
+        <Identifier>RWS40_c106.02351834</Identifier>
+        <ows:WGS84BoundingBox>
+            <ows:LowerCorner>5.0207895 52.2801566</ows:LowerCorner>
+            <ows:UpperCorner>5.0224721 52.2803145</ows:UpperCorner>
+        </ows:WGS84BoundingBox>
+    </CoverageSummary>
+    <CoverageSummary>
+        <ows:Title>19980121_ONXXANIHGAHM_AMSDRKNL_GG</ows:Title>
+        <Identifier>RWS40_c106.02351835</Identifier>
+        <ows:WGS84BoundingBox>
+            <ows:LowerCorner>5.0208366 52.2803694</ows:LowerCorner>
+            <ows:UpperCorner>5.0224614 52.2805425</ows:UpperCorner>
+        </ows:WGS84BoundingBox>
+    </CoverageSummary>
+    <CoverageSummary>
+        <ows:Title>19980121_ONXXANIHGAHM_AMSDRKNL_GG</ows:Title>
+        <Identifier>RWS40_c106.02351836</Identifier>
+        <ows:WGS84BoundingBox>
+            <ows:LowerCorner>5.020905 52.280622</ows:LowerCorner>
+            <ows:UpperCorner>5.0224878 52.2807778</ows:UpperCorner>
+        </ows:WGS84BoundingBox>
+    </CoverageSummary>
+    <CoverageSummary>
+        <ows:Title>19980121_ONXXANIHGAHM_AMSDRKNL_GG</ows:Title>
+        <Identifier>RWS40_c106.02351837</Identifier>
+        <ows:WGS84BoundingBox>
+            <ows:LowerCorner>5.0209156 52.2808429</ows:LowerCorner>
+            <ows:UpperCorner>5.022443 52.280978999999995</ows:UpperCorner>
+        </ows:WGS84BoundingBox>
+    </CoverageSummary>
+    <CoverageSummary>
+        <ows:Title>19980121_ONXXANIHGAHM_AMSDRKNL_GG</ows:Title>
+        <Identifier>RWS40_c106.02351838</Identifier>
+        <ows:WGS84BoundingBox>
+            <ows:LowerCorner>5.0209839 52.281076999999996</ows:LowerCorner>
+            <ows:UpperCorner>5.0224878 52.2811982</ows:UpperCorner>
+        </ows:WGS84BoundingBox>
+    </CoverageSummary>
+    <CoverageSummary>
+        <ows:Title>19980121_ONXXANIHGAHM_AMSDRKNL_GG</ows:Title>
+        <Identifier>RWS40_c106.02351839</Identifier>
+        <ows:WGS84BoundingBox>
+            <ows:LowerCorner>5.021001 52.281298</ows:LowerCorner>
+            <ows:UpperCorner>5.0224756 52.2814151</ows:UpperCorner>
+        </ows:WGS84BoundingBox>
+    </CoverageSummary>
+    <CoverageSummary>
+        <ows:Title>19980121_ONXXANIHGAHM_AMSDRKNL_GG</ows:Title>
+        <Identifier>RWS40_c106.02351840</Identifier>
+        <ows:WGS84BoundingBox>
+            <ows:LowerCorner>5.0211034 52.2815373</ows:LowerCorner>
+            <ows:UpperCorner>5.0224834 52.2816167</ows:UpperCorner>
+        </ows:WGS84BoundingBox>
+    </CoverageSummary>
+    <CoverageSummary>
+        <ows:Title>19980121_ONXXANIHGAHM_AMSDRKNL_GG</ows:Title>
+        <Identifier>RWS40_c106.02351841</Identifier>
+        <ows:WGS84BoundingBox>
+            <ows:LowerCorner>5.021091 52.2817595</ows:LowerCorner>
+            <ows:UpperCorner>5.0224621 52.2818562</ows:UpperCorner>
+        </ows:WGS84BoundingBox>
+    </CoverageSummary>
+    <CoverageSummary>
+        <ows:Title>19980121_ONXXANIHGAHM_AMSDRKNL_GG</ows:Title>
+        <Identifier>RWS40_c106.02351842</Identifier>
+        <ows:WGS84BoundingBox>
+            <ows:LowerCorner>5.0211424 52.2819954</ows:LowerCorner>
+            <ows:UpperCorner>5.0224741999999996 52.2820606</ows:UpperCorner>
+        </ows:WGS84BoundingBox>
+    </CoverageSummary>
+    <CoverageSummary>
+        <ows:Title>19980121_ONXXANIHGAHM_AMSDRKNL_GG</ows:Title>
+        <Identifier>RWS40_c106.02351843</Identifier>
+        <ows:WGS84BoundingBox>
+            <ows:LowerCorner>5.021088 52.2822096</ows:LowerCorner>
+            <ows:UpperCorner>5.0224376 52.2822925</ows:UpperCorner>
+        </ows:WGS84BoundingBox>
+    </CoverageSummary>
+    <CoverageSummary>
+        <ows:Title>19980121_ONXXANIHGAHM_AMSDRKNL_GG</ows:Title>
+        <Identifier>RWS40_c106.02351844</Identifier>
+        <ows:WGS84BoundingBox>
+            <ows:LowerCorner>5.0211415 52.2824573</ows:LowerCorner>
+            <ows:UpperCorner>5.0224697 52.2825285</ows:UpperCorner>
+        </ows:WGS84BoundingBox>
+    </CoverageSummary>
+    <CoverageSummary>
+        <ows:Title>19980121_ONXXANIHGAHM_AMSDRKNL_GG</ows:Title>
+        <Identifier>RWS40_c106.02351845</Identifier>
+        <ows:WGS84BoundingBox>
+            <ows:LowerCorner>5.0211453 52.2826929</ows:LowerCorner>
+            <ows:UpperCorner>5.0224332 52.282723999999995</ows:UpperCorner>
+        </ows:WGS84BoundingBox>
+    </CoverageSummary>
+    <CoverageSummary>
+        <ows:Title>19980121_ONXXANIHGAHM_AMSDRKNL_GG</ows:Title>
+        <Identifier>RWS40_c106.02351846</Identifier>
+        <ows:WGS84BoundingBox>
+            <ows:LowerCorner>5.0211659 52.2829113</ows:LowerCorner>
+            <ows:UpperCorner>5.0224676 52.2829339</ows:UpperCorner>
+        </ows:WGS84BoundingBox>
+    </CoverageSummary>
+    <CoverageSummary>
+        <ows:Title>19980121_ONXXANIHGAHM_AMSDRKNL_GG</ows:Title>
+        <Identifier>RWS40_c106.02351847</Identifier>
+        <ows:WGS84BoundingBox>
+            <ows:LowerCorner>5.0211189 52.2831445</ows:LowerCorner>
+            <ows:UpperCorner>5.0224228 52.2831668</ows:UpperCorner>
+        </ows:WGS84BoundingBox>
+    </CoverageSummary>
+    <CoverageSummary>
+        <ows:Title>19980121_ONXXANIHGAHM_AMSDRKNL_GG</ows:Title>
+        <Identifier>RWS40_c106.02351848</Identifier>
+        <ows:WGS84BoundingBox>
+            <ows:LowerCorner>5.0211381 52.283359999999995</ows:LowerCorner>
+            <ows:UpperCorner>5.0224588 52.283383</ows:UpperCorner>
+        </ows:WGS84BoundingBox>
+    </CoverageSummary>
+    <CoverageSummary>
+        <ows:Title>19980121_ONXXANIHGAHM_AMSDRKNL_GG</ows:Title>
+        <Identifier>RWS40_c106.02351849</Identifier>
+        <ows:WGS84BoundingBox>
+            <ows:LowerCorner>5.0211147 52.2835927</ows:LowerCorner>
+            <ows:UpperCorner>5.0223899 52.283625</ows:UpperCorner>
+        </ows:WGS84BoundingBox>
+    </CoverageSummary>
+    <CoverageSummary>
+        <ows:Title>19980121_ONXXANIHGAHM_AMSDRKNL_GG</ows:Title>
+        <Identifier>RWS40_c106.02351850</Identifier>
+        <ows:WGS84BoundingBox>
+            <ows:LowerCorner>5.0211619999999995 52.2838112</ows:LowerCorner>
+            <ows:UpperCorner>5.0224496 52.2838377</ows:UpperCorner>
+        </ows:WGS84BoundingBox>
+    </CoverageSummary>
+    <CoverageSummary>
+        <ows:Title>19980121_ONXXANIHGAHM_AMSDRKNL_GG</ows:Title>
+        <Identifier>RWS40_c106.02351851</Identifier>
+        <ows:WGS84BoundingBox>
+            <ows:LowerCorner>5.0211047 52.2840457</ows:LowerCorner>
+            <ows:UpperCorner>5.022405 52.2840645</ows:UpperCorner>
+        </ows:WGS84BoundingBox>
+    </CoverageSummary>
+    <CoverageSummary>
+        <ows:Title>19980121_ONXXANIHGAHM_AMSDRKNL_GG</ows:Title>
+        <Identifier>RWS40_c106.02351852</Identifier>
+        <ows:WGS84BoundingBox>
+            <ows:LowerCorner>5.0211005 52.2842747</ows:LowerCorner>
+            <ows:UpperCorner>5.0224018 52.2842906</ows:UpperCorner>
+        </ows:WGS84BoundingBox>
+    </CoverageSummary>
+    <CoverageSummary>
+        <ows:Title>19980121_ONXXANIHGAHM_AMSDRKNL_GG</ows:Title>
+        <Identifier>RWS40_c106.02351853</Identifier>
+        <ows:WGS84BoundingBox>
+            <ows:LowerCorner>5.0211135 52.2844996</ows:LowerCorner>
+            <ows:UpperCorner>5.0223904 52.2845171</ows:UpperCorner>
+        </ows:WGS84BoundingBox>
+    </CoverageSummary>
+    <CoverageSummary>
+        <ows:Title>19980121_ONXXANIHGAHM_AMSDRKNL_GG</ows:Title>
+        <Identifier>RWS40_c106.02351854</Identifier>
+        <ows:WGS84BoundingBox>
+            <ows:LowerCorner>5.0211031 52.2847164</ows:LowerCorner>
+            <ows:UpperCorner>5.022412999999999 52.2847419</ows:UpperCorner>
+        </ows:WGS84BoundingBox>
+    </CoverageSummary>
+    <CoverageSummary>
+        <ows:Title>19980121_ONXXANIHGAHM_AMSDRKNL_GG</ows:Title>
+        <Identifier>RWS40_c106.02351855</Identifier>
+        <ows:WGS84BoundingBox>
+            <ows:LowerCorner>5.0211203 52.2849358</ows:LowerCorner>
+            <ows:UpperCorner>5.0224308 52.2849581</ows:UpperCorner>
+        </ows:WGS84BoundingBox>
+    </CoverageSummary>
+    <CoverageSummary>
+        <ows:Title>19980121_ONXXANIHGAHM_AMSDRKNL_GG</ows:Title>
+        <Identifier>RWS40_c106.02351856</Identifier>
+        <ows:WGS84BoundingBox>
+            <ows:LowerCorner>5.0211076 52.2851662</ows:LowerCorner>
+            <ows:UpperCorner>5.0223874 52.2851921</ows:UpperCorner>
+        </ows:WGS84BoundingBox>
+    </CoverageSummary>
+    <CoverageSummary>
+        <ows:Title>19980121_ONXXANIHGAHM_AMSDRKNL_GG</ows:Title>
+        <Identifier>RWS40_c106.02351857</Identifier>
+        <ows:WGS84BoundingBox>
+            <ows:LowerCorner>5.0210709 52.2853932</ows:LowerCorner>
+            <ows:UpperCorner>5.0223959 52.2854214</ows:UpperCorner>
+        </ows:WGS84BoundingBox>
+    </CoverageSummary>
+    <CoverageSummary>
+        <ows:Title>19980121_ONXXANIHGAHM_AMSDRKNL_GG</ows:Title>
+        <Identifier>RWS40_c106.02351858</Identifier>
+        <ows:WGS84BoundingBox>
+            <ows:LowerCorner>5.0210837 52.2856142</ows:LowerCorner>
+            <ows:UpperCorner>5.0223777 52.2856453</ows:UpperCorner>
+        </ows:WGS84BoundingBox>
+    </CoverageSummary>
+    <CoverageSummary>
+        <ows:Title>19980121_ONXXANIHGAHM_AMSDRKNL_GG</ows:Title>
+        <Identifier>RWS40_c106.02351859</Identifier>
+        <ows:WGS84BoundingBox>
+            <ows:LowerCorner>5.0211349 52.285833999999994</ows:LowerCorner>
+            <ows:UpperCorner>5.0223962 52.2858572</ows:UpperCorner>
+        </ows:WGS84BoundingBox>
+    </CoverageSummary>
+    <CoverageSummary>
+        <ows:Title>19980121_ONXXANIHGAHM_AMSDRKNL_GG</ows:Title>
+        <Identifier>RWS40_c106.02351860</Identifier>
+        <ows:WGS84BoundingBox>
+            <ows:LowerCorner>5.0210875 52.2860629</ows:LowerCorner>
+            <ows:UpperCorner>5.0222783 52.2860881</ows:UpperCorner>
+        </ows:WGS84BoundingBox>
+    </CoverageSummary>
+    <CoverageSummary>
+        <ows:Title>19980121_ONXXANIHGAHM_AMSDRKNL_GG</ows:Title>
+        <Identifier>RWS40_c106.02351861</Identifier>
+        <ows:WGS84BoundingBox>
+            <ows:LowerCorner>5.0211348 52.2862766</ows:LowerCorner>
+            <ows:UpperCorner>5.0222883 52.2863075</ows:UpperCorner>
+        </ows:WGS84BoundingBox>
+    </CoverageSummary>
+    <CoverageSummary>
+        <ows:Title>19980121_ONXXANIHGAHM_AMSDRKNL_GG</ows:Title>
+        <Identifier>RWS40_c106.02351862</Identifier>
+        <ows:WGS84BoundingBox>
+            <ows:LowerCorner>5.0210636 52.2865189</ows:LowerCorner>
+            <ows:UpperCorner>5.0223809 52.2865395</ows:UpperCorner>
+        </ows:WGS84BoundingBox>
+    </CoverageSummary>
+    <CoverageSummary>
+        <ows:Title>19980121_ONXXANIHGAHM_AMSDRKNL_GG</ows:Title>
+        <Identifier>RWS40_c106.02351863</Identifier>
+        <ows:WGS84BoundingBox>
+            <ows:LowerCorner>5.0211427 52.2867308</ows:LowerCorner>
+            <ows:UpperCorner>5.0223895 52.286763</ows:UpperCorner>
+        </ows:WGS84BoundingBox>
+    </CoverageSummary>
+    <CoverageSummary>
+        <ows:Title>19980121_ONXXANIHGAHM_AMSDRKNL_GG</ows:Title>
+        <Identifier>RWS40_c106.02351864</Identifier>
+        <ows:WGS84BoundingBox>
+            <ows:LowerCorner>5.021069 52.2869616</ows:LowerCorner>
+            <ows:UpperCorner>5.0223531 52.2869903</ows:UpperCorner>
+        </ows:WGS84BoundingBox>
+    </CoverageSummary>
+    <CoverageSummary>
+        <ows:Title>19980121_ONXXANIHGAHM_AMSDRKNL_GG</ows:Title>
+        <Identifier>RWS40_c106.02351865</Identifier>
+        <ows:WGS84BoundingBox>
+            <ows:LowerCorner>5.0210664 52.2871782</ows:LowerCorner>
+            <ows:UpperCorner>5.0223458 52.2872147</ows:UpperCorner>
+        </ows:WGS84BoundingBox>
+    </CoverageSummary>
+    <CoverageSummary>
+        <ows:Title>20010308_NHXXANIIJMDN_VE_GG</ows:Title>
+        <Identifier>RWS40_c106.02355347</Identifier>
+        <ows:WGS84BoundingBox>
+            <ows:LowerCorner>5.0670898 52.3301032</ows:LowerCorner>
+            <ows:UpperCorner>5.0710323 52.3439339</ows:UpperCorner>
+        </ows:WGS84BoundingBox>
+    </CoverageSummary>
+</CoverageSummaries>

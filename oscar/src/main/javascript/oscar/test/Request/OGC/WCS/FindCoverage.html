@@ -1,0 +1,69 @@
+<html>
+<head>
+<script src="../../../../Loader.js"></script>
+<script type="text/javascript">
+	/**
+	* Test the coverages request result.
+	*/
+	function test_FindCoverageRequest(t) {
+		t.plan(3);
+		var request = new oscar.Request.OGC.WCS.FindCoverage(
+				"../../../files/FindCoverage.xml");
+		request.events.on({
+			"success" : function(coverages) {
+				console.log(coverages);
+			}
+		});
+		request.get();
+
+		t.wait_result(2);
+	}
+
+	/**
+	* Test to see of the no coverages found message is displayed when there are no coverages found.
+	*/
+
+	function test_FindCoverageRequestNoResults(t) {
+		t.plan(3);
+		var request = new oscar.Request.OGC.WCS.FindCoverage(
+				"../../../files/FindCoverage-noresults.xml");
+		request.events.on({
+			"success" : function(coverages) {
+				console.log(coverages);
+			},
+			"failure" : function(err) {
+				console.log(err);
+			},
+			scope : this
+		});
+		console.log(request.events);
+		request.get();
+
+		t.wait_result(2);
+	}
+
+	/**
+	* Test to see if the exception gets transformed when there are too many results found.
+	*/
+	function test_FindCoverageRequestTooManyResults(t) {
+		t.plan(3);
+		var request = new oscar.Request.OGC.WCS.FindCoverage(
+				"../../../files/FindCoverage-toomanyresults.xml");
+		request.events.on({
+			"success" : function(coverages) {
+				console.log(coverages);
+			},
+			"failure" : function(err) {
+				console.log(err);
+			},
+			scope : this
+		});
+		console.log(request.events);
+		request.get();
+
+		t.wait_result(2);
+	}
+</script>
+<body>
+</body>
+</html>

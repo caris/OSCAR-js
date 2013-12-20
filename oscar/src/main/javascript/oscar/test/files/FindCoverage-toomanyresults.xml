@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ows:ExceptionReport version="1.1.0" xmlns:ows="http://www.opengis.net/ows/1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opengis.net/ows/1.1 http://tastlews.caris.priv:8080/spatialfusionserver/schemas/ows/1.1.0/owsExceptionReport.xsd">
+	<ows:Exception exceptionCode="OWSException">
+		<ows:ExceptionText>Too many coverages found, please refine search criteria.</ows:ExceptionText>
+	</ows:Exception>
+</ows:ExceptionReport>
