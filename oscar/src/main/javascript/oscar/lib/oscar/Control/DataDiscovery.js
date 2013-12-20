@@ -299,6 +299,7 @@ oscar.Control.DataDiscovery = oscar.BaseClass(oscar.Control.DragPanel, {
 			},
 			"failure":function(e) {
 				this.displayResults([]);
+				$$("<div></div>").append(e).dialog({title:oscar.i18n("Error")});
 			},
 			scope:this
 		});

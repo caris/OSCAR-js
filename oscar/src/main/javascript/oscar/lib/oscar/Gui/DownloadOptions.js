@@ -1,93 +1,93 @@
 /*
- * CARIS oscar - Open Spatial Component ARchitecture
- *
- * Copyright 2012 CARIS <http://www.caris.com>
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * 	http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+* CARIS oscar - Open Spatial Component ARchitecture
+*
+* Copyright 2012 CARIS <http://www.caris.com>
+*
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+* 	http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*/
 /**
- * Class: oscar.Gui.DownloadOptions
- *
- * This GUI class is used to display download options for WFS and WCS contents.
- * 
- */
+* Class: oscar.Gui.DownloadOptions
+*
+* This GUI class is used to display download options for WFS and WCS contents.
+* 
+*/
 
 oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 	/**
-	 * APIProperty: db
-	 * The database containing the object references
-	 */
+	* APIProperty: db
+	* The database containing the object references
+	*/
 	db:null,
 	/**
-	 * Property: capabilities
-	 * The current capabilities object
-	 */
+	* Property: capabilities
+	* The current capabilities object
+	*/
 	capabilities:null,
 	/**
-	 * Property: serviceType
-	 * The type of service
-	 */
+	* Property: serviceType
+	* The type of service
+	*/
 	serviceType:null,
 	/**
-	 * Property: feature
-	 * 
-	 */
+	* Property: feature
+	* 
+	*/
 	feature:null,
 	/**
-	 * Property: defaultOptions
-	 */
+	* Property: defaultOptions
+	*/
 	defaultOptions:null,
 	/**
-	 * APIProperty: EVENT_TYPES
-	 */
+	* APIProperty: EVENT_TYPES
+	*/
 	EVENT_TYPES:["serviceReady"],
 	/**
-	 * APIProperty: events
-	 */
+	* APIProperty: events
+	*/
 	events:null,
 	
 	serviceParameters:null,
 	/**
-	 * Constructor: new oscar.Gui.DownloadOptions
-	 */
+	* Constructor: new oscar.Gui.DownloadOptions
+	*/
 	initialize:function(options) {
 		oscar.Gui.prototype.initialize.apply(this,arguments);
 		this.defaultOptions = {};
-        this.events = new OpenLayers.Events(this, null,
+		this.events = new OpenLayers.Events(this, null,
 				this.EVENT_TYPES, false, {
 					includeXY :false
-        });
+		});
 	},
 	/**
-	 * Method: draw
-	 * Creates the interface panel.
-	 */
+	* Method: draw
+	* Creates the interface panel.
+	*/
 	draw:function() {
 		oscar.Gui.prototype.draw.apply(this);
 		oscar.jQuery(this.div).addClass("options");		
-        OpenLayers.Event.observe(this.div, "mousedown", function(e) {
+		OpenLayers.Event.observe(this.div, "mousedown", function(e) {
 			OpenLayers.Event.stop(e, true);
-        });
-        OpenLayers.Event.observe(this.div, "click", function(e) {
+		});
+		OpenLayers.Event.observe(this.div, "click", function(e) {
 			OpenLayers.Event.stop(e, true);
-        });
+		});
 
 		return this.div;
 	},
 	/**
-	 * Method: redraw
-	 * Created the gui elements to be displayed.
-	 */
+	* Method: redraw
+	* Created the gui elements to be displayed.
+	*/
 	redraw:function() {
 		this.div.innerHTML = "";
 		var infoPanel = document.createElement("div");
@@ -101,21 +101,24 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 
 	},
 	/**
-	 * Method: deactivate
-	 * 
-	 */
+	* Method: deactivate
+	* 
+	*/
 	deactivate:function() {
 		if(this.cropTool) {
 			this.cropTool.deactivate();
 		}
-	},
-	
-	buildDownloadOptions:function() {
 		
+		//removes the attributes dialog.
 		if(this.attrDlg) {
 			this.attrDlg.dialog("destroy");
 			this.attrDlg = null;
 		}
+		
+	},
+	
+	buildDownloadOptions:function() {
+		this.deactivate();
 		
 		var scope = this;
 		this.defaultOptions = {};
@@ -143,7 +146,7 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 		
 		OpenLayers.Event.observe(downloadDiv, "click", function(e) {
 			scope.queueDownload();
-        });
+		});
 		
 		OpenLayers.Event.observe(this.cropDiv, "click", function(e) {
 			scope.cropTool = new oscar.Control.Box();
@@ -179,11 +182,22 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 				scope : scope
 			});
 			
-        });
+		});
 		this.getOptions_WCS(userConfigPanel);
 		
 	},
-		
+	
+	
+	/**
+	* Method: linkToAttributes
+	* 
+	* Creates the button to display the attributes of the selected coverage.
+	* 
+	* Parameters:
+	* 
+	*  url - The url for the GetAttributes operation.
+	*
+	*/
 	linkToAttributes:function(url) {
 		var scope = this;
 		var $div=$$("#userConfigPanel");
@@ -197,6 +211,16 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 		$div.append(linkDiv);
 	},
 	
+	
+	/**
+	* Method: getAttributesList
+	* 
+	* Triggers the GetAttriburtes request and displays the results in a dialog.
+	* 
+	* Parameters:
+	* 
+	* url - The url for the GetAttributes operation.
+	*/
 	getAttributeList:function(url) {
 		var request = new oscar.Request.OGC.WCS.GetAttributes(url);
 
@@ -258,10 +282,10 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 
 
 	/**
-	 * Method: makeFormatList
-	 * 
-	 * Creates a combo box list for selecting formats.
-	 */
+	* Method: makeFormatList
+	* 
+	* Creates a combo box list for selecting formats.
+	*/
 	makeFormatList:function(outputFormats) {
 		var $div = $$("#userConfigPanel");
 		var scope = this;
@@ -322,33 +346,33 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 		
 		var button = document.createElement("button");
 		button.innerHTML = oscar.i18n("Format");
-        formatDiv.appendChild(button);
-        oscar.jQuery(button).insertAfter( input ).button({
-        	icons: {
-    		primary: "ui-icon-triangle-1-s"
-	    	},
-	    	text: false        	
-        }).removeClass( "ui-corner-all" ).addClass( "ui-corner-right ui-button-icon" ).click(function() {
-            // close if already visible
-            if ( oscar.jQuery(input).autocomplete( "widget" ).is( ":visible" ) ) {
-            	oscar.jQuery(input).autocomplete( "close" );
-                return;
-            }
-            // pass empty string as value to search for, displaying all results
-            oscar.jQuery(input).autocomplete( "search", "" );
-            oscar.jQuery(input).focus();
-        });
-        input.value = usedFormats[0].label;
-        this.defaultOptions.format = usedFormats[0].value
+		formatDiv.appendChild(button);
+		oscar.jQuery(button).insertAfter( input ).button({
+			icons: {
+			primary: "ui-icon-triangle-1-s"
+			},
+			text: false        	
+		}).removeClass( "ui-corner-all" ).addClass( "ui-corner-right ui-button-icon" ).click(function() {
+			// close if already visible
+			if ( oscar.jQuery(input).autocomplete( "widget" ).is( ":visible" ) ) {
+				oscar.jQuery(input).autocomplete( "close" );
+				return;
+			}
+			// pass empty string as value to search for, displaying all results
+			oscar.jQuery(input).autocomplete( "search", "" );
+			oscar.jQuery(input).focus();
+		});
+		input.value = usedFormats[0].label;
+		this.defaultOptions.format = usedFormats[0].value
 		$div.append(formatDiv);
 		
 	},
 	
 	/**
-	 * Method: makeCRSList
-	 * 
-	 * Creates a combo box list for selecting coordinate reference systems.
-	 */
+	* Method: makeCRSList
+	* 
+	* Creates a combo box list for selecting coordinate reference systems.
+	*/
 	makeCRSList:function(crss) {
 		var $div = $$("#userConfigPanel");
 		var scope = this;
@@ -369,16 +393,16 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 		$input.autocomplete({
 			minLength:0,
 			source:function(request,response) {
-            	var term = request.term;
-            	var match = [];
-            	for (var i in crsReferences) {
-            		if(crsReferences[i].code.toLowerCase().indexOf(term.toLowerCase())!=-1) {
-            	    	match.push(crsReferences[i]);
-            	    }
-            	}
-            	response(match);
-            	return;
-            },
+				var term = request.term;
+				var match = [];
+				for (var i in crsReferences) {
+					if(crsReferences[i].code.toLowerCase().indexOf(term.toLowerCase())!=-1) {
+						match.push(crsReferences[i]);
+					}
+				}
+				response(match);
+				return;
+			},
 			select:function(event,ul) {
 				this.value = ul.item.description;
 				scope.defaultOptions.crs = ul.item.code;
@@ -390,11 +414,11 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 				
 			}
 		}).data("uiAutocomplete")._renderItem=function(ul,item) {
-	        var li = document.createElement("li");
-            return oscar.jQuery(li).data( "ui-autocomplete-item", item )
-            .append( "<a>" + item.code + "<br>" + item.description + "</a>" )
-            .appendTo( ul );
-            
+			var li = document.createElement("li");
+			return oscar.jQuery(li).data( "ui-autocomplete-item", item )
+			.append( "<a>" + item.code + "<br>" + item.description + "</a>" )
+			.appendTo( ul );
+			
 
 		};
 		
@@ -402,24 +426,24 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 		
 		var $button = $$("<button></button>").html(oscar.i18n("srsCodeColumnLabel"));
 		$button.addClass("crsButton");
-        $crsDiv.append($button);
-        $button.insertAfter( $input ).button({
-        	icons: {
-        		primary: "ui-icon-triangle-1-s"
-        	},
-        	text: false
-        }).removeClass( "ui-corner-all" ).addClass( "ui-corner-right ui-button-icon" ).click(function() {
-            // close if already visible
-            if ( oscar.jQuery(input).autocomplete( "widget" ).is( ":visible" ) ) {
-            	oscar.jQuery(input).autocomplete( "close" );
-                return;
-            }
-            // pass empty string as value to search for, displaying all results
-            $input.autocomplete( "search", "" );
-            $input.focus();
-        })
-        $input.val(crsReferences[0].description);
-        this.defaultOptions.crs = crsReferences[0].code
+		$crsDiv.append($button);
+		$button.insertAfter( $input ).button({
+			icons: {
+				primary: "ui-icon-triangle-1-s"
+			},
+			text: false
+		}).removeClass( "ui-corner-all" ).addClass( "ui-corner-right ui-button-icon" ).click(function() {
+			// close if already visible
+			if ( oscar.jQuery(input).autocomplete( "widget" ).is( ":visible" ) ) {
+				oscar.jQuery(input).autocomplete( "close" );
+				return;
+			}
+			// pass empty string as value to search for, displaying all results
+			$input.autocomplete( "search", "" );
+			$input.focus();
+		})
+		$input.val(crsReferences[0].description);
+		this.defaultOptions.crs = crsReferences[0].code
 		$div.append($crsDiv);
 	},
 	/**
@@ -438,19 +462,19 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 		$input.click(function() {
 			var $this = $$(this);
 			var currentFields = scope.defaultOptions.field;
-            var fieldFound = false;
-            for(var i=0;i<currentFields.length;i++) {
-                var selectedField = currentFields[i];
-                if($this.attr("id") == selectedField.attr("id")) {
-                    fieldFound = true;
-                    currentFields.splice(i,1);
-                    break;
-                }
-            }
-            if(!fieldFound) {
-                currentFields.push($this);
-            }
-            scope.defaultOptions.field=currentFields
+			var fieldFound = false;
+			for(var i=0;i<currentFields.length;i++) {
+				var selectedField = currentFields[i];
+				if($this.attr("id") == selectedField.attr("id")) {
+					fieldFound = true;
+					currentFields.splice(i,1);
+					break;
+				}
+			}
+			if(!fieldFound) {
+				currentFields.push($this);
+			}
+			scope.defaultOptions.field=currentFields
 		}); 
 		return $input;
 	},
@@ -485,11 +509,11 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 		return $selection;
 	},
 	/**
-	 * Method: makeFieldList
-	 * 
-	 * Creates a button to display a list to select fields for extraction from 
-	 * a Web Coverage Service.
-	 */
+	* Method: makeFieldList
+	* 
+	* Creates a button to display a list to select fields for extraction from 
+	* a Web Coverage Service.
+	*/
 	makeFieldList:function(fields) {
 		var $div = $$("#userConfigPanel");
 		var scope = this;
@@ -573,12 +597,12 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 		this.$yText.val(Math.abs(offsetY));
 	},	
 	/**
-	 * This function will build the download options for a Web Coverage Service
-	 * Supports:
-	 *  - Format
-	 *  - CRS
-	 *  - Fields 
-	 */
+	* This function will build the download options for a Web Coverage Service
+	* Supports:
+	*  - Format
+	*  - CRS
+	*  - Fields 
+	*/
 	getOptions_WCS:function(div) {
 		var descCoverage = new oscar.Request.OGC.WCS.DescribeCoverage(
 			this.serviceParams.url,
@@ -640,62 +664,62 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 		this.makeResolutionFields();
 	},
 	/**
-	 * Method: setFeature
-	 * 
-	 * Sets the current selected feature.
-	 * 
-	 * Parameters: 
-	 * 
-	 * - OpenLayers.Feature
-	 */
-    setCoverage:function(coverage) {
-    	this.coverage = coverage;
-    	this.redraw();
-    },
-    
-    /**
-     * Method: getCapabilites
-     * 
-     * Uses the curent feature to obtain the reference in the capabilities document.
-     * 
-     */
-    getCapabilities:function() {
-    	this.capabilities = this.db.search("capabilities",this.feature.div.data("fk_capabilities"),function(table,query) {
-    	     return table.records[query];
-    	});
-    	this.serviceType = oscar.Util.Metadata.getServiceType(this.capabilities.capabilities);
-    },
-    
-    /**
-     * Method: queueDownload
-     * 
-     * Adds an item to the download queue panel.
-     */
-    queueDownload:function() {
-    	var serviceType = this.defaultOptions.service;
-    	var downloadService = null;
-    	var params = {
-    			service:"WCS",
-    			version:"1.1.0"
-    	}
-    	
-    	var buildUrl = function(url, params) {
-    		if(!url) {
-    			url = "";
-    		}
-    		var paramString = OpenLayers.Util.getParameterString(params);
-    		paramString = unescape(paramString);
+	* Method: setFeature
+	* 
+	* Sets the current selected feature.
+	* 
+	* Parameters: 
+	* 
+	* - OpenLayers.Feature
+	*/
+	setCoverage:function(coverage) {
+		this.coverage = coverage;
+		this.redraw();
+	},
+	
+	/**
+	* Method: getCapabilites
+	* 
+	* Uses the curent feature to obtain the reference in the capabilities document.
+	* 
+	*/
+	getCapabilities:function() {
+		this.capabilities = this.db.search("capabilities",this.feature.div.data("fk_capabilities"),function(table,query) {
+			return table.records[query];
+		});
+		this.serviceType = oscar.Util.Metadata.getServiceType(this.capabilities.capabilities);
+	},
+	
+	/**
+	* Method: queueDownload
+	* 
+	* Adds an item to the download queue panel.
+	*/
+	queueDownload:function() {
+		var serviceType = this.defaultOptions.service;
+		var downloadService = null;
+		var params = {
+				service:"WCS",
+				version:"1.1.0"
+		}
+		
+		var buildUrl = function(url, params) {
+			if(!url) {
+				url = "";
+			}
+			var paramString = OpenLayers.Util.getParameterString(params);
+			paramString = unescape(paramString);
 			if (paramString.length > 0) {
 				var separator = (url.indexOf('?') > -1) ? '&' : '?';
 				url += separator + paramString;
 			}
 			
 			return url;
-    	}
-    	
-    	
-    	switch (serviceType) {
-    	case "WCS":
+		}
+		
+		
+		switch (serviceType) {
+		case "WCS":
 			var bounds = this.defaultOptions.bbox;
 			var projection = new OpenLayers.Projection(this.defaultOptions.crs);
 			var urn = oscar.Util.EpsgConversion.epsgToUrn(projection.projCode);
@@ -713,7 +737,7 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 			for(f in fields) {
 				var field = fields[f];
 				var $input = $$(field); 
-                var fieldName = encodeURI($input.val());
+				var fieldName = encodeURI($input.val());
 				var select = $$($input.data("selection"));
 				var selectValue = select.val();
 
@@ -725,21 +749,21 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 			}
 			
 			var rngSubset="";
-            if(fieldsArray.length > 1) {
-                rngSubset = fieldsArray.join(";");
-            } else {
-                rngSubset = fieldsArray.join(" ");
-            }
+			if(fieldsArray.length > 1) {
+				rngSubset = fieldsArray.join(";");
+			} else {
+				rngSubset = fieldsArray.join(" ");
+			}
 			
 			var localparams = {
-    			request:"GetCoverage",
-    			store:this.defaultOptions.store,
-    			GridBaseCRS:urn,
-    			identifier:this.defaultOptions.id,
-    			BoundingBox:localBBOX + ","+ urn,
-    			format:this.defaultOptions.format,
+				request:"GetCoverage",
+				store:this.defaultOptions.store,
+				GridBaseCRS:urn,
+				identifier:this.defaultOptions.id,
+				BoundingBox:localBBOX + ","+ urn,
+				format:this.defaultOptions.format,
 				gridType:this.gridType
-    		}
+			}
 			
 			if (fieldsArray.length > 0) {
 				localparams.RangeSubset = rngSubset;
@@ -777,16 +801,16 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 			localparams.GridOffsets = offsetArray.toString();
 			
 			OpenLayers.Util.extend(localparams,params);
-    		var url = buildUrl(this.defaultOptions.operationUrl,localparams);
+			var url = buildUrl(this.defaultOptions.operationUrl,localparams);
 
-    	    downloadService = new oscar.Gui.Download.WCS(url,null,{title:this.defaultOptions.title});
-    		break;	
-    	}
-    	if(downloadService) {
-    		this.events.triggerEvent("serviceReady",downloadService);
-    	}
-    	
-    },
+			downloadService = new oscar.Gui.Download.WCS(url,null,{title:this.defaultOptions.title});
+			break;	
+		}
+		if(downloadService) {
+			this.events.triggerEvent("serviceReady",downloadService);
+		}
+		
+	},
 	drawFeature:function(feature) {
 		var selectFeature = this.map.getControlsByClass("oscar.Control.SelectFeature")[0];
 		var feats = feature.layer.selectedFeatures;
@@ -805,9 +829,9 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 		}
 		
 	},
-    /**
-     * Constant: CLASS_NAME
-     */
+	/**
+	* Constant: CLASS_NAME
+	*/
 	CLASS_NAME:"oscar.Gui.DownloadOptions"
 
 });
