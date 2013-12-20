@@ -4,7 +4,7 @@
 <script type="text/javascript">
 /**
 *
-* Going to test the transformation
+* Test the response transformation of the GetAttributes operation.
 *
 **/
 function test_getAttributes(t) {
@@ -23,7 +23,9 @@ function test_getAttributes(t) {
 	t.wait_result(2);
 }
 
-
+/**
+ * Test the response when the OWSException is returned. 
+ */
 function test_getAttributesException(t) {
 	t.plan(1);
 	var request = new oscar.Request.OGC.WCS.GetAttributes("../../../files/GetAttributes-none.xml");

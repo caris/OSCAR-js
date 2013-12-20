@@ -40,6 +40,18 @@ oscar.Request.OGC.WCS.GetAttributes = new oscar.BaseClass(oscar.Request.OGC.WCS,
 		var $html = this._transformResults(result);
 		this.events.triggerEvent("success",$html);
 	},
+	
+	/**
+	 * Method: _transformResults
+	 * 
+	 * This method makes a request to the GetAttributes xsl transformation stylesheet
+	 * and transforms the response xml into html which will then be passed on with the 
+	 * success event.
+	 * 
+	 * Parameters: 
+	 * 
+	 * xml - The response xml from the GetAttributes operation.
+	 */
 	_transformResults:function(xml) {
 		var xslt=null;
 		OpenLayers.Request.GET({
@@ -61,14 +73,31 @@ oscar.Request.OGC.WCS.GetAttributes = new oscar.BaseClass(oscar.Request.OGC.WCS,
 		return $$(html);
 	},
 	
+	/**
+	 * Method: getRequest
+	 * 
+	 * Returns the GetAttributes request value.
+	 */
 	getRequest:function() {
 		return "GetAttributes";
 	},
+	
+	/**
+	 * Method: getParamters
+	 * 
+	 * Returns the parameters object containing the request and version.
+	 */
 	getParameters:function() {
 		return {
 			"request":this.getRequest(),
 			"version":"1.1.0"
 		}
 	},
+	
+	/**
+	 * Constant: CLASS_NAME
+	 * 
+	 * The Class name.
+	 */
 	CLASS_NAME:"oscar.Request.OGC.WCS.GetAttributes"
 });
