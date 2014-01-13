@@ -16,6 +16,8 @@
     <properties>
         <branch>13.0</branch>
         <project.scm.url>https://github.com/caris/OSCAR-js.git</project.scm.url>
+        <maven.project.info.reports.plugin.version>2.7</maven.project.info.reports.plugin.version>
+        <maven.site.plugin.version>3.3</maven.site.plugin.version>
     </properties>
 
     <parent>
