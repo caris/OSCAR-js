@@ -434,8 +434,8 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 			text: false
 		}).removeClass( "ui-corner-all" ).addClass( "ui-corner-right ui-button-icon" ).click(function() {
 			// close if already visible
-			if ( oscar.jQuery(input).autocomplete( "widget" ).is( ":visible" ) ) {
-				oscar.jQuery(input).autocomplete( "close" );
+			if ( $input.autocomplete( "widget" ).is( ":visible" ) ) {
+				$input.autocomplete( "close" );
 				return;
 			}
 			// pass empty string as value to search for, displaying all results
