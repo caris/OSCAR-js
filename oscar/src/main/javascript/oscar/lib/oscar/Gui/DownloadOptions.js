@@ -238,9 +238,7 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 				
 				var x = $tblDiv.find("td").each(function() {
 					var $this = $$(this);
-					var content = $this.html();
-					$this.attr("title",content);
-					$this.html(content.substring(0,25));
+					$this.attr("title",$this.html());
 				});
 				$div.append($tblDiv);
 				if($tblDiv.find(".iamerror").length == 0) {
