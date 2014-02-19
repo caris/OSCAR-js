@@ -31,7 +31,7 @@
 
     <ciManagement>
         <system>Jenkins</system>
-        <url>${ci.base.url}/view/JavaScript%20Libraries/job/oscar_framework_${branch}</url>
+        <url>${ci.base.url}/oscar_framework_${branch}</url>
     </ciManagement>
 
     <scm>
