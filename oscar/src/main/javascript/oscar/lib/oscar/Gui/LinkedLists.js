@@ -71,10 +71,11 @@ oscar.Gui.LinkedLists = new oscar.BaseClass(oscar.Gui,{
 	},
 	destinationReceived:function(li){
 		//check to see if this already exists
+		var scope = this;
 		var alreadyExists=false;
 		this.destinationList.children().each(function() {
 			var $this = $$(this);
-			if(li.data("id") == $this.data("id")) {
+			if(scope.compare(li,$$(this))) {
 				alreadyExists = true;
 			}
 		});
@@ -84,7 +85,6 @@ oscar.Gui.LinkedLists = new oscar.BaseClass(oscar.Gui,{
 		if(this.destinationDecorator) {
 			this.destinationDecorator(li);
 		}
-		this.filter(li);
 	},
 	
 	buildButtons:function() {
