@@ -2,9 +2,14 @@ oscar.Gui.LinkedLists = new oscar.BaseClass(oscar.Gui,{
 	displayClass:"oscarGuiLinkedLists",
 	availableText:"",
 	selectedText:"",
+	EVENT_TYPES:["sourceReceived","destinationReceived"],
 	initialize:function(options) {
+		this.EVENT_TYPES = this.EVENT_TYPES.concat(oscar.Gui.prototype.EVENT_TYPES);
 		oscar.Gui.prototype.initialize.apply(this,[options]);
 		this.connectionClass=OpenLayers.Util.createUniqueID("connection");
+		this.events.register("sourceReceived", this, this.sourceReceived);
+		this.events.register("destinationReceived", this, this.destinationReceived);
+		
 	},
 	filter:function() {
 		return true;
@@ -57,8 +62,32 @@ oscar.Gui.LinkedLists = new oscar.BaseClass(oscar.Gui,{
 		$this.disableSelection();
 		
 	},
+	sourceReceived:function(li) {
+		this.sourceList.append(li);
+		if(this.sourceDecorator) {
+			this.sourceDecorator(li);
+		}
+		this.filter(li);
+	},
+	destinationReceived:function(li){
+		//check to see if this already exists
+		var alreadyExists=false;
+		this.destinationList.children().each(function() {
+			var $this = $$(this);
+			if(li.data("id") == $this.data("id")) {
+				alreadyExists = true;
+			}
+		});
+		if(!alreadyExists) {
+			this.destinationList.append(li);
+		}
+		if(this.destinationDecorator) {
+			this.destinationDecorator(li);
+		}
+		this.filter(li);
+	},
+	
 	buildButtons:function() {
-		
 		var scope = this;
 		this.toTheRight = $$("<button onclick='return false;'></button>").html(oscar.i18n("MoveAllToTheRight"));
 		
@@ -71,8 +100,7 @@ oscar.Gui.LinkedLists = new oscar.BaseClass(oscar.Gui,{
 		this.toTheRight.click(function() {
 			var available = scope.sourceList.children();
 			available.each(function() {
-				scope.destinationList.append($$(this));
-				scope.filter($$(this));
+				scope.events.triggerEvent("destinationReceived",$$(this));
 			});
 			scope.destinationList.sortable('refresh');
 			return false;
@@ -88,8 +116,7 @@ oscar.Gui.LinkedLists = new oscar.BaseClass(oscar.Gui,{
 		this.toTheLeft.click(function() {
 			var available = scope.destinationList.children();
 			available.each(function() {
-				scope.sourceList.append($$(this));
-				scope.filter($$(this));
+				scope.events.triggerEvent("sourceReceived",$$(this));
 			});
 			return false;
 		});
@@ -107,11 +134,8 @@ oscar.Gui.LinkedLists = new oscar.BaseClass(oscar.Gui,{
 		}
 
 		li.addClass("ui-state-default");
-		if(this.filter) {
-			this.filter(li);
-		}
 		if(!this.isSelected(li)) {
-			this.sourceList.append(li);
+			this.events.triggerEvent("sourceReceived",li);
 		}
 		this.sortable();
 		return li;
@@ -125,8 +149,7 @@ oscar.Gui.LinkedLists = new oscar.BaseClass(oscar.Gui,{
 			li.data(p,data[p]);
 		}
 		li.addClass("ui-state-default");
-
-		this.destinationList.append(li);
+		this.events.triggerEvent("destinationReceived",li);
 		this.sortable();
 		
 		return li;
@@ -138,7 +161,7 @@ oscar.Gui.LinkedLists = new oscar.BaseClass(oscar.Gui,{
 		dropOnEmpty:true,
 		cursor: "move",
 		receive:function(event,ui) {
-			scope.filter(ui.item);
+			scope.events.triggerEvent("sourceReceived",ui.item);
 		}
 	}).disableSelection();
 	
@@ -147,7 +170,7 @@ oscar.Gui.LinkedLists = new oscar.BaseClass(oscar.Gui,{
 		dropOnEmpty: true,
 		cursor: "move",
 		receive:function(event,ui) {
-			scope.filter(ui.item);
+			scope.events.triggerEvent("destinationReceived",ui.item);
 		}
 	}).disableSelection();
 	},
