@@ -88,7 +88,7 @@ oscar.Gui.LinkedLists = new oscar.BaseClass(oscar.Gui,{
 		if(this.destinationDecorator) {
 			this.destinationDecorator(li);
 		}
-		this.destionationFilter(li);
+		this.destinationFilter(li);
 	},
 	
 	buildButtons:function() {
