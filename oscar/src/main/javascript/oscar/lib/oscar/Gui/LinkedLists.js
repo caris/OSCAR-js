@@ -14,6 +14,9 @@ oscar.Gui.LinkedLists = new oscar.BaseClass(oscar.Gui,{
 	filter:function() {
 		return true;
 	},
+	destinationFilter:function() {
+		return true;
+	},
 	draw:function() {
 		var sourceId = OpenLayers.Util.createUniqueID("source");
 		var destinationId = OpenLayers.Util.createUniqueID("destination");
@@ -85,6 +88,7 @@ oscar.Gui.LinkedLists = new oscar.BaseClass(oscar.Gui,{
 		if(this.destinationDecorator) {
 			this.destinationDecorator(li);
 		}
+		this.destionationFilter(li);
 	},
 	
 	buildButtons:function() {
