@@ -118,7 +118,7 @@ OpenLayers.Util.applyDefaults(oscar.Lang.getDictionary("fr"), {
 
 	"MeasurementToole" :"Outil de mesure",
 
-	"srsCodeColumnLabel" :"Syst\u00e8me de r\u00e9f\u00e9rence de coordonn\u00e9es",
+	"srsCodeColumnLabel" :"Code",
 
 	"srsDescriptionColumnLabel" :"Description",
 

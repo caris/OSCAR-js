@@ -118,7 +118,7 @@ OpenLayers.Util.applyDefaults(oscar.Lang.getDictionary("es"), {
 
 	"MeasurementToole" :"Herramienta de medici\u00f3n",
 
-	"srsCodeColumnLabel" :"Sistema de referencia de coordenadas",
+	"srsCodeColumnLabel" :"C\u00f3digo",
 
 	"srsDescriptionColumnLabel" :"Descripci\u00f3n",
 
