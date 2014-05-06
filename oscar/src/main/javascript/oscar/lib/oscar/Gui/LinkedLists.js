@@ -197,6 +197,9 @@ oscar.Gui.LinkedLists = new oscar.BaseClass(oscar.Gui,{
 	clearSourceList:function() {
 		this.sourceList.empty();
 	},
+	clearDestinationList:function() {
+		this.destinationList.empty();
+	},
 	compare:function(a,b) {
 		if(a.html() == b.html())
 			return true;
