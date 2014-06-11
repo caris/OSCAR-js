@@ -21,6 +21,7 @@
 
 var $_oscarcssdependencies = [
     "../jquery/jquery/css/smoothness/jquery-ui-1.10.0.custom.min.css"
+	,"../jquery/plugins/datetimepicker/jquery.datetimepicker.css"
     ,"theme/default/style.css"
     ,"../yui/build/fonts/fonts-min.css"
     ,"../yui/build/button/assets/skins/sam/button.css"
@@ -38,6 +39,7 @@ var $_oscarcssdependencies = [
 var $_oscarscripts = [
     "../jquery/jquery/js/jquery-1.9.0.js"
     ,"../jquery/jquery/js/jquery-ui-1.10.0.custom.min.js"
+	,"../jquery/plugins/datetimepicker/jquery.datetimepicker.js"
 	,"../jquery/plugins/stalker/jquery.stalker.js"
 	,"../jquery/plugins/layout/js/jquery.layout-latest.min.js"
     ,"../jquery/plugins/slimScroll/jquery.slimscroll.js"

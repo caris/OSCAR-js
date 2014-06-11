@@ -232,6 +232,13 @@
 								</artifactItem>
 								<artifactItem>
 									<groupId>jquery</groupId>
+									<artifactId>datetimepicker</artifactId>
+									<overWrite>false</overWrite>
+									<outputDirectory>${project.build.directory}/scripts/jquery/plugins/datetimepicker</outputDirectory>
+									<includes>**</includes>
+								</artifactItem>
+								<artifactItem>
+									<groupId>jquery</groupId>
 									<artifactId>jqueryui</artifactId>
 									<overWrite>false</overWrite>
 									<outputDirectory>${project.build.directory}/scripts/jquery</outputDirectory>
