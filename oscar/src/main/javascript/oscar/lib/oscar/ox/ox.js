@@ -148,6 +148,16 @@ oscar.ox.Theme = oscar.BaseClass( {
 		else
 			return null;
 	},
+	
+	getCatalogueService : function() {
+		if (this.hasCatalogueService())
+			return this.services.catalogue.serviceEntries;
+		else
+			return null;
+	},
+    hasCatalogueService : function() {
+		return (this.services && this.services.catalogue) ? true : false;
+	},	
 	/**
 	 * APIMethod: hasExtractionService
 	 * 
@@ -717,6 +727,9 @@ oscar.ox.Services = oscar.BaseClass( {
 	 * Property: extraction
 	 */
 	extraction :null,
+	
+	catalogue:null,
+	
 	/**
 	 * Constructor: oscar.ox.Services
 	 */
@@ -742,6 +755,11 @@ oscar.ox.Services = oscar.BaseClass( {
 	addExtractionService : function() {
 		this.extraction = new oscar.ox.ExtractionService();
 		return this.extraction;
+	},
+	
+	addCatalogueService : function() {
+		this.catalogue = new oscar.ox.CatalogueService();
+		return this.catalogue;
 	},
 	
 	/**
@@ -845,6 +863,25 @@ oscar.ox.SelectionService = oscar.BaseClass(oscar.ox.Service, {
 	 */
 	CLASS_NAME :"oscar.ox.SelectionService"
 });
+
+oscar.ox.CatalogueService = oscar.BaseClass(oscar.ox.Service, {
+	/**
+	 * Constructor: oscar.ox.SelectionService
+	 * 
+	 * Parameters: 
+	 * options - {Object} An optional object whose properties will be set on
+	 * 			 this instance.
+	 */
+	initialize : function(options) {
+		oscar.ox.Service.prototype.initialize.apply(this, [ options ]);
+	},
+	/**
+	 * Constant: CLASS_NAME
+	 * - oscar.ox.SelectionService
+	 */
+	CLASS_NAME :"oscar.ox.CatalogueService"
+});
+
 
 /**
  * Class: oscar.ox.ExtractionService

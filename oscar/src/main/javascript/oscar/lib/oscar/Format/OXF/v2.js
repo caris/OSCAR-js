@@ -65,6 +65,12 @@ oscar.Format.OXF.v2 = oscar.BaseClass( {
 			var extractionService = obj.addExtractionService();
 			this.runProps(extractionService, data[0]);
 		},
+		catalogue : function(obj, data) {
+			if (data.length == 0)
+				return
+			var catalogueService = obj.addCatalogueService();
+			this.runProps(catalogueService, data[0]);
+		},
 		serviceEntries : function(obj, data) {
 			for ( var i = 0; i < data.length; i++) {
 				var se = new oscar.ox.ServiceEntry(data[i]);

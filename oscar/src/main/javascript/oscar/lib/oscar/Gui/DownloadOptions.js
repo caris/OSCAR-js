@@ -38,6 +38,12 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 	 * The type of service
 	 */
 	serviceType:null,
+	
+	/**
+	* Property: showAbstract
+	* Show the abstract of the feature selected. Defaults to true.
+	**/
+	showAbstract:true,
 	/**
 	 * Property: feature
 	 * 
@@ -102,6 +108,11 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 		} else {
 			featureAbstract.innerHTML = this.feature.div.data("abstract");
 		}
+		
+		if(!this.showAbstract) {
+			$$(infoPanel).css("display","none");
+		}
+		
 		this.buildDownloadOptions();
 
 	},

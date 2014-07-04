@@ -130,17 +130,15 @@ oscar.Gui.ComboBox = oscar.BaseClass(oscar.Gui,{
             var div= document.createElement("div")
         	div.value=value;
         },
-        /**
+		 /**
     	 * Method:render 
     	 * 
     	 * Triggers the list item render event passing the item reference to the 
 	     * listeners.
     	 */
-         render:function(ul,item) { 
-           if(this.onRender) { 
-                  this.onRender.call(this,ul,item);
-                }           
-           this.events.triggerEvent("onRender",ul,item);
+         render:function(ul,item) {
+		    this.events.triggerEvent("onRender",ul,item);
+            return this.onRender(ul,item);
            },
            
        /**
@@ -151,7 +149,7 @@ oscar.Gui.ComboBox = oscar.BaseClass(oscar.Gui,{
        	 */ 
          onRender: function(ul,item){
         	 var li= document.createElement("li")
-             oscar.jQuery(li).data( "ui-autocomplete-item", item )
+             return oscar.jQuery(li).data( "ui-autocomplete-item", item )
               .append( "<a>" + item.label +"</a>" )
               .appendTo( ul );
          },

@@ -118,7 +118,7 @@ OpenLayers.Util.applyDefaults(oscar.Lang.getDictionary("en"), {
 
 	"MeasurementToole" :"Measurement Tool",
 
-	"srsCodeColumnLabel" :"Coordinate Reference System",
+	"srsCodeColumnLabel" :"Code",
 
 	"srsDescriptionColumnLabel" :"Description",
 
@@ -282,7 +282,7 @@ OpenLayers.Util.applyDefaults(oscar.Lang.getDictionary("en"), {
 
 	"oscar_control_extractor" :"Download areas of interest.",
 
-	"NoThemesAvailable" :"No Themes Available",
+	"NoDataAvailable" :"No Data Available",
 	
 	"NotAvailable"	:"Not Available",
 

@@ -45,6 +45,7 @@ oscar.Gui.Download = oscar.BaseClass(oscar.Gui, {
     downloadFromService:function(url,filename) {
     	if(oscar.DownloadHost) {
 			var form = document.createElement("form");
+			$$(form).css("display","none");
 			var formName = OpenLayers.Util.createUniqueID("randomForm");
 			form.name = formName;
 			form.action = oscar.DownloadHost;

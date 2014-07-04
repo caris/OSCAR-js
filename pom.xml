@@ -4,7 +4,7 @@
     <groupId>com.caris</groupId>
     <artifactId>oscar_framework</artifactId>
     <name>Oscar Framework</name>
-    <version>13.0.3-GA</version>
+    <version>14.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <description>This is the CARIS JavaScript map library. It currently
         extends the Openlayers library and uses YUI and jQuery UI to make
@@ -14,7 +14,7 @@
     </description>
 
     <properties>
-        <branch>13.0</branch>
+        <branch>14.0</branch>
         <project.scm.url>https://github.com/caris/OSCAR-js.git</project.scm.url>
         <maven.project.info.reports.plugin.version>2.7</maven.project.info.reports.plugin.version>
         <maven.site.plugin.version>3.3</maven.site.plugin.version>
@@ -23,7 +23,7 @@
     <parent>
         <groupId>com.caris.pom</groupId>
         <artifactId>caris-opensource-pom</artifactId>
-        <version>9</version>
+        <version>12</version>
     </parent>
 
     <issueManagement>
@@ -42,24 +42,24 @@
         <url>${project.scm.url}</url>
     </scm>
 
-	<repositories>                
+    <repositories>                
         <repository>
             <name>CARIS Snapshots</name>
             <id>nexus.caris.com.snapshots</id>
             <url>http://nexus.caris.com/nexus/content/repositories/public-snapshots/</url>            
-        </repository>	
+        </repository>
         <repository>
             <name>CARIS Releases</name>
             <id>nexus.caris.com.releases</id>
             <url>http://nexus.caris.com/nexus/content/repositories/public-releases</url>            
-        </repository>	
+        </repository>
         <repository>
             <name>CARIS Vendor</name>
             <id>nexus.caris.com</id>
             <url>http://nexus.caris.com/nexus/content/repositories/public-vendor/</url>
-        </repository>			
-    </repositories>	
-	
+        </repository>
+    </repositories>
+
     <pluginRepositories>                
         <pluginRepository>
             <name>Maven Plugin Repository</name>
@@ -77,7 +77,7 @@
             <url>http://nexus.codehaus.org/content/groups/snapshots-group</url>
         </pluginRepository>	               
     </pluginRepositories>
-	
+
     <modules>
         <module>oscar</module>
         <module>oscarexchange4j</module>

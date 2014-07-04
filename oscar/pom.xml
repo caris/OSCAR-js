@@ -5,150 +5,70 @@
 	<name>oscar</name>
 	<packaging>jar</packaging>
 	<groupId>com.caris</groupId>
-	<version>13.0.3-GA</version>
+	<version>14.0-SNAPSHOT</version>
 	<parent>
 		<groupId>com.caris</groupId>
 		<artifactId>oscar_framework</artifactId>
-		<version>13.0.3-GA</version>
+		<version>14.0-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 	<dependencies>
 		<dependency>
 			<groupId>osgeo</groupId>
 			<artifactId>openlayers</artifactId>
-			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>osgeo</groupId>
 			<artifactId>proj4js</artifactId>
-			<scope>provided</scope>
-			<version>1.0-3</version>
 		</dependency>
 		<dependency>
 			<groupId>jquery</groupId>
 			<artifactId>jqueryui</artifactId>
-			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>jquery</groupId>
 			<artifactId>layout</artifactId>
-			<version>1.3.0-rc30.79</version>
+		</dependency>
+		<dependency>
+			<groupId>jquery</groupId>
+			<artifactId>slimscroll</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>jquery</groupId>
 			<artifactId>stalker</artifactId>
-			<version>1.0.0</version>
-			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>bjornharrtell</groupId>
+			<artifactId>jsts</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>yahoo</groupId>
 			<artifactId>yui</artifactId>
-			<type>jar</type>
-			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 	<build>
 		<finalName>oscar</finalName>
 		<outputDirectory>target/scripts</outputDirectory>
 		<testOutputDirectory>target/test-scripts</testOutputDirectory>
+		<resources>
+			<resource>
+				<directory>src/main/javascript/oscar</directory>
+				<targetPath>oscar</targetPath>
+			</resource>
+		</resources>
 		<plugins>
 			<plugin>
-				<groupId>org.codehaus.mojo.javascript</groupId>
-				<artifactId>javascript-maven-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-dependency-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>unpack</id>
-						<phase>compile</phase>
-						<goals>
-							<goal>unpack</goal>
-						</goals>
-						<configuration>
-							<artifactItems>
-								<artifactItem>
-									<groupId>osgeo</groupId>
-									<artifactId>openlayers</artifactId>
-									<version>2.12.0</version>
-									<type>jar</type>
-									<overWrite>false</overWrite>
-									<outputDirectory>${project.build.directory}/scripts/openlayers</outputDirectory>
-									<includes>OpenLayers.js, theme/**, img/**,
-										license.txt,release-license.txt,news.txt,readme.txt</includes>
-								</artifactItem>
-								<artifactItem>
-									<groupId>jquery</groupId>
-									<artifactId>jqueryui</artifactId>
-									<version>1.10.0</version>
-									<type>jar</type>
-									<overWrite>false</overWrite>
-									<outputDirectory>${project.build.directory}/scripts/jquery</outputDirectory>
-									<includes>**</includes>
-								</artifactItem>
-								<artifactItem>
-									<groupId>jquery</groupId>
-									<artifactId>stalker</artifactId>
-									<version>1.0.0</version>
-									<type>jar</type>
-									<overWrite>false</overWrite>
-									<outputDirectory>${project.build.directory}/scripts/jquery/plugins/stalker</outputDirectory>
-									<includes>**</includes>
-								</artifactItem>								
-								<artifactItem>
-									<groupId>jquery</groupId>
-									<artifactId>layout</artifactId>
-									<version>1.3.0-rc30.79</version>
-									<overWrite>false</overWrite>
-									<outputDirectory>${project.build.directory}/scripts/jquery/plugins/layout</outputDirectory>
-									<includes>**</includes>
-								</artifactItem>								
-
-								<artifactItem>
-									<groupId>osgeo</groupId>
-									<artifactId>proj4js</artifactId>
-									<type>jar</type>
-									<overWrite>false</overWrite>
-									<outputDirectory>${project.build.directory}/scripts/proj4js</outputDirectory>
-									<includes>build/license.txt,lib/**</includes>
-								</artifactItem>
-								<artifactItem>
-									<groupId>yahoo</groupId>
-									<artifactId>yui</artifactId>
-									<version>2.8.2r1</version>
-									<type>jar</type>
-									<overWrite>false</overWrite>
-									<outputDirectory>${project.build.directory}/scripts/yui</outputDirectory>
-									<destFileName />
-									<includes>build/**</includes>
-								</artifactItem>
-							</artifactItems>
-							<outputDirectory>${project.build.directory}</outputDirectory>
-							<overWriteReleases>false</overWriteReleases>
-							<overWriteSnapshots>true</overWriteSnapshots>
-						</configuration>
-					</execution>
-				</executions>
+				<groupId>com.mycila.maven-license-plugin</groupId>
+				<artifactId>maven-license-plugin</artifactId>
 			</plugin>
 			<plugin>
 				<groupId>net.alchim31.maven</groupId>
 				<artifactId>yuicompressor-maven-plugin</artifactId>
-				<version>1.1</version>
-				<executions>
-					<execution>
-						<id>aggrCompress</id>
-						<goals>
-							<goal>compress</goal>
-						</goals>
-					</execution>
-				</executions>
 				<configuration>
 					<jswarn>false</jswarn>
 					<nosuffix>true</nosuffix>
 					<statistics>false</statistics>
-					<sourceDirectory>../../src/main/javascript/oscar
-					</sourceDirectory>
+					<sourceDirectory>../../src/main/javascript/oscar</sourceDirectory>
 					<aggregations>
 						<aggregation>
 							<!-- remove files after aggregation (default: false) -->
@@ -156,8 +76,7 @@
 							<!-- insert new line after each concatenation (default: false) -->
 							<insertNewLine>true</insertNewLine>
 							<!-- Output path -->
-							<output>target/scripts/oscar/oscar.js
-							</output>
+							<output>target/scripts/oscar/oscar.js</output>
 							<!-- files to include, path relative to output's directory or absolute 
 								path -->
 							<includes>
@@ -166,6 +85,7 @@
 								<include>**/Types/BaseClass.js</include>
 								<include>**/ox/ox.js</include>
 								<include>**/Gui.js</include>
+								<include>**/Gui/CatalogueResults.js</include>
 								<include>**/Gui/Download.js</include>
 								<include>**/Gui/Download/WCS.js</include>
 								<include>**/Gui/Download/WFS.js</include>
@@ -175,7 +95,9 @@
 								<include>**/Gui/ClickableLabel.js</include>
 								<include>**/Gui/ComboBox.js</include>
 								<include>**/Gui/LinkedLists.js</include>
+								<include>**/Gui/Wizards.js</include>
 								<include>**/Handler.js</include>
+								<include>**/Handler/CSW.js</include>
 								<include>**/Handler/WFS.js</include>
 								<include>**/Control.js</include>
 								<include>**/Control/ArgParser.js</include>
@@ -191,6 +113,7 @@
 								<include>**/Control/RangeSelect.js</include>
 								<include>**/Control/Point.js</include>
 								<include>**/Control/Select.js</include>
+								<include>**/Control/CatalogueSearchForm.js</include>
 								<include>**/Control/Print.js</include>
 								<include>**/Control/DataExtractor.js</include>
 								<include>**/Control/Measure.js</include>
@@ -238,6 +161,10 @@
 								<include>**/Util/CoordinateReferences.js</include>
 								<include>**/Util/Transform.js</include>
 								<include>**/Util/Help.js</include>
+								<include>**/Util/PluginManager.js</include>
+								<include>**/Util/Plugin/Plugin.js</include>
+								<include>**/Util/Plugin/Download/Download.js</include>
+								<include>**/Util/Plugin/Download/WCSService.js</include>
 								<include>**/Lang.js</include>
 								<include>**/Lang/en.js</include>
 								<include>**/Lang/es.js</include>
@@ -253,8 +180,7 @@
 							<!-- insert new line after each concatenation (default: false) -->
 							<insertNewLine>true</insertNewLine>
 							<!-- Output path -->
-							<output>target/scripts/oscar/yuiDependencies.js
-							</output>
+							<output>target/scripts/oscar/yuiDependencies.js</output>
 							<!-- files to include, path relative to output's directory or absolute 
 								path -->
 							<includes>
@@ -283,19 +209,94 @@
 				</configuration>
 			</plugin>
 			<plugin>
-				<groupId>com.mycila.maven-license-plugin</groupId>
-				<artifactId>maven-license-plugin</artifactId>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>unpack</id>
+						<phase>compile</phase>
+						<goals>
+							<goal>unpack</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>osgeo</groupId>
+									<artifactId>openlayers</artifactId>
+									<overWrite>false</overWrite>
+									<outputDirectory>${project.build.directory}/scripts/openlayers</outputDirectory>
+									<includes>OpenLayers.js, theme/**,
+										img/**,license.txt,release-license.txt,news.txt,readme.txt</includes>
+								</artifactItem>
+								<artifactItem>
+									<groupId>jquery</groupId>
+									<artifactId>datetimepicker</artifactId>
+									<overWrite>false</overWrite>
+									<outputDirectory>${project.build.directory}/scripts/jquery/plugins/datetimepicker</outputDirectory>
+									<includes>**</includes>
+								</artifactItem>
+								<artifactItem>
+									<groupId>jquery</groupId>
+									<artifactId>jqueryui</artifactId>
+									<overWrite>false</overWrite>
+									<outputDirectory>${project.build.directory}/scripts/jquery</outputDirectory>
+									<includes>**</includes>
+								</artifactItem>
+								<artifactItem>
+									<groupId>jquery</groupId>
+									<artifactId>stalker</artifactId>
+									<overWrite>false</overWrite>
+									<outputDirectory>${project.build.directory}/scripts/jquery/plugins/stalker</outputDirectory>
+									<includes>**</includes>
+								</artifactItem>
+								<artifactItem>
+									<groupId>jquery</groupId>
+									<artifactId>layout</artifactId>
+									<overWrite>false</overWrite>
+									<outputDirectory>${project.build.directory}/scripts/jquery/plugins/layout</outputDirectory>
+									<includes>**</includes>
+								</artifactItem>
+								<artifactItem>
+									<groupId>osgeo</groupId>
+									<artifactId>proj4js</artifactId>
+									<overWrite>false</overWrite>
+									<outputDirectory>${project.build.directory}/scripts/proj4js</outputDirectory>
+									<includes>build/license.txt,lib/**</includes>
+								</artifactItem>
+								<artifactItem>
+									<groupId>jquery</groupId>
+									<artifactId>slimscroll</artifactId>
+									<overWrite>false</overWrite>
+									<outputDirectory>${project.build.directory}/scripts/jquery/plugins/slimScroll</outputDirectory>
+									<includes>**</includes>
+								</artifactItem>
+								<artifactItem>
+									<groupId>yahoo</groupId>
+									<artifactId>yui</artifactId>
+									<overWrite>false</overWrite>
+									<outputDirectory>${project.build.directory}/scripts/yui</outputDirectory>
+									<includes>build/**</includes>
+								</artifactItem>
+								<artifactItem>
+									<groupId>bjornharrtell</groupId>
+									<artifactId>jsts</artifactId>
+									<overWrite>false</overWrite>
+									<outputDirectory>${project.build.directory}/scripts/jsts</outputDirectory>
+								</artifactItem>
+							</artifactItems>
+							<outputDirectory>${project.build.directory}</outputDirectory>
+							<overWriteReleases>false</overWriteReleases>
+							<overWriteSnapshots>true</overWriteSnapshots>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo.javascript</groupId>
+				<artifactId>javascript-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
-		<resources>
-			<resource>
-				<directory>src/main/javascript/oscar 
-                </directory>
-				<targetPath>oscar</targetPath>
-			</resource>
-		</resources>
 	</build>
-
 	<profiles>
 		<profile>
 			<id>production</id>
@@ -304,15 +305,6 @@
 					<plugin>
 						<groupId>net.alchim31.maven</groupId>
 						<artifactId>yuicompressor-maven-plugin</artifactId>
-						<version>1.1</version>
-						<executions>
-							<execution>
-								<id>aggrCompress</id>
-								<goals>
-									<goal>compress</goal>
-								</goals>
-							</execution>
-						</executions>
 						<configuration>
 							<excludes>
 								<exclude>**/*.pack.js</exclude>
@@ -323,37 +315,46 @@
 								<exclude>**/examples/**/*.*</exclude>
 							</excludes>
 						</configuration>
+						<executions>
+							<execution>
+								<goals>
+									<goal>compress</goal>
+								</goals>
+							</execution>
+						</executions>
 					</plugin>
 				</plugins>
 			</build>
 		</profile>
 		<profile>
-            <id>naturaldocs</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.codehaus.mojo.naturaldocs</groupId>
-                        <artifactId>naturaldocs-maven-plugin</artifactId>
-                        <version>1.0-SNAPSHOT</version>
-                        <executions>
-                            <execution>
-                                <phase>compile</phase>
-                                <goals>
-                                    <goal>generate</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                        <configuration>
-                            <naturalDocsHome>D:\Program Files\Natural Docs\NaturalDocs-1.4</naturalDocsHome>
-                            <input>src/main/javascript/oscar</input>
-                            <project>src/main/documentation/settings</project>
-                            <output>target/scripts/oscar/documentation</output>
-                            <outputFormat>FramedHTML</outputFormat>
-                            <rebuild>true</rebuild>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
+			<id>naturaldocs</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.codehaus.mojo.naturaldocs</groupId>
+						<artifactId>naturaldocs-maven-plugin</artifactId>
+						<version>1.0-SNAPSHOT</version>
+						<executions>
+							<execution>
+								<phase>compile</phase>
+								<goals>
+									<goal>generate</goal>
+								</goals>
+							</execution>
+						</executions>
+						<configuration>
+							<naturalDocsHome>C:\Program Files\NaturalDocs-1.51</naturalDocsHome>
+							<input>src/main/javascript/oscar</input>
+							<project>
+								src/main/documentation/settings
+							</project>
+							<output>target/scripts/oscar/documentation</output>
+							<outputFormat>FramedHTML</outputFormat>
+							<rebuild>true</rebuild>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 </project>

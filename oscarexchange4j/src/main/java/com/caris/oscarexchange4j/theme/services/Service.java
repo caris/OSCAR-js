@@ -1,7 +1,7 @@
 /**
  * CARIS oscar - Open Spatial Component ARchitecture
  *
- * Copyright 2013 CARIS <http://www.caris.com>
+ * Copyright 2014 CARIS <http://www.caris.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ public interface Service {
      * enum of service types.
      */
     public enum ServiceType {
-        SERVICE, SELECTION, EXTRACTION
+        SERVICE, SELECTION, EXTRACTION, CATALOGUE
     };
 
     /**

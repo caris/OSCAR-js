@@ -1,7 +1,7 @@
 /**
  * CARIS oscar - Open Spatial Component ARchitecture
  *
- * Copyright 2013 CARIS <http://www.caris.com>
+ * Copyright 2014 CARIS <http://www.caris.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,8 +18,16 @@
 package com.caris.oscarexchange4j.theme.services;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ServiceEntry {
+
+    /**
+     * Attributes for the service entry.
+     */
+    Map<String, String> attributes;
+
     /**
      * the URL for the service
      */
@@ -39,7 +47,7 @@ public class ServiceEntry {
      * The format of the service (JSON, KML, GML2, etc.)
      */
     private String format;
-    
+
     /**
      * The service identifiers (featureTypes, coverages, etc.)
      */
@@ -50,6 +58,25 @@ public class ServiceEntry {
      */
     public String getUrl() {
         return url;
+    }
+
+    /**
+     * Returns the attributes set for the service entry.
+     * @return
+     */
+    public Map<String, String> getAttributes() {
+        return attributes;
+    }
+    
+    /**
+     * Adds an attribute to the attributes map.
+     * @param name
+     * @param value
+     */
+    public void addAttribute(String name,String value) {
+        if(this.attributes==null) 
+            this.attributes= new HashMap<String, String>();
+        this.attributes.put(name, value);
     }
 
     /**
@@ -104,7 +131,7 @@ public class ServiceEntry {
     public void setFormat(String format) {
         this.format = format;
     }
-    
+
     /**
      * @return the identifiers
      */
@@ -122,13 +149,15 @@ public class ServiceEntry {
 
     /**
      * Add an identifier to the identifiers list
-     * @param identifier The String identifier
+     * 
+     * @param identifier
+     *            The String identifier
      */
     public void addIdentifier(String identifier) {
         if (this.identifiers == null)
             this.identifiers = new ArrayList<String>();
         this.identifiers.add(identifier);
-            
+
     }
-    
+
 }

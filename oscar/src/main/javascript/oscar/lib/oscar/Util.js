@@ -39,6 +39,78 @@ oscar.debug = {
  */
 oscar.Util = {};
 
+
+/**
+ * APIMethod: extractGeometriesFromFeatures
+ * This method takes an array of features and extracts the geometry objects
+ * from them and returns them in an array.
+ * 
+ * Returns an array of geometries.
+ */
+oscar.Util.extractGeometriesFromFeatures = function(features) {
+	var geometryArray=[];
+	while(features.length > 0) {
+		var feature = features.shift();
+		var geometry = feature.geometry;
+		geometryArray.push(geometry);
+	} 
+	
+	
+	return geometryArray;
+}
+
+/**
+ * APIMethod: combineGeometries
+ * This method take an array of <OpenLayers.Geometry> objects and attempts
+ * to combine them to fewer geometry objects.
+ * 
+ * Returns an array of geometry objects.
+ */
+oscar.Util.combineGeometries = function(geoms) {
+	var merged = []
+	while(geoms.length > 0) {
+		var geometry = geoms.shift();
+		if(!oscar.Util.mergeToExistingGeometry(merged,geometry)) {
+			merged.push(geometry);
+		}
+	} 
+	return merged;
+}
+
+/**
+ * APIMethod: mergeGeometries
+ * Takes two <OpenLayers.Geometry> objects and merges them to a single <OpenLayers.Geometry> object.
+ * 
+ * Returns the new geometry object.
+ */
+oscar.Util.mergeGeometries =function(geomA, geomB) {
+    var reader = new jsts.io.WKTReader();
+    var gom,strFeatB,union;
+    strFeatA = reader.read(geomA.toString());
+    strFeatB = reader.read(geomB.toString());
+    union = strFeatA.union(strFeatB);
+    var parser = new jsts.io.OpenLayersParser();
+    return parser.write(union);
+}
+
+/**
+ * APIMethod: mergeToExistingGeometry
+ * Takes a geometry and attempts to merge it to a list of existing geometry objects.
+ * Returns true or false of the merge was successful.
+ */
+oscar.Util.mergeToExistingGeometry = function(geometries, geometry) {
+    for(var g in geometries) {
+        var existingGeometry = geometries[g];
+        if(existingGeometry.intersects(geometry)) {
+            geometries[g] = oscar.Util.mergeGeometries(existingGeometry,geometry);
+            return true;
+        }
+    }
+    return false;
+
+}
+
+
 /**
 * APIMethod:getMetersConversionFactor
 * Uses the projection to obtain a conversion factor value to display units in meters.
@@ -696,7 +768,67 @@ oscar.Util.isGeographicCRS = function(projection) {
 }
 
 /**
+ * APIMethod: boundsToFeatures
+ * This method taks an OpenLayers.Bounds object and convert it to a feature.
+ * Parameters:
+ * - bounds <OpenLayers.Bounds>
+ * - srcProjection <OpenLayers.Projection>
+ * - map <OpenLayers.Map>
+ */
+oscar.Util.boundsToFeatures = function(bbox,srcProjection,map) {
+	var features = [];
+	var mapMaxExtent = map.getMaxExtent();
+	var featureBounds = bbox.clone();
+	
+	if(map.getProjectionObject().getCode() != srcProjection.getCode()) {
+		featureBounds.transform(srcProjection,map.getProjectionObject());
+	}
+	
+	if(bbox.left > bbox.right) {
+		var boundsA = new OpenLayers.Bounds(
+			featureBounds.left,
+			featureBounds.bottom,
+			map.getMaxExtent().right,
+			featureBounds.top
+		);
+		var boundsB = new OpenLayers.Bounds(
+			map.getMaxExtent().left,
+			featureBounds.bottom,
+			featureBounds.right,
+			featureBounds.top
+		);
+		features.push(new OpenLayers.Feature.Vector(boundsA.toGeometry()));
+		features.push(new OpenLayers.Feature.Vector(boundsB.toGeometry()));
+	} else {
+		featureBounds.left = Math.abs(featureBounds.left);
+		if(bbox.left <= 0) {
+			featureBounds.left *= -1;
+		}
+
+		featureBounds.right = Math.abs(featureBounds.right);
+		if(bbox.left <= 0) {
+			featureBounds.right *= -1;
+		}
+		features.push(new OpenLayers.Feature.Vector(featureBounds.toGeometry()));
+	}
+	
+	return features;
+}
+
+/**
  * Override the default OL pink color for broken images
  */
 OpenLayers.Util.onImageLoadErrorColor = "transparent";
 
+oscar.Util.WizardFactory = function(protocol,link,options) {
+	switch(protocol) {
+		case "OGC:WCS-1.1.0-http-get-coverage":
+			return new oscar.Gui.Wizard.WebCoverageServiceDownload(protocol,link.url,options);
+		case "IENC":
+		case "Shapefile":
+		case "KML":
+			//return new oscar.Gui.Wizard.DirectDownload(protocol,link.url);
+		default:
+			return null;
+	}
+};
