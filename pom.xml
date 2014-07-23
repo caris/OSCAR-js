@@ -14,7 +14,7 @@
     </description>
 
     <properties>
-        <branch>14.0</branch>
+        <branch>15.0</branch>
         <project.scm.url>https://github.com/caris/OSCAR-js.git</project.scm.url>
     </properties>
 
