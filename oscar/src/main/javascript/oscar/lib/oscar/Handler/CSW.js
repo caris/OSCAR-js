@@ -15,6 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+ 
 /**
  * Class: oscar.Handler.CSW
  * 
@@ -38,21 +39,23 @@ oscar.Handler.CSW = new oscar.BaseClass(oscar.Handler,{
     EVENT_TYPES:["beforeSearch","afterSearch","success","failure"],
     catalogue:null,
     initialize:function(catalogueService,options) {
-        this.catalogue = catalogueService;
+		if($$.isArray(catalogueService)) {
+			this.catalogue = catalogueService[0];
+		} else {
+			this.catalogue = catalogueService;
+		}
         this.events = new OpenLayers.Events(this, null, this.EVENT_TYPES,
         false, {
             includeXY :true
         });
-        
-		if(this.catalogue.attributes && this.catalogue.attributes.outputSchema) {
-			this.DEFAULT_SEARCH_PARAMETERS.outputSchema = this.catalogue.attributes.outputSchema;
+		if(this.catalogue.isSetDefaultOutputSchema()) {
+			this.DEFAULT_SEARCH_PARAMETERS.outputSchema = this.catalogue.getDefaultOutputSchema();
 		}
 		
         if(options) {
             if(options.DEFAULT_SEARCH_PARAMETERS) {
                 OpenLayers.Util.extend(this.DEFAULT_SEARCH_PARAMETERS,options.DEFAULT_SEARCH_PARAMETERS);
             }
-        
         }
     },
     setMap:function(map) {
@@ -71,7 +74,7 @@ oscar.Handler.CSW = new oscar.BaseClass(oscar.Handler,{
         var formatter = new OpenLayers.Format.CSWGetRecords();
         var scope = this;
         OpenLayers.Request.POST({
-            url:this.catalogue.url,
+            url: this.catalogue.getUrl("POST"),
             success:this.success,
             failure:this.failure,
             data:formatter.write(this.parameters),

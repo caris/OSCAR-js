@@ -133,6 +133,9 @@
 								<include>**/Format/OXF.js</include>
 								<include>**/Format/OXF/v2.js</include>
 								<include>**/Format/OXF/XML.js</include>
+								<include>**/Format/CSW.js</include>
+								<include>**/Format/CSW/v2_0_2.js</include>
+								<include>**/Format/CSW/v2_0_2/Capabilities.js</include>
 								<include>**/Format/WCSCapabilities.js</include>
 								<include>**/Format/WCSCapabilities/v1.js</include>
 								<include>**/Format/WCSCapabilities/v1_0_0.js</include>
@@ -169,6 +172,9 @@
 								<include>**/Lang/en.js</include>
 								<include>**/Lang/es.js</include>
 								<include>**/Lang/fr.js</include>
+								<include>**/ogc.js</include>
+								<include>**/ogc/BaseService.js</include>
+								<include>**/ogc/Catalogue/CatalogueService.js</include>
 								<include>**/Popup/FramedCloud.js</include>
 								<include>**/Map.js</include>
 								<include>**/OLPrototypePatches.js</include>
