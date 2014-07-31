@@ -166,8 +166,8 @@ oscar.Control.DataDiscovery = oscar.BaseClass(oscar.Control.DragPanel, {
 		 this.queuePanel = $$("<div></div>").addClass("queuePanel");
          
          /* add everything to the main panel */
-		 $$(this.discoverPanel).append(searchHeader);
-		 $$(this.discoverPanel).append(searchPanel);
+		 //$$(this.discoverPanel).append(searchHeader);
+		 //$$(this.discoverPanel).append(searchPanel);
 		 $$(this.discoverPanel).append(optionsHeader);
 		 $$(this.discoverPanel).append(this.optionsPanel);
 		 $$(this.discoverPanel).append(this.queueHeader);
@@ -290,7 +290,7 @@ oscar.Control.DataDiscovery = oscar.BaseClass(oscar.Control.DragPanel, {
                 var $this = $$(this);
                 scope.unselectFeature();
                 $this.addClass("selected");
-                scope.discoverPanel.accordion("option", "active",1);
+                scope.discoverPanel.accordion("option", "active",0);
                 scope.drawFeature($this);
                 
             });
@@ -316,12 +316,7 @@ oscar.Control.DataDiscovery = oscar.BaseClass(oscar.Control.DragPanel, {
             var isInRange = (mapViewPort.containsBounds($this.data("bbox")) ||
                 mapViewPort.intersectsBounds($this.data("bbox")));
             
-            var textFound = (query.length == 0 || 
-					$this.data("id").toLowerCase().indexOf(query.toLowerCase()) !=-1 || 
-					$this.data("title").toLowerCase().indexOf(query.toLowerCase())!=-1
-			);
-            
-            if(isInRange && textFound) {
+            if(isInRange) {
                 $this.show();
 				validResults.push($this);
             } else {
@@ -369,7 +364,8 @@ oscar.Control.DataDiscovery = oscar.BaseClass(oscar.Control.DragPanel, {
 	    	this.downloadOptions.events.on({"serviceReady":this.queueDownload,scope:this});
 	    	this.downloadOptions.appendTo(this.optionsPanel);
 	    }
-	    this.downloadOptions.setFeature(feat);
+	    this.downloadOptions.coverage = $div.data("coverage")
+		this.downloadOptions.setFeature(feat);
 	},
 	/**
 	 * Method: activate
@@ -430,7 +426,7 @@ oscar.Control.DataDiscovery = oscar.BaseClass(oscar.Control.DragPanel, {
      */
     queueDownload:function(service) {
 
-    	this.discoverPanel.accordion("option", "active",2);
+    	this.discoverPanel.accordion("option", "active",1);
 
     	if(this.queuePanel.children().length>0) {
             this.queuePanel.prepend(service.draw());

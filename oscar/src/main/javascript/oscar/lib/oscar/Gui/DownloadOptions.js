@@ -376,7 +376,7 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 
 		};
 		
-		$$(input).css("width","190px");
+		$$(input).css("width","175px");
 		
 		var button = document.createElement("button");
 		button.innerHTML = oscar.i18n("srsCodeColumnLabel");
@@ -581,72 +581,45 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 		    return false;
 		}
 		this.defaultOptions.store = isServiceStorageAllowed(GetCoverageOp);
-		
-		var url = oscar.Util.Metadata.getOperationHref(
-				this.capabilities.capabilities, "DescribeCoverage");
+		oscar.jQuery(loading).fadeOut();
+		var version = this.capabilities.capabilities.version;
+		this.coverage.coverageDescription;
+		var fields = null;
 
-		var params = {
-			service :"WCS",
-			request :"DescribeCoverage",
-			identifiers :this.feature.div.data("id"),
-			version :this.capabilities.capabilities.version
-		}
-		var scope = this;
-		var success = function(resp) {
-			oscar.jQuery(loading).fadeOut();
-			var version = this.capabilities.capabilities.version;
-			var reader = new oscar.Format.WCSDescribeCoverage( {
-				"version" :version
-			});
-			var coverageDescription = reader.read(resp.responseXML);
-			var fields = null;
-
-			try {
-				this.gridBaseCRS = coverageDescription.coverageDescription.domain.spatialDomain.gridCRS.gridBaseCRS;
-				
-				this.gridType = "urn:ogc:def:method:WCS:1.1:2dSimpleGrid";
-				if(coverageDescription.coverageDescription.domain.spatialDomain.gridCRS.gridType) {
-					this.gridType = coverageDescription.coverageDescription.domain.spatialDomain.gridCRS.gridType;
-				}
-
-				
-				if(coverageDescription.coverageDescription.domain.spatialDomain.gridCRS.gridOrigin) {
-					this.gridOrigin = coverageDescription.coverageDescription.domain.spatialDomain.gridCRS.gridOrigin;
-				} else {
-					this.gridOrigin= "0 0";
-				}
-				if(coverageDescription.coverageDescription.domain.spatialDomain.gridCRS.gridOffsets) {
-					this.gridOffsets = coverageDescription.coverageDescription.domain.spatialDomain.gridCRS.gridOffsets;
-				} else {
-					this.gridOffsets = "0 0";
-				}
-				var fields = coverageDescription.coverageDescription.range.fields;
-				supportedCRSs = coverageDescription.coverageDescription.supportedCRS;
-				supportedFormats = coverageDescription.coverageDescription.supportedFormats;
-				this.makeFormatList(div,supportedFormats);
-				this.makeCRSList(div,supportedCRSs);
-				this.makeFieldList(div,fields);
-				this.makeResolutionFields(div);
-			} catch(err) {
-				alert(err.message);
-				alert("error in response");
+		try {
+			this.gridBaseCRS = this.coverage.coverageDescription.domain.spatialDomain.gridCRS.gridBaseCRS;
+			
+			this.gridType = "urn:ogc:def:method:WCS:1.1:2dSimpleGrid";
+			if(this.coverage.coverageDescription.domain.spatialDomain.gridCRS.gridType) {
+				this.gridType = this.coverage.coverageDescription.domain.spatialDomain.gridCRS.gridType;
 			}
 
-		};
-
-		var request = new OpenLayers.Request.GET( {
-			url :url,
-            params:params,
-            async:true,
-            success : success,
-            failure : function(resp){},
-            scope :this
-        });
-
+			
+			if(this.coverage.coverageDescription.domain.spatialDomain.gridCRS.gridOrigin) {
+				this.gridOrigin = this.coverage.coverageDescription.domain.spatialDomain.gridCRS.gridOrigin;
+			} else {
+				this.gridOrigin= "0 0";
+			}
+			if(this.coverage.coverageDescription.domain.spatialDomain.gridCRS.gridOffsets) {
+				this.gridOffsets = this.coverage.coverageDescription.domain.spatialDomain.gridCRS.gridOffsets;
+			} else {
+				this.gridOffsets = "0 0";
+			}
+			var fields = this.coverage.coverageDescription.range.fields;
+			supportedCRSs = this.coverage.coverageDescription.supportedCRS;
+			supportedFormats = this.coverage.coverageDescription.supportedFormats;
+			this.makeFormatList(div,supportedFormats);
+			this.makeCRSList(div,supportedCRSs);
+			this.makeFieldList(div,fields);
+			this.makeResolutionFields(div);
+		} catch(err) {
+			alert(err.message);
+			alert("error in response");
+		}
 		this.defaultOptions.operationUrl = GetCoverageOp.dcp.http.get;
-		this.defaultOptions.id = this.feature.div.data("id");
+		this.defaultOptions.id = this.coverage.coverageDescription.identifier
 		this.defaultOptions.bbox = this.feature.div.data("bbox");
-		this.defaultOptions.title = this.feature.div.data("title") || this.feature.div.data("id");
+		this.defaultOptions.title = this.coverage.coverageDescription.title || this.coverage.coverageDescription.identifier
 		
 		
 		

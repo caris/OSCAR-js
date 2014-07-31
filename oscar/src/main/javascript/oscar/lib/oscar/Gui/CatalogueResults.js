@@ -176,27 +176,39 @@ oscar.Gui.CatalogueResults = new oscar.BaseClass(oscar.Gui,{
 
     },
     showSearchInfo:function(info) {
-        var nextDisabled=(info.nextRecord > info.numberOfRecordsMatched || info.nextRecord == 0)?true:false;
-        if(nextDisabled) 
-            this.$next.button("disable");
-        else 
-            this.$next.button("enable");
-
-        var previousDisabled=(info.nextRecord - info.numberOfRecordsReturned -1 <=0)?true:false;
-        if(previousDisabled) 
-            this.$previous.button("disable");
-        else 
-            this.$previous.button("enable");
-        
+		var matched = info.numberOfRecordsMatched;
+		var returned = info.numberOfRecordsReturned;
+		var next = info.nextRecord;
         this.$buttons.css("visibility","visible");
 
         var str = "";
-        var start = (info.nextRecord !=0)? info.nextRecord - info.numberOfRecordsReturned:1;
+		 var start = (info.nextRecord !=0)? info.nextRecord - info.numberOfRecordsReturned:1;
+		if(next > 0) {
+			start = next - returned;
+		} else {
+			start = matched - returned +1;
+		}
         str+=start;
-        to = start + (info.numberOfRecordsReturned-1);
-        if(to > info.numberOfRecordsMatched) to = info.numberOfRecordsMatched;
+        to = start + returned - 1;
+        if(to > info.numberOfRecordsMatched) {
+			to = info.numberOfRecordsMatched
+		};
         str+= " - " + to;
         str+= " of " + info.numberOfRecordsMatched;
+		
+		if(to != matched) {
+			this.$next.button("enable");
+		} else {
+			this.$next.button("disable");
+		}
+
+        if(start != 1) {
+            this.$previous.button("enable");
+		}
+        else {
+            this.$previous.button("disable");
+		}
+		
         this.$searchInfo.html(str);
     },
     enablePagination:function(info) {

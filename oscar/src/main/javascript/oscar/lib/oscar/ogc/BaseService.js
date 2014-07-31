@@ -13,7 +13,7 @@ oscar.ogc.BaseService = new oscar.BaseClass({
 	/**
 	 * Method: loadCapabilities
 	 * 
-	 * Loads the capabilitiles of the service.
+	 * Loads the capabilities of the service.
 	 */
 	loadCapabilities : function() {
 		var params = {

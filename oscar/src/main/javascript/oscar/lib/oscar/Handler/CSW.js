@@ -27,13 +27,15 @@
  */
 
 oscar.Handler.CSW = new oscar.BaseClass(oscar.Handler,{
+	TEXT:1,
+	SPATIAL:2,
     DEFAULT_SEARCH_PARAMETERS: {
         request:"GetRecords",
         service:"csw",
         version:"2.0.2",
         resultType:"results",
         outputSchema:"http://www.opengis.net/cat/csw/2.0.2",
-        maxRecords:110,
+        maxRecords:10,
         startPosition:1
     },
     EVENT_TYPES:["beforeSearch","afterSearch","success","failure"],
@@ -92,11 +94,24 @@ oscar.Handler.CSW = new oscar.BaseClass(oscar.Handler,{
         this.events.triggerEvent("afterSearch");
     },
     createFilter:function(parameters) {
-        filter = new OpenLayers.Filter.Comparison({
-            type: OpenLayers.Filter.Comparison.LIKE,
-            property:"csw:AnyText",
-            value:this.query.q
-        });
+		var filter = null;
+		switch (this.query.type) {
+			case oscar.Handler.CSW.prototype.TEXT:
+				filter = new OpenLayers.Filter.Comparison({
+					type: OpenLayers.Filter.Comparison.LIKE,
+					property:"csw:AnyText",
+					value:this.query.q
+				});
+			break;
+			case oscar.Handler.CSW.prototype.SPATIAL:
+				filter = new OpenLayers.Filter.Comparison({
+					type: OpenLayers.Filter.Spatial.BBOX,
+					property:"ows:BoundingBox",
+					value:this.query.spatial,
+					projection:this.map.getProjection()
+				});
+			break;
+		}
         parameters.Query = {
                 ElementSetName : {
                     value : "full"
@@ -106,7 +121,7 @@ oscar.Handler.CSW = new oscar.BaseClass(oscar.Handler,{
                     Filter : filter
                 }
             }
-        if(this.query.q.length ==0) {
+        if(this.query.q.length ==0 && this.query.spatial == null) {
             delete parameters.Query.Constraint;
         }
     },
@@ -125,15 +140,18 @@ oscar.Handler.CSW = new oscar.BaseClass(oscar.Handler,{
     },
     previous:function() {
         var info = this.results.SearchResults;
-        var parameters = {};
+		var matched = info.numberOfRecordsMatched;
+		var returned = info.numberOfRecordsReturned;
+		var next = info.nextRecord;
+		
+		var parameters = {};
         OpenLayers.Util.extend(parameters,this.parameters);
-        
-        var newStartPosition = info.nextRecord - (this.DEFAULT_SEARCH_PARAMETERS.maxRecords*2)
-        if(newStartPosition < 1) {
-         newStartPosition = 1;
-        }
-        parameters.startPosition = newStartPosition;
-        
+		if(next > 0) {
+			parameters.startPosition = next - returned - this.DEFAULT_SEARCH_PARAMETERS.maxRecords;
+		} else {
+			parameters.startPosition = matched - returned +1 - this.DEFAULT_SEARCH_PARAMETERS.maxRecords;
+		}
+		if(parameters.startPosition < 0) parameters.startPosition = 1;
         this.search(this.query,parameters);
     },
     CLASS_NAME:"oscar.Handler.CSW"

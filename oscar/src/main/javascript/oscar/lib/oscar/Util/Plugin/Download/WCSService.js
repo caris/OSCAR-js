@@ -26,7 +26,7 @@
 oscar.Util.Plugin.Download.WCSService = new oscar.BaseClass(
 		oscar.Util.Plugin.Download,
 		{
-			pluginType : "OGC:WCS-1.1.0-http-get-coverage",
+			pluginType : "OGC:WCS-1.1.0-http-describe-coverage",
 			icon : "ui-icon-wcs-download",
 			initialize : function(options) {
 				oscar.Util.Plugin.Download.prototype.initialize.apply(this,
@@ -42,7 +42,7 @@ oscar.Util.Plugin.Download.WCSService = new oscar.BaseClass(
 			createDatabase : function() {
 				this.database = new oscar.Util.Database();
 				this.database.addTable("sources", [ "id", "title", "bbox",
-						"abstract", "fk_capabilities", "dataType" ]);
+						"abstract", "fk_capabilities", "dataType","coverage" ]);
 				this.database.addTable("capabilities", [ "capabilities" ]);
 			},
 
@@ -57,8 +57,11 @@ oscar.Util.Plugin.Download.WCSService = new oscar.BaseClass(
 					service : "WCS",
 					version : "1.1.0"
 				}
+				
+				var baseUrl = $$.trim(this.link.url).split("?")[0];
+				
 				this.wcsRequest = OpenLayers.Request.GET({
-					url : $$.trim(this.link.url),
+					url : baseUrl,
 					params : params,
 					async : false,
 					success : this.success,
@@ -77,27 +80,38 @@ oscar.Util.Plugin.Download.WCSService = new oscar.BaseClass(
 				var capIndex = this.database.addRecord("capabilities", {
 					capabilities : capabilities
 				});
-				coverages = oscar.Util.Metadata.getCoverages(capabilities);
-				for ( var c in coverages) {
-					var coverage = coverages[c];
-					var bbox = new OpenLayers.Bounds(
-							coverage.wgs84BoundingBox.west,
-							coverage.wgs84BoundingBox.south,
-							coverage.wgs84BoundingBox.east,
-							coverage.wgs84BoundingBox.north);
-					var transformedBounds = bbox.clone();
-					transformedBounds.transform(new OpenLayers.Projection(
-							"EPSG:4326"), this.map.getProjectionObject());
-					var record = {
-						"id" : coverage.identifier,
-						"title" : coverage.title,
-						"abstract" : coverage["abstract"],
-						"bbox" : transformedBounds,
-						"fk_capabilities" : capIndex,
-						"dataType" : "wcs"
-					}
-					this.database.addRecord("sources", record);
+				
+				var coverage = null;
+				OpenLayers.Request.GET({
+					url:$$.trim(this.link.url),
+					async:false,
+					success:function(resp) {
+						var reader = new oscar.Format.WCSDescribeCoverage();
+						coverage = reader.read(resp.responseXML);
+					},
+					scope:this
+				});
+				var bbox = coverage.coverageDescription.domain.spatialDomain.boundingBoxes[0];
+				var bbox = new OpenLayers.Bounds(
+						bbox.west,
+						bbox.south,
+						bbox.east,
+						bbox.north);
+				var transformedBounds = bbox.clone();
+				transformedBounds.transform(new OpenLayers.Projection(
+						"EPSG:4326"), this.map.getProjectionObject());
+				var record = {
+					"id" : coverage.identifier,
+					"title" : coverage.title,
+					"abstract" : coverage["abstract"],
+					"bbox" : transformedBounds,
+					"fk_capabilities" : capIndex,
+					"dataType" : "wcs",
+					"coverage" : coverage
+				
 				}
+				this.database.addRecord("sources", record);
+					
 			},
 
 			/**

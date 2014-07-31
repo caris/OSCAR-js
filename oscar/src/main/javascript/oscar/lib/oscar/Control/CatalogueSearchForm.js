@@ -29,10 +29,16 @@ oscar.Control.CatalogueSearchForm = oscar.BaseClass(oscar.Control,{
     basicSearch:true,
     handler:null,
     ui:null,
+	spatialSearch:null,
     initialize:function(options) {
         this.EVENT_TYPES = oscar.Control.CatalogueSearchForm.prototype.EVENT_TYPES.concat(oscar.Control.prototype.EVENT_TYPES);
         oscar.Control.prototype.initialize.apply(this,[options]);
         this.events.register("search",this,this.search);
+		this.spatialSearch = new oscar.Control.Box();
+		this.spatialSearch.events.on({
+			"done":this.performSpatialSearch,
+			scope:this
+		});
         
     },
     setMap:function(map) {
@@ -50,9 +56,12 @@ oscar.Control.CatalogueSearchForm = oscar.BaseClass(oscar.Control,{
         if(this.defaultText) {
             this.input.val(this.defaultText);
         }
+		this.map.addControl(this.spatialSearch);
         this.form.append(this.input);
         this.button = $$("<button></button").html(oscar.i18n("Search"));
+		this.spatialButton = $$("<button></button").html(oscar.i18n("Spatial Search"));
         this.form.append(this.button);
+		this.form.append(this.spatialButton);
         var scope = this;
         this.button.button({
             icons : {
@@ -62,16 +71,34 @@ oscar.Control.CatalogueSearchForm = oscar.BaseClass(oscar.Control,{
         }).click(function() {
             var criteria = {
                 q:scope.input.val(),
-                spatial:scope.map.getExtent()
+				type:oscar.Handler.CSW.prototype.TEXT
             };
             if(scope.basicSearch) {
             } else {}//advanced
             scope.events.triggerEvent("search",criteria);
         });
-        
-        
+		
+		this.spatialButton.button({
+            icons : {
+                primary : "ui-icon-arrow-4-diag"
+            },
+            text : false
+        }).click(function() {
+			scope.input.val("");
+			scope.spatialSearch.activate();
+		});
         $$(this.div).append(this.form);
         return this.div;
     },
+	performSpatialSearch:function(geom) {
+		var criteria = {
+			q:this.input.val(),
+			spatial:geom.getBounds(),
+			type:oscar.Handler.CSW.prototype.SPATIAL
+		}
+		this.spatialSearch.deactivate();
+		this.events.triggerEvent("search",criteria);
+		
+	},
     CLASS_NAME:"oscar.Control.CatalogueSearchForm"
 });
