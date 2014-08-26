@@ -405,6 +405,27 @@ oscar.Format.OGC.ows.v1_0_0 = {
 		obj.metadataUrls.push(metadata);
 
 	},
+	readers:{
+		"ows": {
+			"Constraint":function(obj,node) {
+				if(!obj.constraints) {
+					obj.constraints = [];
+				}
+				var constraint = [];
+				constraint.name = this.getAttributeNS(node,"","name");
+				this.runChildNodes(constraint,node);
+				obj.constraints.push(constraint);
+			},
+			
+			"Value":function(obj,node) {
+				if(!obj.values) {
+					obj.values=[];
+				}
+				obj.values.push(this.getChildValue(node));
+			}
+		}
+		
+	},
 
 	/**
 	 * Constant: CLASS_NAME

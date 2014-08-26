@@ -133,6 +133,8 @@
 								<include>**/Format/OXF.js</include>
 								<include>**/Format/OXF/v2.js</include>
 								<include>**/Format/OXF/XML.js</include>
+								<include>**/Format/OGC/Filter.js</include>
+								<include>**/Format/OGC/Filter/v1_1_0.js</include>
 								<include>**/Format/CSW.js</include>
 								<include>**/Format/CSW/v2_0_2.js</include>
 								<include>**/Format/CSW/v2_0_2/Capabilities.js</include>
