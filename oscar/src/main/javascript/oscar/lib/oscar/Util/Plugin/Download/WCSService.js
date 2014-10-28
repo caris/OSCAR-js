@@ -85,7 +85,7 @@ oscar.Util.Plugin.Download.WCSService = new oscar.BaseClass(
 				
 				var url = oscar.Util.Metadata.getOperationHref(
 				capabilities, "DescribeCoverage");
-				console.log(url);
+
 				OpenLayers.Request.GET({
 					url:$$.trim(url),
 					async:false,
