@@ -411,7 +411,7 @@ oscar.Format.OGC.ows.v1_0_0 = {
 				if(!obj.constraints) {
 					obj.constraints = [];
 				}
-				var constraint = [];
+				var constraint = {};
 				constraint.name = this.getAttributeNS(node,"","name");
 				this.runChildNodes(constraint,node);
 				obj.constraints.push(constraint);

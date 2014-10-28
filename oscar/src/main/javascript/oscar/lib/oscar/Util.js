@@ -822,7 +822,7 @@ OpenLayers.Util.onImageLoadErrorColor = "transparent";
 
 oscar.Util.WizardFactory = function(protocol,link,options) {
 	switch(protocol) {
-		case "OGC:WCS-1.1.0-http-describe-coverage":
+		case "OGC:WCS-1.1.0-http-get-capabilities":
 			return new oscar.Gui.Wizard.WebCoverageServiceDownload(protocol,link.url,options);
 		case "IENC":
 		case "Shapefile":

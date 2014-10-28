@@ -302,6 +302,9 @@ OpenLayers.Format.CSWGetRecords.v2_0_2.prototype.readers["dsc"] = {
 	link.protocol = this.getAttributeNS(node,"","protocol");
 	link.url = this.getChildValue(node);
 	obj.links.push(link);
+},
+"DataIdentifier": function(node,obj) {
+	obj.dataIdentifier = this.getChildValue(node);
 }
 }
 

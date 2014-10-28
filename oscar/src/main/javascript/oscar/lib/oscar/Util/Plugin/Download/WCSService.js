@@ -26,7 +26,7 @@
 oscar.Util.Plugin.Download.WCSService = new oscar.BaseClass(
 		oscar.Util.Plugin.Download,
 		{
-			pluginType : "OGC:WCS-1.1.0-http-describe-coverage",
+			pluginType : "OGC:WCS-1.1.0-http-get-capabilities",
 			icon : "ui-icon-wcs-download",
 			initialize : function(options) {
 				oscar.Util.Plugin.Download.prototype.initialize.apply(this,
@@ -82,9 +82,19 @@ oscar.Util.Plugin.Download.WCSService = new oscar.BaseClass(
 				});
 				
 				var coverage = null;
+				
+				var url = oscar.Util.Metadata.getOperationHref(
+				capabilities, "DescribeCoverage");
+				console.log(url);
 				OpenLayers.Request.GET({
-					url:$$.trim(this.link.url),
+					url:$$.trim(url),
 					async:false,
+					params: {
+						request:"DescribeCoverage",
+						service:"WCS",
+						version:"1.1.0",
+						identifiers:this.record.dataIdentifier
+					},
 					success:function(resp) {
 						var reader = new oscar.Format.WCSDescribeCoverage();
 						coverage = reader.read(resp.responseXML);
