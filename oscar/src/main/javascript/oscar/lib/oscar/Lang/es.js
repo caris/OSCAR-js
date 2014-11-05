@@ -320,7 +320,7 @@ OpenLayers.Util.applyDefaults(oscar.Lang.getDictionary("es"), {
 	
 	"DownloadManagerToolTip" : "Realiza un seguimiento de las descargas de wcs.",
 	
-	"metadataKeywordLabel" : "Palabra Clave",
+	"metadataKeywordLabel" : "Palabras clave",
 		
 	"metadataVocabularyLabel" : "Vocabulario",
 	

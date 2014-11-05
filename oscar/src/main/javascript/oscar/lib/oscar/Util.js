@@ -832,3 +832,17 @@ oscar.Util.WizardFactory = function(protocol,link,options) {
 			return null;
 	}
 };
+/**
+* APIMethod: oscar.Util.renderEntities
+* Takes a string and renders the character entities.
+* Parameters:
+* - str String object.
+* Returns:
+* Rendered entity string
+*
+**/
+oscar.Util.renderEntities = function(str) {
+	var field = document.createElement("textarea");
+	field.innerHTML = str;
+	return field.value;
+};
