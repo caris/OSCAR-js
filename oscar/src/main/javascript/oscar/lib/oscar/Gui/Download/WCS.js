@@ -267,22 +267,21 @@ oscar.Gui.Download.WCS = oscar.BaseClass(oscar.Gui.Download, {
         var fadeIn = function() {
         	scope.transformedDiv.innerHTML = pHolder.innerHTML;
             var children = oscar.jQuery(scope.transformedDiv).find("span");
-            for(var i=0;i<children.length;i++) {
-                var child = children[i];
-                var href= child.attributes['href'].value;
-                var onclick = function(classType, url) {
-                    return function() {
-                        scope.gotoUrl(classType, url);
-                    }
-                }
-                child.onclick = onclick(child.attributes['class'].value, href);
-            }
+			children.each(function() {
+				var $this = $$(this);
+				$this.attr("title",oscar.i18n($this.attr("class")));
+				$this.tooltip();
+				$this.click(function() {
+					var $this = $$(this);
+					scope.gotoUrl($this.attr("class"),$this.attr("href"));
+				});
+			});
             oscar.jQuery(scope.grfx).addClass("downloadReady");
             oscar.jQuery(this.content).addClass("ready");
             oscar.jQuery(scope.content).fadeIn("fast");
+			
         }
         oscar.jQuery(this.content).fadeOut("fast",fadeIn);
-    
     },
     /**
      * Method: gotoUrl
@@ -298,7 +297,10 @@ oscar.Gui.Download.WCS = oscar.BaseClass(oscar.Gui.Download, {
 				this.downloadFromService(url,filename);
                 break;
             case "dMetadata":
-                this.downloadFromService(url,"metadata.xml");
+				this.downloadFromService(url,"isometadata.xml");
+				break;
+			case "dGML":
+			    this.downloadFromService(url,"gmlmetadata.xml");
                 break;
         }
     },

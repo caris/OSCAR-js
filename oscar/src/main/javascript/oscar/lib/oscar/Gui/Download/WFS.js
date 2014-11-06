@@ -203,6 +203,7 @@ oscar.Gui.Download.WFS = oscar.BaseClass(oscar.Gui.Download, {
 				this.downloadFromService(url,filename);
 				break;
             case "dMetadata":
+			case "dGML":
                 window.open(url);
                 break;
         }
