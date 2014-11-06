@@ -352,5 +352,11 @@ OpenLayers.Util.applyDefaults(oscar.Lang.getDictionary("fr"), {
 	
 	"MoveAllToTheRight":"D\u00e9placer tout vers la droite.",
 	
-	"showThemeSwitcher":"Afficher s\u00e9lecteur de Th\u00e8mes"
+	"showThemeSwitcher":"Afficher s\u00e9lecteur de Th\u00e8mes",
+	
+	"dCoverage":"T\u00e9l\u00e9charger Couverture",
+	
+	"dMetadata":"T\u00e9l\u00e9charger M\u00e9tadonn\u00e9es (ISO)",
+	
+	"dGML":"T\u00e9l\u00e9charger M\u00e9tadonn\u00e9es (GML)"
 });
