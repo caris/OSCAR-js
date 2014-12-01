@@ -24,15 +24,24 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
 /**
- * Proxy class for handing 
+ * Proxy class for handing
  * 
  * @author tcoburn
  *
  */
 public class ISOMetadataDownload extends ISOMetadataRequest {
 
+    /**
+     * The filename to use during download.
+     */
     private String fileName;
 
+    /**
+     * Constructor
+     * 
+     * @param request
+     * @param response
+     */
     public ISOMetadataDownload(HttpServletRequest request,
             HttpServletResponse response) {
         super(request, response);
@@ -40,7 +49,7 @@ public class ISOMetadataDownload extends ISOMetadataRequest {
 
     @Override
     void transform() throws Exception {
-        
+
         DOMSource source = new DOMSource(this.document);
         TransformerFactory tFactory = TransformerFactory.newInstance();
         tFactory.newTransformer().transform(source,
@@ -48,22 +57,32 @@ public class ISOMetadataDownload extends ISOMetadataRequest {
     }
 
     @Override
-    void configurResponseHeaders() {
+    void setResponseHeaders() {
+        
         HttpServletResponse resp = this.getResponse();
         resp.setHeader("Expires", "0");
-        resp.setHeader("Cache-Control",
-                "no-cache, no-store, must-revalidate");
+        resp.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
         resp.setHeader("Pragma", "no-cache");
         this.getRequest().getHeader("Content-Disposition");
         resp.setHeader("Content-Disposition",
-                    "attachment;filename=" + this.getFileName());
-        
+                "attachment;filename=" + this.getFileName());
+
     }
-    
+
+    /**
+     * Set the filename to use when adjusting the content disposition.
+     * 
+     * @param fileName
+     */
     public void setFileName(String fileName) {
         this.fileName = fileName;
     }
 
+    /**
+     * Returns the filename.
+     * 
+     * @return The filename.
+     */
     private String getFileName() {
         return this.fileName;
     }

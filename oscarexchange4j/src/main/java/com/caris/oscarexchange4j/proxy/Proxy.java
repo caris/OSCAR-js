@@ -73,7 +73,7 @@ public abstract class Proxy {
         }
         try (InputStream is = connection.getInputStream()) {
             processInputStream(is);
-            configurResponseHeaders();
+            setResponseHeaders();
             transform();
         } catch (Exception e) {
         }
@@ -83,7 +83,7 @@ public abstract class Proxy {
     /**
      * Called by subclasses to configure response headers.
      */
-    abstract void configurResponseHeaders();
+    abstract void setResponseHeaders();
 
     /**
      * Returns the servlet request.
