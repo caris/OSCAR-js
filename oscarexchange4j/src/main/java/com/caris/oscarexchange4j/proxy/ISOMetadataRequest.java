@@ -28,15 +28,33 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+/**
+ * Base proxy class for requestion ISO Metadata.
+ * 
+ * @author tcoburn
+ *
+ */
 public abstract class ISOMetadataRequest extends Proxy {
 
+    /**
+     * Constructor
+     * 
+     * @param request
+     *            The request
+     * @param response
+     *            The response
+     */
     public ISOMetadataRequest(HttpServletRequest request,
             HttpServletResponse response) {
         super(request, response);
     }
 
+    /**
+     * The document.
+     */
     protected Document document;
 
+    @Override
     protected void processInputStream(InputStream is) throws Exception {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         factory.setNamespaceAware(true);
@@ -52,14 +70,19 @@ public abstract class ISOMetadataRequest extends Proxy {
 
     }
 
+    /**
+     * @param childNodes
+     *            The child nodes.
+     * @return The first element node.
+     */
     private Node getFirstChildElement(NodeList childNodes) {
+        assert childNodes != null;
         for (int i = 0; i < childNodes.getLength(); i++) {
             Node node = childNodes.item(i);
             if (node.getNodeType() == Node.ELEMENT_NODE) {
                 return node;
             }
         }
-
         return null;
     }
 }

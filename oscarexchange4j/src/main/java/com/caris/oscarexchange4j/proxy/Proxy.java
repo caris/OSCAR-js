@@ -62,20 +62,19 @@ public abstract class Proxy {
      * 
      * @param url
      *            The URL.
+     * @throws Exception Thrown if something goes wrong.
      */
-    public void execute(URL url) {
+    public void execute(URL url) throws Exception {
         URLConnection connection = null;
         try {
             connection = url.openConnection();
 
-        } catch (IOException e) {
-
-        }
-        try (InputStream is = connection.getInputStream()) {
-            processInputStream(is);
-            setResponseHeaders();
-            transform();
-        } catch (Exception e) {
+        } finally {
+            try (InputStream is = connection.getInputStream()) {
+                processInputStream(is);
+                setResponseHeaders();
+                transform();
+            }
         }
 
     }
