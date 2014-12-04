@@ -169,6 +169,8 @@
 								<include>**/Util/PluginManager.js</include>
 								<include>**/Util/Plugin/Plugin.js</include>
 								<include>**/Util/Plugin/Download/Download.js</include>
+								<include>**/Util/Plugin/Download/GetRecordById.js</include>
+								<include>**/Util/Plugin/Download/GetRecordByIdView.js</include>
 								<include>**/Util/Plugin/Download/WCSService.js</include>
 								<include>**/Util/Plugin/Download/Zipfile.js</include>
 								<include>**/Lang.js</include>

@@ -41,18 +41,21 @@ oscar.ogc.BaseService = new oscar.BaseClass({
 	 * 
 	 * Parameters:
 	 * 
+	 * operation The operation.
 	 * method The method to get the url for. GET, POST currently supported.
 	 * 
 	 * 
+	 * 
 	 */
-	getUrl : function(method) {
+	getUrl : function(operation,method) {
 		method = method.toLowerCase();
 		var url = "";
+		var op = this.capabilities.operationsMetadata[operation];
 		switch (method) {
 		case "get":
+			url = op.dcp.http.get;
 			break;
 		case "post":
-			var op = this.capabilities.operationsMetadata["GetRecords"];
 			url = op.dcp.http.post;
 			break;
 		default:

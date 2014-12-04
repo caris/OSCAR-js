@@ -39,6 +39,23 @@ oscar.debug = {
  */
 oscar.Util = {};
 
+/**
+* APIMethod: buildUrl
+* This method takes a string and object of parameters and returns a url with query string.
+**/
+oscar.Util.buildUrl = function(url,parameters) {
+	if(!url) {
+		url = "";
+	}
+	var paramString = OpenLayers.Util.getParameterString(parameters);
+	paramString = unescape(paramString);
+	if (paramString.length > 0) {
+		var separator = (url.indexOf('?') > -1) ? '&' : '?';
+		url += separator + paramString;
+	}
+	return url;
+}
+
 
 /**
  * APIMethod: extractGeometriesFromFeatures

@@ -76,7 +76,7 @@ oscar.Handler.CSW = new oscar.BaseClass(oscar.Handler,{
         var formatter = new OpenLayers.Format.CSWGetRecords();
         var scope = this;
         OpenLayers.Request.POST({
-            url: this.catalogue.getUrl("POST"),
+            url: this.catalogue.getUrl(oscar.ogc.CatalogueService.prototype.GETRECORDS, "POST"),
             success:this.success,
             failure:this.failure,
             data:formatter.write(this.parameters),

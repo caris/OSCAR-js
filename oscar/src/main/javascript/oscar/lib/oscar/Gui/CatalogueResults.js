@@ -27,6 +27,7 @@ oscar.Gui.CatalogueResults = new oscar.BaseClass(oscar.Gui,{
     EVENT_TYPES:["next","previous"],
     features:[],
     map:null,
+	catalogueServices:null,
 	buttons:[],
     initialize:function(options) {
         oscar.Gui.prototype.initialize.apply(this,[options]);
@@ -57,7 +58,7 @@ oscar.Gui.CatalogueResults = new oscar.BaseClass(oscar.Gui,{
     buildLayout:function() {
         this.layout = {
             north:null,
-            center:null
+            center:null,
         }
         this.layout.north = $$("<div></div");
         this.layout.north.addClass("ui-layout-north");
@@ -276,8 +277,24 @@ oscar.Gui.CatalogueResults = new oscar.BaseClass(oscar.Gui,{
     },
 	createLinksPanel:function(record) {
 		var $div = $$("<div></div>");
+		
+		//here is where we are going to add the default protocol for GetRecordById
+		
 		if(record.links == null ||
-			record.links.length == 0) return $div;
+			record.links.length == 0) {
+			record.links = [];
+		}
+		
+		record.links.unshift({
+			protocol:oscar.Util.Plugin.Download.GetRecordByIdView.prototype.pluginType,
+			url:this.catalogueServices[0].getUrl(oscar.ogc.CatalogueService.prototype.GETRECORDBYID,"POST")
+		});
+		
+		record.links.unshift({
+			protocol:oscar.Util.Plugin.Download.GetRecordById.prototype.pluginType,
+			url:this.catalogueServices[0].getUrl(oscar.ogc.CatalogueService.prototype.GETRECORDBYID,"POST")
+		});
+		
 		for(var i=0;i<record.links.length;i++) {
 			var link = record.links[i];
 			var plugin = oscar.getPluginManager().getPluginFor(link.protocol);
@@ -307,7 +324,6 @@ oscar.Gui.CatalogueResults = new oscar.BaseClass(oscar.Gui,{
         }
         var $this = $$(this);
         $this.switchClass("","over",100);
-        //$this.addClass("over");
         $this.children().each(function() {
             var $this = $$(this);
             $this.addClass("over");
@@ -347,8 +363,6 @@ oscar.Gui.CatalogueResults = new oscar.BaseClass(oscar.Gui,{
     },
     CLASS_NAME:"oscar.Gui.CatalogueResults"
 });
-
-
 
 var cswget = {
     title:function(r) {

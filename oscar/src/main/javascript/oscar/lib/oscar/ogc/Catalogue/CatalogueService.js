@@ -4,6 +4,8 @@
  * Used to represent a catalogue service.
  */
 oscar.ogc.CatalogueService = new oscar.BaseClass(oscar.ogc.BaseService, {
+	GETRECORDBYID:"GetRecordById",
+	GETRECORDS:"GetRecords",
 	initialize : function(serviceEntry, options) {
 		oscar.ogc.BaseService.prototype.initialize.apply(this, [ serviceEntry,
 				options ]);
