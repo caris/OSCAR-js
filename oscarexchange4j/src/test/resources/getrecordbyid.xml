@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<GetRecordByIdResponse xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns="http://www.opengis.net/cat/csw/2.0.2" xmlns:ows="http://www.opengis.net/ows" xmlns:dct="http://purl.org/dc/terms/" xmlns:ogc="http://www.opengis.net/ogc" xmlns:gml="http://www.opengis.net/gml" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:dsc="http://www.caris.com/dsc/1.0" xmlns:ns9="http://www.opengis.net/gml/3.2" xmlns:smil="http://www.w3.org/2001/SMIL20/" xmlns:smil20lang="http://www.w3.org/2001/SMIL20/Language" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opengis.net/cat/csw/2.0.2 http://tcoburnws.caris.priv/spatialfusionserver/schemas/ogc/csw/2.0.2/csw.xsd">
+    <gmd:MD_Metadata xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns="http://www.isotc211.org/2005/gmd" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:gts="http://www.isotc211.org/2005/gts" xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://tcoburnws.caris.priv/spatialfusionserver/schemas/iso/19139/200670417/gmd/gmd.xsd">
+    <fileIdentifier>
+        <gco:CharacterString>5d0b9644-4ee2-4cf3-9cd1-0ed6d15348f7</gco:CharacterString>
+    </fileIdentifier>
+    <language>
+        <gco:CharacterString>eng</gco:CharacterString>
+    </language>
+    <characterSet>
+        <MD_CharacterSetCode codeList="http://tcoburnws.caris.priv/spatialfusionserver/schemas/iso/19139/20070417/resources/Codelist/gmxCodelists.xml#MD_CharacterSetCode" codeListValue="utf8"/>
+    </characterSet>
+    <hierarchyLevel>
+        <MD_ScopeCode codeList="http://tcoburnws.caris.priv/spatialfusionserver/schemas/iso/19139/20070417/resources/Codelist/gmxCodelists.xml#MD_ScopeCode" codeListValue="dataset"/>
+    </hierarchyLevel>
+    <contact xlink:type="simple">
+        <CI_ResponsibleParty>
+            <contactInfo xlink:type="simple"/>
+            <role>
+                <CI_RoleCode codeList="http://tcoburnws.caris.priv/spatialfusionserver/schemas/iso/19139/20070417/resources/Codelist/gmxCodelists.xml#CI_RoleCode" codeListValue="originator"/>
+            </role>
+        </CI_ResponsibleParty>
+    </contact>
+    <dateStamp>
+        <gco:Date>2014-11-12</gco:Date>
+    </dateStamp>
+    <metadataStandardName>
+        <gco:CharacterString>ISO 19115</gco:CharacterString>
+    </metadataStandardName>
+    <metadataStandardVersion>
+        <gco:CharacterString>2003</gco:CharacterString>
+    </metadataStandardVersion>
+    <referenceSystemInfo xlink:type="simple">
+        <MD_ReferenceSystem>
+            <referenceSystemIdentifier xlink:type="simple">
+                <RS_Identifier>
+                    <code>
+                        <gco:CharacterString>EPSG:4326</gco:CharacterString>
+                    </code>
+                    <codeSpace>
+                        <gco:CharacterString/>
+                    </codeSpace>
+                    <version>
+                        <gco:CharacterString/>
+                    </version>
+                </RS_Identifier>
+            </referenceSystemIdentifier>
+        </MD_ReferenceSystem>
+    </referenceSystemInfo>
+    <identificationInfo xlink:type="simple">
+        <MD_DataIdentification>
+            <citation xlink:type="simple">
+                <CI_Citation>
+                    <title>
+                        <gco:CharacterString>Thor_vector_surfaces</gco:CharacterString>
+                    </title>
+                    <date xlink:type="simple">
+                        <CI_Date>
+                            <date>
+<gco:Date>2014-11-12</gco:Date>
+                            </date>
+                            <dateType>
+<CI_DateTypeCode codeList="http://tcoburnws.caris.priv/spatialfusionserver/schemas/iso/19139/20070417/resources/Codelist/gmxCodelists.xml#CI_DateTypeCode" codeListValue="creation"/>
+                            </dateType>
+                        </CI_Date>
+                    </date>
+                </CI_Citation>
+            </citation>
+            <abstract>
+                <gco:CharacterString xsi:nil="true"/>
+            </abstract>
+            <resourceFormat xlink:type="simple">
+                <MD_Format>
+                    <name>
+                        <gco:CharacterString>BDB Coverages</gco:CharacterString>
+                    </name>
+                </MD_Format>
+            </resourceFormat>
+            <resourceConstraints xlink:type="simple">
+                <MD_Constraints xsi:type="MD_LegalConstraints_Type">
+                    <accessConstraints>
+                        <MD_RestrictionCode codeList="http://tcoburnws.caris.priv/spatialfusionserver/schemas/iso/19139/20070417/resources/Codelist/gmxCodelists.xml#MD_RestrictionCode" codeListValue="otherRestrictions"/>
+                    </accessConstraints>
+                </MD_Constraints>
+            </resourceConstraints>
+            <spatialRepresentationType>
+                <MD_SpatialRepresentationTypeCode codeList="http://tcoburnws.caris.priv/spatialfusionserver/schemas/iso/19139/20070417/resources/Codelist/gmxCodelists.xml#MD_SpatialRepresentationTypeCode" codeListValue="vector"/>
+            </spatialRepresentationType>
+            <language>
+                <gco:CharacterString>eng</gco:CharacterString>
+            </language>
+            <extent xlink:type="simple">
+                <EX_Extent>
+                    <geographicElement xlink:type="simple">
+                        <EX_GeographicBoundingBox>
+                            <westBoundLongitude>
+<gco:Decimal>-123.091135252339</gco:Decimal>
+                            </westBoundLongitude>
+                            <eastBoundLongitude>
+<gco:Decimal>-122.667601835118</gco:Decimal>
+                            </eastBoundLongitude>
+                            <southBoundLatitude>
+<gco:Decimal>37.8364968925504</gco:Decimal>
+                            </southBoundLatitude>
+                            <northBoundLatitude>
+<gco:Decimal>38.2412244012868</gco:Decimal>
+                            </northBoundLatitude>
+                        </EX_GeographicBoundingBox>
+                    </geographicElement>
+                </EX_Extent>
+            </extent>
+        </MD_DataIdentification>
+    </identificationInfo>
+</gmd:MD_Metadata>
+</GetRecordByIdResponse>

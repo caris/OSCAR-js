@@ -17,6 +17,7 @@
  */
 package com.caris.oscarexchange4j.proxy;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,28 +28,60 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
+/**
+ * 
+ * 
+ * @author tcoburn
+ *
+ */
 public class ISOMetadataView extends ISOMetadataRequest {
 
+    /**
+     * The transformer
+     */
+    private Transformer transformer;
+
+    /**
+     * @param request
+     * @param response
+     */
     public ISOMetadataView(HttpServletRequest request,
             HttpServletResponse response) {
         super(request, response);
     }
 
-    public InputStream getTransformer() {
-        return getClass().getResourceAsStream("/isoToHtml.xsl");
+    /**
+     * Sets the transformer to be used.
+     * 
+     * @param transformer
+     *            The transformer
+     */
+    public void setTransformer(Transformer transformer) {
+        this.transformer = transformer;
+    }
+
+    /**
+     * Get the transformer for converting the document.
+     * 
+     * @return The transformer
+     * @throws IOException
+     *             Thrown if something goes wrong.
+     */
+    private Transformer getTransformer() throws Exception {
+        if (this.transformer != null) {
+            return this.transformer;
+        }
+        try (InputStream is = getClass().getResourceAsStream("/isoToHtml.xsl")) {
+            return TransformerFactory.newInstance().newTransformer(
+                    new StreamSource(is));
+        }
     }
 
     @Override
     void transform() throws Exception {
         DOMSource source = new DOMSource(this.document);
-        try (InputStream is = getTransformer()) {
-            Transformer transformer = TransformerFactory.newInstance()
-                    .newTransformer(new StreamSource(is));
-
-            transformer.transform(source,
-                    new StreamResult(this.getOutputStream()));
-        }
-
+        this.getTransformer().transform(source,
+                new StreamResult(this.getOutputStream()));
     }
 
     @Override
