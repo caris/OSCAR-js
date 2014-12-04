@@ -24,7 +24,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
 /**
- * Proxy class for handing
+ * Proxy class for handling.
  * 
  * @author tcoburn
  *
@@ -40,7 +40,9 @@ public class ISOMetadataDownload extends ISOMetadataRequest {
      * Constructor
      * 
      * @param request
+     *            The servlet request.
      * @param response
+     *            The servlet response.
      */
     public ISOMetadataDownload(HttpServletRequest request,
             HttpServletResponse response) {
@@ -58,8 +60,9 @@ public class ISOMetadataDownload extends ISOMetadataRequest {
 
     @Override
     void setResponseHeaders() {
-        
+
         HttpServletResponse resp = this.getResponse();
+        resp.setContentType(this.getRequest().getContentType());
         resp.setHeader("Expires", "0");
         resp.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
         resp.setHeader("Pragma", "no-cache");
