@@ -29,7 +29,7 @@ oscar.Util.Plugin.Download.GetRecordById = new oscar.BaseClass(
 				});
 				
 				downloadGui = new oscar.Gui.Download();
-				downloadGui.downloadFromService(url,this.record.identifier[0].value,"isometadatadownload.action");
+				downloadGui.downloadFromService(url,this.record.identifier[0].value,oscar.ISOMetadataDownloadProxy);
 			},
 			CLASS_NAME : "oscar.Util.Plugin.Download.GetRecordById"
 		});
