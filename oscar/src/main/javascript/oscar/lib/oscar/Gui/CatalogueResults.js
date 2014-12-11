@@ -58,7 +58,7 @@ oscar.Gui.CatalogueResults = new oscar.BaseClass(oscar.Gui,{
     buildLayout:function() {
         this.layout = {
             north:null,
-            center:null,
+            center:null
         }
         this.layout.north = $$("<div></div");
         this.layout.north.addClass("ui-layout-north");

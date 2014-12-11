@@ -27,6 +27,12 @@
     oscar.jQuery = jQuery.noConflict();
     window.$$ = oscar.jQuery;
     oscar.DownloadHost=null;
+	
+	//Proxy to use for viewing iso metadata. Used by oscar.Util.Plugin.Download.GetRecordByIdView
+	oscar.ISOMetadataViewProxy=null;
+	
+	//Proxy to use for viewing iso metadata. Used by oscar.Util.Plugin.Download.GetRecordById
+	oscar.ISOMetadataDownloadProxy=null;
 })();
 /**
  * Constant: VERSION_NUMBER
