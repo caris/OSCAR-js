@@ -547,3 +547,7 @@ OpenLayers.Format.WFSCapabilities.v1_0_0.prototype.readers["wfs"]["LatLongBoundi
 	}
 	OpenLayers.Request.XMLHttpRequest = cXMLHttpRequest;
 })();
+
+//Override the default value for these OL objects.
+OpenLayers.Control.Measure.prototype.geodesic=true;
+OpenLayers.Control.ScaleLine.prototype.geodesic=true;
