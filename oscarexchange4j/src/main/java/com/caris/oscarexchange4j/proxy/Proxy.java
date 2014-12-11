@@ -58,13 +58,13 @@ public abstract class Proxy {
     }
 
     /**
-     * This metod executes the provided url.
+     * This method opens a connection to the provided url.
      * 
      * @param url
      *            The URL.
      * @throws Exception Thrown if something goes wrong.
      */
-    public void execute(URL url) throws Exception {
+    public void openConnection(URL url) throws Exception {
         URLConnection connection = null;
         try {
             connection = url.openConnection();
