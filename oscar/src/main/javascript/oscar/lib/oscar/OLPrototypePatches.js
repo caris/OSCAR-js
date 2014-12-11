@@ -854,3 +854,7 @@ OpenLayers.Format.CSWGetRecordById.v2_0_2.prototype.readers["csw"]["GetRecordByI
 	}
 	OpenLayers.Request.XMLHttpRequest = cXMLHttpRequest;
 })();
+
+//Override the default value for these OL objects.
+OpenLayers.Control.Measure.prototype.geodesic=true;
+OpenLayers.Control.ScaleLine.prototype.geodesic=true;
