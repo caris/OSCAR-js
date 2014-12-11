@@ -30,7 +30,7 @@ oscar.Util.Plugin.Download.GetRecordByIdView = new oscar.BaseClass(
 				
 				var queryString = OpenLayers.Util.getParameterString({url:url});
 
-				var actionUrl = "isometadataview.action?"+queryString;
+				var actionUrl = oscar.ISOMetadataViewProxy+"?"+queryString;
 				var iframeDiv = $$("<div></div>");
 				iframeDiv.css("background-color","white");
 				
@@ -40,7 +40,7 @@ oscar.Util.Plugin.Download.GetRecordByIdView = new oscar.BaseClass(
 				iframe.attr("height",400);
 				iframe.attr("frameborder",0);
 				iframe.attr("seamless");
-				var dlg = $$("<div></div>").dialog({"width":"520px"});
+				var dlg = $$("<div></div>").dialog({"width":"520px",resizable:false});
 				iframeDiv.append(iframe);
 				dlg.append(iframeDiv);
 			},
