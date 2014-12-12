@@ -59,7 +59,7 @@ public class ISOMetadataViewTest {
     @Test
     public void view() throws Exception {
         ISOMetadataView proxy = new ISOMetadataView(request, response);
-        proxy.execute(getClass().getResource("/getrecordbyid.xml"));
+        proxy.openConnection(getClass().getResource("/getrecordbyid.xml"));
         EasyMock.verify(response,request);
         
     }

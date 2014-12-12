@@ -85,7 +85,7 @@ public class ISOMetadataDownloadTest {
     public void download() throws Exception {
         ISOMetadataDownload proxy = new ISOMetadataDownload(request, response);
         proxy.setFileName("test.xml");
-        proxy.execute(getClass().getResource("/getrecordbyid.xml"));
+        proxy.openConnection(getClass().getResource("/getrecordbyid.xml"));
         EasyMock.verify(response, request);
 
     }
