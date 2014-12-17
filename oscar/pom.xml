@@ -177,6 +177,8 @@
 								<include>**/Lang/en.js</include>
 								<include>**/Lang/es.js</include>
 								<include>**/Lang/fr.js</include>
+								<include>**/Layer.js</include>
+								<include>**/Layer/GetCoveragePreview.js</include>
 								<include>**/ogc.js</include>
 								<include>**/ogc/BaseService.js</include>
 								<include>**/ogc/Catalogue/CatalogueService.js</include>

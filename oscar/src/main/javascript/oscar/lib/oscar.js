@@ -24,6 +24,7 @@
     oscar.getImagePath=function() {
      return oscar._getScriptLocation() + "images/";
     }	
+
     oscar.jQuery = jQuery.noConflict();
     window.$$ = oscar.jQuery;
     oscar.DownloadHost=null;
@@ -33,6 +34,9 @@
 	
 	//Proxy to use for viewing iso metadata. Used by oscar.Util.Plugin.Download.GetRecordById
 	oscar.ISOMetadataDownloadProxy=null;
+	
+	//Proxy to use for previewing bathymetry  coverages.
+	oscar.PreviewCoverageProxy=null;
 })();
 /**
  * Constant: VERSION_NUMBER
