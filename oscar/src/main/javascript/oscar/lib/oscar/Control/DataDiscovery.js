@@ -69,8 +69,6 @@ oscar.Control.DataDiscovery = oscar.BaseClass(oscar.Control.DragPanel, {
 	
 	database:null,
 	
-	showAbstract:true,
-	
 	/**
 	 * APIProperty: styles
 	 * 
@@ -101,16 +99,10 @@ oscar.Control.DataDiscovery = oscar.BaseClass(oscar.Control.DragPanel, {
 	 * 
 	 *  db - {oscar.Util.Database} The database of results for searching.
 	 */
-    initialize:function(db,options) {
-	    oscar.Control.DragPanel.prototype.initialize.apply(this,[options]);
+    initialize:function(db) {
+	    oscar.Control.DragPanel.prototype.initialize.apply(this);
 	    this.database = db;
 	    this.database.events.on({"dbupdated":this.dbupdated,scope:this});
-		this.events.on({
-			"closed":function() {
-				this.deactivate();
-			},
-			scope:this
-		});
 	},
 	dbupdated:function(e) {
 	},
@@ -166,8 +158,8 @@ oscar.Control.DataDiscovery = oscar.BaseClass(oscar.Control.DragPanel, {
 		 this.queuePanel = $$("<div></div>").addClass("queuePanel");
          
          /* add everything to the main panel */
-		 //$$(this.discoverPanel).append(searchHeader);
-		 //$$(this.discoverPanel).append(searchPanel);
+		 $$(this.discoverPanel).append(searchHeader);
+		 $$(this.discoverPanel).append(searchPanel);
 		 $$(this.discoverPanel).append(optionsHeader);
 		 $$(this.discoverPanel).append(this.optionsPanel);
 		 $$(this.discoverPanel).append(this.queueHeader);
@@ -236,11 +228,7 @@ oscar.Control.DataDiscovery = oscar.BaseClass(oscar.Control.DragPanel, {
                 OpenLayers.Event.stop(e, true);
          });
          $$(this.content).append(this.discoverPanel);
-		 if(this.query) {
-			this.txt.val(this.query);
-		 }
          this.getResults();
-
 	},
 	
     /**
@@ -290,7 +278,7 @@ oscar.Control.DataDiscovery = oscar.BaseClass(oscar.Control.DragPanel, {
                 var $this = $$(this);
                 scope.unselectFeature();
                 $this.addClass("selected");
-                scope.discoverPanel.accordion("option", "active",0);
+                scope.discoverPanel.accordion("option", "active",1);
                 scope.drawFeature($this);
                 
             });
@@ -309,26 +297,24 @@ oscar.Control.DataDiscovery = oscar.BaseClass(oscar.Control.DragPanel, {
 	displayResults:function(e) {
         var scope = this;
         var query = this.txt.val().trim();
-		var validResults = [];
         this.resultsPanel.children().each(function() {
             var $this = $$(this);
             var mapViewPort = scope.map.getExtent();
             var isInRange = (mapViewPort.containsBounds($this.data("bbox")) ||
                 mapViewPort.intersectsBounds($this.data("bbox")));
             
-            if(isInRange) {
+            var textFound = (query.length == 0 || 
+					$this.data("id").toLowerCase().indexOf(query.toLowerCase()) !=-1 || 
+					$this.data("title").toLowerCase().indexOf(query.toLowerCase())!=-1
+			);
+            
+            if(isInRange && textFound) {
                 $this.show();
-				validResults.push($this);
             } else {
                 $this.hide();
             }
         });
-		setTimeout(function() {
-		if(validResults.length == 1) {
-			validResults[0].click();
-		}
-		},500);
-	},		
+	},	
 	/**
 	 * Method: drawFeature
 	 * Once the feature is selected in the results panel this will display 
@@ -349,10 +335,8 @@ oscar.Control.DataDiscovery = oscar.BaseClass(oscar.Control.DragPanel, {
 	    var scope = this;
 	    setTimeout(function(){
 			var selectFeature = scope.map.getControlsByClass("oscar.Control.SelectFeature")[0];
-			if(selectFeature) {
-				selectFeature.ctrl.unselectAll();
-				selectFeature.ctrl.select(feat);
-			}
+			selectFeature.ctrl.unselectAll();
+			selectFeature.ctrl.select(feat);
 	    },0);
 	    
 	    var viewPort = this.map.getExtent();
@@ -360,12 +344,11 @@ oscar.Control.DataDiscovery = oscar.BaseClass(oscar.Control.DragPanel, {
 	    	this.map.zoomToExtent(bbox);
 	    }
 	    if(this.downloadOptions == null) {
-	    	this.downloadOptions = new oscar.Gui.DownloadOptions({db:this.database,map:this.map,showAbstract:this.showAbstract});
+	    	this.downloadOptions = new oscar.Gui.DownloadOptions({db:this.database,map:this.map});
 	    	this.downloadOptions.events.on({"serviceReady":this.queueDownload,scope:this});
 	    	this.downloadOptions.appendTo(this.optionsPanel);
 	    }
-	    this.downloadOptions.coverage = $div.data("coverage")
-		this.downloadOptions.setFeature(feat);
+	    this.downloadOptions.setFeature(feat);
 	},
 	/**
 	 * Method: activate
@@ -426,7 +409,7 @@ oscar.Control.DataDiscovery = oscar.BaseClass(oscar.Control.DragPanel, {
      */
     queueDownload:function(service) {
 
-    	this.discoverPanel.accordion("option", "active",1);
+    	this.discoverPanel.accordion("option", "active",2);
 
     	if(this.queuePanel.children().length>0) {
             this.queuePanel.prepend(service.draw());
