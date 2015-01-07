@@ -51,12 +51,12 @@ oscar.Gui.Download = oscar.BaseClass(oscar.Gui, {
 			form.method="POST";
 			var iUrl = document.createElement("input");
 			iUrl.name="url";
-			iUrl.tyle="text";
+			iUrl.type="text";
 			iUrl.value = url;
 			form.appendChild(iUrl);
 			var iFilename= document.createElement("input");
 			iFilename.name="filename";
-			iFilename.tyle="text";
+			iFilename.type="text";
 			iFilename.value = filename;
 			form.appendChild(iFilename);
 			document.body.appendChild(form);
