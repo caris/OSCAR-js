@@ -42,22 +42,21 @@ oscar.Gui.Download = oscar.BaseClass(oscar.Gui, {
      * Creates a hidden iframe to post a url to allow the Save As dialog
      * to be used when downloading from a service.
      */
-    downloadFromService:function(url,filename,proxyOverride) {
-    	if(proxyOverride || oscar.DownloadHost) {
+    downloadFromService:function(url,filename) {
+    	if(oscar.DownloadHost) {
 			var form = document.createElement("form");
-			$$(form).css("display","none");
 			var formName = OpenLayers.Util.createUniqueID("randomForm");
 			form.name = formName;
-			form.action = proxyOverride || oscar.DownloadHost;
+			form.action = oscar.DownloadHost;
 			form.method="POST";
 			var iUrl = document.createElement("input");
 			iUrl.name="url";
-			iUrl.type="text";
+			iUrl.tyle="text";
 			iUrl.value = url;
 			form.appendChild(iUrl);
 			var iFilename= document.createElement("input");
-			iFilename.name="identifier";
-			iFilename.type="text";
+			iFilename.name="filename";
+			iFilename.tyle="text";
 			iFilename.value = filename;
 			form.appendChild(iFilename);
 			document.body.appendChild(form);
