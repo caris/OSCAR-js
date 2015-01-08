@@ -542,13 +542,20 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 		$resolutionDiv.append(this.$yText);
 		$resolutionDiv.append($meters.clone());
 		$$(div).append($resolutionDiv);
+		// variable names are just labels; the offsets array could be ordered XY or YX, depending on the CRS
 		var offsetX = parseFloat(offsets[0]);
 		var offsetY = parseFloat(offsets[1]);
 		var projection = new OpenLayers.Projection(this.gridBaseCRS);
 		offsetX *= oscar.Util.getMetersConversionFactor(projection);
 		offsetY *= oscar.Util.getMetersConversionFactor(projection);
-		this.$xText.val(offsetX);
-		this.$yText.val(Math.abs(offsetY));
+		var isGeographicCRS = oscar.Util.isGeographicCRS(projection);
+		if (isGeographicCRS) {
+			this.$xText.val(offsetY);
+			this.$yText.val(offsetX);
+		} else {
+			this.$xText.val(offsetX);
+			this.$yText.val(offsetY);
+		}
 	},	
 	/**
 	 * This function will build the download options for a Web Coverage Service
@@ -812,9 +819,10 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 			//inject the new grid offset values.
 			var resX = parseFloat(this.$xText.val());
 			var resY = parseFloat(this.$yText.val());
-			if(resY > 0) {
-				resY*=-1;
-			}			
+			
+			if (resY > 0) {
+				resY *= -1;
+			}
 			
 			resX /= oscar.Util.getMetersConversionFactor(projection);
 			resY /= oscar.Util.getMetersConversionFactor(projection);

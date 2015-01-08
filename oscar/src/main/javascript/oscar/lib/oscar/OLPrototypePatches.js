@@ -878,3 +878,7 @@ if (!Function.prototype.bind) {
     return fBound;
   };
 }
+
+//Override the default value for these OL objects.
+OpenLayers.Control.Measure.prototype.geodesic=true;
+OpenLayers.Control.ScaleLine.prototype.geodesic=true;
