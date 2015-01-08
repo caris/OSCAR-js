@@ -2,7 +2,7 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 <!-- WCS 1.1.0 -->
 <xsl:template match="owcs:Coverages"  xmlns:geonet="http://www.fao.org/geonetwork" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dct="http://purl.org/dc/terms/" xmlns:owcs="http://www.opengis.net/wcs/1.1/ows">
-    <div><xsl:apply-templates/></div>
+    <xsl:apply-templates/>
 </xsl:template>
 <xsl:template match="owcs:Coverage" xmlns:owcs="http://www.opengis.net/wcs/1.1/ows" xmlns:xlink="http://www.w3.org/1999/xlink">
 	<xsl:apply-templates/>
@@ -14,6 +14,7 @@
         <xsl:choose>
             <xsl:when test="(contains(@xlink:role,'coverage'))">dCoverage</xsl:when>
 			<xsl:when test="(contains(@xlink:role,'record'))">dMetadata</xsl:when>
+			<xsl:when test="(contains(@xlink:role,'BDB/attributes'))">dGML</xsl:when>
             <xsl:otherwise>dMetadata</xsl:otherwise>
         </xsl:choose>
     </xsl:variable>
@@ -38,6 +39,7 @@
         <xsl:choose>
             <xsl:when test="(contains(@xlink:role,'coverage'))">dCoverage</xsl:when>
 			<xsl:when test="(contains(@xlink:role,'record'))">dMetadata</xsl:when>
+			<xsl:when test="(contains(@xlink:role,'BDB/attributes'))">dGML</xsl:when>
             <xsl:otherwise>dCoverage</xsl:otherwise>
         </xsl:choose>
     </xsl:variable>
