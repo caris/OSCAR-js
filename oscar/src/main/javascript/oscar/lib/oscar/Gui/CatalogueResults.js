@@ -39,40 +39,89 @@ oscar.Gui.CatalogueResults = new oscar.BaseClass(oscar.Gui,{
     },
     draw:function() {
         oscar.Gui.prototype.draw.apply(this);
-        this.buildLayout();
+        this._buildLayout();
         var scope = this;
         setTimeout(function() {
-            var x = $$(scope.div).layout({
-                closable:false,
-                resizable:false,
-                center__showOverflow:true,
-                onresize:function() {
-                    scope.results.slimScroll({
-                        height:"auto",
-                        scrollTo:0
-                    });
-                }
-            });
+            scope.layout = $$(scope.div).layout({
+				west:{
+					initHidden:true,
+					slidable:true,
+					closable:false,
+					resizable:false,
+					hideTogglerOnSlide:true,
+					allowOverflow:false
+				}
+			});
+			scope.layout.allowOverflow();
         },0);
+
+
     },
-    buildLayout:function() {
-        this.layout = {
-            north:null,
-            center:null
-        }
-        this.layout.north = $$("<div></div");
-        this.layout.north.addClass("ui-layout-north");
-        this.layout.center = $$("<div></div");
-        this.layout.center.addClass("ui-layout-center");
-        $$(this.div).append(this.layout.north);
-        $$(this.div).append(this.layout.center);
-        this.results = $$("<div></div>");
-        this.layout.center.append(this.results);
-        this.$searchInfo = $$("<div>&nbsp;</div>");
+	toggleOptionsMode:function(optionsContainer) { 
+		if(this.layout.state.west.isClosed) {
+			this.layout.sizePane("west","100%");
+			this.layout.show("west");
+			this.layout.west.pane.append(optionsContainer);
+		} else {
+			this.layout.hide("west");
+			this.layout.west.pane.empty();
+		}
+	},
+	addOption:function(jDiv) {
+		this.optionsContainer.center.pane.append(jDiv);
+	},
+    _buildLayout:function() {
+		var build_ele = function (name,classArray) {
+			var element = $$("<"+name+"></"+name+">");
+			if(classArray) {
+				for(var i=0;i<classArray.length;i++) {
+					element.addClass(classArray[i]);
+				}
+			}
+			return element;
+		}
+		
+		
+		/**
+		* This panel will be used when entering an "alternate" mode. To
+		* provide additional functionality for the calling protocol.
+		**/
+		var mode_panel = build_ele("div",["ui-layout-west"]);
+		mode_panel.slimScroll();
+		/**
+		* This panel is used to display initial results from the query
+		**/
+		var results_panel = build_ele("div",["ui-layout-center"]);
+		
+		
+		/**
+		* These panels are used to facilitate in the display of the query results
+		**/
+		var pagination_panel = build_ele("div",["ui-layout-north"]);
+		var results_list_panel = build_ele("div",["ui-layout-center"]);
+
+		var scope = this;
+		$$(this.div).append(mode_panel);
+		$$(this.div).append(results_panel);
+
+		
+		results_panel.append(pagination_panel);
+		results_panel.append(results_list_panel);
+		results_panel.layout({
+			resizable:false,
+			north: {
+				closable:false,
+			},
+			center: {
+			},
+			center__showOverflow:true,
+		});
+		
+		this.$searchInfo = $$("<div>&nbsp;</div>");
         this.$previous = $$("<button>Previous</button>");
         this.$next = $$("<button>Next</button>");
-        var $results = $$(this.div);
-        var scope = this;
+		
+		        var scope = this;
         this.$buttons = $$("<div></div>");
         this.$buttons.css({
             "position":"relative"
@@ -118,14 +167,14 @@ oscar.Gui.CatalogueResults = new oscar.BaseClass(oscar.Gui,{
         this.$searchInfo.addClass("searchResultInformation");
         this.$buttons.append(this.$next);
         this.$buttons.append(this.$previous);
-        this.layout.north.append(this.$buttons);
+        pagination_panel.append(this.$buttons);
         this.$buttons.css("visibility","hidden");
-        
-        
-        
+		
+		this.results = $$("<div></div>");
+        results_list_panel.append(this.results);
     },
     showResults:function(results) {
-        this.layout.center.scrollTop();
+        //this.layout.center.scrollTop();
         this.results.empty();
         var layer = map.getLayersByName("results")[0].removeAllFeatures();
         this.features = [];
@@ -299,19 +348,8 @@ oscar.Gui.CatalogueResults = new oscar.BaseClass(oscar.Gui,{
 			var link = record.links[i];
 			var plugin = oscar.getPluginManager().getPluginFor(link.protocol);
 			if(plugin) {
-				var icon = plugin.getIcon() || "ui-icon-disk";
-				plugin.setOptions({link:link,map:this.map,record:record});
-				$button = $$("<button></button").html(link.protocol);
-				$button.data("plugin",plugin);
-				$button.button({
-					icons: {
-						primary:icon
-					},
-					text:false
-				}).click(function() {
-					$$(this).data("plugin").play();
-				});
-				$div.append($button);
+				plugin.setOptions({link:link,map:this.map,record:record,catalogueService:this.catalogueServices[0],parent:this});
+				plugin.drawTo($div);
 			}
 		}
 		return $div;
