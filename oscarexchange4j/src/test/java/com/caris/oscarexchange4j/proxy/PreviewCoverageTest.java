@@ -96,7 +96,6 @@ public class PreviewCoverageTest {
      * 
      * @throws Exception
      */
-    @Test
     public void generateUrl() throws Exception {
         String expected = "http://localhost/spatialfusionserver/services/ows/wcs/thor-wcs?GridOffsets=38.218514137268066,-38.218514137268066&store=false&BoundingBox=-13717294.727384,4565132.9021464,-13643915.18024,4591847.6435284,urn:ogc:def:crs:EPSG::900913&FORMAT=image/png&request=GetCoverage&service=WCS&identifier=Thor.02000005&GridBaseCRS=urn:ogc:def:crs:EPSG::900913&gridType=urn:ogc:def:method:WCS:1.1:2dSimpleGrid&version=1.1.0";
         HashMap<String, String> parameterMap = new HashMap<>();
