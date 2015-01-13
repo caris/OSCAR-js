@@ -734,8 +734,7 @@ OpenLayers.Format.CSWGetRecordById.v2_0_2.prototype.readers["csw"]["GetRecordByI
 			'cancelable' : false,
 			'timeStamp' : new Date + 0
 		});
-	}
-	;
+	};
 
 	function fGetDocument(oRequest) {
 		var oDocument = oRequest.responseXML, sResponse = oRequest.responseText;
@@ -758,8 +757,7 @@ OpenLayers.Format.CSWGetRecordById.v2_0_2.prototype.readers["csw"]["GetRecordByI
 					|| (oDocument.documentElement && oDocument.documentElement.tagName == "parsererror"))
 				return null;
 		return oDocument;
-	}
-	;
+	};
 
 	function fSynchronizeValues(oRequest) {
 		try {
@@ -778,53 +776,13 @@ OpenLayers.Format.CSWGetRecordById.v2_0_2.prototype.readers["csw"]["GetRecordByI
 			oRequest.statusText = oRequest._object.statusText;
 		} catch (e) {
 		}
-	}
-	;
+	};
 
 	function fCleanTransport(oRequest) {
 		// BUGFIX: IE - memory leak (on-page leak)
 		oRequest._object.onreadystatechange = new window.Function;
-	}
-	;
-	/*
-	 // Queue manager
-	 var oQueuePending    = {"CRITICAL":[],"HIGH":[],"NORMAL":[],"LOW":[],"LOWEST":[]},
-	 aQueueRunning    = [];
-	 function fQueue_add(oRequest) {
-	 oQueuePending[oRequest.priority in oQueuePending ? oRequest.priority : "NORMAL"].push(oRequest);
-	 //
-	 setTimeout(fQueue_process);
-	 };
+	};
 
-	 function fQueue_remove(oRequest) {
-	 for (var nIndex = 0, bFound    = false; nIndex < aQueueRunning.length; nIndex++)
-	 if (bFound)
-	 aQueueRunning[nIndex - 1]    = aQueueRunning[nIndex];
-	 else
-	 if (aQueueRunning[nIndex] == oRequest)
-	 bFound    = true;
-	 if (bFound)
-	 aQueueRunning.length--;
-	 //
-	 setTimeout(fQueue_process);
-	 };
-
-	 function fQueue_process() {
-	 if (aQueueRunning.length < 6) {
-	 for (var sPriority in oQueuePending) {
-	 if (oQueuePending[sPriority].length) {
-	 var oRequest    = oQueuePending[sPriority][0];
-	 oQueuePending[sPriority]    = oQueuePending[sPriority].slice(1);
-	 //
-	 aQueueRunning.push(oRequest);
-	 // Send request
-	 fXMLHttpRequest_send(oRequest);
-	 break;
-	 }
-	 }
-	 }
-	 };
-	 */
 	// Internet Explorer 5.0 (missing apply)
 	if (!window.Function.prototype.apply) {
 		window.Function.prototype.apply = function(oRequest, oArguments) {
@@ -835,8 +793,7 @@ OpenLayers.Format.CSWGetRecordById.v2_0_2.prototype.readers["csw"]["GetRecordByI
 					oArguments[3], oArguments[4]);
 			delete oRequest.__func;
 		};
-	}
-	;
+	};
 
 	// Register new object with window
 	/**
