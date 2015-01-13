@@ -849,3 +849,28 @@ oscar.Util.WizardFactory = function(protocol,link,options) {
 			return null;
 	}
 };
+
+oscar.Util.downloadFromService = function(url,filename,proxyOverride) {
+    	if(proxyOverride || oscar.DownloadHost) {
+			var form = document.createElement("form");
+			$$(form).css("display","none");
+			var formName = OpenLayers.Util.createUniqueID("randomForm");
+			form.name = formName;
+			form.action = proxyOverride || oscar.DownloadHost;
+			form.method="POST";
+			var iUrl = document.createElement("input");
+			iUrl.name="url";
+			iUrl.type="text";
+			iUrl.value = url;
+			form.appendChild(iUrl);
+			var iFilename= document.createElement("input");
+			iFilename.name="identifier";
+			iFilename.type="text";
+			iFilename.value = filename;
+			form.appendChild(iFilename);
+			document.body.appendChild(form);
+			form.submit();
+   	 } else {
+   		 	window.open(url, "abc123","width=640,height=480,menuBar=yes,location=false,scrollbars=yes");
+   	 }
+}
