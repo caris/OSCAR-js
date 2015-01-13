@@ -2,7 +2,7 @@ oscar.Util.Plugin.Download.GetRecordByIdView = new oscar.BaseClass(
 		oscar.Util.Plugin.Download,
 		{
 			pluginType : "OGC:CSW-2.0.0-http-get-record-by-id-view",
-			icon : "ui-icon-disk",
+			icon : "ui-icon-comment",
 			defaultOutputSchema:"http://www.isotc211.org/2005/gmd",
 			outputSchema:null,
 			initialize : function(options) {
@@ -14,6 +14,10 @@ oscar.Util.Plugin.Download.GetRecordByIdView = new oscar.BaseClass(
 					return this.defaultOutputSchema;
 				} 
 				return this.outputSchema;
+			},
+			
+			destroy:function() {
+				$$("#GetRecordByIdViewDlg").remove();
 			},
 			/**
 			 * @Override
@@ -40,7 +44,7 @@ oscar.Util.Plugin.Download.GetRecordByIdView = new oscar.BaseClass(
 				iframe.attr("height",400);
 				iframe.attr("frameborder",0);
 				iframe.attr("seamless");
-				var dlg = $$("<div></div>").dialog({"width":"520px",resizable:false});
+				dlg = $$("<div id='GetRecordByIdViewDlg'></div>").dialog({"width":"520px",resizable:false,position:{my:"right top", at:"right top", of:this.map.div}});
 				iframeDiv.append(iframe);
 				dlg.append(iframeDiv);
 			},

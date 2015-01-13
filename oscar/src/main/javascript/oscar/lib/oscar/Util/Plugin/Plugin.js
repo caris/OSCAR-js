@@ -21,6 +21,8 @@
  * This is a base class for all plugins.
  */
 oscar.Util.Plugin = new oscar.BaseClass({
+	
+	catalogueService:null,
 	/**
 	 * APIProperty: pluginType
 	 * 
@@ -42,6 +44,9 @@ oscar.Util.Plugin = new oscar.BaseClass({
 	getIcon : function() {
 		return this.icon;
 	},
+	getLabel:function() {
+		return oscar.i18n(this.getPluginType());
+	},
 	initialize : function(options) {
 		this.setOptions(options);
 	},
@@ -51,7 +56,7 @@ oscar.Util.Plugin = new oscar.BaseClass({
 	 * Returns the plugin type
 	 */
 	getPluginType : function() {
-		return this.pluginType;
+		return this.pluginType || "&nbsp;";
 	},
 	/**
 	 * APIMethod: setOptions
@@ -63,6 +68,8 @@ oscar.Util.Plugin = new oscar.BaseClass({
 	setOptions : function(options) {
 		OpenLayers.Util.extend(this, options);
 	},
+	
+	destroy:function(){},
 
 	/**
 	 * APIMethod: play
@@ -70,6 +77,21 @@ oscar.Util.Plugin = new oscar.BaseClass({
 	 * This is the method that is called to run the plugin.
 	 */
 	play : function() {
+	},
+	
+	drawTo:function($jqDiv) {
+		var $button = $$("<button></button>").html(this.getPluginType());
+		var scope = this;
+		$button.button({
+			icons:{ 
+				primary:this.getIcon() || "ui-icon-disk"
+			},
+			text:false,
+			label:this.getLabel()
+		}).click(function() {scope.play();});
+		
+		$jqDiv.append($button);
+	
 	},
 	CLASS_NAME : "oscar.Util.Plugin"
 });
