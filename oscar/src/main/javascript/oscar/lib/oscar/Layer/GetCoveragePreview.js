@@ -22,20 +22,29 @@
  * - <OpenLayers.Layer.WMS>
  */
 
-oscar.Layer.GetCoveragePreview = oscar.BaseClass(OpenLayers.Layer.WMS, {
+oscar.Layer.GetCoveragePreview = new oscar.BaseClass(OpenLayers.Layer.WMS,{
+
+	DEFAULT_PARAMS: {
+		"service":"WCS",
+		"format":"image/png",
+		"request":"GetCoverage"
+	},
+	
 	initialize:function(name,url,params,options) {
-		params.FORMAT="image/png";
+		params.format="image/png";
 		OpenLayers.Layer.WMS.prototype.initialize.apply(this,[name,url,params,options]);
 	},
 	getFullRequestString:function(newparams,altUrl) {
+
 		var resolution = this.map.getResolution();
 		newparams.GRIDOFFSETS = resolution + "," + (resolution*-1);
 		newparams.IDENTIFIER = this.params.IDENTIFIER;
 		newparams.SERVICEENDPOINT = this.params.SERVICEENDPOINT;
 		newparams.RANGESUBSET = this.params.RANGESUBSET;
 		newparams.GRIDBASECRS = oscar.Util.EpsgConversion.epsgToUrn(this.map.getProjection())
-		
-		return OpenLayers.Layer.WMS.prototype.getFullRequestString.apply(this,[newparams,altUrl]);
+		var qString =  OpenLayers.Layer.WMS.prototype.getFullRequestString.apply(this,[newparams,altUrl]);
+
+		return qString;
 	},
 	CLASS : "oscar.Layer.GetCoveragePreview"
-})
+});
