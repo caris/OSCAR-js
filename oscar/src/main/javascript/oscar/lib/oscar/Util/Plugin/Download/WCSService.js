@@ -88,24 +88,6 @@ oscar.Util.Plugin.Download.WCSService = new oscar.BaseClass(
 					scope:this
 				});
 				this.coverageDescription = coverage.coverageDescription;
-				return;
-				
-				var bbox = coverage.coverageDescription.domain.spatialDomain.boundingBoxes[0];
-				var bbox = new OpenLayers.Bounds(
-						bbox.west,
-						bbox.south,
-						bbox.east,
-						bbox.north);
-				var transformedBounds = bbox.clone();
-				transformedBounds.transform(new OpenLayers.Projection(
-						"EPSG:4326"), this.map.getProjectionObject());
-				var record = {
-					"id" : coverage.coverageDescription.identifier,
-					"title" : coverage.coverageDescription.title,
-					"bbox" : transformedBounds,
-					"dataType" : "wcs",
-					"coverage" : coverage
-				}
 			},
 			
 			destroy:function() {
@@ -128,7 +110,6 @@ oscar.Util.Plugin.Download.WCSService = new oscar.BaseClass(
 				this.buildDownloadOptionsPanel();
 			},
 			buildInformationPanel:function() {
-				console.log(this.record);
 				var $panel = $$("<div></div>");
 				
 				var title = this.record.title[0].value || this.record.identifier[0].value;
@@ -499,12 +480,24 @@ oscar.Util.Plugin.Download.WCSService = new oscar.BaseClass(
 				this.addOption($panel);
 			},
 			showPreviewLayer:function() {
+				var isPreviewSupported = function(formats) {
+					for(var i=0;i<formats.length;i++) {
+						if(formats[i] == "image/png") {
+							return true;
+						}
+					}
+					return false;
+				}
+				if(!isPreviewSupported(this.coverageDescription.supportedFormats)) {
+					return;
+				}
+				var GetCoverageOp = oscar.Util.Metadata.getOperation(this.capabilities,"GetCoverage");
 				this.previewLayer = new oscar.Layer.GetCoveragePreview(
 				this.coverageDescription.identifier,
 				oscar.PreviewCoverageProxy,
 				{
 					identifier : this.coverageDescription.identifier,
-					serviceEndpoint : "http://tcoburnws.caris.priv/spatialfusionserver/services/ows/wcs/thor-wcs",
+					serviceEndpoint : GetCoverageOp.dcp.http.get,
 					rangeSubset : "Depth:linear",
 					version : "1.1.0"
 				}, {
