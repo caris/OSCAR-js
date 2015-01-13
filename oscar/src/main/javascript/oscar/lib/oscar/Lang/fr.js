@@ -352,5 +352,11 @@ OpenLayers.Util.applyDefaults(oscar.Lang.getDictionary("fr"), {
 	
 	"MoveAllToTheRight":"D\u00e9placer tout vers la droite.",
 	
-	"showThemeSwitcher":"Afficher s\u00e9lecteur de Th\u00e8mes"
+	"showThemeSwitcher":"Afficher s\u00e9lecteur de Th\u00e8mes",
+	
+	"OGC:CSW-2.0.0-http-get-record-by-id":"NULL",
+	
+	"OGC:CSW-2.0.0-http-get-record-by-id-view":"NULL",
+	
+	"OGC:WCS-1.1.0-http-get-capabilities":"NULL"
 });
