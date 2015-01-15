@@ -17,11 +17,6 @@
  */
 package com.caris.oscarexchange4j.theme;
 
-/*
- * WEB-1002 - JavaDocs cleanup.
- * WEB-1005 - Implemented Validatable interface and defined validation rules.
- * WEB-1031 - Removed the transparent parameter from being added to the url.
- */
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -62,8 +57,7 @@ public class ThemeLayer implements Validatable, Comparable<ThemeLayer> {
     private List<String> urls = new ArrayList<String>();
 
     /**
-     * Private member for the layer format.
-     * Defaults to image/png
+     * Private member for the layer format. Defaults to image/png
      */
     private String format = "image/png";
 
@@ -340,7 +334,7 @@ public class ThemeLayer implements Validatable, Comparable<ThemeLayer> {
             throw new ValidationException("Layer name is empty");
         else if (this.layerType == null)
             throw new ValidationException("Layer must have a LayerType.");
-        
+
         return true;
     }
 
