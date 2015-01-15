@@ -17,10 +17,6 @@
  */
 package com.caris.oscarexchange4j.theme.interfaces;
 
-/*
- * WEB-999 - Interface added to define methods used by web feature service layers.
- */
-
 /**
  * Interface to define methods used by Web Feature Service layers.
  * 
