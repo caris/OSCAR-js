@@ -33,7 +33,7 @@ import com.google.gson.GsonBuilder;
  * 
  */
 public class OXUtil {
-	
+
     /**
      * Returns a com.caris.theme.CoverType object. It will return a DEFAULT
      * CoverType if an error occurs.
@@ -67,7 +67,7 @@ public class OXUtil {
         }
         return lType;
     }
-    
+
     /**
      * Returns a com.google.gson.Gson object for writing JSON
      * 
@@ -80,107 +80,110 @@ public class OXUtil {
         }
         return g.create();
     }
-    
-    
+
     /**
      * This method takes a java.awt.Color object and returns a Hex color string.
+     * 
      * @param color
      * @return String
      */
     public static String ColorToHex(Color color) {
-        String hexColor = Integer.toHexString( color.getRGB() & 0x00ffffff ); 
+        String hexColor = Integer.toHexString(color.getRGB() & 0x00ffffff);
         return checkForZeros(hexColor);
     }
-    
+
     /**
-     * This method takes red, green, blue color values and returns a Hex color string.
+     * This method takes red, green, blue color values and returns a Hex color
+     * string.
+     * 
      * @param red
      * @param green
      * @param blue
      * @return
      */
     public static String RGBToHex(int red, int green, int blue) {
-        Color color = new Color(red,green,blue);
+        Color color = new Color(red, green, blue);
         return OXUtil.ColorToHex(color);
     }
-    
+
     private static String checkForZeros(String hexColor) {
         StringBuffer zeros = new StringBuffer();
-        int hexColorLength = 6-hexColor.length();
-        for(int i = 0;i<hexColorLength;i++) {
+        int hexColorLength = 6 - hexColor.length();
+        for (int i = 0; i < hexColorLength; i++) {
             zeros.append("0");
         }
         zeros.append(hexColor);
         return zeros.toString();
     }
 
-	/**
-	 * Returns a scale set object based off the name passed in with the
-	 * parameters defined.
-	 * 
-	 * @param wellKnownScaleSet
-	 * @return
-	 */
-	public static ScaleSet getScaleSet(String srs) {
-		String tileMatrixSet = getTileMatrixFromEPSG(srs);
-		ScaleSet ss = null;
-		if (tileMatrixSet.equals(ScaleSet.GoogleMapsCompatible)) {
-			ss = new ScaleSet();
-			ss.setTileFullExtent(new double[] { -20037508.34, -20037508.34,
-					20037508.34, 20037508.34 });
-			ss.setTileOrigin(new double[] { -20037508.34, 20037508.34 });
-			ss.setTileMatrixSet(ScaleSet.GoogleMapsCompatible);
-		} else if (tileMatrixSet.equals(ScaleSet.GoogleCRS84Quad)) {
-			ss = new ScaleSet();
-			ss.setTileFullExtent(new double[] { -180.00, -180.00, 180.00, 180.00 });
-			ss.setTileOrigin(new double[] { -180, 180 });
-			ss.setTileMatrixSet(ScaleSet.GoogleCRS84Quad);
-		}
-		return ss;
-	}
+    /**
+     * Returns a scale set object based off the name passed in with the
+     * parameters defined.
+     * 
+     * @param wellKnownScaleSet
+     * @return
+     */
+    public static ScaleSet getScaleSet(String srs) {
+        String tileMatrixSet = getTileMatrixFromEPSG(srs);
+        ScaleSet ss = null;
+        if (tileMatrixSet.equals(ScaleSet.GoogleMapsCompatible)) {
+            ss = new ScaleSet();
+            ss.setTileFullExtent(new double[] { -20037508.34, -20037508.34,
+                    20037508.34, 20037508.34 });
+            ss.setTileOrigin(new double[] { -20037508.34, 20037508.34 });
+            ss.setTileMatrixSet(ScaleSet.GoogleMapsCompatible);
+        } else if (tileMatrixSet.equals(ScaleSet.GoogleCRS84Quad)) {
+            ss = new ScaleSet();
+            ss.setTileFullExtent(new double[] { -180.00, -180.00, 180.00,
+                    180.00 });
+            ss.setTileOrigin(new double[] { -180, 180 });
+            ss.setTileMatrixSet(ScaleSet.GoogleCRS84Quad);
+        }
+        return ss;
+    }
 
-	/**
-	 * 
-	 * @param epsg
-	 * @return String returns the TileMatrix based on the epsg code
-	 */
-	public static String getTileMatrixFromEPSG(String epsg) {
-		int code = 0;
-		try {
-			if (epsg.contains(":")) {
-				code = Integer.parseInt(epsg.split(":")[1]);
-			} else {
-				code = Integer.parseInt(epsg);
-			}
-		} catch (NumberFormatException nfe) {
-			return null;
-		} catch (NullPointerException npe) {
-			return null;
-		}
+    /**
+     * 
+     * @param epsg
+     * @return String returns the TileMatrix based on the epsg code
+     */
+    public static String getTileMatrixFromEPSG(String epsg) {
+        int code = 0;
+        try {
+            if (epsg.contains(":")) {
+                code = Integer.parseInt(epsg.split(":")[1]);
+            } else {
+                code = Integer.parseInt(epsg);
+            }
+        } catch (NumberFormatException nfe) {
+            return null;
+        } catch (NullPointerException npe) {
+            return null;
+        }
 
-		return getTileMatrixFromEPSG(code);
-	}
+        return getTileMatrixFromEPSG(code);
+    }
 
-	/**
-	 * @param epsg
-	 * @return String - the name of the TileMatrix based on the epsg code.
-	 */
-	private static String getTileMatrixFromEPSG(int epsg) {
+    /**
+     * @param epsg
+     * @return String - the name of the TileMatrix based on the epsg code.
+     */
+    private static String getTileMatrixFromEPSG(int epsg) {
 
-		switch (epsg) {
-		case 900913:
-		case 3857:
-			return ScaleSet.GoogleMapsCompatible;
-		case 4326:
-			return ScaleSet.GoogleCRS84Quad;
-		default:
-			return "EPSG:" + epsg;
-		}
-	}
+        switch (epsg) {
+        case 900913:
+        case 3857:
+            return ScaleSet.GoogleMapsCompatible;
+        case 4326:
+            return ScaleSet.GoogleCRS84Quad;
+        default:
+            return "EPSG:" + epsg;
+        }
+    }
 
-	public static String getUrlProtocol(String url) {
-		
-		return url.substring(0,url.indexOf("//")+2);
-	}
+    public static String getUrlProtocol(String url) {
+
+        return url.substring(0, url.indexOf("//") + 2);
+    }
 
 }
