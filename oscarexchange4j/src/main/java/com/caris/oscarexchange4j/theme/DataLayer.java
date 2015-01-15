@@ -16,9 +16,6 @@
  * limitations under the License.
  */
 package com.caris.oscarexchange4j.theme;
-/*
- * WEB-1002 - JavaDocs cleanup.
- */
 
 /**
  * This class represents an Oscar DataLayer
@@ -41,14 +38,16 @@ public class DataLayer {
      * index member
      */
     private int index;
-    
+
     /**
      * no-args constructor
      */
-    public DataLayer(){}
+    public DataLayer() {
+    }
 
     /**
      * Create a data layer with a given name.
+     * 
      * @param layerName
      */
     public DataLayer(String layerName) {
@@ -58,6 +57,7 @@ public class DataLayer {
 
     /**
      * Create a data layer with an index and name.
+     * 
      * @param index
      * @param layerName
      */
@@ -69,6 +69,7 @@ public class DataLayer {
 
     /**
      * Create a data layer with an id, index and name.
+     * 
      * @param id
      * @param index
      * @param layerName
