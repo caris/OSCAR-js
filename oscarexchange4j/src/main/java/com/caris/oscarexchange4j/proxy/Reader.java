@@ -26,8 +26,9 @@ import javax.servlet.http.HttpServletRequest;
 public interface Reader {
     /**
      * Make a request
+     * 
      * @return The Resposne object from the request.
      */
-	public Response makeRequest(HttpServletRequest httpServletRequest);
+    public Response makeRequest(HttpServletRequest httpServletRequest);
 
 }
