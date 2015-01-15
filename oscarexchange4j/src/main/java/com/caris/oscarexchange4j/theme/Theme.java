@@ -95,6 +95,8 @@ public class Theme {
     SelectionStyle selectionStyle;
 
     /**
+     * Get the background colour.
+     * 
      * @return String The background color
      */
     public String getBackgroundColor() {
@@ -102,6 +104,8 @@ public class Theme {
     }
 
     /**
+     * Set the background colour.
+     * 
      * @param backgroundColor
      *            the backgroundColor to set
      */
@@ -110,44 +114,60 @@ public class Theme {
     }
 
     /**
+     * Set the background colour.
+     * 
      * @param red
-     *            , green, blue the backgroundColor to set
+     *            The red value (0-255)
+     * @param green
+     *            The green value (0-255).
+     * @param blue
+     *            The blue value (0-255).
      */
     public void setBackgroundColor(int red, int green, int blue) {
         this.setBackgroundColor(OXUtil.RGBToHex(red, green, blue));
     }
 
     /**
+     * Set the background colour.
+     * 
      * @param color
-     *            the backgroundColor to set
+     *            The background colour.
      */
     public void setBackgroundColor(Color color) {
         this.setBackgroundColor(OXUtil.ColorToHex(color));
     }
 
     /**
+     * Set the selection style.
+     * 
      * @param selectionStyle
-     *            the selection style for this theme
+     *            The selection style for this theme.
      */
     public void setSelectionStyle(SelectionStyle selectionStyle) {
         this.selectionStyle = selectionStyle;
     }
 
     /**
-     * @return SelectionStyle Object containing selection style parameters
+     * Get the selection style.
+     * 
+     * @return The selection style for this theme.
      */
     public SelectionStyle getSelectionStyle() {
         return selectionStyle;
     }
 
     /**
-     * @return int The position of where it should be displayed.
+     * Get the display order.
+     * 
+     * @return The position of where it should be displayed.
      */
     public int getDisplayOrder() {
         return displayOrder;
     }
 
     /**
+     * Set the display order.
+     * 
      * @param displayOrder
      *            The position of where it should be displayed.
      */
@@ -156,16 +176,17 @@ public class Theme {
     }
 
     /**
-     * @return List<ThemeLayer> The list of layers associated to the theme.
+     * Get the list of layers for this theme.
+     * 
+     * @return The list of layers associated to the theme.
      */
     public List<ThemeLayer> getLayers() {
         return layers;
     }
 
-    /*
-     * WEB-1005 - Validation of all layers when adding a list.
-     */
     /**
+     * Set the list of layers for this theme.
+     * 
      * @param layers
      *            Set the layers to the theme.
      */
@@ -174,10 +195,9 @@ public class Theme {
             this.addLayer(layer);
     }
 
-    /*
-     * WEB-1005 - Validation of theme layer before adding it.
-     */
     /**
+     * Add a layer to this theme.
+     * 
      * @param layer
      *            Add a single layer to the current theme.
      */
@@ -193,42 +213,54 @@ public class Theme {
     }
 
     /**
-     * @return the services
+     * Get the services used by this theme.
+     * 
+     * @return The services in this theme.
      */
     public Services getServices() {
         return services;
     }
 
     /**
+     * Set the services for this theme.
+     * 
      * @param services
-     *            the services to set
+     *            The services to be used by the theme.
      */
     public void setServices(Services services) {
         this.services = services;
     }
 
     /**
-     * @return int The theme id.
+     * Get the theme identifier.
+     * 
+     * @return The theme identifier.
      */
     public int getId() {
         return this.id;
     }
 
     /**
-     * @return Set<Cover> A set of covers for the theme.
+     * Get the covers for this theme.
+     * 
+     * @return A set of covers for the theme.
      */
     public Set<Cover> getCovers() {
         return this.covers;
     }
 
     /**
-     * @return String The theme name.
+     * Get the theme name.
+     * 
+     * @return The theme name.
      */
     public String getName() {
         return this.name;
     }
 
     /**
+     * Set the theme id.
+     * 
      * @param id
      *            The theme id.
      */
@@ -237,6 +269,8 @@ public class Theme {
     }
 
     /**
+     * Set the theme name.
+     * 
      * @param name
      *            The theme name.
      */
@@ -245,6 +279,8 @@ public class Theme {
     }
 
     /**
+     * Set the theme covers.
+     * 
      * @param covers
      *            A set of theme covers.
      */
@@ -253,20 +289,26 @@ public class Theme {
     }
 
     /**
-     * @return double The theme version.
+     * Get the theme version.
+     * 
+     * @return The theme version.
      */
     public double getVersion() {
         return this.version;
     }
 
     /**
-     * @return Map<String,String> The theme parameters.
+     * Get the theme parameters.
+     * 
+     * @return The theme parameters.
      */
     public Map<String, String> getParameters() {
         return parameters;
     }
 
     /**
+     * Set the theme parameters.
+     * 
      * @param parameters
      *            The theme parameters.
      */
@@ -380,15 +422,19 @@ public class Theme {
     }
 
     /**
-     * @return String The coordinate system.
+     * Get the spatial reference system key.
+     * 
+     * @return The spatial reference system key.
      */
     public String getSRS() {
         return this.srs;
     }
 
     /**
-     * @param inSRS
-     *            The coordinate system.
+     * Set the spatial reference system key.
+     * 
+     * @param srs
+     *            The spatial reference system key.
      */
     public void setSRS(String srs) {
         this.srs = srs;

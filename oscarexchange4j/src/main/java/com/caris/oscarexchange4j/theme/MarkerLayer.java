@@ -42,7 +42,8 @@ public class MarkerLayer extends Overlay {
      * This method takes in a string and returns a MarkerLayer.TYPES enum.
      * 
      * @param type
-     * @return
+     *            The desired string representation of the type.
+     * @return The enumerated type for the desired marker layer type string.
      */
     public static TYPES createTypeFromString(String type) {
         try {

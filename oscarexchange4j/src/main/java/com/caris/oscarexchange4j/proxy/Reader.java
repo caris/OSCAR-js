@@ -21,11 +21,14 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author tcoburn
- *
  */
 public interface Reader {
+
     /**
      * Make a request
+     * 
+     * @param httpServletRequest
+     *            The incoming request that contains the proxy URL.
      * 
      * @return The Resposne object from the request.
      */

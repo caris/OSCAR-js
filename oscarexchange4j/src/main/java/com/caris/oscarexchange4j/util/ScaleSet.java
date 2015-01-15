@@ -44,49 +44,57 @@ public class ScaleSet {
     private double[] tileFullExtent = null;
 
     /**
-     * Sets the name of the scale set to be used.
+     * Sets the identifier of the scale set to be used.
      * 
      * @param tileMatrixSet
+     *            The tile matrix set identifier.
      */
     public void setTileMatrixSet(String tileMatrixSet) {
         this.tileMatrixSet = tileMatrixSet;
     }
 
     /**
+     * Get the tile matrix set identifier.
      * 
-     * @return String The name of the scale set.
+     * @return String The identifier of the scale set.
      */
     public String getTileMatrixSet() {
         return tileMatrixSet;
     }
 
     /**
-     * @return double[] The top-left corner.
+     * Get the tile origin.
+     * 
+     * @return The top-left corner.
      */
     public double[] getTileOrigin() {
         return tileOrigin.clone();
     }
 
     /**
-     * Sets the top-left corner
+     * Sets the top-left corner.
      * 
      * @param tileOrigin
+     *            The tile orgin.
      */
     public void setTileOrigin(double[] tileOrigin) {
         this.tileOrigin = tileOrigin.clone();
     }
 
     /**
-     * @return double[] The world cover.
+     * Get the world cover.
+     * 
+     * @return The world cover.
      */
     public double[] getTileFullExtent() {
         return tileFullExtent.clone();
     }
 
     /**
-     * Sets the world cover
+     * Sets the world cover.
      * 
      * @param tileFullExtent
+     *            The extent of the world.
      */
     public void setTileFullExtent(double[] tileFullExtent) {
         this.tileFullExtent = tileFullExtent.clone();

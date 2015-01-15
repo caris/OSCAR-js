@@ -56,38 +56,38 @@ public class SelectionStyle {
     }
 
     /**
-     * set featureColor
+     * Set the feature colour.
      * 
-     * @param Color
-     *            featureColor
+     * @param featureColor
+     *            The feature colour.
      */
     public void setFeatureColor(Color featureColor) {
         this.featureColor = featureColor;
     }
 
     /**
-     * get featureColor
+     * Get the feature colour.
      * 
-     * @return Color featureColor
+     * @return The feature colour.
      */
     public Color getFeatureColor() {
         return featureColor;
     }
 
     /**
-     * set selectedFeatureColor
+     * Set the selected feature colour.
      * 
-     * @param Color
-     *            selectedFeatureColor
+     * @param selectedFeatureColor
+     *            The selected feature colour.
      */
     public void setSelectedFeatureColor(Color selectedFeatureColor) {
         this.selectedFeatureColor = selectedFeatureColor;
     }
 
     /**
-     * get selectedFeatureColor
+     * Get the selected feature colour.
      * 
-     * @return Color selectedFeatureColor
+     * @return The selected feature colour.
      */
     public Color getSelectedFeatureColor() {
         return selectedFeatureColor;

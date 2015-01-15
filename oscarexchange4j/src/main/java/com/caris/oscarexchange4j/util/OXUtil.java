@@ -39,7 +39,8 @@ public class OXUtil {
      * CoverType if an error occurs.
      * 
      * @param type
-     * @return com.caris.oscarexchange4j.theme.CoverType
+     *            The type of cover.
+     * @return The cover type.
      */
     public static CoverType createCoverType(String type) {
         CoverType cType = null;
@@ -56,7 +57,8 @@ public class OXUtil {
      * LayerType if an error occurs.
      * 
      * @param type
-     * @return com.caris.oscarexchange4j.theme.LayerType
+     *            The layer type.
+     * @return The layer type.
      */
     public static LayerType createLayerType(String type) {
         LayerType lType = null;
@@ -71,6 +73,9 @@ public class OXUtil {
     /**
      * Returns a com.google.gson.Gson object for writing JSON
      * 
+     * @param prettyPrinting
+     *            True if pretty printing is desired, otherwise use false.
+     * @return The Gson instance.
      */
     public static Gson createGsonBuilder(boolean prettyPrinting) {
         GsonBuilder g = new GsonBuilder();
@@ -85,7 +90,9 @@ public class OXUtil {
      * This method takes a java.awt.Color object and returns a Hex color string.
      * 
      * @param color
-     * @return String
+     *            The colour that you want a HEX string from.
+     * @return String A string that should contain HEX values representing the
+     *         given colour.
      */
     public static String ColorToHex(Color color) {
         String hexColor = Integer.toHexString(color.getRGB() & 0x00ffffff);
@@ -97,15 +104,25 @@ public class OXUtil {
      * string.
      * 
      * @param red
+     *            The red value (0-255)
      * @param green
+     *            The green value (0-255).
      * @param blue
-     * @return
+     *            The blue value (0-255).
+     * @return A HEX colour string.
      */
     public static String RGBToHex(int red, int green, int blue) {
         Color color = new Color(red, green, blue);
         return OXUtil.ColorToHex(color);
     }
 
+    /**
+     * Ensure that the HEX colour string has zero padding.
+     * 
+     * @param hexColor
+     *            A HEX colour string.
+     * @return A properly zero-padded HEX colour string.
+     */
     private static String checkForZeros(String hexColor) {
         StringBuffer zeros = new StringBuffer();
         int hexColorLength = 6 - hexColor.length();
@@ -120,8 +137,9 @@ public class OXUtil {
      * Returns a scale set object based off the name passed in with the
      * parameters defined.
      * 
-     * @param wellKnownScaleSet
-     * @return
+     * @param srs
+     *            A string that represents a spatial reference system key.
+     * @return The scale set.
      */
     public static ScaleSet getScaleSet(String srs) {
         String tileMatrixSet = getTileMatrixFromEPSG(srs);
@@ -143,9 +161,11 @@ public class OXUtil {
     }
 
     /**
+     * Get the tile matrix from the EPSG string key.
      * 
      * @param epsg
-     * @return String returns the TileMatrix based on the epsg code
+     *            A string that represents an EPSG key.
+     * @return String returns the TileMatrix based on the epsg code.
      */
     public static String getTileMatrixFromEPSG(String epsg) {
         int code = 0;
@@ -165,8 +185,11 @@ public class OXUtil {
     }
 
     /**
+     * Get the tile matrix from the numerical part of an EPSG key.
+     * 
      * @param epsg
-     * @return String - the name of the TileMatrix based on the epsg code.
+     *            An the number part of an EPSG key.
+     * @return The name of the tile matrix based on the epsg code.
      */
     private static String getTileMatrixFromEPSG(int epsg) {
 
@@ -181,6 +204,13 @@ public class OXUtil {
         }
     }
 
+    /**
+     * Get the URL protocol.
+     * 
+     * @param url
+     *            A string representing a URL.
+     * @return The protocol (i.e., URL scheme.)
+     */
     public static String getUrlProtocol(String url) {
 
         return url.substring(0, url.indexOf("//") + 2);

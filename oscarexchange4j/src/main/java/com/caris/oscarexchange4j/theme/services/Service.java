@@ -38,8 +38,8 @@ public interface Service {
      * Returns a list of ServiceEntry objects that are registered with this
      * service.
      * 
-     * @return List<ServiceEntry> The ServiceEntry objects registered with this
-     *         service. Returns null if no ServiceEntries are present.
+     * @return The ServiceEntry objects registered with this service. Returns
+     *         null if no ServiceEntries are present.
      */
     public abstract List<ServiceEntry> getServiceEntries();
 

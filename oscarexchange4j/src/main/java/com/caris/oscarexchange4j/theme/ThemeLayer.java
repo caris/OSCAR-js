@@ -94,44 +94,59 @@ public class ThemeLayer implements Validatable, Comparable<ThemeLayer> {
     }
 
     /**
-     * @return int
+     * Get the theme layer identifier.
+     * 
+     * @return The theme layer identifier.
      */
     public int getLayerId() {
         return layerId;
     }
 
     /**
+     * Set the theme layer identifier.
+     * 
      * @param layerId
+     *            The theme layer identifier.
      */
     public void setLayerId(int layerId) {
         this.layerId = layerId;
     }
 
     /**
-     * @return java.lang.String
+     * Get the theme layer name.
+     * 
+     * @return The theme layer name.
      */
     public String getName() {
         return name;
     }
 
     /**
+     * Set the theme layer name.
+     * 
      * @param name
+     *            The theme layer name.
      */
     public void setName(String name) {
         this.name = name;
     }
 
     /**
+     * Get the theme layer URL.
+     * 
      * @deprecated replaced with getUrl(index)
-     * @return java.lang.String url
+     * @return The theme layer URL.
      */
     public String getUrl() {
         return this.urls.get(0);
     }
 
     /**
+     * Get the theme layer URL for the given index.
+     * 
      * @param index
-     * @return java.lang.String url
+     *            The index of the desired URL.
+     * @return The theme layer URL.
      */
     public String getUrl(int index) {
         if (index >= this.urls.size())
@@ -141,58 +156,81 @@ public class ThemeLayer implements Validatable, Comparable<ThemeLayer> {
     }
 
     /**
-     * @return java.lang.String format
+     * Get the theme layer format.
+     * 
+     * @return The theme layer format.
      */
     public String getFormat() {
         return format;
     }
 
     /**
+     * Set the theme layer format.
+     * 
      * @param format
+     *            The theme layer format.
      */
     public void setFormat(String format) {
         this.format = format;
     }
 
     /**
-     * @return boolean
+     * Is this theme layer a base layer?
+     * 
+     * @return True if the theme layer is a base layer.
      */
     public boolean isBaseLayer() {
         return baseLayer;
     }
 
     /**
+     * Indicate if this is a base layer.
+     * 
      * @param baseLayer
+     *            True if this theme layer is to be base layer, otherwise false.
      **/
     public void isBaseLayer(boolean baseLayer) {
         this.baseLayer = baseLayer;
     }
 
     /**
+     * Indicate if this is a base layer.
+     * 
      * @deprecated replaced with isBaseLayer(boolean)
      * @param baseLayer
+     *            True if this theme layer is to be a base layer, otherwise
+     *            false.
      */
     public void setBaseLayer(boolean baseLayer) {
         this.baseLayer = baseLayer;
     }
 
     /**
-     * @return List<DataLayer>
+     * Get the list of data layers.
+     * 
+     * @return A list of data layers.
      */
     public List<DataLayer> getDataLayers() {
         return dataLayers;
     }
 
     /**
+     * Set the data layers to this theme layer.
+     * 
      * @param dataLayers
+     *            The list of data layers to be set on this theme layer.
      */
     public void setDataLayers(List<DataLayer> dataLayers) {
         this.dataLayers = dataLayers;
     }
 
     /**
+     * Set a data layer to this theme layer.
+     * 
      * @param dataLayer
-     * @return boolean
+     *            The data layer to set to this theme layer.
+     * @return boolean True if the addition of a data layer was successful,
+     *         otherwise false.
      */
     public boolean addDataLayer(DataLayer dataLayer) {
         if (this.dataLayers == null) {
@@ -202,7 +240,10 @@ public class ThemeLayer implements Validatable, Comparable<ThemeLayer> {
     }
 
     /**
+     * Set the parameters associated to this layer.
+     * 
      * @param parameters
+     *            The parameters associated to this layer.
      */
     public void setParameters(Map<String, String> parameters) {
         this.parameters = parameters;
@@ -211,7 +252,7 @@ public class ThemeLayer implements Validatable, Comparable<ThemeLayer> {
     /**
      * This method returns the map of parametrers associated with the layer.
      * 
-     * @return Map<String,String>
+     * @return The parameters.
      */
     public Map<String, String> getParameters() {
         return parameters;
@@ -221,7 +262,9 @@ public class ThemeLayer implements Validatable, Comparable<ThemeLayer> {
      * This method will add parameters associated with the layer.
      * 
      * @param key
+     *            The key.
      * @param value
+     *            The value.
      */
     public void addParameter(String key, String value) {
         this.parameters.put(key, value);
@@ -232,7 +275,7 @@ public class ThemeLayer implements Validatable, Comparable<ThemeLayer> {
      * layer.
      * 
      * @param layerType
-     *            the layerType to set
+     *            The layerType to set
      */
     public void setLayerType(LayerType layerType) {
         this.layerType = layerType;
@@ -242,7 +285,7 @@ public class ThemeLayer implements Validatable, Comparable<ThemeLayer> {
      * This method returns the com.caris.oscarexchange4j.theme.LayerType of the
      * layer.
      * 
-     * @return LayerType
+     * @return The type of layer this is.
      */
     public LayerType getLayerType() {
         return layerType;
@@ -252,7 +295,7 @@ public class ThemeLayer implements Validatable, Comparable<ThemeLayer> {
      * This method sets the display order of the layer.
      * 
      * @param displayOrder
-     *            the displayOrder to set
+     *            The displayOrder to set.
      */
     public void setDisplayOrder(int displayOrder) {
         this.displayOrder = displayOrder;
@@ -261,7 +304,7 @@ public class ThemeLayer implements Validatable, Comparable<ThemeLayer> {
     /**
      * This method returns the display order of the layer.
      * 
-     * @return int
+     * @return A number representing the display order of the theme layer.
      */
     public int getDisplayOrder() {
         return displayOrder;
@@ -294,7 +337,7 @@ public class ThemeLayer implements Validatable, Comparable<ThemeLayer> {
     /**
      * This method returns the urls associated with the layer.
      * 
-     * @return java.util.List<String>
+     * @return A list of Strings, assumed to be URLs.
      */
     public List<String> getUrls() {
         return urls;
@@ -305,7 +348,8 @@ public class ThemeLayer implements Validatable, Comparable<ThemeLayer> {
      * paraemter if it is not present.
      * 
      * @param url
-     * @return true if successful, false if not.
+     *            The URL to add to this theme layer.
+     * @return True if successful, false if not.
      */
     public boolean addUrl(String url) {
         return this.urls.add(url);

@@ -35,6 +35,7 @@ public interface WebFeatureService {
      * Sets the Web Feature Service version
      * 
      * @param wfsVersion
+     *            The WFS version string.
      */
     public void setWFSVersion(String wfsVersion);
 
@@ -49,6 +50,7 @@ public interface WebFeatureService {
      * Sets the Web Feature Service output format
      * 
      * @param responseFormat
+     *            The output format of the WFS.
      */
     public void setResponseFormat(String responseFormat);
 

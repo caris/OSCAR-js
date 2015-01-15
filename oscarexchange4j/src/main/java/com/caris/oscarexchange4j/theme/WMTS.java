@@ -65,13 +65,15 @@ public class WMTS extends ThemeLayer {
     /**
      * @deprecated - Use new WMTS(url,requestType)
      * @param url
-     *            - Source URL
+     *            Source URL
      * @param layerName
-     *            - Layer name or Theme name
+     *            Layer name or Theme name
      * @param requestType
-     *            - REST or KVP (Key Value Pair)
+     *            REST or KVP (Key Value Pair)
      * @param srs
-     *            - EPSG code
+     *            A string representing the spatial reference system key.
+     * @param format
+     *            The desired WMTS output format.
      */
     public WMTS(String url, String layerName, String requestType, String srs,
             String format) {
