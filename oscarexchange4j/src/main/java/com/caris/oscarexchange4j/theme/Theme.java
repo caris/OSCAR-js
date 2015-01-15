@@ -17,11 +17,6 @@
  */
 package com.caris.oscarexchange4j.theme;
 
-/*
- * WEB-1002 JavaDocs cleanup, added methods to add individual layers.
- * WEB-1005 Added call to validate the layer when adding it.
- * SFV-96 Needed to add an equals as part of some viewer cleanup.
- */
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -75,7 +70,7 @@ public class Theme {
      * The layers that a theme contains.
      */
     List<ThemeLayer> layers;
-    
+
     Services services;
 
     /**
@@ -93,7 +88,7 @@ public class Theme {
      * Background colour.
      */
     String backgroundColor;
-    
+
     /**
      * selection style options
      */
@@ -137,7 +132,7 @@ public class Theme {
     public void setSelectionStyle(SelectionStyle selectionStyle) {
         this.selectionStyle = selectionStyle;
     }
-    
+
     /**
      * @return SelectionStyle Object containing selection style parameters
      */
@@ -201,14 +196,15 @@ public class Theme {
      * @return the services
      */
     public Services getServices() {
-            return services;
+        return services;
     }
 
     /**
-     * @param services the services to set
+     * @param services
+     *            the services to set
      */
     public void setServices(Services services) {
-            this.services = services;
+        this.services = services;
     }
 
     /**
@@ -290,96 +286,100 @@ public class Theme {
         this.parameters.put(key, value);
     }
 
-    /* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result
-				+ ((backgroundColor == null) ? 0 : backgroundColor.hashCode());
-		result = prime * result + ((covers == null) ? 0 : covers.hashCode());
-		result = prime * result + displayOrder;
-		result = prime * result + id;
-		result = prime * result + ((layers == null) ? 0 : layers.hashCode());
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result
-				+ ((parameters == null) ? 0 : parameters.hashCode());
-		result = prime * result
-				+ ((selectionStyle == null) ? 0 : selectionStyle.hashCode());
-		result = prime * result
-				+ ((services == null) ? 0 : services.hashCode());
-		result = prime * result + ((srs == null) ? 0 : srs.hashCode());
-		long temp;
-		temp = Double.doubleToLongBits(version);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		return result;
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result
+                + ((backgroundColor == null) ? 0 : backgroundColor.hashCode());
+        result = prime * result + ((covers == null) ? 0 : covers.hashCode());
+        result = prime * result + displayOrder;
+        result = prime * result + id;
+        result = prime * result + ((layers == null) ? 0 : layers.hashCode());
+        result = prime * result + ((name == null) ? 0 : name.hashCode());
+        result = prime * result
+                + ((parameters == null) ? 0 : parameters.hashCode());
+        result = prime * result
+                + ((selectionStyle == null) ? 0 : selectionStyle.hashCode());
+        result = prime * result
+                + ((services == null) ? 0 : services.hashCode());
+        result = prime * result + ((srs == null) ? 0 : srs.hashCode());
+        long temp;
+        temp = Double.doubleToLongBits(version);
+        result = prime * result + (int) (temp ^ (temp >>> 32));
+        return result;
+    }
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (!(obj instanceof Theme))
-			return false;
-		Theme other = (Theme) obj;
-		if (backgroundColor == null) {
-			if (other.backgroundColor != null)
-				return false;
-		} else if (!backgroundColor.equals(other.backgroundColor))
-			return false;
-		if (covers == null) {
-			if (other.covers != null)
-				return false;
-		} else if (!covers.equals(other.covers))
-			return false;
-		if (displayOrder != other.displayOrder)
-			return false;
-		if (id != other.id)
-			return false;
-		if (layers == null) {
-			if (other.layers != null)
-				return false;
-		} else if (!layers.equals(other.layers))
-			return false;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
-		if (parameters == null) {
-			if (other.parameters != null)
-				return false;
-		} else if (!parameters.equals(other.parameters))
-			return false;
-		if (selectionStyle == null) {
-			if (other.selectionStyle != null)
-				return false;
-		} else if (!selectionStyle.equals(other.selectionStyle))
-			return false;
-		if (services == null) {
-			if (other.services != null)
-				return false;
-		} else if (!services.equals(other.services))
-			return false;
-		if (srs == null) {
-			if (other.srs != null)
-				return false;
-		} else if (!srs.equals(other.srs))
-			return false;
-		if (Double.doubleToLongBits(version) != Double
-				.doubleToLongBits(other.version))
-			return false;
-		return true;
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (!(obj instanceof Theme))
+            return false;
+        Theme other = (Theme) obj;
+        if (backgroundColor == null) {
+            if (other.backgroundColor != null)
+                return false;
+        } else if (!backgroundColor.equals(other.backgroundColor))
+            return false;
+        if (covers == null) {
+            if (other.covers != null)
+                return false;
+        } else if (!covers.equals(other.covers))
+            return false;
+        if (displayOrder != other.displayOrder)
+            return false;
+        if (id != other.id)
+            return false;
+        if (layers == null) {
+            if (other.layers != null)
+                return false;
+        } else if (!layers.equals(other.layers))
+            return false;
+        if (name == null) {
+            if (other.name != null)
+                return false;
+        } else if (!name.equals(other.name))
+            return false;
+        if (parameters == null) {
+            if (other.parameters != null)
+                return false;
+        } else if (!parameters.equals(other.parameters))
+            return false;
+        if (selectionStyle == null) {
+            if (other.selectionStyle != null)
+                return false;
+        } else if (!selectionStyle.equals(other.selectionStyle))
+            return false;
+        if (services == null) {
+            if (other.services != null)
+                return false;
+        } else if (!services.equals(other.services))
+            return false;
+        if (srs == null) {
+            if (other.srs != null)
+                return false;
+        } else if (!srs.equals(other.srs))
+            return false;
+        if (Double.doubleToLongBits(version) != Double
+                .doubleToLongBits(other.version))
+            return false;
+        return true;
+    }
 
-	/**
+    /**
      * @return String The coordinate system.
      */
     public String getSRS() {
