@@ -56,18 +56,20 @@ public class OX4J {
     private Map<String, String> parameters;
 
     private double version;
-    
+
     private boolean prettyPrinting;
 
     public OX4J() {
         this.version = OX4J.defaultVersion;
     }
+
     public OX4J(double version) {
         this.version = version;
     }
 
     /**
      * Returns a list of themes.
+     * 
      * @return java.util.List
      */
     public List<Theme> getThemes() {
@@ -76,6 +78,7 @@ public class OX4J {
 
     /**
      * Returns the version.
+     * 
      * @return double
      */
     public double getVersion() {
@@ -84,6 +87,7 @@ public class OX4J {
 
     /**
      * Sets the list of themes.
+     * 
      * @param themes
      */
     public void setThemes(List<Theme> themes) {
@@ -92,6 +96,7 @@ public class OX4J {
 
     /**
      * Called when sorting the themes.
+     * 
      * @param c
      */
     public void sortThemes(Comparator<Theme> c) {
@@ -103,13 +108,16 @@ public class OX4J {
      */
     /**
      * Creates a JSON serialized version of the object.
+     * 
      * @return java.lang.String
      */
     public String toJson() {
         return OXUtil.createGsonBuilder(this.getPrettyPrinting()).toJson(this);
     }
+
     /**
      * Returns the proxy member.
+     * 
      * @return java.lang.String
      */
     public String getProxy() {
@@ -118,6 +126,7 @@ public class OX4J {
 
     /**
      * Sets a map of parameters.
+     * 
      * @param parameters
      *            the parameters to set
      */
@@ -127,18 +136,21 @@ public class OX4J {
 
     /**
      * Returns a map of parameters.
+     * 
      * @return Map<String,String>
      */
     public Map<String, String> getParameters() {
         return parameters;
     }
-    
+
     /**
-     * @param doPrettyPrinting the doPrettyPrinting to set
+     * @param doPrettyPrinting
+     *            the doPrettyPrinting to set
      */
     public void setPrettyPrinting(boolean prettyPrinting) {
         this.prettyPrinting = prettyPrinting;
     }
+
     /**
      * @return the doPrettyPrinting
      */
@@ -148,6 +160,7 @@ public class OX4J {
 
     /**
      * Adds a single parameter.
+     * 
      * @param key
      * @param value
      */
@@ -159,6 +172,7 @@ public class OX4J {
 
     /**
      * Adds a single theme.
+     * 
      * @param theme
      */
     public void addTheme(Theme theme) {
