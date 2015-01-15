@@ -10,7 +10,6 @@
 		<version>15.0-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
-
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>

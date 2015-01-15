@@ -4,8 +4,6 @@
 	<artifactId>oscar</artifactId>
 	<name>oscar</name>
 	<packaging>jar</packaging>
-	<groupId>com.caris</groupId>
-	<version>15.0-SNAPSHOT</version>
 	<parent>
 		<groupId>com.caris</groupId>
 		<artifactId>oscar_framework</artifactId>
