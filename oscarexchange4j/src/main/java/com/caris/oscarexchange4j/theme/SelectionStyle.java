@@ -35,16 +35,20 @@ public class SelectionStyle {
      * color of selected features
      */
     private Color selectedFeatureColor;
-    
+
     /**
      * no-args constructor
      */
-    public SelectionStyle(){}
-    
+    public SelectionStyle() {
+    }
+
     /**
      * Two-arg constructor for convenience
-     * @param featureColor Color of features
-     * @param selectedFeatureColor Color of selected features
+     * 
+     * @param featureColor
+     *            Color of features
+     * @param selectedFeatureColor
+     *            Color of selected features
      */
     public SelectionStyle(Color featureColor, Color selectedFeatureColor) {
         this.featureColor = featureColor;
@@ -53,7 +57,9 @@ public class SelectionStyle {
 
     /**
      * set featureColor
-     * @param Color featureColor
+     * 
+     * @param Color
+     *            featureColor
      */
     public void setFeatureColor(Color featureColor) {
         this.featureColor = featureColor;
@@ -61,6 +67,7 @@ public class SelectionStyle {
 
     /**
      * get featureColor
+     * 
      * @return Color featureColor
      */
     public Color getFeatureColor() {
@@ -69,7 +76,9 @@ public class SelectionStyle {
 
     /**
      * set selectedFeatureColor
-     * @param Color selectedFeatureColor
+     * 
+     * @param Color
+     *            selectedFeatureColor
      */
     public void setSelectedFeatureColor(Color selectedFeatureColor) {
         this.selectedFeatureColor = selectedFeatureColor;
@@ -77,51 +86,56 @@ public class SelectionStyle {
 
     /**
      * get selectedFeatureColor
+     * 
      * @return Color selectedFeatureColor
      */
     public Color getSelectedFeatureColor() {
         return selectedFeatureColor;
     }
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result
-				+ ((featureColor == null) ? 0 : featureColor.hashCode());
-		result = prime
-				* result
-				+ ((selectedFeatureColor == null) ? 0 : selectedFeatureColor
-						.hashCode());
-		return result;
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result
+                + ((featureColor == null) ? 0 : featureColor.hashCode());
+        result = prime
+                * result
+                + ((selectedFeatureColor == null) ? 0 : selectedFeatureColor
+                        .hashCode());
+        return result;
+    }
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (!(obj instanceof SelectionStyle))
-			return false;
-		SelectionStyle other = (SelectionStyle) obj;
-		if (featureColor == null) {
-			if (other.featureColor != null)
-				return false;
-		} else if (!featureColor.equals(other.featureColor))
-			return false;
-		if (selectedFeatureColor == null) {
-			if (other.selectedFeatureColor != null)
-				return false;
-		} else if (!selectedFeatureColor.equals(other.selectedFeatureColor))
-			return false;
-		return true;
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (!(obj instanceof SelectionStyle))
+            return false;
+        SelectionStyle other = (SelectionStyle) obj;
+        if (featureColor == null) {
+            if (other.featureColor != null)
+                return false;
+        } else if (!featureColor.equals(other.featureColor))
+            return false;
+        if (selectedFeatureColor == null) {
+            if (other.selectedFeatureColor != null)
+                return false;
+        } else if (!selectedFeatureColor.equals(other.selectedFeatureColor))
+            return false;
+        return true;
+    }
 
 }
