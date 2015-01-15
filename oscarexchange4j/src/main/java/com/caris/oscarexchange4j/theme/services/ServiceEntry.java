@@ -62,20 +62,22 @@ public class ServiceEntry {
 
     /**
      * Returns the attributes set for the service entry.
+     * 
      * @return
      */
     public Map<String, String> getAttributes() {
         return attributes;
     }
-    
+
     /**
      * Adds an attribute to the attributes map.
+     * 
      * @param name
      * @param value
      */
-    public void addAttribute(String name,String value) {
-        if(this.attributes==null) 
-            this.attributes= new HashMap<String, String>();
+    public void addAttribute(String name, String value) {
+        if (this.attributes == null)
+            this.attributes = new HashMap<String, String>();
         this.attributes.put(name, value);
     }
 
