@@ -16,11 +16,6 @@
  * limitations under the License.
  */
 package com.caris.oscarexchange4j.theme;
-/*
- * WEB-968 - Class created to represent selection layers. 
- * WEB-1005 - Added validation rules.
- * WEB-995 - Added feature color and feature selected color members.
- */
 
 import java.awt.Color;
 
@@ -41,15 +36,15 @@ public class SelectionLayer extends Overlay implements WebFeatureService {
     private String wfsVersion;
 
     private String responseFormat;
-    
+
     private String featureColor;
-    
+
     private String featureSelectedColor;
 
     public SelectionLayer() {
         super.setLayerType(LayerType.SELECTION);
-        this.setFeatureColor(new Color(238,153,0));
-        this.setFeatureSelectedColor(new Color(0,0,255));
+        this.setFeatureColor(new Color(238, 153, 0));
+        this.setFeatureSelectedColor(new Color(0, 0, 255));
     }
 
     /*
@@ -143,26 +138,29 @@ public class SelectionLayer extends Overlay implements WebFeatureService {
     }
 
     /**
-     * @param featureColor the featureColor to set
+     * @param featureColor
+     *            the featureColor to set
      */
     public void setFeatureColor(String featureColor) {
         this.featureColor = featureColor;
     }
 
     /**
-     * @param featureColor the featureColor to set
+     * @param featureColor
+     *            the featureColor to set
      */
     public void setFeatureColor(int red, int green, int blue) {
         this.setFeatureColor(OXUtil.RGBToHex(red, green, blue));
     }
-    
+
     /**
-     * @param featureColor the featureColor to set
+     * @param featureColor
+     *            the featureColor to set
      */
     public void setFeatureColor(Color color) {
         this.setFeatureColor(OXUtil.ColorToHex(color));
     }
-    
+
     /**
      * @return the featureColor
      */
@@ -171,26 +169,29 @@ public class SelectionLayer extends Overlay implements WebFeatureService {
     }
 
     /**
-     * @param featureSelectedColor the featureSelectedColor to set
+     * @param featureSelectedColor
+     *            the featureSelectedColor to set
      */
     public void setFeatureSelectedColor(String featureSelectedColor) {
         this.featureSelectedColor = featureSelectedColor;
     }
-    
+
     /**
-     * @param featureSelectedColor the featureSelectedColor to set
+     * @param featureSelectedColor
+     *            the featureSelectedColor to set
      */
     public void setFeatureSelectedColor(int red, int green, int blue) {
         this.setFeatureSelectedColor(OXUtil.RGBToHex(red, green, blue));
     }
-   
+
     /**
-     * @param featureSelectedColor the featureSelectedColor to set
+     * @param featureSelectedColor
+     *            the featureSelectedColor to set
      */
     public void setFeatureSelectedColor(Color color) {
         this.setFeatureSelectedColor(OXUtil.ColorToHex(color));
     }
-    
+
     /**
      * @return the featureSelectedColor
      */
