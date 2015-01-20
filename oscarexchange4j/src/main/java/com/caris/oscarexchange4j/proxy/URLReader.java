@@ -42,20 +42,20 @@ public class URLReader implements Reader {
     Logger log = Logger.getLogger(this.getClass().getName());
 
     /**
-     * The url object used for the request
+     * This was added, pretty sure, to just confuse people.
      */
     private URL url;
 
     /**
      * This is a constructor for the URLReader class
      * 
-     * @param url
+     * @param connectionString
+     *            I have no idea what this is supposed to do.
      * @throws MalformedURLException
+     *             Thrown if the connection string cannot be made into a URL.
      */
-    public URLReader(String connectionString) throws MalformedURLException { // replace
-                                                                             // spaces
-                                                                             // with
-                                                                             // %20
+    public URLReader(String connectionString) throws MalformedURLException {
+        // replace spaces with %20
         connectionString = connectionString.replace(" ", "%20");
         this.url = new URL(connectionString);
     }
@@ -64,6 +64,7 @@ public class URLReader implements Reader {
      * This is a constructor for the URLReader class
      * 
      * @param url
+     *            I have no idea what this is supposed to do.
      */
     public URLReader(URL url) {
         this.url = url;
@@ -72,8 +73,10 @@ public class URLReader implements Reader {
     /**
      * Returns an HttpConnection object based on the classes URL.
      * 
-     * @return
+     * @return A HTTP connection for the current URL. A URL that I have no idea
+     *         why we're providing.
      * @throws IOException
+     *             A problem occurred while opening the connection to the URL.
      */
     public HttpURLConnection getConnection() throws IOException {
         return (HttpURLConnection) this.url.openConnection();

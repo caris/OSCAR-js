@@ -42,8 +42,12 @@ public class ISOMetadataView extends ISOMetadataRequest {
     private Transformer transformer;
 
     /**
+     * Construct the transformation view.
+     * 
      * @param request
+     *            The incoming request.
      * @param response
+     *            The outgoing response.
      */
     public ISOMetadataView(HttpServletRequest request,
             HttpServletResponse response) {

@@ -76,6 +76,7 @@ public class ISOMetadataDownload extends ISOMetadataRequest {
      * Set the filename to use when adjusting the content disposition.
      * 
      * @param fileName
+     *            The file name to use for the content disposition.
      */
     public void setFileName(String fileName) {
         this.fileName = fileName;

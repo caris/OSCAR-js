@@ -17,11 +17,6 @@
  */
 package com.caris.oscarexchange4j.theme;
 
-/*
- * WEB-999 - Class added to represent Marker layers (POI layers) in Oscar.
- * WEB-1005 - Added validation rules for MarkerLayers.
- * WEB-1026 - icon, sfs and formatType are optional properties for the MarkerLayer
- */
 import com.caris.oscarexchange4j.theme.exceptions.ValidationException;
 
 /**
@@ -29,27 +24,31 @@ import com.caris.oscarexchange4j.theme.exceptions.ValidationException;
  * 
  */
 public class MarkerLayer extends Overlay {
-    
-    public static final String ICON_URI="iconUri";
-    public static final String SRS="srs";
-    public static final String FORMAT_TYPE="formatType";
-    
+
+    public static final String ICON_URI = "iconUri";
+
+    public static final String SRS = "srs";
+
+    public static final String FORMAT_TYPE = "formatType";
+
     /**
-     * TYPES - Definition list of supported types for the Marker Layer 
+     * TYPES - Definition list of supported types for the Marker Layer
      */
     public static enum TYPES {
         GMLV2, GEORSS, KML, GEOJSON, PICASA, FLICKR, YOUTUBE
     }
-    
+
     /**
      * This method takes in a string and returns a MarkerLayer.TYPES enum.
+     * 
      * @param type
-     * @return
+     *            The desired string representation of the type.
+     * @return The enumerated type for the desired marker layer type string.
      */
     public static TYPES createTypeFromString(String type) {
         try {
             return MarkerLayer.TYPES.valueOf(type);
-        } catch(IllegalArgumentException iae) {
+        } catch (IllegalArgumentException iae) {
             return MarkerLayer.TYPES.GMLV2;
         }
     }
