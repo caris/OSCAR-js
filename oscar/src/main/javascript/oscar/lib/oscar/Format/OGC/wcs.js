@@ -94,7 +94,15 @@ oscar.Format.OGC.wcs = {
 		var crs = this.getChildValue(node);
 		obj.supportedCRS.push(crs);
 	},
-	
+	/**
+	* Method: read_cap_OtherSource
+	*
+	* Reads the OtherSource node
+	*/
+	read_cap_OtherSource : function(obj,node) {
+		if(!obj.OtherSource) {obj.OtherSource = [];}
+		obj.OtherSource.push({href:node.getAttributeNS("http://www.w3.org/1999/xlink", "href")});
+	},
 	/**
 	 * Constant: CLASS_NAME
 	 * - oscar.Format.OGC.wcs
