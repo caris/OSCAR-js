@@ -103,12 +103,25 @@ oscar.Handler.CSW = new oscar.BaseClass(oscar.Handler,{
 					value:this.query.q
 				});
 			break;
-			case oscar.Handler.CSW.prototype.SPATIAL:
-				filter = new OpenLayers.Filter.Comparison({
+			case oscar.Handler.CSW.prototype.SPATIAL: 
+				if (this.query.q == "") {
+					this.query.q = "*";
+				}
+				
+				var text_filter = new OpenLayers.Filter.Comparison({
+					type: OpenLayers.Filter.Comparison.LIKE,
+					property:"csw:AnyText",
+					value:this.query.q
+				});
+				var spatial_filter = new OpenLayers.Filter.Comparison({
 					type: OpenLayers.Filter.Spatial.BBOX,
 					property:"ows:BoundingBox",
 					value:this.query.spatial,
 					projection:this.map.getProjection()
+				});
+				filter = new OpenLayers.Filter.Logical({
+					type:OpenLayers.Filter.Logical.AND,
+					filters:[text_filter,spatial_filter]
 				});
 			break;
 		}
