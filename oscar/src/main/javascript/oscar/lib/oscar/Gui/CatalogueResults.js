@@ -279,24 +279,8 @@ oscar.Gui.CatalogueResults = new oscar.BaseClass(oscar.Gui,{
     renderFeaturesToMap:function() {
 		var layer = map.getLayersByName("results")[0];
         if(this.features.length == 0) return;
-		
-		//extract the geometries from the features
-		var geometryArray=oscar.Util.extractGeometriesFromFeatures(this.features);
-		//attempt to combine geometries
-		geometryArray = oscar.Util.combineGeometries(geometryArray);
-		//flip the array and go in reverse 
-		geometryArray = oscar.Util.combineGeometries(geometryArray.reverse());
-
-		/**
-		Create a new set of features from combined geometries to 
-		display on the map.
-		**/
-		for(var i = 0;i<geometryArray.length;i++) {
-			var feature = new OpenLayers.Feature.Vector(geometryArray[i]);
-			layer.addFeatures(feature);
-		}
+		layer.addFeatures(this.features);
 		map.zoomToExtent(layer.getDataExtent());
-
     },
     addRecordToResultList:function(record) {
         var $result = $$("<div class='result'></div");
