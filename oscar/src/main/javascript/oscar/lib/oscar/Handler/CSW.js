@@ -94,49 +94,52 @@ oscar.Handler.CSW = new oscar.BaseClass(oscar.Handler,{
         this.events.triggerEvent("afterSearch");
     },
     createFilter:function(parameters) {
-		var filter = null;
-		switch (this.query.type) {
-			case oscar.Handler.CSW.prototype.TEXT:
-				filter = new OpenLayers.Filter.Comparison({
-					type: OpenLayers.Filter.Comparison.LIKE,
-					property:"csw:AnyText",
-					value:this.query.q
-				});
-			break;
-			case oscar.Handler.CSW.prototype.SPATIAL: 
-				if (this.query.q == "") {
-					this.query.q = "*";
-				}
-				
-				var text_filter = new OpenLayers.Filter.Comparison({
-					type: OpenLayers.Filter.Comparison.LIKE,
-					property:"csw:AnyText",
-					value:this.query.q
-				});
-				var spatial_filter = new OpenLayers.Filter.Comparison({
-					type: OpenLayers.Filter.Spatial.BBOX,
-					property:"ows:BoundingBox",
-					value:this.query.spatial,
-					projection:this.map.getProjection()
-				});
-				filter = new OpenLayers.Filter.Logical({
-					type:OpenLayers.Filter.Logical.AND,
-					filters:[text_filter,spatial_filter]
-				});
-			break;
+		
+		var csw_query = {
+			"ElementSetName":{
+				"value":"full"
+			}
 		}
-        parameters.Query = {
-                ElementSetName : {
-                    value : "full"
-                },
-                Constraint : {
-                    version : "1.1.0",
-                    Filter : filter
-                }
-            }
-        if(this.query.q.length ==0 && this.query.spatial == null) {
-            delete parameters.Query.Constraint;
-        }
+		var filters = [];
+		
+		if(this.query.q.length > 0) {
+			var text_filter = new OpenLayers.Filter.Comparison({
+				type: OpenLayers.Filter.Comparison.LIKE,
+				property:"csw:AnyText",
+				value:this.query.q
+			});
+			filters.push(text_filter);
+		}
+		
+		if(this.query.spatial) {
+			var spatial_filter = new OpenLayers.Filter.Comparison({
+				type: OpenLayers.Filter.Spatial.BBOX,
+				property:"ows:BoundingBox",
+				value:this.query.spatial,
+				projection:this.map.getProjection()
+			});
+			filters.push(spatial_filter);
+		}
+		
+		var filter = null;
+		if(filters.length >1) {
+			filter = new OpenLayers.Filter.Logical({
+				type:OpenLayers.Filter.Logical.AND,
+				filters:filters
+			});
+
+		} else if(filters.length == 1) {
+			filter = filters[0];
+		}
+		
+		if(filter) {
+			csw_query["Constraint"] = {
+				"version":"1.1.0",
+				"Filter":filter
+			}
+		}
+		
+		parameters.Query = csw_query;
     },
     next:function() {
         var info = this.results.SearchResults;
