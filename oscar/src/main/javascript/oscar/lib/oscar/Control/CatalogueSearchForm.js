@@ -97,8 +97,8 @@ oscar.Control.CatalogueSearchForm = oscar.BaseClass(oscar.Control,{
 			type:oscar.Handler.CSW.prototype.SPATIAL
 		}
 		this.spatialSearch.deactivate();
+		this.spatialButton.blur();
 		this.events.triggerEvent("search",criteria);
-		
 	},
     CLASS_NAME:"oscar.Control.CatalogueSearchForm"
 });
