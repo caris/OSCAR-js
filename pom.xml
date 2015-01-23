@@ -42,24 +42,24 @@
         <url>${project.scm.url}</url>
     </scm>
 
-	<repositories>                
+    <repositories>                
         <repository>
             <name>CARIS Snapshots</name>
             <id>nexus.caris.com.snapshots</id>
             <url>http://nexus.caris.com/nexus/content/repositories/public-snapshots/</url>            
-        </repository>	
+        </repository>    
         <repository>
             <name>CARIS Releases</name>
             <id>nexus.caris.com.releases</id>
             <url>http://nexus.caris.com/nexus/content/repositories/public-releases</url>            
-        </repository>	
+        </repository>    
         <repository>
             <name>CARIS Vendor</name>
             <id>nexus.caris.com</id>
             <url>http://nexus.caris.com/nexus/content/repositories/public-vendor/</url>
-        </repository>			
-    </repositories>	
-	
+        </repository>            
+    </repositories>    
+    
     <pluginRepositories>                
         <pluginRepository>
             <name>Maven Plugin Repository</name>
@@ -70,14 +70,14 @@
             <name>oss.sonatype.org</name>
             <id>oss.sonatype.org</id>
             <url>http://oss.sonatype.org/content/groups/public</url>
-        </pluginRepository>	
+        </pluginRepository>    
         <pluginRepository>
             <name>nexus.codehouse.org</name>
             <id>nexus.codehouse.org</id>
             <url>http://nexus.codehaus.org/content/groups/snapshots-group</url>
-        </pluginRepository>	               
+        </pluginRepository>                   
     </pluginRepositories>
-	
+    
     <modules>
         <module>oscar</module>
         <module>oscarexchange4j</module>
@@ -93,11 +93,44 @@
                     <reportPlugins>
                         <plugin>
                             <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-changelog-plugin</artifactId>
+                            <version>${maven.changelog.plugin.version}</version>
+                        </plugin>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-checkstyle-plugin</artifactId>
+                            <version>${maven.checksytle.plugin.version}</version>
+                        </plugin>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
                             <artifactId>maven-javadoc-plugin</artifactId>
-                            <version>2.10.1</version>
+                            <version>${maven.javadoc.plugin.version}</version>
                             <configuration>
                                 <additionalparam>-Xdoclint:none</additionalparam>
                             </configuration>
+                        </plugin>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-pmd-plugin</artifactId>
+                            <version>${maven.pmd.plugin.version}</version>
+                            <configuration>
+                                <targetJdk>${compile.source}</targetJdk>
+                            </configuration>
+                        </plugin>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-project-info-reports-plugin</artifactId>
+                            <version>${maven.project.info.reports.plugin.version}</version>
+                        </plugin>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-surefire-report-plugin</artifactId>
+                            <version>2.17</version>
+                        </plugin>
+                        <plugin>
+                            <groupId>org.codehaus.mojo</groupId>
+                            <artifactId>findbugs-maven-plugin</artifactId>
+                            <version>3.0.0</version>
                         </plugin>
                     </reportPlugins>
                 </configuration>
