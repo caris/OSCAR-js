@@ -54,8 +54,6 @@ oscar.Gui.CatalogueResults = new oscar.BaseClass(oscar.Gui,{
 			});
 			scope.layout.allowOverflow();
         },0);
-
-
     },
 	toggleOptionsMode:function(optionsContainer) { 
 		if(this.layout.state.west.isClosed) {
@@ -174,17 +172,18 @@ oscar.Gui.CatalogueResults = new oscar.BaseClass(oscar.Gui,{
         results_list_panel.append(this.results);
     },
     showResults:function(results) {
-        //this.layout.center.scrollTop();
         this.results.empty();
-        var layer = map.getLayersByName("results")[0].removeAllFeatures();
-        this.features = [];
+		var feat_layer = map.getLayersByName("results")[0];
+		if(feat_layer) {		
+			feat_layer.removeAllFeatures();
+		}
         var records = results.records;
         this.showSearchInfo(results.SearchResults);
         if(records.length == 0) {
             this.$searchInfo.html(oscar.i18n("map.information.no.records.found"));
             return;
         }
-        var features = [];
+        var features_array = [];
         for(var r in  records) {
             var record = records[r];
             if(record.bounds) {
@@ -200,30 +199,30 @@ oscar.Gui.CatalogueResults = new oscar.BaseClass(oscar.Gui,{
 
 				projection = new OpenLayers.Projection("EPSG:4326");
 
-                var features = oscar.Util.boundsToFeatures(record.bounds,projection,this.map);
-				var clones = []
-				for(var f in features) {
-					var feat = features[f].clone();
-					feat.style= {
-						strokeColor:"#004580",
-						fillOpacity:0.0,
-						strokeWidth:2
-					};
-					
-					clones.push(feat);
-				}
-				record.features=clones;
-				$$.merge(this.features,features);
+                var feature = oscar.Util.boundsToFeature(record.bounds,projection,this.map);
+				record.feature = feature.clone();
+				features_array.push(record.feature);
             }
             this.addRecordToResultList(record);
         }
-        this.renderFeaturesToMap();
+		
+		features_array.sort(function(feature_a,feature_b) {
+			if(feature_a.geometry.getArea() < feature_b.geometry.getArea()) {
+				return 1;
+			} else if(feature_a.geometry.getArea() > feature_b.geometry.getArea()) {
+				return -1;
+			} else {
+				return 0;
+			}
+		});
+		
+		this.renderFeaturesToMap(features_array);
+		
         $$(this.div).layout().resizeAll();
         this.results.slimScroll({
             height:"auto",
             scrollTo:0
         });
-
     },
     showSearchInfo:function(info) {
 		var matched = info.numberOfRecordsMatched;
@@ -276,11 +275,71 @@ oscar.Gui.CatalogueResults = new oscar.BaseClass(oscar.Gui,{
         $$(this.div).fadeTo("fast",0.2);
         
     },
-    renderFeaturesToMap:function() {
-		var layer = map.getLayersByName("results")[0];
-        if(this.features.length == 0) return;
-		layer.addFeatures(this.features);
-		map.zoomToExtent(layer.getDataExtent());
+    renderFeaturesToMap:function(features) {
+		var feat_layer = map.getLayersByName("results")[0];
+		
+		if(!feat_layer) {
+			var styleMap = new OpenLayers.StyleMap({
+                "default": new OpenLayers.Style({
+					fillColor:"#0f0f0f",
+					fillOpacity : 0.01,
+					strokeWidth : 0,
+					strokeColor : "#0f0f0f",
+					strokeOpacity : 0.3
+                }),
+                "select": new OpenLayers.Style({
+					strokeColor:"#004580",
+					fillColor:"#0f0f0f",
+					fillOpacity : 0.01,
+					fillOpacity : 0.01,
+					strokeOpacity : 1,
+					strokeWidth:2
+                })
+            });
+			
+			feat_layer = new OpenLayers.Layer.Vector("results", {
+				styleMap : styleMap,
+				renderers: ['Canvas', 'VML'],
+				wrapDateLine:true,
+				projection:map.getProjectionObject()
+			});
+			var scope = this;
+			feat_layer.events.on({
+				"featureselected":function(event) {
+					var feature = event.feature;
+					if(feature.record_div) {
+						scope.overRecord($$(feature.record_div).data("record"));
+					}
+				},
+				
+				"featureunselected":function(event) {
+					var feature = event.feature;
+					if(feature.record_div) {
+						scope.blurRecord($$(feature.record_div).data("record"));
+					}
+				}
+			});
+			map.addLayer(feat_layer);
+			var scope = this;
+			var select = new OpenLayers.Control.SelectFeature(
+				feat_layer,
+				{
+					click:true,
+					hover:true,
+					callbacks:{
+						"click":$$.proxy(function(feature){
+							if(feature.record_div) {
+								this.focusRecord($$(feature.record_div).data("record"));
+							}
+						},scope)
+					}
+				});
+			map.addControl(select);
+			select.activate();
+			select.handlers.feature.stopDown = false;
+		}
+		feat_layer.addFeatures(features);
+		map.zoomToExtent(feat_layer.getDataExtent());
     },
     addRecordToResultList:function(record) {
         var $result = $$("<div class='result'></div");
@@ -297,7 +356,12 @@ oscar.Gui.CatalogueResults = new oscar.BaseClass(oscar.Gui,{
         $abs.attr("title",abs);
         this.results.append($result);
         $result.data("record",record);
-		
+		record.container = $result;
+		if(record.feature) {
+			if(!record.feature.record_div) {
+				record.feature.record_div = $result;
+			}
+		}
 		/*
 			Display the link data here. We should create wizards to handle
 			the different protocol cases.
@@ -338,48 +402,52 @@ oscar.Gui.CatalogueResults = new oscar.BaseClass(oscar.Gui,{
 		}
 		return $div;
 	},
-    attachMouseEvents:function($resultDiv,record) {
-        $resultDiv.mouseenter(function(e) {
-        if(record.features) {
-            var layer = map.getLayersByName("results")[0];
-            layer.addFeatures(record.features);
-        }
-        var $this = $$(this);
-        $this.switchClass("","over",100);
-        $this.children().each(function() {
-            var $this = $$(this);
-            $this.addClass("over");
-            });
-        });
-        
-        $resultDiv.mouseleave(function(e) {
-            if(record.features) {
-                var layer = map.getLayersByName("results")[0];
-                layer.removeFeatures(record.features);
-            }
-            var $this = $$(this);
-            $this.switchClass("over","",100);
-            $this.children().each(function() {
-                var $this = $$(this);
-                $this.removeClass("over");
-            });
-        });
-        
-        $resultDiv.click(function(e) {
-           var $this = $$(this);
+	overRecord:function(record) {
+		record.container.switchClass("","over",100);
+		record.container.children().each(function() {
+			var $this = $$(this);
+			$this.addClass("over");
+		});
+	},
+	blurRecord:function(record) {
+		record.container.switchClass("over","",100),
+		record.container.children().each(function() {
+			var $this = $$(this);
+			$this.removeClass("over");
+		});
+
+	},
+	focusRecord:function(record) {
+		var $this = record.container;
            $this.parent().children().each(function() {
             var $local = $$(this);
             $local.removeClass("active");
            });
            
            $this.addClass("active");
-           if(record.features) {
-				var bounds = record.features[0].geometry.getBounds();
-				for(var i = 1;i<record.features.length;i++) {
-					bounds.extend(record.features[i].geometry.getBounds());
-				}
-				map.zoomToExtent(bounds);
+           if(record.feature) {
+				map.zoomToExtent(record.feature.geometry.getBounds());
            }
+	},
+    attachMouseEvents:function($resultDiv,record) {
+		var scope = this;
+		$resultDiv.mouseenter(function(e) {
+			if(record.feature) {
+				var ctrl = scope.map.getControlsByClass(OpenLayers.Control.SelectFeature.prototype.CLASS_NAME)[0];
+				ctrl.select(record.feature);
+			}
+        });
+        
+        $resultDiv.mouseleave(function(e) {
+            if(record.feature) {
+				var ctrl = scope.map.getControlsByClass(OpenLayers.Control.SelectFeature.prototype.CLASS_NAME)[0];
+				ctrl.unselect(record.feature);
+
+            }
+        });
+        var scope = this;
+        $resultDiv.click(function(e) {
+			scope.focusRecord(record);
         });
     
     },
