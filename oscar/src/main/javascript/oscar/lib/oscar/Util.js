@@ -785,15 +785,15 @@ oscar.Util.isGeographicCRS = function(projection) {
 }
 
 /**
- * APIMethod: boundsToFeatures
+ * APIMethod: boundsToFeature
  * This method taks an OpenLayers.Bounds object and convert it to a feature.
  * Parameters:
  * - bounds <OpenLayers.Bounds>
  * - srcProjection <OpenLayers.Projection>
  * - map <OpenLayers.Map>
  */
-oscar.Util.boundsToFeatures = function(bbox,srcProjection,map) {
-	var features = [];
+oscar.Util.boundsToFeature = function(bbox,srcProjection,map) {
+	var feature = null;
 	var mapMaxExtent = map.getMaxExtent();
 	var featureBounds = bbox.clone();
 	
@@ -814,22 +814,11 @@ oscar.Util.boundsToFeatures = function(bbox,srcProjection,map) {
 			featureBounds.right,
 			featureBounds.top
 		);
-		features.push(new OpenLayers.Feature.Vector(boundsA.toGeometry()));
-		features.push(new OpenLayers.Feature.Vector(boundsB.toGeometry()));
+		var multi_polygon = new OpenLayers.Geometry.MultiPolygon([boundsA.toGeometry(),boundsB.toGeometry()]);
+		return new new OpenLayers.Feature.Vector(multi_polygon);
 	} else {
-		featureBounds.left = Math.abs(featureBounds.left);
-		if(bbox.left <= 0) {
-			featureBounds.left *= -1;
-		}
-
-		featureBounds.right = Math.abs(featureBounds.right);
-		if(bbox.left <= 0) {
-			featureBounds.right *= -1;
-		}
-		features.push(new OpenLayers.Feature.Vector(featureBounds.toGeometry()));
+		return new OpenLayers.Feature.Vector(featureBounds.toGeometry());
 	}
-	
-	return features;
 }
 
 /**
