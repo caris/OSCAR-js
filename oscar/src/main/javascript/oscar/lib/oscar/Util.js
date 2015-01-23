@@ -793,6 +793,9 @@ oscar.Util.isGeographicCRS = function(projection) {
  * - map <OpenLayers.Map>
  */
 oscar.Util.boundsToFeature = function(bbox,srcProjection,map) {
+	//multipolygons will not draw next to each other when crossing
+	//the date line, they draw on opposite sides of the map.
+	
 	var feature = null;
 	var mapMaxExtent = map.getMaxExtent();
 	var featureBounds = bbox.clone();
@@ -802,20 +805,21 @@ oscar.Util.boundsToFeature = function(bbox,srcProjection,map) {
 	}
 	
 	if(bbox.left > bbox.right) {
-		var boundsA = new OpenLayers.Bounds(
+		var geomA = new OpenLayers.Bounds(
 			featureBounds.left,
 			featureBounds.bottom,
 			map.getMaxExtent().right,
 			featureBounds.top
-		);
-		var boundsB = new OpenLayers.Bounds(
+		).toGeometry();
+
+		var geomB = new OpenLayers.Bounds(
 			map.getMaxExtent().left,
 			featureBounds.bottom,
 			featureBounds.right,
 			featureBounds.top
-		);
-		var multi_polygon = new OpenLayers.Geometry.MultiPolygon([boundsA.toGeometry(),boundsB.toGeometry()]);
-		return new new OpenLayers.Feature.Vector(multi_polygon);
+		).toGeometry();
+		var multi_polygon = new OpenLayers.Geometry.MultiPolygon([geomA,geomB]);
+		return new OpenLayers.Feature.Vector(multi_polygon);
 	} else {
 		return new OpenLayers.Feature.Vector(featureBounds.toGeometry());
 	}
