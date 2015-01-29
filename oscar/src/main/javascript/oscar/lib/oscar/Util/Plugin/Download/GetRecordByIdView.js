@@ -24,15 +24,17 @@ oscar.Util.Plugin.Download.GetRecordByIdView = new oscar.BaseClass(
 			 * @see oscar.Util.Plugin
 			 */
 			play : function() {
-				url = oscar.Util.buildUrl(this.link.url,{
+				if($$("#GetRecordByIdViewDlg").length) {this.destroy()};
+				
+				var params = {
+				endPoint:this.link.url,
 				request:"GetRecordById",
 				service:"CSW",
 				version:"2.0.2",
-				id:this.record.identifier[0].value,
-				outputSchema:this.getOutputSchema()
-				});
+				identifier:this.record.identifier[0].value
+				}
 				
-				var queryString = OpenLayers.Util.getParameterString({url:url});
+				var queryString = OpenLayers.Util.getParameterString(params);
 
 				var actionUrl = oscar.ISOMetadataViewProxy+"?"+queryString;
 				var iframeDiv = $$("<div></div>");
@@ -44,6 +46,7 @@ oscar.Util.Plugin.Download.GetRecordByIdView = new oscar.BaseClass(
 				iframe.attr("height",400);
 				iframe.attr("frameborder",0);
 				iframe.attr("seamless");
+				
 				dlg = $$("<div id='GetRecordByIdViewDlg'></div>").dialog({"width":"520px",resizable:false,position:{my:"right top", at:"right top", of:this.map.div}});
 				iframeDiv.append(iframe);
 				dlg.append(iframeDiv);
