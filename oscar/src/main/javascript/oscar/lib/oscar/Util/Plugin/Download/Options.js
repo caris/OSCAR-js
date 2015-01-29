@@ -23,8 +23,14 @@ oscar.Util.Plugin.Download.Options = new oscar.BaseClass(
 				var scope = this;
 				
 				var north = $$("<div style='text-align:right'></div>");
+				this.$title_panel = $$("<div style='text-align:left'></div>");
 				var close_btn = $$("<button></button>").html("close");
-				north.append(close_btn);
+				close_btn.css("float","right");
+				this.$title_panel.append(close_btn);
+				this.$title_panel.css({
+					"white-space":"nowrap"
+				});
+				north.append(this.$title_panel);
 				close_btn.button({
 					icons: {
 						primary: "ui-icon-closethick"
@@ -41,22 +47,43 @@ oscar.Util.Plugin.Download.Options = new oscar.BaseClass(
 				this.container.append(north);
 				this.container.append(center);
 				
-				this.content_pane = center;
+				this.content_pane = $$("<div></div>");
+				
+				center.append(this.content_pane);
+				this.content_pane.css({
+					"margin-left":"5px",
+					"margin-right":"10px",
+					"height":"100% !important"
+				});
+				
 				
 				
 				setTimeout(function(){
+				window.onresize=function() {
+					scope.internal_layout.resizeAll();
+				}
 				scope.internal_layout = scope.container.layout({
 					resizable:false,
 					north: {
 						closable:false,
-					},
-					center: {
 					}
+				});
+				scope.content_pane.slimScroll({
+				"height":"100%"
 				});
 				},0);
 				this.parent.toggleOptionsMode(this.container);
 			},
-
+			setTitle:function(str) {
+				var tooltip = str;
+				if(str.length > 25) {
+					str = str.substring(0,25) + "&#8230;"
+				}
+				var $header = $$("<h2></h2>").html(str);
+				$header.attr("title",tooltip);
+				$header.tooltip();
+				this.$title_panel.append($header);
+			},
 			addOption:function(jDiv) {
 				this.content_pane.append(jDiv);
 			},
