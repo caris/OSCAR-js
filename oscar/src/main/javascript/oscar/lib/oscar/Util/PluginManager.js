@@ -56,7 +56,7 @@ oscar.Util.PluginManager = new oscar.BaseClass({
 	getPluginFor : function(pluginType) {
 		var plugin = this.registeredPlugins[pluginType];
 		if (!plugin) {
-			return new oscar.Util.Plugin();
+			return null;
 		}
 		return new plugin();
 	},
