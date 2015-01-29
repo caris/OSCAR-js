@@ -1854,3 +1854,11 @@ td#oscarLayoutFooterContainer {
 	background-image:url("img/oscar-ui-icons_888888_256x240.png") !important;
 	background-position: 0 0;
 }
+.ui-icon-crop{
+	background-image:url("img/oscar-ui-icons_888888_256x240.png")!important;
+	background-position:-32px 0px !important
+}
+.ui-icon-prepare{
+	background-image:url("img/oscar-ui-icons_888888_256x240.png")!important;
+	background-position:-16px 0px !important;
+}
