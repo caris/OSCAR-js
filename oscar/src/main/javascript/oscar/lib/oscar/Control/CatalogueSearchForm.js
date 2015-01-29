@@ -84,7 +84,6 @@ oscar.Control.CatalogueSearchForm = oscar.BaseClass(oscar.Control,{
             },
             text : false
         }).click(function() {
-			scope.input.val("");
 			scope.spatialSearch.activate();
 		});
         $$(this.div).append(this.form);
