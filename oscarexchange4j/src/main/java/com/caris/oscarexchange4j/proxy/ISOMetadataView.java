@@ -89,7 +89,5 @@ public class ISOMetadataView extends ISOMetadataRequest {
     }
 
     @Override
-    void setResponseHeaders() {
-        this.getResponse().setContentType("text/html");
-    }
+    void setResponseHeaders() {}
 }
