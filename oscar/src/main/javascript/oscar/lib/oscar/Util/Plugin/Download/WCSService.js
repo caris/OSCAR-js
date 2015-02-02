@@ -93,6 +93,9 @@ oscar.Util.Plugin.Download.WCSService = new oscar.BaseClass(
 			},
 			
 			destroy:function() {
+				try{
+					this.map.getLayersByName("results")[0].setVisibility(true);
+				} catch(err){}
 				this.map.removeLayer(this.previewLayer);
 				for(var i=0;i<this.plugins.length;i++) {
 					this.plugins[i].destroy();
@@ -104,6 +107,9 @@ oscar.Util.Plugin.Download.WCSService = new oscar.BaseClass(
 			 * @see oscar.Util.Plugin
 			 */
 			play : function() {
+				try{
+					this.map.getLayersByName("results")[0].setVisibility(false);
+				} catch(err){}
 				oscar.Util.Plugin.Download.Options.prototype.play.apply(this);
 				this.sendRequest();
 				this.setDefaultDownloadOptions();
