@@ -171,12 +171,16 @@ oscar.Gui.CatalogueResults = new oscar.BaseClass(oscar.Gui,{
 		this.results = $$("<div></div>");
         results_list_panel.append(this.results);
     },
-    showResults:function(results) {
-        this.results.empty();
+	clearResults:function() {
+		this.results.empty();
+		this.$searchInfo.empty();
 		var feat_layer = map.getLayersByName("results")[0];
 		if(feat_layer) {		
 			feat_layer.removeAllFeatures();
 		}
+	},
+    showResults:function(results) {
+        this.clearResults();
         var records = results.records;
         this.showSearchInfo(results.SearchResults);
         if(records.length == 0) {
