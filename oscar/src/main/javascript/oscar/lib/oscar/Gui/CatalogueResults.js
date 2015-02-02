@@ -458,6 +458,17 @@ oscar.Gui.CatalogueResults = new oscar.BaseClass(oscar.Gui,{
         $resultDiv.click(function(e) {
 			scope.focusRecord(record);
         });
+		
+		this.map.events.on({
+			"mouseout":function(evt) {
+				try {
+					var ctrl = map.getControlsByClass(OpenLayers.Control.SelectFeature.prototype.CLASS_NAME)[0];
+					ctrl.unselectAll();
+				} catch (err) {
+					oscar.debug.error(err);       			
+				}
+			}
+		});		
     
     },
     CLASS_NAME:"oscar.Gui.CatalogueResults"
