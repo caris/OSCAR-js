@@ -67,6 +67,11 @@ public class Theme {
     Set<Cover> covers;
 
     /**
+     * The position object.
+     */
+    private Position position;
+
+    /**
      * The layers that a theme contains.
      */
     List<ThemeLayer> layers;
@@ -438,6 +443,25 @@ public class Theme {
      */
     public void setSRS(String srs) {
         this.srs = srs;
+    }
+
+    /**
+     * Returns the position object.
+     * 
+     * @return the position
+     */
+    public Position getPosition() {
+        return position;
+    }
+
+    /**
+     * Sets the position object.
+     * 
+     * @param position
+     *            the position to set
+     */
+    public void setPosition(Position position) {
+        this.position = position;
     }
 
 }

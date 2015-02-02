@@ -52,6 +52,9 @@ public class ThemeSerializer implements JsonSerializer<Theme> {
             obj.add("name", context.serialize(src.getName()));
         if (src.getCovers() != null)
             obj.add("covers", context.serialize(src.getCovers()));
+        if(src.getPosition() != null) {
+            obj.add("position", context.serialize(src.getPosition()));
+        }
         if (src.getLayers() != null)
             obj.add("layers", context.serialize(src.getLayers()));
         obj.add("displayOrder", context.serialize(src.getDisplayOrder()));
