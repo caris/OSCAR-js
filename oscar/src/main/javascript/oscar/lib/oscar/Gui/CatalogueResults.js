@@ -217,12 +217,17 @@ oscar.Gui.CatalogueResults = new oscar.BaseClass(oscar.Gui,{
 		});
 		
 		this.renderFeaturesToMap(features_array);
-		
         $$(this.div).layout().resizeAll();
         this.results.slimScroll({
-            height:"auto",
+            height:"100%",
             scrollTo:0
         });
+		$$(window).resize($$.proxy(function(){
+			this.results.slimScroll({
+            height:"100%",
+            scrollTo:0
+        });
+		},this));
     },
     showSearchInfo:function(info) {
 		var matched = info.numberOfRecordsMatched;
