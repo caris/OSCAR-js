@@ -101,6 +101,7 @@
 								<include>**/Control/ArgParser.js</include>
 								<include>**/Control/DragPanel.js</include>
 								<include>**/Control/DataDiscovery.js</include>
+								<include>**/Control/LoadingBar.js</include>
 								<include>**/Control/Multi.js</include>
 								<include>**/Control/MeasurementTools.js</include>
 								<include>**/Control/SelectionTools.js</include>
@@ -168,8 +169,6 @@
 								<include>**/Util/Plugin/Plugin.js</include>
 								<include>**/Util/Plugin/Download/Download.js</include>
 								<include>**/Util/Plugin/Download/Options.js</include>
-								<include>**/Util/Plugin/Download/GetRecordById.js</include>
-								<include>**/Util/Plugin/Download/GetRecordByIdView.js</include>
 								<include>**/Util/Plugin/Download/WCSService.js</include>
 								<include>**/Util/Plugin/Download/Zipfile.js</include>
 								<include>**/Lang.js</include>
