@@ -1,46 +1,46 @@
 /*
- * CARIS oscar - Open Spatial Component ARchitecture
- *
- * Copyright 2012 CARIS <http://www.caris.com>
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * 	http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+* CARIS oscar - Open Spatial Component ARchitecture
+*
+* Copyright 2012 CARIS <http://www.caris.com>
+*
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+* 	http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*/
 /**
- * Class: oscar.Util.Plugin
- * 
- * This is a base class for all plugins.
- */
+* Class: oscar.Util.Plugin
+* 
+* This is a base class for all plugins.
+*/
 oscar.Util.Plugin = new oscar.BaseClass({
 	
 	catalogueService:null,
 	/**
-	 * APIProperty: pluginType
-	 * 
-	 * A string to define what the plugin is for. This will be used for the
-	 * plugin registration
-	 * 
-	 */
+	* APIProperty: pluginType
+	* 
+	* A string to define what the plugin is for. This will be used for the
+	* plugin registration
+	* 
+	*/
 	pluginType : null,
 	/**
-	 * APIPropery: icon
-	 * 
-	 * A css class that defines the icon for this plugin. The class should
-	 * follow the jQueryUI icon styles
-	 */
+	* APIPropery: icon
+	* 
+	* A css class that defines the icon for this plugin. The class should
+	* follow the jQueryUI icon styles
+	*/
 	icon : null,
 	/**
-	 * APIMethod: getIcon Returns the icon
-	 */
+	* APIMethod: getIcon Returns the icon
+	*/
 	getIcon : function() {
 		return this.icon;
 	},
@@ -51,20 +51,20 @@ oscar.Util.Plugin = new oscar.BaseClass({
 		this.setOptions(options);
 	},
 	/**
-	 * APIMethod: getPluginType
-	 * 
-	 * Returns the plugin type
-	 */
+	* APIMethod: getPluginType
+	* 
+	* Returns the plugin type
+	*/
 	getPluginType : function() {
 		return this.pluginType || "&nbsp;";
 	},
 	/**
-	 * APIMethod: setOptions
-	 * 
-	 * This method will take a JSON class definition and apply the properties to
-	 * this object. Parameter: - options A JSON class
-	 * 
-	 */
+	* APIMethod: setOptions
+	* 
+	* This method will take a JSON class definition and apply the properties to
+	* this object. Parameter: - options A JSON class
+	* 
+	*/
 	setOptions : function(options) {
 		OpenLayers.Util.extend(this, options);
 	},
@@ -72,10 +72,10 @@ oscar.Util.Plugin = new oscar.BaseClass({
 	destroy:function(){},
 
 	/**
-	 * APIMethod: play
-	 * 
-	 * This is the method that is called to run the plugin.
-	 */
+	* APIMethod: play
+	* 
+	* This is the method that is called to run the plugin.
+	*/
 	play : function() {
 	},
 	
