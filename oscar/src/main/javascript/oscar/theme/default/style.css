@@ -1777,21 +1777,13 @@ td#oscarLayoutFooterContainer {
     height:100%;
 }
 
-
 .oscarGuiCatalogueResults .ui-layout-pane-north {
-    border: 1px solid rgb(187,187,187);
     background-color:#fff;
     padding:5px;
 }
 
-.oscarGuiCatalogueResults .ui-layout-resizer {
-    background-color:rgb(221,221,221);
-}
-
-
 .oscarGuiCatalogueResults .ui-layout-pane-center {
-    border: 1px solid rgb(187,187,187);
-    padding:3px;
+    padding:5px;
 }
 
 
@@ -1802,6 +1794,7 @@ td#oscarLayoutFooterContainer {
     cursor:pointer;
     margin-right:10px;
     border-bottom:1px solid #bbb;
+	padding: 5px;
 }
 
 .oscarGuiCatalogueResults .result.over {
@@ -1826,6 +1819,10 @@ td#oscarLayoutFooterContainer {
     border-radius: 4px;    
     padding-top:6px;
     border:1px solid #dfdfdf;
+	text-align:center;
+	margin: 0 auto;
+	width:50%;
+	padding-bottom:6px;
     
 }
 
