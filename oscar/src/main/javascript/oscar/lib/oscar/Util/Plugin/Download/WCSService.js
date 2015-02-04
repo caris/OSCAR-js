@@ -664,6 +664,20 @@ oscar.Util.Plugin.Download.WCSService = new oscar.BaseClass(
 						isBaseLayer : false,
 						singleTile:true
 					});
+					previewLayer.events.on({
+						"loadstart":function() {
+							try {
+								this.map.getControlsByClass("oscar.Control.LoadingBar")[0].show();
+							} catch(err){}
+						},
+						"loadend":function() {
+							try {
+								this.map.getControlsByClass("oscar.Control.LoadingBar")[0].hide();
+							} catch(err){}
+						},
+						scope:this
+					
+					});
 					this.map.addLayer(previewLayer);
 					this.events.on({
 						"exitMode":function() {

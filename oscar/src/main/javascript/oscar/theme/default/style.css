@@ -527,6 +527,16 @@ div.olControlMousePosition {
 	cursor: -moz-grabbing;
 }
 
+.oscarControlLoadingBar {
+	width:150px;
+	height:18px;
+	background-image:url('img/loading-bar.gif');
+	background-repeat:no-repeat;
+	position:absolute;
+	right:3px;
+	top:3px;
+}
+
 .oscarControlOverviewMapContainer {
 	position: absolute;
 	bottom: -2px;
