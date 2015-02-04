@@ -46,5 +46,5 @@ oscar.Layer.GetCoveragePreview = new oscar.BaseClass(OpenLayers.Layer.WMS,{
 
 		return qString;
 	},
-	CLASS : "oscar.Layer.GetCoveragePreview"
+	CLASS_NAME : "oscar.Layer.GetCoveragePreview"
 });
