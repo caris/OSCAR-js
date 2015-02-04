@@ -24,10 +24,12 @@
 */
 
 oscar.Gui.CatalogueResults = new oscar.BaseClass(oscar.Gui,{
-	EVENT_TYPES:["next","previous"],
+	EVENT_TYPES:["next","previous","recordFocus"],
 	features:[],
 	map:null,
 	catalogueServices:null,
+	searchHandler:null,
+	resultsList:null,
 	buttons:[],
 	initialize:function(options) {
 		oscar.Gui.prototype.initialize.apply(this,[options]);
@@ -36,39 +38,26 @@ oscar.Gui.CatalogueResults = new oscar.BaseClass(oscar.Gui,{
 			includeXY :true
 		});
 		this.appendTo(this.parent);
+		if(this.searchHandler) {
+			this.searchHandler.events.on({
+				"success" : this.showResults,
+				"beforeSearch" : this.fadeOutUI,
+				"afterSearch" : this.fadeInUI,
+				scope : this
+			});
+			this.events.on({
+				"next" : this.searchHandler.next,
+				"previous" : this.searchHandler.previous,
+				scope : this.searchHandler
+			});			
+		}
 	},
 	draw:function() {
 		oscar.Gui.prototype.draw.apply(this);
-		this._buildLayout();
 		var scope = this;
-		setTimeout(function() {
-			scope.layout = $$(scope.div).layout({
-				west:{
-					initHidden:true,
-					slidable:true,
-					closable:false,
-					resizable:false,
-					hideTogglerOnSlide:true,
-					allowOverflow:false
-				}
-			});
-			scope.layout.allowOverflow();
-		},0);
-	},
-	toggleOptionsMode:function(optionsContainer) { 
-		if(this.layout.state.west.isClosed) {
-			this.layout.sizePane("west","100%");
-			this.layout.show("west");
-			this.layout.west.pane.append(optionsContainer);
-		} else {
-			this.layout.hide("west");
-			this.layout.west.pane.empty();
-		}
-	},
-	addOption:function(jDiv) {
-		this.optionsContainer.center.pane.append(jDiv);
 	},
 	_buildLayout:function() {
+		this.clearResults();
 		var build_ele = function (name,classArray) {
 			var element = $$("<"+name+"></"+name+">");
 			if(classArray) {
@@ -77,35 +66,37 @@ oscar.Gui.CatalogueResults = new oscar.BaseClass(oscar.Gui,{
 				}
 			}
 			return element;
-		}
-		
-		
-		/**
-		* This panel will be used when entering an "alternate" mode. To
-		* provide additional functionality for the calling protocol.
-		**/
-		var mode_panel = build_ele("div",["ui-layout-west"]);
-		mode_panel.slimScroll();
+		};
 		/**
 		* This panel is used to display initial results from the query
 		**/
-		var results_panel = build_ele("div",["ui-layout-center"]);
-		
-		
+		var styleMap = {
+			"height":"100%",
+			"width":"100%",
+			"backgroundColor":"#fff",
+			"position":"absolute",
+			"top":"0px",
+			"left":"0px"
+		};
+		this.results_panel = build_ele("div",["results-panel"]);
+		this.results_panel.css(styleMap);
+		this.modes_panel = build_ele("div",["modes-panel"]);
+		this.modes_panel.hide();
+		this.modes_panel.css(styleMap);
 		/**
 		* These panels are used to facilitate in the display of the query results
 		**/
 		var pagination_panel = build_ele("div",["ui-layout-north"]);
 		var results_list_panel = build_ele("div",["ui-layout-center"]);
 
-		var scope = this;
-		$$(this.div).append(mode_panel);
-		$$(this.div).append(results_panel);
-
+		$$(this.div).append(this.modes_panel);
+		$$(this.div).append(this.results_panel);
 		
-		results_panel.append(pagination_panel);
-		results_panel.append(results_list_panel);
-		results_panel.layout({
+		this.results_panel.append(pagination_panel);
+		this.results_panel.append(results_list_panel);
+		this.layout = this.results_panel.layout({
+			closable:false,
+			spacing_open : 0,
 			resizable:false,
 			north: {
 				closable:false,
@@ -119,7 +110,6 @@ oscar.Gui.CatalogueResults = new oscar.BaseClass(oscar.Gui,{
 		this.$previous = $$("<button>Previous</button>");
 		this.$next = $$("<button>Next</button>");
 		
-				var scope = this;
 		this.$buttons = $$("<div></div>");
 		this.$buttons.css({
 			"position":"relative"
@@ -131,12 +121,14 @@ oscar.Gui.CatalogueResults = new oscar.BaseClass(oscar.Gui,{
 			},
 			text : false,
 			disabled:true
-		}).click(function() {
-			scope.events.triggerEvent("next");
-		});
+		}).click($$.proxy(function(){
+			this.events.triggerEvent("next");
+		},this));
+		
 		this.$next.css({
 			"position":"absolute",
-			"right":"0px"
+			"right":"0px",
+			"top":"0px"
 		});
 		
 		this.$previous.button({
@@ -145,23 +137,16 @@ oscar.Gui.CatalogueResults = new oscar.BaseClass(oscar.Gui,{
 			},
 			text : false,
 			disabled:true
-		}).click(function() {
-			scope.events.triggerEvent("previous");
-		}); 
+		}).click($$.proxy(function(){
+			this.events.triggerEvent("previous");
+		},this));
 
 		this.$previous.css({
-			"position":"relative",
-			"left":"0px"
-		});
-		
-		this.$searchInfo.css({
 			"position":"absolute",
-			"left":"35px",
-			"top":"2px",
-			"width":"162px",
-			"height":"25px",
-			"text-align":"center"
+			"left":"0px",
+			"top":"0px"
 		});
+
 		this.$searchInfo.addClass("searchResultInformation");
 		this.$buttons.append(this.$next);
 		this.$buttons.append(this.$previous);
@@ -169,20 +154,27 @@ oscar.Gui.CatalogueResults = new oscar.BaseClass(oscar.Gui,{
 		this.$buttons.css("visibility","hidden");
 		
 		this.results = $$("<div></div>");
+		
 		results_list_panel.append(this.results);
+		
+		$$(window).resize($$.proxy(function(){
+			this.layout.resizeAll();
+		},this));
 	},
 	clearResults:function() {
-		this.results.empty();
-		this.$searchInfo.empty();
+		$$(this.div).empty();
 		var feat_layer = map.getLayersByName("results")[0];
 		if(feat_layer) {		
 			feat_layer.removeAllFeatures();
 		}
 	},
 	showResults:function(results) {
-		this.clearResults();
+		this._buildLayout();
+		this.layout.resizeAll();
 		var records = results.records;
+
 		this.showSearchInfo(results.SearchResults);
+
 		if(records.length == 0) {
 			this.$searchInfo.html(oscar.i18n("map.information.no.records.found"));
 			return;
@@ -210,6 +202,7 @@ oscar.Gui.CatalogueResults = new oscar.BaseClass(oscar.Gui,{
 			this.addRecordToResultList(record);
 		}
 		
+		
 		features_array.sort(function(feature_a,feature_b) {
 			if(feature_a.geometry.getArea() < feature_b.geometry.getArea()) {
 				return 1;
@@ -221,7 +214,6 @@ oscar.Gui.CatalogueResults = new oscar.BaseClass(oscar.Gui,{
 		});
 		
 		this.renderFeaturesToMap(features_array);
-		$$(this.div).layout().resizeAll();
 		this.results.slimScroll({
 			height:"100%",
 			scrollTo:0
@@ -273,16 +265,11 @@ oscar.Gui.CatalogueResults = new oscar.BaseClass(oscar.Gui,{
 		
 	},
 	fadeInUI:function() {
-	$$(".searching").show();
-		$$(".searching").fadeOut();
 		$$(this.div).fadeTo("fast",1);
-		
 	},
 
 	fadeOutUI:function() {
-		$$(".searching").fadeIn();
 		$$(this.div).fadeTo("fast",0.2);
-		
 	},
 	renderFeaturesToMap:function(features) {
 		var feat_layer = map.getLayersByName("results")[0];
@@ -329,7 +316,6 @@ oscar.Gui.CatalogueResults = new oscar.BaseClass(oscar.Gui,{
 				}
 			});
 			map.addLayer(feat_layer);
-			var scope = this;
 			var select = new OpenLayers.Control.SelectFeature(
 				feat_layer,
 				{
@@ -383,30 +369,28 @@ oscar.Gui.CatalogueResults = new oscar.BaseClass(oscar.Gui,{
 	},
 	createLinksPanel:function(record) {
 		var $div = $$("<div></div>");
-		
-		//here is where we are going to add the default protocol for GetRecordById
-		
+
 		if(record.links == null ||
 			record.links.length == 0) {
 			record.links = [];
 		}
-		
-		record.links.unshift({
-			protocol:oscar.Util.Plugin.Download.GetRecordByIdView.prototype.pluginType,
-			url:this.catalogueServices[0].getUrl(oscar.ogc.CatalogueService.prototype.GETRECORDBYID,"POST")
-		});
-		
-		record.links.unshift({
-			protocol:oscar.Util.Plugin.Download.GetRecordById.prototype.pluginType,
-			url:this.catalogueServices[0].getUrl(oscar.ogc.CatalogueService.prototype.GETRECORDBYID,"POST")
-		});
-		
 		for(var i=0;i<record.links.length;i++) {
 			var link = record.links[i];
 			var plugin = oscar.getPluginManager().getPluginFor(link.protocol);
 			if(plugin) {
-				plugin.setOptions({link:link,map:this.map,record:record,catalogueService:this.catalogueServices[0],parent:this});
+				plugin.setOptions({link:link,map:this.map,record:record,catalogueService:this.catalogueServices[0],mode_container:this.modes_panel});
 				plugin.drawTo($div);
+				if(plugin.events) {
+					plugin.events.on({
+						"enterMode":function(){
+							this.results_panel.hide("slide",{direction:"left"},500);
+						},
+						"exitMode":function(){
+							this.results_panel.show("slide",{direction:"left"},500);
+						},
+						scope:this
+					});
+				}
 			}
 		}
 		return $div;
@@ -423,10 +407,12 @@ oscar.Gui.CatalogueResults = new oscar.BaseClass(oscar.Gui,{
 		record.container.children().each(function() {
 			var $this = $$(this);
 			$this.removeClass("over");
+			
 		});
 
 	},
 	focusRecord:function(record) {
+		this.events.triggerEvent("recordFocus",record);
 		var $this = record.container;
 		$this.parent().children().each(function() {
 			var $local = $$(this);
@@ -468,8 +454,7 @@ oscar.Gui.CatalogueResults = new oscar.BaseClass(oscar.Gui,{
 					oscar.debug.error(err);       			
 				}
 			}
-		});		
-	
+		});
 	},
 	CLASS_NAME:"oscar.Gui.CatalogueResults"
 });
