@@ -1,27 +1,27 @@
 /*
- * CARIS oscar - Open Spatial Component ARchitecture
- *
- * Copyright 2012 CARIS <http://www.caris.com>
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * 	http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+* CARIS oscar - Open Spatial Component ARchitecture
+*
+* Copyright 2012 CARIS <http://www.caris.com>
+*
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+* 	http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*/
 
 /**
- * Class: oscar.Util.Plugin.Download.WCSService
- * 
- * This plugin is used for downloading from the WCS service.
- * 
- */
+* Class: oscar.Util.Plugin.Download.WCSService
+* 
+* This plugin is used for downloading from the WCS service.
+* 
+*/
 
 oscar.Util.Plugin.Download.WCSService = new oscar.BaseClass(
 		oscar.Util.Plugin.Download.Options,
@@ -37,10 +37,10 @@ oscar.Util.Plugin.Download.WCSService = new oscar.BaseClass(
 
 
 			/**
-			 * Method: sendRequest
-			 * 
-			 * This method sends the GetCapabilities request to the WCS service.
-			 */
+			* Method: sendRequest
+			* 
+			* This method sends the GetCapabilities request to the WCS service.
+			*/
 			sendRequest : function() {
 				var params = {
 					request : "GetCapabilities",
@@ -61,10 +61,10 @@ oscar.Util.Plugin.Download.WCSService = new oscar.BaseClass(
 			},
 
 			/**
-			 * Method: success
-			 * 
-			 * Called when the response was successful.
-			 */
+			* Method: success
+			* 
+			* Called when the response was successful.
+			*/
 			success : function(response) {
 				var reader = new oscar.Format.WCSCapabilities();
 				this.capabilities = reader.read(response.responseXML);
@@ -103,9 +103,9 @@ oscar.Util.Plugin.Download.WCSService = new oscar.BaseClass(
 			},
 
 			/**
-			 * @Override
-			 * @see oscar.Util.Plugin
-			 */
+			* @Override
+			* @see oscar.Util.Plugin
+			*/
 			play : function() {
 				try{
 					this.map.getLayersByName("results")[0].setVisibility(false);
