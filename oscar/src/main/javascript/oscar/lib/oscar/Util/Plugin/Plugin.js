@@ -21,6 +21,8 @@
 * This is a base class for all plugins.
 */
 oscar.Util.Plugin = new oscar.BaseClass({
+	EVENT_TYPES:[],
+	events:null,
 	
 	catalogueService:null,
 	/**
@@ -48,6 +50,10 @@ oscar.Util.Plugin = new oscar.BaseClass({
 		return oscar.i18n(this.getPluginType());
 	},
 	initialize : function(options) {
+		this.events = new OpenLayers.Events(this, null,
+				this.EVENT_TYPES, false, {
+					includeXY :true
+				});
 		this.setOptions(options);
 	},
 	/**
@@ -88,8 +94,9 @@ oscar.Util.Plugin = new oscar.BaseClass({
 			},
 			text:false,
 			label:this.getLabel()
-		}).click(function() {scope.play();});
-		
+		}).click($$.proxy(function(){
+			this.play();
+		},this));
 		$jqDiv.append($button);
 	
 	},
