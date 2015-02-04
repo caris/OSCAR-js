@@ -13,9 +13,9 @@ oscar.Util.Plugin.Download.Options = new oscar.BaseClass(
 				
 			},
 			/**
-			 * @Override
-			 * @see oscar.Util.Plugin
-			 */
+			* @Override
+			* @see oscar.Util.Plugin
+			*/
 			play : function() {
 				this.container = $$("<div></div>");
 				this.container.css("width","100%");
