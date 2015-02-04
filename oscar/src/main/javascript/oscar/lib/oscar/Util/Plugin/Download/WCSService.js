@@ -33,6 +33,19 @@ oscar.Util.Plugin.Download.WCSService = new oscar.BaseClass(
 			initialize : function(options) {
 				oscar.Util.Plugin.Download.Options.prototype.initialize.apply(this,
 						[ options ]);
+				this.events.on({
+					"enterMode":function() {
+						try{
+							this.map.getLayersByName("results")[0].setVisibility(false);
+						} catch(err){}
+					},
+					"exitMode":function() {
+						try{
+							this.map.getLayersByName("results")[0].setVisibility(true);
+						} catch(err){}
+					},
+					scope:this
+				});
 			},
 
 
@@ -92,30 +105,16 @@ oscar.Util.Plugin.Download.WCSService = new oscar.BaseClass(
 				this.coverageDescription = coverage.coverageDescription;
 			},
 			
-			destroy:function() {
-				try{
-					this.map.getLayersByName("results")[0].setVisibility(true);
-				} catch(err){}
-				this.map.removeLayer(this.previewLayer);
-				for(var i=0;i<this.plugins.length;i++) {
-					this.plugins[i].destroy();
-				}
-			},
-
 			/**
 			* @Override
 			* @see oscar.Util.Plugin
 			*/
 			play : function() {
-				try{
-					this.map.getLayersByName("results")[0].setVisibility(false);
-				} catch(err){}
 				oscar.Util.Plugin.Download.Options.prototype.play.apply(this);
 				this.sendRequest();
 				this.setDefaultDownloadOptions();
 				this.showPreviewLayer();
 				this.buildInformationPanel();
-				this.buildMetadataPanel();
 				this.buildDownloadOptionsPanel();
 			},
 			setDefaultDownloadOptions:function() {
@@ -153,7 +152,29 @@ oscar.Util.Plugin.Download.WCSService = new oscar.BaseClass(
 				this.addOption(this.$panel);
 			},
 			_createToolButtons:function() {
-				var scope = this;
+				var styleMap = new OpenLayers.StyleMap({
+					"default": new OpenLayers.Style({
+						strokeDashstyle:"dash",
+						fillColor:"#0f0f0f",
+						fillOpacity : 0.5,
+						strokeWidth : 0,
+						strokeColor : "#0f0f0f",
+						strokeOpacity : 0
+					})
+				});
+				var crop_layer = new OpenLayers.Layer.Vector("wcs-polygon-preview", {
+					styleMap:styleMap,
+					renderers: ['Canvas', 'VML'],
+					wrapDateLine:true,
+					projection:this.map.getProjectionObject()
+				});
+				this.map.addLayer(crop_layer);			
+				this.events.on({
+					"exitMode":function() {
+						this.map.removeLayer(crop_layer);
+					},
+					scope:this
+				});
 			
 				var $btnPanel = $$("<div></div>");
 				$btnPanel.addClass("buttonsPanel");
@@ -170,7 +191,7 @@ oscar.Util.Plugin.Download.WCSService = new oscar.BaseClass(
 					},
 					text:false
 				}).click($$.proxy(function() {
-					scope.cropControl.activate();
+					this.cropControl.activate();
 				},this));
 				
 				
@@ -185,12 +206,18 @@ oscar.Util.Plugin.Download.WCSService = new oscar.BaseClass(
 				this.map.addControl(this.cropControl);
 				this.cropControl.events.on({
 					'done':function(geom) {
+						if(this.cropFeature) {
+							crop_layer.removeFeatures(this.cropFeature);
+
+						}
+						this.cropFeature = new OpenLayers.Feature.Vector(geom);
+						crop_layer.addFeatures(this.cropFeature);
+						//crop_layer.drawFeature(this.cropFeature);
 						this.downloadOptions.bbox = geom.getBounds().clone();
 						this.cropControl.deactivate();
 					},
 					scope:this
 				});
-
 				this.$panel.append($btnPanel);
 				var $header = $$("<h2></h2>").html("Download Results");
 				$header.css("border-bottom","1px solid black");
@@ -396,7 +423,6 @@ oscar.Util.Plugin.Download.WCSService = new oscar.BaseClass(
 					"display":"block",
 					"font-weight":"bold",
 					"margin-bottom":"5px"
-					
 				};
 				$label_longitude.css(style);
 				$label_latitude.append($$("<br/>")).append(this.$input_latitude);
@@ -614,45 +640,8 @@ oscar.Util.Plugin.Download.WCSService = new oscar.BaseClass(
 					}
 				}
 			},
-			buildMetadataPanel:function() {
-				var $panel = $$("<div></div>");
-				var $header = $$("<h2></h2>").html("Metadata");
-				$header.css("border-bottom","1px solid black");
-				$panel.append($header);
-				var $metadata_btns = $$("<div></div>");
-				
-				var btns = [];
-				btns.unshift({
-					protocol:oscar.Util.Plugin.Download.GetRecordByIdView.prototype.pluginType,
-					url:this.catalogueService.getUrl(oscar.ogc.CatalogueService.prototype.GETRECORDBYID,"POST")
-				});
-				
-				btns.unshift({
-					protocol:oscar.Util.Plugin.Download.GetRecordById.prototype.pluginType,
-					url:this.catalogueService.getUrl(oscar.ogc.CatalogueService.prototype.GETRECORDBYID,"POST")
-				});
-				
-				this.plugins = [];
-				
-				for(var i=0;i<btns.length;i++) {
-					var link = btns[i];
-					var plugin = oscar.getPluginManager().getPluginFor(link.protocol);
-					if(plugin) {
-						var icon = plugin.getIcon() || "ui-icon-disk";
-						plugin.setOptions({link:link,map:this.map,record:this.record,catalogueService:this.catalogueServices});
-						plugin.drawTo($metadata_btns);
-						if(plugin.getPluginType() == oscar.Util.Plugin.Download.GetRecordByIdView.prototype.pluginType) {
-							plugin.play();
-						}
-						
-						this.plugins.push(plugin);
-					}
-				}
-				
-				$panel.append($metadata_btns);
-				this.addOption($panel);
-			},
 			showPreviewLayer:function() {
+			
 				var isPreviewSupported = function(formats) {
 					for(var i=0;i<formats.length;i++) {
 						if(formats[i] == "image/png") {
@@ -661,25 +650,58 @@ oscar.Util.Plugin.Download.WCSService = new oscar.BaseClass(
 					}
 					return false;
 				}
-				if(!isPreviewSupported(this.coverageDescription.supportedFormats)) {
-					return;
+				if(isPreviewSupported(this.coverageDescription.supportedFormats)) {
+					var GetCoverageOp = oscar.Util.Metadata.getOperation(this.capabilities,"GetCoverage");
+					var previewLayer = new oscar.Layer.GetCoveragePreview(
+					this.coverageDescription.identifier,
+					oscar.PreviewCoverageProxy,
+					{
+						identifier : this.coverageDescription.identifier,
+						serviceEndpoint : GetCoverageOp.dcp.http.get,
+						rangeSubset : "Depth:linear",
+						version : "1.1.0"
+					}, {
+						isBaseLayer : false,
+						singleTile:true
+					});
+					this.map.addLayer(previewLayer);
+					this.events.on({
+						"exitMode":function() {
+							this.map.removeLayer(previewLayer);
+						},
+						scope:this
+					});
+				} else {
+					this.showPolyPreviewLayer();
 				}
-				var GetCoverageOp = oscar.Util.Metadata.getOperation(this.capabilities,"GetCoverage");
-				this.previewLayer = new oscar.Layer.GetCoveragePreview(
-				this.coverageDescription.identifier,
-				oscar.PreviewCoverageProxy,
-				{
-					identifier : this.coverageDescription.identifier,
-					serviceEndpoint : GetCoverageOp.dcp.http.get,
-					rangeSubset : "Depth:linear",
-					version : "1.1.0"
-				}, {
-					isBaseLayer : false,
-					singleTile:true
+			},
+			showPolyPreviewLayer:function() {
+				var styleMap = new OpenLayers.StyleMap({
+					"default": new OpenLayers.Style({
+						fillColor:"#0f0f0f",
+						fillOpacity : 0.01,
+						strokeWidth : 0,
+						strokeColor : "#0f0f0f",
+						strokeOpacity : 0.3
+					})
 				});
-				var layers = this.map.layers;
-				this.map.addLayer(this.previewLayer);
+				var poly_layer = new OpenLayers.Layer.Vector("wcs-polygon-preview", {
+					styleMap:styleMap,
+					renderers: ['Canvas', 'VML'],
+					wrapDateLine:true,
+					projection:map.getProjectionObject()
+				});
+				this.map.addLayer(poly_layer);
 			
+				var t = this.record.feature.clone();
+				poly_layer.addFeatures(t);
+				
+				this.events.on({
+					"exitMode":function() {
+						this.map.removeLayer(poly_layer);
+					},
+					scope:this
+				});
 			},
 			CLASS_NAME : "oscar.Util.Plugin.Download.WCSService"
 		});
