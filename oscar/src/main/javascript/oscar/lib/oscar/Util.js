@@ -821,8 +821,15 @@ oscar.Util.boundsToFeature = function(bbox,srcProjection,map) {
 		var multi_polygon = new OpenLayers.Geometry.MultiPolygon([geomA,geomB]);
 		return new OpenLayers.Feature.Vector(multi_polygon);
 	} else {
+		if(bbox.left < 0 && featureBounds.left > 0) {
+			featureBounds.left*=-1;
+		}
+
+		if(bbox.right < 0 && featureBounds.right > 0) {
+			featureBounds.right*=-1;
+		}
+
 		return new OpenLayers.Feature.Vector(featureBounds.toGeometry());
-	}
 }
 
 /**
