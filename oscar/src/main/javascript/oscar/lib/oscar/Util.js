@@ -1,42 +1,42 @@
 /*
- * CARIS oscar - Open Spatial Component ARchitecture
- *
- * Copyright 2012 CARIS <http://www.caris.com>
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * 	http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+* CARIS oscar - Open Spatial Component ARchitecture
+*
+* Copyright 2012 CARIS <http://www.caris.com>
+*
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+* 	http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*/
 /**
- * Class: oscar.debug
- */
+* Class: oscar.debug
+*/
 oscar.debug = {
 	canOutput:function() {
-    	var canOutput = false;
-    	try {
-    		canOutput = (window.console)?true:false; 
-    	} catch (err){}
-    	
-    	return canOutput 
-    },
-    error : function(obj) {
-    	if(this.canOutput()) {
-    		window.console.error(obj.message);
-    	}
-    }
+		var canOutput = false;
+		try {
+			canOutput = (window.console)?true:false; 
+		} catch (err){}
+		
+		return canOutput 
+	},
+	error : function(obj) {
+		if(this.canOutput()) {
+			window.console.error(obj.message);
+		}
+	}
 };
 
 /**
- * Class: oscar.Util
- */
+* Class: oscar.Util
+*/
 oscar.Util = {};
 
 /**
@@ -58,12 +58,12 @@ oscar.Util.buildUrl = function(url,parameters) {
 
 
 /**
- * APIMethod: extractGeometriesFromFeatures
- * This method takes an array of features and extracts the geometry objects
- * from them and returns them in an array.
- * 
- * Returns an array of geometries.
- */
+* APIMethod: extractGeometriesFromFeatures
+* This method takes an array of features and extracts the geometry objects
+* from them and returns them in an array.
+* 
+* Returns an array of geometries.
+*/
 oscar.Util.extractGeometriesFromFeatures = function(features) {
 	var geometryArray=[];
 	while(features.length > 0) {
@@ -77,12 +77,12 @@ oscar.Util.extractGeometriesFromFeatures = function(features) {
 }
 
 /**
- * APIMethod: combineGeometries
- * This method take an array of <OpenLayers.Geometry> objects and attempts
- * to combine them to fewer geometry objects.
- * 
- * Returns an array of geometry objects.
- */
+* APIMethod: combineGeometries
+* This method take an array of <OpenLayers.Geometry> objects and attempts
+* to combine them to fewer geometry objects.
+* 
+* Returns an array of geometry objects.
+*/
 oscar.Util.combineGeometries = function(geoms) {
 	var merged = []
 	while(geoms.length > 0) {
@@ -95,35 +95,35 @@ oscar.Util.combineGeometries = function(geoms) {
 }
 
 /**
- * APIMethod: mergeGeometries
- * Takes two <OpenLayers.Geometry> objects and merges them to a single <OpenLayers.Geometry> object.
- * 
- * Returns the new geometry object.
- */
+* APIMethod: mergeGeometries
+* Takes two <OpenLayers.Geometry> objects and merges them to a single <OpenLayers.Geometry> object.
+* 
+* Returns the new geometry object.
+*/
 oscar.Util.mergeGeometries =function(geomA, geomB) {
-    var reader = new jsts.io.WKTReader();
-    var gom,strFeatB,union;
-    strFeatA = reader.read(geomA.toString());
-    strFeatB = reader.read(geomB.toString());
-    union = strFeatA.union(strFeatB);
-    var parser = new jsts.io.OpenLayersParser();
-    return parser.write(union);
+	var reader = new jsts.io.WKTReader();
+	var gom,strFeatB,union;
+	strFeatA = reader.read(geomA.toString());
+	strFeatB = reader.read(geomB.toString());
+	union = strFeatA.union(strFeatB);
+	var parser = new jsts.io.OpenLayersParser();
+	return parser.write(union);
 }
 
 /**
- * APIMethod: mergeToExistingGeometry
- * Takes a geometry and attempts to merge it to a list of existing geometry objects.
- * Returns true or false of the merge was successful.
- */
+* APIMethod: mergeToExistingGeometry
+* Takes a geometry and attempts to merge it to a list of existing geometry objects.
+* Returns true or false of the merge was successful.
+*/
 oscar.Util.mergeToExistingGeometry = function(geometries, geometry) {
-    for(var g in geometries) {
-        var existingGeometry = geometries[g];
-        if(existingGeometry.intersects(geometry)) {
-            geometries[g] = oscar.Util.mergeGeometries(existingGeometry,geometry);
-            return true;
-        }
-    }
-    return false;
+	for(var g in geometries) {
+		var existingGeometry = geometries[g];
+		if(existingGeometry.intersects(geometry)) {
+			geometries[g] = oscar.Util.mergeGeometries(existingGeometry,geometry);
+			return true;
+		}
+	}
+	return false;
 
 }
 
@@ -157,20 +157,20 @@ oscar.Util.getMetersConversionFactor = function(projection) {
 *
 **/
 oscar.Util.isFeatureInArray = function(featureName,selectedFeatures) {
-    for(var i in selectedFeatures) {
-        if(featureName == selectedFeatures[i])
-        return true;
-    }
-    return false;
+	for(var i in selectedFeatures) {
+		if(featureName == selectedFeatures[i])
+		return true;
+	}
+	return false;
 };
 
 
 /**
- * Method: createFormElement
- * @deprecated
- * 
- * {Note: I cannot find any usage of this function anywhere}
- */
+* Method: createFormElement
+* @deprecated
+* 
+* {Note: I cannot find any usage of this function anywhere}
+*/
 oscar.Util.createFormElement = function(element, type, name, id, value, parent) {
 	var e = document.createElement(element);
 	e.setAttribute("name", name);
@@ -181,10 +181,10 @@ oscar.Util.createFormElement = function(element, type, name, id, value, parent) 
 };
 
 /**
- * APIMethod: checkAll
- * 
- * Checks all checkboxes in a form except a checkbox using the name "allbox"
- */
+* APIMethod: checkAll
+* 
+* Checks all checkboxes in a form except a checkbox using the name "allbox"
+*/
 oscar.Util.checkAll = function(theForm) {
 	for ( var i = 0; i < theForm.elements.length; i++) {
 		var e = theForm.elements[i];
@@ -197,10 +197,10 @@ oscar.Util.checkAll = function(theForm) {
 };
 
 /**
- * APIMethod: isOneChecked
- * 
- * Takes an array of checkbox elements and checks to see if at least one is checked.
- */
+* APIMethod: isOneChecked
+* 
+* Takes an array of checkbox elements and checks to see if at least one is checked.
+*/
 oscar.Util.isOneChecked = function(checkbox) {
 	if (checkbox == null) {
 		return false;
@@ -220,14 +220,14 @@ oscar.Util.isOneChecked = function(checkbox) {
 };
 
 /**
- * APIMethod: isSphericalMercator
- * 
- * Returns true if the coordinate system is EPSG:3857 or EPSG:900913
- * 
- * Parameters:
- * 
- * srs - {String} A coordiante system reference such as "EPSG:4326" or "EPSG:3857"
- */
+* APIMethod: isSphericalMercator
+* 
+* Returns true if the coordinate system is EPSG:3857 or EPSG:900913
+* 
+* Parameters:
+* 
+* srs - {String} A coordiante system reference such as "EPSG:4326" or "EPSG:3857"
+*/
 oscar.Util.isSphericalMercator = function(srs) {
 	if ((srs == "EPSG:900913") || (srs == "EPSG:3857")) {
 		return true;
@@ -236,16 +236,16 @@ oscar.Util.isSphericalMercator = function(srs) {
 };
 
 /**
- * APIMethod: moveSelectedOptions
- * 
- * Moves selected options from one select box to another
- * 
- * Parameters:
- * 
- * fromSelectName - {String} Source select reference
- * 
- * toSelectName - {String} destination select reference
- */
+* APIMethod: moveSelectedOptions
+* 
+* Moves selected options from one select box to another
+* 
+* Parameters:
+* 
+* fromSelectName - {String} Source select reference
+* 
+* toSelectName - {String} destination select reference
+*/
 oscar.Util.moveSelectedOptions = function(fromSelectName, toSelectName) {
 	var fromSelect = document.getElementsByName(fromSelectName)[0];
 	var toSelect = document.getElementsByName(toSelectName)[0];
@@ -265,16 +265,16 @@ oscar.Util.moveSelectedOptions = function(fromSelectName, toSelectName) {
 
 //This function moves all the options from the fromSelect to the toSelect
 /**
- * APIMethod: moveAllSelectOptions
- * 
- * Moves all options from one select box to another
- * 
- * Parameters:
- * 
- * fromSelectName - {String} Source select reference
- * 
- * toSelectName - {String} destination select reference
- */
+* APIMethod: moveAllSelectOptions
+* 
+* Moves all options from one select box to another
+* 
+* Parameters:
+* 
+* fromSelectName - {String} Source select reference
+* 
+* toSelectName - {String} destination select reference
+*/
 oscar.Util.moveAllSelectOptions = function(fromSelectName, toSelectName) {
 	var fromSelect = document.getElementsByName(fromSelectName)[0];
 	var toSelect = document.getElementsByName(toSelectName)[0];
@@ -292,14 +292,14 @@ oscar.Util.moveAllSelectOptions = function(fromSelectName, toSelectName) {
 };
 
 /**
- * Submits the given form. If an action other than the one already associated with the given
- * form is supplied, it applies that one instead.
- *
- * Input:
- *   form - The form to be submitted. By default it is submitted to the URI defined by the
- *   form's action property.
- *   action - (Optional) The name of the struts action to be invoked.
- */
+* Submits the given form. If an action other than the one already associated with the given
+* form is supplied, it applies that one instead.
+*
+* Input:
+*   form - The form to be submitted. By default it is submitted to the URI defined by the
+*   form's action property.
+*   action - (Optional) The name of the struts action to be invoked.
+*/
 oscar.Util.submitForm = function(form, action) {
 	if (action != null)
 		form.action = action;
@@ -307,17 +307,17 @@ oscar.Util.submitForm = function(form, action) {
 };
 
 /**
- * APIMethod: getBrowserName
- * 
- * Returns: {String} A string which specifies which is the current browser in
- * which we are running.
- * 
- * Currently-supported browser detection and codes: * 'opera' -- Opera * 'msie' --
- * Internet Explorer * 'safari' -- Safari * 'firefox' -- FireFox * 'mozilla' --
- * Mozilla
- * 
- * If we are unable to property identify the browser, we return an empty string.
- */
+* APIMethod: getBrowserName
+* 
+* Returns: {String} A string which specifies which is the current browser in
+* which we are running.
+* 
+* Currently-supported browser detection and codes: * 'opera' -- Opera * 'msie' --
+* Internet Explorer * 'safari' -- Safari * 'firefox' -- FireFox * 'mozilla' --
+* Mozilla
+* 
+* If we are unable to property identify the browser, we return an empty string.
+*/
 oscar.Util.getBrowserName = function() {
 	var browserName = "";
 
@@ -340,14 +340,14 @@ oscar.Util.getBrowserName = function() {
 };
 
 /**
- * APIMethod: buildWFSFilterForRequest
- * 
- * This method will generate a WFSFilter for WFS requests. geometry -
- * OpenLayers.LonLat || OpenLayers.Bounds
- * 
- * returns a WFSFilter
- * 
- */
+* APIMethod: buildWFSFilterForRequest
+* 
+* This method will generate a WFSFilter for WFS requests. geometry -
+* OpenLayers.LonLat || OpenLayers.Bounds
+* 
+* returns a WFSFilter
+* 
+*/
 oscar.Util.buildWFSFilterForRequest = function(geometry, srs, wfsVersion, propertyName) {
 	var reqType = OpenLayers.Filter.Spatial.BBOX;
 	spatialFilter = new OpenLayers.Filter.Spatial( {
@@ -364,15 +364,15 @@ oscar.Util.buildWFSFilterForRequest = function(geometry, srs, wfsVersion, proper
 };
 
 /**
- * APIMethod: getDataFormatter
- * 
- * returns a data formatter for the passed-in data format
- * 
- * Parameters: 
- * 
- * 	dataFormatType - Type of the data format
- * 	options -  An optional object whose properties will be set on this instance
- */
+* APIMethod: getDataFormatter
+* 
+* returns a data formatter for the passed-in data format
+* 
+* Parameters: 
+* 
+* 	dataFormatType - Type of the data format
+* 	options -  An optional object whose properties will be set on this instance
+*/
 
 oscar.Util.getDataFormatter = function(dataFormatType, options) {
 	var dft = dataFormatType.toLowerCase();
@@ -388,17 +388,17 @@ oscar.Util.getDataFormatter = function(dataFormatType, options) {
 };
 
 /**
- * Maintain existing definition of $.
- */
+* Maintain existing definition of $.
+*/
 if (typeof window.$ === "undefined") {
 	window.$ = OpenLayers.Util.getElement;
 }
 
 
 /** 
- * Fix the getElementById method for IE 7 and lower
- * use browser sniffing to determine if using an affected version
- */
+* Fix the getElementById method for IE 7 and lower
+* use browser sniffing to determine if using an affected version
+*/
 var isOldIE = false;
 var userAgent = navigator.userAgent;
 if (userAgent.indexOf("MSIE") != -1) {
@@ -432,28 +432,28 @@ if (isOldIE) {
 	};
 }
 /**
- * Method: getTimeStamp
- * 
- *  Used to append to a URL to prevent caching
- * 
- * Returns:
- *  {String} Returns a key value pair. 
- *  
- *  Example
- *  
- *  timestamp=421564215
- * 
- */
+* Method: getTimeStamp
+* 
+*  Used to append to a URL to prevent caching
+* 
+* Returns:
+*  {String} Returns a key value pair. 
+*  
+*  Example
+*  
+*  timestamp=421564215
+* 
+*/
 oscar.Util.getTimeStamp = function() {
 	var now = new Date().getTime();
 	return "timestamp=" + now;
 };
 
 /**
- * Method: getToolTipId
- * 
- * returns the toolTipId
- */
+* Method: getToolTipId
+* 
+* returns the toolTipId
+*/
 
 oscar.Util.getToolTipId = function(objWithClassName) {
 	return toolTipId = objWithClassName.CLASS_NAME.toLowerCase().replaceAll(
@@ -461,10 +461,10 @@ oscar.Util.getToolTipId = function(objWithClassName) {
 };
 
 /**
- * Class: oscar.Util.EpsgConversion
- * 
- * Converts epsg codes to urns and vice versa
- */
+* Class: oscar.Util.EpsgConversion
+* 
+* Converts epsg codes to urns and vice versa
+*/
 oscar.Util.EpsgConversion = {
 	CRS :"CRS",
 	OGC :"OGC",
@@ -473,23 +473,23 @@ oscar.Util.EpsgConversion = {
 	CRS_URN :"urn:ogc:def:crs:OGC:2:",
 
 	/**
-	 * APIMethod: oscar.Util.EpsgConversion.urnToEpsg
-	 * 
-	 * Convert urn to crs.
-	 * 
-	 * Parameters:
-	 * 
-	 * urn - {String} academic urn
-	 * 
-	 * Returns:
-	 * 
-	 * epsg - {String} epsg crs.
-	 * 
-	 * Usage: 
-	 * > var epsg = oscar.Util.EpsgConversion.urnToEpsg("urn:ogc:def:crs:EPSG::4326");
-	 * >
-	 * > Returns "EPSG:4326"  
-	 */
+	* APIMethod: oscar.Util.EpsgConversion.urnToEpsg
+	* 
+	* Convert urn to crs.
+	* 
+	* Parameters:
+	* 
+	* urn - {String} academic urn
+	* 
+	* Returns:
+	* 
+	* epsg - {String} epsg crs.
+	* 
+	* Usage: 
+	* > var epsg = oscar.Util.EpsgConversion.urnToEpsg("urn:ogc:def:crs:EPSG::4326");
+	* >
+	* > Returns "EPSG:4326"  
+	*/
 	urnToEpsg : function(urn) {
 		var tokens = urn.split(":");
 		if (tokens.length == 7) {
@@ -503,23 +503,23 @@ oscar.Util.EpsgConversion = {
 		}
 	},
 	/**
-	 * APIMethod: oscar.Util.EpsgConversion.epsgToUrn
-	 * 
-	 * Convert espg crs to urn.
-	 * 
-	 * Parameters:
-	 * 
-	 * epsg - {String}
-	 * 
-	 * Returns:
-	 * 
-	 *  urn - {String} academic urn
-	 *  
-	 *  Usage: 
-	 * > var urn = oscar.Util.EpsgConversion.epsgToUrn("EPSG:4326");
-	 * >
-	 * > Returns "urn:ogc:def:crs:EPSG::4326"
-	 */
+	* APIMethod: oscar.Util.EpsgConversion.epsgToUrn
+	* 
+	* Convert espg crs to urn.
+	* 
+	* Parameters:
+	* 
+	* epsg - {String}
+	* 
+	* Returns:
+	* 
+	*  urn - {String} academic urn
+	*  
+	*  Usage: 
+	* > var urn = oscar.Util.EpsgConversion.epsgToUrn("EPSG:4326");
+	* >
+	* > Returns "urn:ogc:def:crs:EPSG::4326"
+	*/
 	epsgToUrn : function(epsg) {
 		var s = epsg.split(":");
 		if (s[0] == oscar.Util.EpsgConversion.EPSG) {
@@ -549,17 +549,17 @@ String.prototype.replaceAll = function(stringToFind, stringToReplace) {
 };
 
 /**
- * APIMethod: oscar.Util.getServerGeometryPropertyName
- * 
- * returns the geometry property name of the current server
- * 
- * Parameters:
- * schema - {JSON} the DescribeFeatureType schema of current server
- * 
- * Returns:
- *  {String} Returns server GeometryPropertyName as a String. 
- *   
- */
+* APIMethod: oscar.Util.getServerGeometryPropertyName
+* 
+* returns the geometry property name of the current server
+* 
+* Parameters:
+* schema - {JSON} the DescribeFeatureType schema of current server
+* 
+* Returns:
+*  {String} Returns server GeometryPropertyName as a String. 
+*   
+*/
 oscar.Util.getServerGeometryPropertyName = function(schema) {
 	var elements = schema.ComplexType.ComplexContent.Extension.Sequence.Elements;
 	for(var i = 0; i < elements.length; i++){
@@ -570,15 +570,15 @@ oscar.Util.getServerGeometryPropertyName = function(schema) {
 	return "";
 };
 /**
- * Method: oscar.Util.convertFormat
- * 
- * returns the user-friendly format text name of the current server
- * 
- * Parameters: format -(String) the format description.
- * 
- * Returns: {String} Returns the format text as a String.
- * 
- */
+* Method: oscar.Util.convertFormat
+* 
+* returns the user-friendly format text name of the current server
+* 
+* Parameters: format -(String) the format description.
+* 
+* Returns: {String} Returns the format text as a String.
+* 
+*/
 oscar.Util.convertFormat= function(format){
 	if (format != null || format.length > 0) {
 		if(format.indexOf("gml/3")!=-1||format.indexOf("gml3")!=-1){
@@ -610,10 +610,10 @@ oscar.Util.convertFormat= function(format){
 };
 
 /**
- * APIMethod: oscar.alert
- * 
- * Displays an alert dialog box to the user.
- */
+* APIMethod: oscar.alert
+* 
+* Displays an alert dialog box to the user.
+*/
 oscar.alert = function(props,content,callbacks) {
 	var _defaults = {
 		modal:true,
@@ -629,9 +629,9 @@ oscar.alert = function(props,content,callbacks) {
 	var $buttonPanel = $$("<div></div>").addClass("dlgButtonPanel");
 	var $ok = $$("<a></a>").html("Ok").button({
 		icons: {
-            primary: "ui-icon-check"
-        },
-        text: false
+			primary: "ui-icon-check"
+		},
+		text: false
 	}).click(function(){
 		$dlg.dialog("close");
 		if(callbacks && callbacks.complete) {
@@ -644,10 +644,10 @@ oscar.alert = function(props,content,callbacks) {
 
 
 /**
- * APIMethod: oscar.confirm
- * 
- * Displays an confirm dialog box.
- */
+* APIMethod: oscar.confirm
+* 
+* Displays an confirm dialog box.
+*/
 oscar.confirm = function(props,content,callbacks) {
 	var _defaults = {
 		modal:true,
@@ -665,9 +665,9 @@ oscar.confirm = function(props,content,callbacks) {
 	var $buttonPanel = $$("<div></div>").addClass("dlgButtonPanel");
 	var $ok = $$("<a></a>").html("Ok").button({
 		icons: {
-            primary: "ui-icon-check"
-        },
-        text: false
+			primary: "ui-icon-check"
+		},
+		text: false
 	}).click(function(){
 		$dlg.dialog("close");
 		if(callbacks && callbacks.complete) {
@@ -676,9 +676,9 @@ oscar.confirm = function(props,content,callbacks) {
 	});
 	var $cancel = $$("<a></a>").html("Cancel").button({
 		icons: {
-            primary: "ui-icon-cancel"
-        },
-        text: false
+			primary: "ui-icon-cancel"
+		},
+		text: false
 	}).click(function(){
 		$dlg.dialog("close");
 		if(callbacks && callbacks.complete) {
@@ -691,70 +691,70 @@ oscar.confirm = function(props,content,callbacks) {
 }
 
 /**
- * Method: parseText
- * This method will take a String argument and look for URLs, email links and images and return anchor or image tags.
- * 
- * Usage: oscar.Util.parseText(String)
- */
+* Method: parseText
+* This method will take a String argument and look for URLs, email links and images and return anchor or image tags.
+* 
+* Usage: oscar.Util.parseText(String)
+*/
 
 oscar.Util.parseText = function(input) {
 	if(input == null) return "";
 	
 	/** 
-	 * internal functions for parsing images, email links and urls.
-	 */
+	* internal functions for parsing images, email links and urls.
+	*/
 	var fns={
-	    makeTag:function(tag) {
-	        return document.createElement(tag);
-	    },
-	    url:function(input) {
-	        if(input.indexOf("http://") ==0 ||
-	            input.indexOf("https://") ==0) {
-	            var elem = this.makeTag("span");
-	            var anchor = this.makeTag("a");
-	            elem.appendChild(anchor);
-	            anchor.href = input;
-	            anchor.innerHTML = input;
-	            anchor.target = "_new";
-	            input = elem.innerHTML;
-	        }
-	        return input;
-	    },
-	    
-	    email: function(input) {
-	        if(input.indexOf("@") > -1) {
-	            var elem = this.makeTag("span");
-	            var anchor = this.makeTag("a");
-	            elem.appendChild(anchor);
-	            anchor.href="mailto:" + input;
-	            anchor.innerHTML = input;
-	            input = elem.innerHTML;
-	        }
-	        return input;
-	    },
-	    image:function (input) {
-	        if(input.indexOf(".png") > -1 ||
-	            input.indexOf(".gif") > -1 ||
-	            input.indexOf(".jpg") > -1 ||
-	            input.indexOf(".jpeg") > -1) {
-	            var elem = this.makeTag("span");
-	            var image = this.makeTag("img");
-	            elem.appendChild(image);
-	            image.src = input;
-	            input = elem.innerHTML;
-	        }
-	        return input;
-	    }
-	        
+		makeTag:function(tag) {
+			return document.createElement(tag);
+		},
+		url:function(input) {
+			if(input.indexOf("http://") ==0 ||
+				input.indexOf("https://") ==0) {
+				var elem = this.makeTag("span");
+				var anchor = this.makeTag("a");
+				elem.appendChild(anchor);
+				anchor.href = input;
+				anchor.innerHTML = input;
+				anchor.target = "_new";
+				input = elem.innerHTML;
+			}
+			return input;
+		},
+		
+		email: function(input) {
+			if(input.indexOf("@") > -1) {
+				var elem = this.makeTag("span");
+				var anchor = this.makeTag("a");
+				elem.appendChild(anchor);
+				anchor.href="mailto:" + input;
+				anchor.innerHTML = input;
+				input = elem.innerHTML;
+			}
+			return input;
+		},
+		image:function (input) {
+			if(input.indexOf(".png") > -1 ||
+				input.indexOf(".gif") > -1 ||
+				input.indexOf(".jpg") > -1 ||
+				input.indexOf(".jpeg") > -1) {
+				var elem = this.makeTag("span");
+				var image = this.makeTag("img");
+				elem.appendChild(image);
+				image.src = input;
+				input = elem.innerHTML;
+			}
+			return input;
+		}
+			
 	};
 	var arr = input.split(" ");
-    for(var i=0;i<arr.length;i++) {
-        var index = arr[i];
-        arr[i] = fns.email(arr[i]);
-        arr[i] = fns.image(arr[i]);
-        arr[i] = fns.url(arr[i]);
-    }    
-    return arr.join(" ");
+	for(var i=0;i<arr.length;i++) {
+		var index = arr[i];
+		arr[i] = fns.email(arr[i]);
+		arr[i] = fns.image(arr[i]);
+		arr[i] = fns.url(arr[i]);
+	}    
+	return arr.join(" ");
 }
 
 /**
@@ -785,13 +785,13 @@ oscar.Util.isGeographicCRS = function(projection) {
 }
 
 /**
- * APIMethod: boundsToFeature
- * This method taks an OpenLayers.Bounds object and convert it to a feature.
- * Parameters:
- * - bounds <OpenLayers.Bounds>
- * - srcProjection <OpenLayers.Projection>
- * - map <OpenLayers.Map>
- */
+* APIMethod: boundsToFeature
+* This method taks an OpenLayers.Bounds object and convert it to a feature.
+* Parameters:
+* - bounds <OpenLayers.Bounds>
+* - srcProjection <OpenLayers.Projection>
+* - map <OpenLayers.Map>
+*/
 oscar.Util.boundsToFeature = function(bbox,srcProjection,map) {
 	//multipolygons will not draw next to each other when crossing
 	//the date line, they draw on opposite sides of the map.
@@ -826,8 +826,8 @@ oscar.Util.boundsToFeature = function(bbox,srcProjection,map) {
 }
 
 /**
- * Override the default OL pink color for broken images
- */
+* Override the default OL pink color for broken images
+*/
 OpenLayers.Util.onImageLoadErrorColor = "transparent";
 
 oscar.Util.WizardFactory = function(protocol,link,options) {
@@ -859,7 +859,7 @@ oscar.Util.renderEntities = function(str) {
 };
 
 oscar.Util.downloadFromService = function(url,filename,proxyOverride) {
-    	if(proxyOverride || oscar.DownloadHost) {
+		if(proxyOverride || oscar.DownloadHost) {
 			var form = document.createElement("form");
 			$$(form).css("display","none");
 			var formName = OpenLayers.Util.createUniqueID("randomForm");
@@ -878,7 +878,7 @@ oscar.Util.downloadFromService = function(url,filename,proxyOverride) {
 			form.appendChild(iFilename);
 			document.body.appendChild(form);
 			form.submit();
-   	 } else {
-   		 	window.open(url, "abc123","width=640,height=480,menuBar=yes,location=false,scrollbars=yes");
-   	 }
+		} else {
+				window.open(url, "abc123","width=640,height=480,menuBar=yes,location=false,scrollbars=yes");
+		}
 }
