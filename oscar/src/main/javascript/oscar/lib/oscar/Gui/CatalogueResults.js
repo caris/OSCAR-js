@@ -163,11 +163,6 @@ oscar.Gui.CatalogueResults = new oscar.BaseClass(oscar.Gui, {
         // should we clear the results here?
         // do we need to cycle through the plugins to close any "modes"
         $$(this.div).empty();
-        // clean up the map.
-        try {
-
-        } catch (err) {
-        }
         var feat_layer = map.getLayersByName("results")[0];
         if (feat_layer) {
             feat_layer.removeAllFeatures();
