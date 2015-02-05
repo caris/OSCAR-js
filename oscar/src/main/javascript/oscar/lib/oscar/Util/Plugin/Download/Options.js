@@ -31,7 +31,7 @@ oscar.Util.Plugin.Download.Options = new oscar.BaseClass(
 			* @see oscar.Util.Plugin
 			*/
 			play : function() {
-				this.events.triggerEvent("enterMode");
+				this.events.triggerEvent("enterMode",this);
 				var scope = this;
 				this.container = $$("<div></div>");
 				this.container.addClass("options-mode-container");

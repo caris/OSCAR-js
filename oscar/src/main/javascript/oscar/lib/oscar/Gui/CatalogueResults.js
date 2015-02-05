@@ -41,8 +41,8 @@ oscar.Gui.CatalogueResults = new oscar.BaseClass(oscar.Gui,{
 		if(this.searchHandler) {
 			this.searchHandler.events.on({
 				"success" : this.showResults,
-				"beforeSearch" : this.fadeOutUI,
-				"afterSearch" : this.fadeInUI,
+				"beforeSearch" : this.preSearch,
+				"afterSearch" : this.postSearch,
 				scope : this
 			});
 			this.events.on({
@@ -95,11 +95,11 @@ oscar.Gui.CatalogueResults = new oscar.BaseClass(oscar.Gui,{
 		this.results_panel.append(pagination_panel);
 		this.results_panel.append(results_list_panel);
 		this.layout = this.results_panel.layout({
-			closable:false,
-			spacing_open : 0,
+			spacing_open : 5,
+			spacing_closed : 5,
 			resizable:false,
 			north: {
-				closable:false,
+				closable:true,
 			},
 			center: {
 			},
@@ -162,7 +162,14 @@ oscar.Gui.CatalogueResults = new oscar.BaseClass(oscar.Gui,{
 		},this));
 	},
 	clearResults:function() {
+		//should we clear the results here?
+		//do we need to cycle through the plugins to close any "modes"
 		$$(this.div).empty();
+		//clean up the map.
+		try {
+		
+		
+		} catch(err){}
 		var feat_layer = map.getLayersByName("results")[0];
 		if(feat_layer) {		
 			feat_layer.removeAllFeatures();
@@ -226,6 +233,7 @@ oscar.Gui.CatalogueResults = new oscar.BaseClass(oscar.Gui,{
 		},this));
 	},
 	showSearchInfo:function(info) {
+		
 		var matched = info.numberOfRecordsMatched;
 		var returned = info.numberOfRecordsReturned;
 		var next = info.nextRecord;
@@ -264,15 +272,25 @@ oscar.Gui.CatalogueResults = new oscar.BaseClass(oscar.Gui,{
 	enablePagination:function(info) {
 		
 	},
-	fadeInUI:function() {
+	postSearch:function() {
 		$$(this.div).fadeTo("fast",1);
+		this._addFeatureLayer();
+		this._addSelectFeature();
 	},
-
-	fadeOutUI:function() {
+	preSearch:function() {
+		var selFeatures = this.map.getControlsByClass("OpenLayers.Control.SelectFeature");
+		for(var i=0;i<selFeatures.length;i++) {
+			selFeatures[i].deactivate();
+		}
+		
+		if(this.activePlugin) {
+			this.activePlugin.destroy();
+		}
 		$$(this.div).fadeTo("fast",0.2);
 	},
-	renderFeaturesToMap:function(features) {
-		var feat_layer = map.getLayersByName("results")[0];
+	
+	_addFeatureLayer:function() {
+		var feat_layer = this.map.getLayersByName("results")[0];
 		
 		if(!feat_layer) {
 			var styleMap = new OpenLayers.StyleMap({
@@ -316,23 +334,32 @@ oscar.Gui.CatalogueResults = new oscar.BaseClass(oscar.Gui,{
 				}
 			});
 			map.addLayer(feat_layer);
-			var select = new OpenLayers.Control.SelectFeature(
-				feat_layer,
-				{
-					click:true,
-					hover:true,
-					callbacks:{
-						"click":$$.proxy(function(feature){
-							if(feature.record_div) {
-								this.focusRecord($$(feature.record_div).data("record"));
-							}
-						},scope)
-					}
-				});
-			map.addControl(select);
-			select.activate();
-			select.handlers.feature.stopDown = false;
 		}
+	},
+	_addSelectFeature:function() {
+		var selectFeature = this.map.getControlsByClass("OpenLayers.Control.SelectFeature")[0];
+		if(!selectFeature) {
+			var scope = this;
+			selectFeature = new OpenLayers.Control.SelectFeature(
+			this.map.getLayersByName("results")[0],
+			{
+				click:true,
+				hover:true,
+				callbacks:{
+					"click":$$.proxy(function(feature){
+						if(feature.record_div) {
+							this.focusRecord($$(feature.record_div).data("record"));
+						}
+					},scope)
+				}
+			});
+			map.addControl(selectFeature);
+		}
+		selectFeature.activate();
+		selectFeature.handlers.feature.stopDown = false;
+	},
+	renderFeaturesToMap:function(features) {
+		var feat_layer = this.map.getLayersByName("results")[0];
 		feat_layer.addFeatures(features);
 		map.zoomToExtent(feat_layer.getDataExtent());
 	},
@@ -382,10 +409,12 @@ oscar.Gui.CatalogueResults = new oscar.BaseClass(oscar.Gui,{
 				plugin.drawTo($div);
 				if(plugin.events) {
 					plugin.events.on({
-						"enterMode":function(){
+						"enterMode":function(plugin){
+							this.activePlugin = plugin;
 							this.results_panel.hide("slide",{direction:"left"},500);
 						},
 						"exitMode":function(){
+							this.activePlugin=null;
 							this.results_panel.show("slide",{direction:"left"},500);
 						},
 						scope:this

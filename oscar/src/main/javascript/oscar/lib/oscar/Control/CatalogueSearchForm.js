@@ -83,11 +83,25 @@ oscar.Control.CatalogueSearchForm = oscar.BaseClass(oscar.Control,{
 				primary : "ui-icon-arrow-4-diag"
 			},
 			text : false
-		}).click(function() {
-			scope.spatialSearch.activate();
-		});
+		}).click($$.proxy(function(){
+			//deactivate any selectFeatureControls here
+			this.toggleFeatureSelection(true);
+			this.spatialSearch.activate();
+		},this));
+		
 		$$(this.div).append(this.form);
 		return this.div;
+	},
+	
+	toggleFeatureSelection:function(forceDeactivate) {
+		var selFeatures = this.map.getControlsByClass("OpenLayers.Control.SelectFeature");
+		for(var i=0;i<selFeatures.length;i++) {
+			if(forceDeactivate) {
+				selFeatures[i].deactivate();
+			} else {
+				selFeatures[i].activate();
+			}
+		}
 	},
 	performSpatialSearch:function(geom) {
 		var criteria = {
