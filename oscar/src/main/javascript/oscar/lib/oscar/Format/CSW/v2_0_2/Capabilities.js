@@ -18,7 +18,7 @@ oscar.Format.CSW.v2_0_2.Capabilities = new oscar.BaseClass(OpenLayers.Format.XML
     runChildNodes : function(obj, node) {
         var children = node.childNodes;
         var child, processor;
-        for ( var child in children) {
+        for (var child=0;child<children.length;child++) {
             childNode = children[child];
             if (childNode.nodeType == 1) {
                 processor = this.getProcessor(childNode);
