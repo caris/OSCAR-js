@@ -109,7 +109,7 @@ oscar.Format.OGC.wcs = {
             obj.OtherSource = [];
         }
         obj.OtherSource.push({
-            href : node.getAttributeNS("http://www.w3.org/1999/xlink", "href")
+            href : this.getAttributeNS(node,"http://www.w3.org/1999/xlink", "href")
         });
     },
     /**

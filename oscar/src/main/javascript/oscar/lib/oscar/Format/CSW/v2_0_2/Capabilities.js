@@ -30,12 +30,13 @@ oscar.Format.CSW.v2_0_2.Capabilities = new oscar.BaseClass(OpenLayers.Format.XML
     },
     getProcessor : function(childNode) {
         var proc = null;
+        var localName = (childNode.localName) ? childNode.localName : childNode.baseName;
         try {
-            proc = this.readers[childNode.prefix][childNode.localName];
+            proc = this.readers[childNode.prefix][localName];
         } catch (err) {
-            proc = this["read_cap_" + childNode.localName]
+            proc = this["read_cap_" + localName]
         }
-        return proc || this["read_cap_" + childNode.localName];
+        return proc || this["read_cap_" + localName];
     },
     CLASS_NAME : "oscar.Format.CSW.v2_0_2.Capabilities"
 });

@@ -845,3 +845,6 @@ if (!Function.prototype.bind) {
 // Override the default value for these OL objects.
 OpenLayers.Control.Measure.prototype.geodesic = true;
 OpenLayers.Control.ScaleLine.prototype.geodesic = true;
+
+//Adding missing namespace
+OpenLayers.Format.CSWGetRecords.v2_0_2.prototype.namespaces.xmlns = "http://www.w3.org/2000/xmlns/";
