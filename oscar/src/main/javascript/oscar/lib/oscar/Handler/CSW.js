@@ -73,13 +73,20 @@ oscar.Handler.CSW = new oscar.BaseClass(oscar.Handler, {
         this.createFilter(this.parameters)
         var formatter = new OpenLayers.Format.CSWGetRecords();
         var scope = this;
-        OpenLayers.Request.POST({
-            url : this.catalogue.getUrl(oscar.ogc.CatalogueService.prototype.GETRECORDS, "POST"),
-            success : this.success,
-            failure : this.failure,
-            data : formatter.write(this.parameters),
-            scope : this
-        });
+        try {
+            OpenLayers.Request.POST({
+                url : this.catalogue.getUrl(oscar.ogc.CatalogueService.prototype.GETRECORDS, "POST"),
+                success : this.success,
+                failure : this.failure,
+                data : formatter.write(this.parameters),
+                scope : this
+            });
+        } catch (err) {
+            if (console) {
+                console.log(err);
+            }
+            this.events.triggerEvent("failure");
+        }
     },
     success : function(resp) {
         this.events.triggerEvent("afterSearch");
@@ -89,7 +96,7 @@ oscar.Handler.CSW = new oscar.BaseClass(oscar.Handler, {
         this.events.triggerEvent("success", this.results);
     },
     failure : function() {
-        this.events.triggerEvent("afterSearch");
+        this.events.triggerEvent("failure");
     },
     createFilter : function(parameters) {
 
