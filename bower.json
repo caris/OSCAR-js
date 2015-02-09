@@ -1,0 +1,26 @@
+{
+  "name": "OSCAR-js",
+  "version": "16.0.0",
+  "homepage": "https://github.com/caris/OSCAR-js",
+  "authors": [
+    "CARIS <www.caris.com>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "openlayers2": "http://github.com/openlayers/openlayers/releases/download/release-2.13.1/OpenLayers-2.13.1.zip",
+    "jqueryui": "~1.11.2",
+    "slimscroll": "~1.3.3",
+    "jsts": "~0.15.0",
+    "jqueryUILayout": "https://github.com/allpro/layout/archive/v1.4.3.zip",
+    "proj4js": "http://download.osgeo.org/proj4js/proj4js-1.1.0.zip",
+    "yui2": "https://github.com/yui/yui2.git#~2.8.0"
+  }
+}

@@ -1,0 +1,56 @@
+<html>
+<head>
+<script src="../../Loader.js"></script>
+<script type="text/javascript">
+/**
+ * Unit Tests for oscar.Util.parseText
+ */
+
+
+
+function test_parseText_Email(t) {
+    t.plan(1);
+	var blob = "Send emails to admin@oscar.text";
+	var valid_result = 'Send emails to <a href="mailto:admin@oscar.text">admin@oscar.text</a>';
+	var result = oscar.Util.parseText(blob);
+    t.eq(result,valid_result, "Valid Parse");
+}
+
+function test_parseText_Image(t) {
+    t.plan(4);
+    var images = ["http://ucode.caris.com/image.gif","http://ucode.caris.com/image.jpg","http://ucode.caris.com/image.jpeg","http://ucode.caris.com/image.png"]
+    for(var i=0;i<images.length;i++) {
+        var blob = images[i];
+        var valid_result = '<img src="'+images[i] +'">';
+        var result = oscar.Util.parseText(blob);
+        t.eq(result,valid_result,"Parsed " + images[i] + " to " + result);
+    }
+
+}
+
+function test_parseText_Url(t) {
+    t.plan(2);
+    var blob = "Visit the website http://ucode.caris.com";
+    var valid_result = 'Visit the website <a target="_new" href="http://ucode.caris.com">http://ucode.caris.com</a>';
+    var result = oscar.Util.parseText(blob);
+    t.eq(result,valid_result,"Valid Parse");
+    
+    blob = "Visit the website https://ucode.caris.com";
+    valid_result = 'Visit the website <a target="_new" href="https://ucode.caris.com">https://ucode.caris.com</a>';
+    result = oscar.Util.parseText(blob);
+    t.eq(result,valid_result,"Valid Parse");
+}
+
+function test_parseText_emptyValue(t) {
+    t.plan(1);
+    var blob = null;
+    var result = oscar.Util.parseText(blob);
+    t.eq(result,"","Null input returned empty string");
+    
+}
+
+
+</script>
+<body>
+</body>
+</html>

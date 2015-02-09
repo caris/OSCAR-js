@@ -1,0 +1,39 @@
+<html>
+<head>
+<script src="../../Loader.js"></script>
+<script type="text/javascript">
+   var successMsg = "Matching translation values";
+   function test_ServiceEntry(t) {
+	   t.plan(4);
+       var se = new oscar.ox.ServiceEntry({url:'http://ogc/ows',identifiers:['Buildings','Properties']});
+       t.eq(se.CLASS_NAME,"oscar.ox.ServiceEntry","Class created!");
+       t.eq(se.identifiers.length,2,"Identifiers length correct");
+       t.eq(se.identifiers[1],'Properties',"Identifier index correct");
+       t.eq(se.url,"http://ogc/ows","Service url is correct");
+       
+   }
+   function test_ServiceEntry_clone(t) {
+	   t.plan(1);
+	   var se = new oscar.ox.ServiceEntry({url:'http://ogc/ows'});
+	   var newSe = se.clone();
+
+	   newSe.url = "http://ogc/newOws";
+
+       t.eq((se.url == "http://ogc/ows" && newSe.url == "http://ogc/newOws"),true,"Clone successful");
+
+   }
+   function test_SelectionService(t) {
+	    var ss = new oscar.ox.SelectionService();
+	    t.ok(typeof ss.getServiceEntries == "function", "getServiceEntries method available"); 
+	    var serviceEntries = ss.getServiceEntries();
+	    t.eq(serviceEntries.length,0,"Service Entries array length is 0");
+	    ss.addServiceEntry({url:'test'});
+	    t.eq(ss.getServiceEntries().length,0,"No Service Entry available");
+	    ss.addServiceEntry(new oscar.ox.ServiceEntry({url:'http://ogc/ows',identifiers:['Buildings','Properties']}));
+	    t.eq(ss.getServiceEntries().length,1,"One service entry is available");
+
+   }
+</script>
+<body>
+</body>
+</html>

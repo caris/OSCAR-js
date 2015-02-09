@@ -1,0 +1,31 @@
+<html>
+<head>
+<script src="../../Loader.js"></script>
+<script type="text/javascript">
+var url = "../files/download2.xml";
+var waitTime = 2;
+
+function test_Format_OXF(t) {
+
+	var success = function(resp) {
+	    var reader = new oscar.Format.OXF.XML();
+	    var oxf = reader.read(resp.responseXML);
+		t.eq(oxf.themes[0].parameters["numzoomlevels"],22);
+		t.eq(oxf.themes[0].parameters["backgroundColor"],"#f00");
+		t.eq(oxf.themes[1].parameters["numzoomlevels"],16);
+		t.eq(oxf.themes[1].parameters["backgroundColor"],"#fff");
+	};
+
+	var fail = function(resp) {
+	    
+
+	};
+
+    OpenLayers.loadURL(url,null,this,success,fail);
+    t.wait_result(waitTime);
+}
+
+</script>
+<body>
+</body>
+</html>

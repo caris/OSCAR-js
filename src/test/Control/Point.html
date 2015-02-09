@@ -1,0 +1,16 @@
+<html>
+<head>
+<script src="../../Loader.js"></script>
+<script type="text/javascript">
+var url = "../files/themeConfiguration.json";
+var waitTime = 2;
+function test_Control_Point(t) {
+    var control = new oscar.Control.Point();
+    t.ok(control instanceof oscar.Control.Point,"new oscar.Control.Point returns Point object");
+    t.eq(control.CLASS_NAME,"oscar.Control.Point","control.CLASS_NAME is set correctly");
+}
+</script>
+<body>
+
+</body>
+</html>

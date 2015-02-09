@@ -1,0 +1,121 @@
+<html>
+<head>
+<script src="../../Loader.js"></script>
+<script type="text/javascript">
+var url = "../files/themeConfiguration.json";
+var waitTime = 2;
+
+function test_Control_LayerToggle(t,control) {
+    if(!control) {
+           control = new oscar.Control.LayerToggle();
+    }
+    t.ok(control instanceof oscar.Control.LayerToggle,"new oscar.Control.LayerToggle returns LayerToggle object");
+    t.eq(control.CLASS_NAME,"oscar.Control.LayerToggle","control.CLASS_NAME is set correctly");
+}
+
+
+var replay = 
+{ checkpoints: [
+function( tst, wnd ) {// #0 time 4s. cursor was over BUTTON [0]
+    var layerControl = wnd.map.getControlsByClass("oscar.Control.LayerToggle")[0];
+    test_Control_LayerToggle(tst,layerControl);
+    
+}, function( tst, wnd ) { // #1 time 6s. cursor was over DIV #LT_OpenLayers.Layer.WMTS_30, DIV [0], LABEL [1]
+    var wmtsLayer = wnd.map.layers[1];
+    tst.ok(wmtsLayer.visibility,"Layer is currently visible");
+
+    
+}, function( tst, wnd ) { // #2 time 9s. cursor was over INPUT #checkbox282 layer toggled off
+    var wmtsLayer = wnd.map.layers[1];
+    tst.ok(wmtsLayer.visibility == false,"Layer is currently hidden");
+    
+}
+], events: [
+{type:"mouseover", target:"0 BUTTON", bubbles:"true", cancelable:"true", which:"1", pageX:"44", pageY:"8", isChar:"false", screenX:"1964", screenY:"-7", clientX:"44", clientY:"8", ctrlKey:"false", shiftKey:"false", altKey:"false", metaKey:"false", button:"0", relatedTarget:"", detail:"0", mozPressure:"0", layerX:"44", layerY:"8", cancelBubble:"false", time:"497"},
+{type:"mousedown", target:"0 BUTTON", bubbles:"true", cancelable:"true", which:"1", pageX:"40", pageY:"21", isChar:"false", screenX:"1960", screenY:"6", clientX:"40", clientY:"21", ctrlKey:"false", shiftKey:"false", altKey:"false", metaKey:"false", button:"0", relatedTarget:null, detail:"1", mozPressure:"0", layerX:"40", layerY:"21", cancelBubble:"false", time:"208"},
+{type:"mouseup", target:"0 BUTTON", bubbles:"true", cancelable:"true", which:"1", pageX:"40", pageY:"21", isChar:"false", screenX:"1960", screenY:"6", clientX:"40", clientY:"21", ctrlKey:"false", shiftKey:"false", altKey:"false", metaKey:"false", button:"0", relatedTarget:null, detail:"1", mozPressure:"0", layerX:"40", layerY:"21", cancelBubble:"false", time:"96"},
+{type:"click", target:"0 BUTTON", bubbles:"true", cancelable:"true", which:"1", pageX:"40", pageY:"21", isChar:"false", screenX:"1960", screenY:"6", clientX:"40", clientY:"21", ctrlKey:"false", shiftKey:"false", altKey:"false", metaKey:"false", button:"0", relatedTarget:null, detail:"1", mozPressure:"0", layerX:"40", layerY:"21", cancelBubble:"false", time:"0"},
+{type:"mouseout", target:"0 BUTTON", bubbles:"true", cancelable:"true", which:"1", pageX:"47", pageY:"32", isChar:"false", screenX:"1967", screenY:"17", clientX:"47", clientY:"32", ctrlKey:"false", shiftKey:"false", altKey:"false", metaKey:"false", button:"0", relatedTarget:"", detail:"0", mozPressure:"0", layerX:"47", layerY:"32", cancelBubble:"false", time:"2664"},
+{type:"_checkpoint", time:"935", which:"0", target:"0 BUTTON"},
+{type:"mouseover", target:"#OpenLayersDiv277 IMG", bubbles:"true", cancelable:"true", which:"1", pageX:"514", pageY:"89", isChar:"false", screenX:"2434", screenY:"74", clientX:"514", clientY:"89", ctrlKey:"false", shiftKey:"false", altKey:"false", metaKey:"false", button:"0", relatedTarget:"", detail:"0", mozPressure:"0", layerX:"37", layerY:"232", cancelBubble:"false", time:"233"},
+{type:"mouseout", target:"#OpenLayersDiv277 IMG", bubbles:"true", cancelable:"true", which:"1", pageX:"561", pageY:"93", isChar:"false", screenX:"2481", screenY:"78", clientX:"561", clientY:"93", ctrlKey:"false", shiftKey:"false", altKey:"false", metaKey:"false", button:"0", relatedTarget:"#oscar.Gui.CollapsiblePanel25 DIV,0 DIV,0 DIV", detail:"0", mozPressure:"0", layerX:"13", layerY:"50", cancelBubble:"false", time:"8"},
+{type:"mouseover", target:"#oscar.Gui.CollapsiblePanel25 DIV,0 DIV,0 DIV", bubbles:"true", cancelable:"true", which:"1", pageX:"561", pageY:"93", isChar:"false", screenX:"2481", screenY:"78", clientX:"561", clientY:"93", ctrlKey:"false", shiftKey:"false", altKey:"false", metaKey:"false", button:"0", relatedTarget:"#OpenLayersDiv277 IMG", detail:"0", mozPressure:"0", layerX:"13", layerY:"50", cancelBubble:"false", time:"0"},
+{type:"mouseout", target:"#oscar.Gui.CollapsiblePanel25 DIV,0 DIV,0 DIV", bubbles:"true", cancelable:"true", which:"1", pageX:"662", pageY:"96", isChar:"false", screenX:"2582", screenY:"81", clientX:"662", clientY:"96", ctrlKey:"false", shiftKey:"false", altKey:"false", metaKey:"false", button:"0", relatedTarget:"#oscar.Gui.CollapsiblePanel25 DIV,0 DIV", detail:"0", mozPressure:"0", layerX:"114", layerY:"53", cancelBubble:"false", time:"16"},
+{type:"mouseover", target:"#oscar.Gui.CollapsiblePanel25 DIV,0 DIV", bubbles:"true", cancelable:"true", which:"1", pageX:"662", pageY:"96", isChar:"false", screenX:"2582", screenY:"81", clientX:"662", clientY:"96", ctrlKey:"false", shiftKey:"false", altKey:"false", metaKey:"false", button:"0", relatedTarget:"#oscar.Gui.CollapsiblePanel25 DIV,0 DIV,0 DIV", detail:"0", mozPressure:"0", layerX:"114", layerY:"53", cancelBubble:"false", time:"0"},
+{type:"mouseout", target:"#oscar.Gui.CollapsiblePanel25 DIV,0 DIV", bubbles:"true", cancelable:"true", which:"1", pageX:"711", pageY:"100", isChar:"false", screenX:"2631", screenY:"85", clientX:"711", clientY:"100", ctrlKey:"false", shiftKey:"false", altKey:"false", metaKey:"false", button:"0", relatedTarget:"#oscar.Gui.CollapsiblePanel25 DIV", detail:"0", mozPressure:"0", layerX:"163", layerY:"57", cancelBubble:"false", time:"8"},
+{type:"mouseover", target:"#oscar.Gui.CollapsiblePanel25 DIV", bubbles:"true", cancelable:"true", which:"1", pageX:"711", pageY:"100", isChar:"false", screenX:"2631", screenY:"85", clientX:"711", clientY:"100", ctrlKey:"false", shiftKey:"false", altKey:"false", metaKey:"false", button:"0", relatedTarget:"#oscar.Gui.CollapsiblePanel25 DIV,0 DIV", detail:"0", mozPressure:"0", layerX:"163", layerY:"57", cancelBubble:"false", time:"0"},
+{type:"mouseout", target:"#oscar.Gui.CollapsiblePanel25 DIV", bubbles:"true", cancelable:"true", which:"1", pageX:"766", pageY:"104", isChar:"false", screenX:"2686", screenY:"89", clientX:"766", clientY:"104", ctrlKey:"false", shiftKey:"false", altKey:"false", metaKey:"false", button:"0", relatedTarget:"#oscar.Control.ThemeSwitcher_18 DIV,1 DIV,0 DIV", detail:"0", mozPressure:"0", layerX:"218", layerY:"61", cancelBubble:"false", time:"8"},
+{type:"mouseover", target:"#oscar.Control.ThemeSwitcher_18 DIV,1 DIV,0 DIV", bubbles:"true", cancelable:"true", which:"1", pageX:"766", pageY:"104", isChar:"false", screenX:"2686", screenY:"89", clientX:"766", clientY:"104", ctrlKey:"false", shiftKey:"false", altKey:"false", metaKey:"false", button:"0", relatedTarget:"#oscar.Gui.CollapsiblePanel25 DIV", detail:"0", mozPressure:"0", layerX:"218", layerY:"61", cancelBubble:"false", time:"0"},
+{type:"mouseout", target:"#oscar.Control.ThemeSwitcher_18 DIV,1 DIV,0 DIV", bubbles:"true", cancelable:"true", which:"1", pageX:"818", pageY:"108", isChar:"false", screenX:"2738", screenY:"93", clientX:"818", clientY:"108", ctrlKey:"false", shiftKey:"false", altKey:"false", metaKey:"false", button:"0", relatedTarget:"#OpenLayersDiv275 IMG", detail:"0", mozPressure:"0", layerX:"85", layerY:"251", cancelBubble:"false", time:"8"},
+{type:"mouseover", target:"#OpenLayersDiv275 IMG", bubbles:"true", cancelable:"true", which:"1", pageX:"818", pageY:"108", isChar:"false", screenX:"2738", screenY:"93", clientX:"818", clientY:"108", ctrlKey:"false", shiftKey:"false", altKey:"false", metaKey:"false", button:"0", relatedTarget:"#oscar.Control.ThemeSwitcher_18 DIV,1 DIV,0 DIV", detail:"0", mozPressure:"0", layerX:"85", layerY:"251", cancelBubble:"false", time:"0"},
+{type:"mouseout", target:"#OpenLayersDiv275 IMG", bubbles:"true", cancelable:"true", which:"1", pageX:"871", pageY:"114", isChar:"false", screenX:"2791", screenY:"99", clientX:"871", clientY:"114", ctrlKey:"false", shiftKey:"false", altKey:"false", metaKey:"false", button:"0", relatedTarget:"#OpenLayersDiv249 IMG", detail:"0", mozPressure:"0", layerX:"138", layerY:"1", cancelBubble:"false", time:"8"},
+{type:"mouseover", target:"#OpenLayersDiv249 IMG", bubbles:"true", cancelable:"true", which:"1", pageX:"871", pageY:"114", isChar:"false", screenX:"2791", screenY:"99", clientX:"871", clientY:"114", ctrlKey:"false", shiftKey:"false", altKey:"false", metaKey:"false", button:"0", relatedTarget:"#OpenLayersDiv275 IMG", detail:"0", mozPressure:"0", layerX:"138", layerY:"1", cancelBubble:"false", time:"0"},
+{type:"mouseout", target:"#OpenLayersDiv249 IMG", bubbles:"true", cancelable:"true", which:"1", pageX:"1008", pageY:"123", isChar:"false", screenX:"2928", screenY:"108", clientX:"1008", clientY:"123", ctrlKey:"false", shiftKey:"false", altKey:"false", metaKey:"false", button:"0", relatedTarget:"#oscar.Control.LayerToggle_4 DIV,1 DIV", detail:"0", mozPressure:"0", layerX:"38", layerY:"31", cancelBubble:"false", time:"24"},
+{type:"mouseover", target:"#oscar.Control.LayerToggle_4 DIV,1 DIV", bubbles:"true", cancelable:"true", which:"1", pageX:"1008", pageY:"123", isChar:"false", screenX:"2928", screenY:"108", clientX:"1008", clientY:"123", ctrlKey:"false", shiftKey:"false", altKey:"false", metaKey:"false", button:"0", relatedTarget:"#OpenLayersDiv249 IMG", detail:"0", mozPressure:"0", layerX:"38", layerY:"31", cancelBubble:"false", time:"0"},
+{type:"mouseout", target:"#oscar.Control.LayerToggle_4 DIV,1 DIV", bubbles:"true", cancelable:"true", which:"1", pageX:"1148", pageY:"109", isChar:"false", screenX:"3068", screenY:"94", clientX:"1148", clientY:"109", ctrlKey:"false", shiftKey:"false", altKey:"false", metaKey:"false", button:"0", relatedTarget:"#LT_OpenLayers.Layer.WMTS_30 DIV,0 DIV", detail:"0", mozPressure:"0", layerX:"178", layerY:"17", cancelBubble:"false", time:"272"},
+{type:"mouseover", target:"#LT_OpenLayers.Layer.WMTS_30 DIV,0 DIV", bubbles:"true", cancelable:"true", which:"1", pageX:"1148", pageY:"109", isChar:"false", screenX:"3068", screenY:"94", clientX:"1148", clientY:"109", ctrlKey:"false", shiftKey:"false", altKey:"false", metaKey:"false", button:"0", relatedTarget:"#oscar.Control.LayerToggle_4 DIV,1 DIV", detail:"0", mozPressure:"0", layerX:"178", layerY:"17", cancelBubble:"false", time:"0"},
+{type:"mouseout", target:"#LT_OpenLayers.Layer.WMTS_30 DIV,0 DIV", bubbles:"true", cancelable:"true", which:"1", pageX:"1013", pageY:"111", isChar:"false", screenX:"2933", screenY:"96", clientX:"1013", clientY:"111", ctrlKey:"false", shiftKey:"false", altKey:"false", metaKey:"false", button:"0", relatedTarget:"#oscar.Control.LayerToggle_4 DIV,1 DIV", detail:"0", mozPressure:"0", layerX:"43", layerY:"19", cancelBubble:"false", time:"248"},
+{type:"mouseover", target:"#oscar.Control.LayerToggle_4 DIV,1 DIV", bubbles:"true", cancelable:"true", which:"1", pageX:"1013", pageY:"111", isChar:"false", screenX:"2933", screenY:"96", clientX:"1013", clientY:"111", ctrlKey:"false", shiftKey:"false", altKey:"false", metaKey:"false", button:"0", relatedTarget:"#LT_OpenLayers.Layer.WMTS_30 DIV,0 DIV", detail:"0", mozPressure:"0", layerX:"43", layerY:"19", cancelBubble:"false", time:"0"},
+{type:"mouseout", target:"#oscar.Control.LayerToggle_4 DIV,1 DIV", bubbles:"true", cancelable:"true", which:"1", pageX:"1006", pageY:"110", isChar:"false", screenX:"2926", screenY:"95", clientX:"1006", clientY:"110", ctrlKey:"false", shiftKey:"false", altKey:"false", metaKey:"false", button:"0", relatedTarget:"#LT_OpenLayers.Layer.WMTS_30 DIV,0 DIV,1 LABEL", detail:"0", mozPressure:"0", layerX:"36", layerY:"18", cancelBubble:"false", time:"56"},
+{type:"mouseover", target:"#LT_OpenLayers.Layer.WMTS_30 DIV,0 DIV,1 LABEL", bubbles:"true", cancelable:"true", which:"1", pageX:"1006", pageY:"110", isChar:"false", screenX:"2926", screenY:"95", clientX:"1006", clientY:"110", ctrlKey:"false", shiftKey:"false", altKey:"false", metaKey:"false", button:"0", relatedTarget:"#oscar.Control.LayerToggle_4 DIV,1 DIV", detail:"0", mozPressure:"0", layerX:"36", layerY:"18", cancelBubble:"false", time:"0"},
+{type:"_checkpoint", time:"1431", which:"1", target:"#LT_OpenLayers.Layer.WMTS_30 DIV,0 DIV,1 LABEL"},
+{type:"mouseout", target:"#LT_OpenLayers.Layer.WMTS_30 DIV,0 DIV,1 LABEL", bubbles:"true", cancelable:"true", which:"1", pageX:"989", pageY:"104", isChar:"false", screenX:"2909", screenY:"89", clientX:"989", clientY:"104", ctrlKey:"false", shiftKey:"false", altKey:"false", metaKey:"false", button:"0", relatedTarget:"#LT_OpenLayers.Layer.WMTS_30 DIV,0 DIV", detail:"0", mozPressure:"0", layerX:"19", layerY:"12", cancelBubble:"false", time:"409"},
+{type:"mouseover", target:"#LT_OpenLayers.Layer.WMTS_30 DIV,0 DIV", bubbles:"true", cancelable:"true", which:"1", pageX:"989", pageY:"104", isChar:"false", screenX:"2909", screenY:"89", clientX:"989", clientY:"104", ctrlKey:"false", shiftKey:"false", altKey:"false", metaKey:"false", button:"0", relatedTarget:"#LT_OpenLayers.Layer.WMTS_30 DIV,0 DIV,1 LABEL", detail:"0", mozPressure:"0", layerX:"19", layerY:"12", cancelBubble:"false", time:"0"},
+{type:"mouseout", target:"#LT_OpenLayers.Layer.WMTS_30 DIV,0 DIV", bubbles:"true", cancelable:"true", which:"1", pageX:"986", pageY:"104", isChar:"false", screenX:"2906", screenY:"89", clientX:"986", clientY:"104", ctrlKey:"false", shiftKey:"false", altKey:"false", metaKey:"false", button:"0", relatedTarget:"#checkbox282 INPUT", detail:"0", mozPressure:"0", layerX:"16", layerY:"12", cancelBubble:"false", time:"16"},
+{type:"mouseover", target:"#checkbox282 INPUT", bubbles:"true", cancelable:"true", which:"1", pageX:"986", pageY:"104", isChar:"false", screenX:"2906", screenY:"89", clientX:"986", clientY:"104", ctrlKey:"false", shiftKey:"false", altKey:"false", metaKey:"false", button:"0", relatedTarget:"#LT_OpenLayers.Layer.WMTS_30 DIV,0 DIV", detail:"0", mozPressure:"0", layerX:"16", layerY:"12", cancelBubble:"false", time:"0"},
+{type:"mousedown", target:"#checkbox282 INPUT", bubbles:"true", cancelable:"true", which:"1", pageX:"979", pageY:"104", isChar:"false", screenX:"2899", screenY:"89", clientX:"979", clientY:"104", ctrlKey:"false", shiftKey:"false", altKey:"false", metaKey:"false", button:"0", relatedTarget:null, detail:"1", mozPressure:"0", layerX:"9", layerY:"12", cancelBubble:"false", time:"368"},
+{type:"mouseup", target:"#checkbox282 INPUT", bubbles:"true", cancelable:"true", which:"1", pageX:"979", pageY:"104", isChar:"false", screenX:"2899", screenY:"89", clientX:"979", clientY:"104", ctrlKey:"false", shiftKey:"false", altKey:"false", metaKey:"false", button:"0", relatedTarget:null, detail:"1", mozPressure:"0", layerX:"9", layerY:"12", cancelBubble:"false", time:"329"},
+{type:"click", target:"#checkbox282 INPUT", bubbles:"true", cancelable:"true", which:"1", pageX:"979", pageY:"104", isChar:"false", screenX:"2899", screenY:"89", clientX:"979", clientY:"104", ctrlKey:"false", shiftKey:"false", altKey:"false", metaKey:"false", button:"0", relatedTarget:null, detail:"1", mozPressure:"0", layerX:"9", layerY:"12", cancelBubble:"false", time:"0"},
+{type:"_checkpoint", time:"1326", which:"2", target:"#checkbox282 INPUT"}
+] }
+;
+
+function test_UI(t) {
+    t.replay_events(window,replay);
+}
+
+function test_Translations(t) {
+    var getTranslation = function(lang,key) {
+        return OpenLayers.Lang[lang][key];
+    };
+
+    t.eq(getTranslation("en","LayerToggleTitle"),"Layers","English key LayerToggleTitle is correct");
+    t.debug_print("[Key] LayerToggleTitle [English] " + getTranslation("en","LayerToggleTitle"));
+
+    t.eq(getTranslation("en","LayerToggleToolTip"),"Turn layers on or off","English key LayerToggleToolTip is correct");
+    t.debug_print("[Key] LayerToggleToolTip [English] " + getTranslation("en","LayerToggleToolTip"));
+
+    t.eq(getTranslation("es","LayerToggleTitle"),"Capas","Spanish key LayerToggleTitle is correct");
+    t.debug_print("[Key] LayerToggleTitle [Spanish] " + getTranslation("es","LayerToggleTitle"));
+
+    t.eq(getTranslation("es","LayerToggleToolTip"),"Capas Activar o desactivar","Spanish key LayerToggleToolTip is correct");
+    t.debug_print("[Key] LayerToggleToolTip [Spanish] " + getTranslation("es","LayerToggleToolTip"));
+
+    t.eq(getTranslation("fr","LayerToggleTitle"),"Couches","French key LayerToggleTitle is correct");
+    t.debug_print("[Key] LayerToggleTitle [French] " + getTranslation("fr","LayerToggleTitle"));
+
+    t.eq(getTranslation("fr","LayerToggleToolTip"),"Couches Activer ou d\u00e9sactiver","French key LayerToggleToolTip is correct");
+    t.debug_print("[Key] LayerToggleToolTip [French] " + getTranslation("fr","LayerToggleToolTip"));
+        
+
+    
+}
+var map;
+function run() {
+    OpenLayers.ProxyHost = "/osa/proxy?url=";
+    var options = {
+        controls:[new oscar.Control.LayerToggle({closed:false,resizable:true,tooltipText:"Use the checkboxes to show or hide different layers."})]
+    };
+    map = new oscar.Map("map",options);
+    var ts = new oscar.Control.ThemeSwitcher();
+    map.addControl(ts);
+    ts.getThemeManager().autoDraw=true;
+    ts.getConfigManager().load(url);
+}
+
+</script>
+<body>
+<button onclick="run()">Open</button>
+<div id="map" style="width:800px;height:600px;float:right;"></div>
+</body>
+</html>

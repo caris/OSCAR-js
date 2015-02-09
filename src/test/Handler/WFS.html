@@ -1,0 +1,157 @@
+<html>
+<head>
+<script src="../../Loader.js"></script>
+<script type="text/javascript">
+function test_buildProtocol_1_0_0_longlat(t) {
+    t.plan(1);
+    var theme = {srs:"EPSG:4326"}
+    var geom = new OpenLayers.Bounds(-63.984375,18.984375,-2.8125,65.390625).toGeometry();
+    var mapProjection = new OpenLayers.Projection("EPSG:4326");
+    var map = new OpenLayers.Map();
+    map.projection= mapProjection;
+
+    var se = new oscar.ox.ServiceEntry();
+    se.url="http://whatever";
+    se.version="1.0.0"
+    se.serviceType="WFS";
+    se.identifiers=["cs:Buildings"];
+    se.schema={
+        featureTypes:[
+        {
+            properties:[
+                {name:"geom"}
+            ]
+        }
+        ],
+        targetNamespace:"cs"
+    };
+    var handler = new oscar.Handler.WFS();
+    handler.map = map;
+    var protocol = handler.buildProtocol(se,geom,theme);
+    t.eq(protocol.format.xy,true,"XY values of cover will not flip.")
+}
+function test_buildProtocol_1_0_0_merc(t) {
+    t.plan(1);
+    var theme = {srs:"EPSG:4326"}
+    var geom = new OpenLayers.Bounds(-63.984375,18.984375,-2.8125,65.390625).toGeometry();
+    var mapProjection = new OpenLayers.Projection("EPSG:900913");
+    var map = new OpenLayers.Map();
+    map.projection= mapProjection;
+
+    var se = new oscar.ox.ServiceEntry();
+    se.url="http://whatever";
+    se.version="1.0.0"
+    se.serviceType="WFS";
+    se.identifiers=["cs:Buildings"];
+    se.schema={
+        featureTypes:[
+        {
+            properties:[
+                {name:"geom"}
+            ]
+        }
+        ],
+        targetNamespace:"http://www.caris.com/cs",
+        targetPrefix:"cs"
+    };
+    var handler = new oscar.Handler.WFS();
+    handler.map = map;
+    var protocol = handler.buildProtocol(se,geom,theme);
+    t.eq(protocol.format.xy,true,"XY values of cover will not flip.")
+}
+function test_buildProtocol_1_1_0_longlat(t) {
+    t.plan(1);
+    var theme = {srs:"EPSG:4326"}
+    var geom = new OpenLayers.Bounds(-63.984375,18.984375,-2.8125,65.390625).toGeometry();
+    var mapProjection = new OpenLayers.Projection("EPSG:4326");
+    var map = new OpenLayers.Map();
+    map.projection= mapProjection;
+
+    var se = new oscar.ox.ServiceEntry();
+    se.url="http://whatever";
+    se.version="1.1.0"
+    se.serviceType="WFS";
+    se.identifiers=["cs:Buildings"];
+    se.schema={
+        featureTypes:[
+        {
+            properties:[
+                {name:"geom"}
+            ]
+        }
+        ],
+        targetNamespace:"http://www.caris.com/cs",
+        targetPrefix:"cs"
+    };
+    var handler = new oscar.Handler.WFS();
+    handler.map = map;
+    var protocol = handler.buildProtocol(se,geom,theme);
+    t.eq(protocol.format.xy,false,"XY values of cover will be flipped.")
+}
+function test_buildProtocol_1_1_0_merc(t) {
+    t.plan(1);
+    var theme = {srs:"EPSG:4326"}
+    var geom = new OpenLayers.Bounds(-63.984375,18.984375,-2.8125,65.390625).toGeometry();
+    var mapProjection = new OpenLayers.Projection("EPSG:900913");
+    var map = new OpenLayers.Map();
+    map.projection= mapProjection;
+
+    var se = new oscar.ox.ServiceEntry();
+    se.url="http://whatever";
+    se.version="1.1.0"
+    se.serviceType="WFS";
+    se.identifiers=["cs:Buildings"];
+    se.schema={
+        featureTypes:[
+        {
+            properties:[
+                {name:"geom"}
+            ]
+        }
+        ],
+        targetNamespace:"http://www.caris.com/cs",
+        targetPrefix:"cs"
+    };
+    var handler = new oscar.Handler.WFS();
+    handler.map = map;
+    var protocol = handler.buildProtocol(se,geom,theme);
+    t.eq(protocol.format.xy,true,"XY values of cover will not flip.")
+}
+
+function test_FeatureNSandSRS(t) {
+    t.plan(5);
+    var theme = {srs:"EPSG:4326"}
+    var geom = new OpenLayers.Bounds(-63.984375,18.984375,-2.8125,65.390625).toGeometry();
+    var mapProjection = new OpenLayers.Projection("EPSG:900913");
+    var map = new OpenLayers.Map();
+    map.projection= mapProjection;
+
+    var se = new oscar.ox.ServiceEntry();
+    se.url="http://whatever";
+    se.version="1.1.0"
+    se.serviceType="WFS";
+    se.identifiers=["cs:Buildings","cs:Roads"];
+    se.schema={
+        featureTypes:[
+        {
+            properties:[
+                {name:"geom"}
+            ]
+        }
+        ],
+        targetNamespace:"http://www.caris.com/cs",
+        targetPrefix:"cs"
+    };
+    var handler = new oscar.Handler.WFS();
+    handler.map = map;
+    var protocol = handler.buildProtocol(se,geom,theme);
+    t.eq(protocol.featureType,"Buildings,Roads","Feature Type is Buildings,Roads");
+    t.eq(protocol.featureNS,"http://www.caris.com/cs","Feature Namespace is http://www.caris.com/cs");
+    t.eq(protocol.featurePrefix,"cs","Feature Prefix cs.");   
+    t.eq(protocol.srsName,"EPSG:4326","Proper SRS Name.");
+    t.eq(protocol.filter.projection,"EPSG:4326","Proper SRS Name.");
+}
+</script>
+<body>
+</body>
+</html>

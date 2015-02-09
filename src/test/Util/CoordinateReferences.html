@@ -1,0 +1,39 @@
+<html>
+<head>
+<script src="../../Loader.js"></script>
+<script type="text/javascript">
+/**
+ * Unit Tests for oscar.Util.Metadata
+ */
+
+/* Test Urls */
+
+/* Test Functions */
+function test_CoordinateReferences_getReference(t) {
+    
+    var coordRef = oscar.Util.CoordinateReferences.getReference("EPSG:4326");
+    t.eq(coordRef.description,"WGS 84", "Returned description matched");
+    t.eq(coordRef.urn,"urn:ogc:def:crs:EPSG::4326", "Returned urn matched");
+
+    coordRef = oscar.Util.CoordinateReferences.getReference("EPSG:3857");
+    t.eq(coordRef.description,"WGS 84 / Pseudo-Mercator", "Returned description matched");
+    t.eq(coordRef.urn,"urn:ogc:def:crs:EPSG::3857", "Returned urn matched");
+
+    var urn = "urn:ogc:def:crs:EPSG::3857";
+    t.ok(oscar.Util.CoordinateReferences.isUrn("urn:ogc:def:crs:EPSG::3857"), "Valid URN");
+
+}
+
+function test_CoordinateReferences_getReference_NoReferenceFound(t) {
+    t.plan(3);
+    var coordRef = oscar.Util.CoordinateReferences.getReference("EPSG:abcd");
+    console.log(coordRef);
+    t.eq(coordRef.code,"EPSG:abcd", "Returned nonreferenced epsg value");
+    t.eq(coordRef.description,coordRef.code, "Description value matches code value.");
+    t.eq(coordRef.urn,"urn:ogc:def:crs:EPSG::abcd","Urn value valid");
+}
+
+</script>
+<body>
+</body>
+</html>

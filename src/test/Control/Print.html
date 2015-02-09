@@ -1,0 +1,16 @@
+<html>
+<head>
+<script src="../../Loader.js"></script>
+<script type="text/javascript">
+var url = "../files/themeConfiguration.json";
+var waitTime = 2;
+function test_Control_Print(t) {
+    var control = new oscar.Control.Print();
+    t.ok(control instanceof oscar.Control.Print,"new oscar.Control.Print returns Print object");
+    t.eq(control.CLASS_NAME,"oscar.Control.Print","control.CLASS_NAME is set correctly");
+}
+</script>
+<body>
+<div id="carisviewer"></div>
+</body>
+</html>

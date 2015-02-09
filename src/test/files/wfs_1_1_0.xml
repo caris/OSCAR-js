@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wfs:WFS_Capabilities xmlns:wfs="http://www.opengis.net/wfs"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ows="http://www.opengis.net/ows"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    xmlns:ogc="http://www.opengis.net/ogc"
+    xsi:schemaLocation="http://www.opengis.net/wfs http://tcoburnvs.caris.priv:8080/sfs/schemas/wfs/1.1.0/wfs.xsd" version="1.1.0">
+    <ows:ServiceIdentification>
+        <ows:Title>Test WFS Service</ows:Title>
+        <ows:Abstract>This is a test WFS Service</ows:Abstract>
+        <ows:Keywords>
+            <ows:Keyword>Test</ows:Keyword>
+            <ows:Keyword>WFS</ows:Keyword>
+            <ows:Type>String</ows:Type>
+        </ows:Keywords>
+        <ows:ServiceType>WFS</ows:ServiceType>
+        <ows:ServiceTypeVersion>1.1.0</ows:ServiceTypeVersion>
+        <ows:Fees>NONE</ows:Fees>
+        <ows:AccessConstraints>NONE</ows:AccessConstraints>
+    </ows:ServiceIdentification>
+    <ows:ServiceProvider>
+        <ows:ProviderName>Caris</ows:ProviderName>
+        <ows:ProviderSite xlink:href="http://www.caris.com"/>
+        <ows:ServiceContact>
+            <ows:IndividualName>Troy Coburn</ows:IndividualName>
+            <ows:PositionName>Web Developer</ows:PositionName>
+            <ows:ContactInfo>
+                <ows:Phone>
+                    <ows:Voice>462-4262</ows:Voice>
+                    <ows:Facsimile>555-5555</ows:Facsimile>
+                </ows:Phone>
+                <ows:Address>
+                    <ows:DeliveryPoint>115 Waggoners Lane</ows:DeliveryPoint>
+                    <ows:City>Fredericton</ows:City>
+                    <ows:AdministrativeArea>New Brunswick</ows:AdministrativeArea>
+                    <ows:PostalCode>E3B 2L4</ows:PostalCode>
+                    <ows:Country>Canada</ows:Country>
+                    <ows:ElectronicMailAddress>troy.coburn@caris.com</ows:ElectronicMailAddress>
+                </ows:Address>
+            </ows:ContactInfo>
+        </ows:ServiceContact>
+    </ows:ServiceProvider>
+    <ows:OperationsMetadata>
+        <ows:Operation name="GetCapabilities">
+            <ows:DCP>
+                <ows:HTTP>
+                    <ows:Get xlink:href="http://tcoburnvs.caris.priv:8080/sfs/services/ows/wfs/testWFS?"/>
+                </ows:HTTP>
+            </ows:DCP>
+        </ows:Operation>
+        <ows:Operation name="DescribeFeatureType">
+            <ows:DCP>
+                <ows:HTTP>
+                    <ows:Get xlink:href="http://tcoburnvs.caris.priv:8080/sfs/services/ows/wfs/testWFS?"/>
+                    <ows:Post xlink:href="http://tcoburnvs.caris.priv:8080/sfs/services/ows/wfs/testWFS?"/>
+                </ows:HTTP>
+            </ows:DCP>
+            <ows:Parameter name="outputFormat">
+                <ows:Value>text/xml; subtype=gml/3.1.1</ows:Value>
+                <ows:Value>text/xml; subType=gml/3.1.1/profiles/gmlsf/1.0.0/0</ows:Value>
+                <ows:Value>text/xml; subtype=gml/2.1.2</ows:Value>
+                <ows:Value/>
+            </ows:Parameter>
+        </ows:Operation>
+        <ows:Operation name="GetFeature">
+            <ows:DCP>
+                <ows:HTTP>
+                    <ows:Get xlink:href="http://tcoburnvs.caris.priv:8080/sfs/services/ows/wfs/testWFS?"/>
+                    <ows:Post xlink:href="http://tcoburnvs.caris.priv:8080/sfs/services/ows/wfs/testWFS?"/>
+                </ows:HTTP>
+            </ows:DCP>
+            <ows:Parameter name="outputFormat">
+                <ows:Value>text/xml; subtype=gml/3.1.1</ows:Value>
+                <ows:Value>text/xml; subType=gml/3.1.1/profiles/gmlsf/1.0.0/0</ows:Value>
+                <ows:Value>text/xml; subtype=gml/2.1.2</ows:Value>
+                <ows:Value>text/xml; subtype=kml/2.2</ows:Value>
+                <ows:Value>application/json</ows:Value>
+            </ows:Parameter>
+        </ows:Operation>
+    </ows:OperationsMetadata>
+    <wfs:FeatureTypeList>
+        <wfs:FeatureType>
+            <wfs:Name xmlns:cs="http://www.caris.com/cs">cs:Buildings</wfs:Name>
+            <wfs:Title>cs:Buildings</wfs:Title>
+            <ows:Keywords>
+                <ows:Keyword>Buildings</ows:Keyword>
+                <ows:Keyword>Towers</ows:Keyword>
+            </ows:Keywords>
+            <wfs:DefaultSRS>EPSG:4326</wfs:DefaultSRS>
+            <wfs:OutputFormats>
+                <wfs:Format>text/xml; subtype=gml/3.1.1</wfs:Format>
+                <wfs:Format>text/xml; subType=gml/3.1.1/profiles/gmlsf/1.0.0/0</wfs:Format>
+                <wfs:Format>text/xml; subtype=gml/2.1.2</wfs:Format>
+                <wfs:Format>text/xml; subtype=kml/2.2</wfs:Format>
+                <wfs:Format>application/json</wfs:Format>
+            </wfs:OutputFormats>
+            <ows:WGS84BoundingBox>
+                <ows:LowerCorner>-66.67752136335088 45.93886503892975</ows:LowerCorner>
+                <ows:UpperCorner>-66.61648179573713 45.97788938593632</ows:UpperCorner>
+            </ows:WGS84BoundingBox>
+            <wfs:MetadataURL type="FGDC" format="text/sgml"/>
+            <wfs:MetadataURL type="FGDC" format="text/sgml">http://www.cnn.com</wfs:MetadataURL>
+        </wfs:FeatureType>
+        <wfs:FeatureType>
+            <wfs:Name xmlns:cs="http://www.caris.com/cs">cs:Forest</wfs:Name>
+            <wfs:Title>Forest</wfs:Title>
+            <wfs:DefaultSRS>EPSG:4326</wfs:DefaultSRS>
+            <wfs:OutputFormats>
+                <wfs:Format>text/xml; subtype=gml/3.1.1</wfs:Format>
+                <wfs:Format>text/xml; subType=gml/3.1.1/profiles/gmlsf/1.0.0/0</wfs:Format>
+                <wfs:Format>text/xml; subtype=gml/2.1.2</wfs:Format>
+                <wfs:Format>text/xml; subtype=kml/2.2</wfs:Format>
+                <wfs:Format>application/json</wfs:Format>
+            </wfs:OutputFormats>
+            <ows:WGS84BoundingBox>
+                <ows:LowerCorner>-66.68061237332816 45.93685197325931</ows:LowerCorner>
+                <ows:UpperCorner>-66.61267468601467 45.97994912079562</ows:UpperCorner>
+            </ows:WGS84BoundingBox>
+        </wfs:FeatureType>
+    </wfs:FeatureTypeList>
+    <ogc:Filter_Capabilities>
+        <ogc:Spatial_Capabilities>
+            <ogc:GeometryOperands>
+                <ogc:GeometryOperand xmlns:gml="http://www.opengis.net/gml">gml:Envelope</ogc:GeometryOperand>
+                <ogc:GeometryOperand xmlns:gml="http://www.opengis.net/gml">gml:Point</ogc:GeometryOperand>
+                <ogc:GeometryOperand xmlns:gml="http://www.opengis.net/gml">gml:LineString</ogc:GeometryOperand>
+                <ogc:GeometryOperand xmlns:gml="http://www.opengis.net/gml">gml:Polygon</ogc:GeometryOperand>
+            </ogc:GeometryOperands>
+            <ogc:SpatialOperators>
+                <ogc:SpatialOperator name="BBOX"/>
+                <ogc:SpatialOperator name="Equals"/>
+                <ogc:SpatialOperator name="Disjoint"/>
+                <ogc:SpatialOperator name="Touches"/>
+                <ogc:SpatialOperator name="Crosses"/>
+                <ogc:SpatialOperator name="Within"/>
+                <ogc:SpatialOperator name="Contains"/>
+                <ogc:SpatialOperator name="Overlaps"/>
+            </ogc:SpatialOperators>
+        </ogc:Spatial_Capabilities>
+        <ogc:Scalar_Capabilities>
+            <ogc:ComparisonOperators>
+                <ogc:ComparisonOperator>LessThan</ogc:ComparisonOperator>
+                <ogc:ComparisonOperator>GreaterThan</ogc:ComparisonOperator>
+                <ogc:ComparisonOperator>LessThanEqualTo</ogc:ComparisonOperator>
+                <ogc:ComparisonOperator>GreaterThanEqualTo</ogc:ComparisonOperator>
+                <ogc:ComparisonOperator>EqualTo</ogc:ComparisonOperator>
+                <ogc:ComparisonOperator>NotEqualTo</ogc:ComparisonOperator>
+                <ogc:ComparisonOperator>Between</ogc:ComparisonOperator>
+            </ogc:ComparisonOperators>
+        </ogc:Scalar_Capabilities>
+        <ogc:Id_Capabilities>
+            <ogc:EID/>
+        </ogc:Id_Capabilities>
+    </ogc:Filter_Capabilities>
+</wfs:WFS_Capabilities>

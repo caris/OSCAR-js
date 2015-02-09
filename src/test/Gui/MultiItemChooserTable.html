@@ -1,0 +1,117 @@
+<html>
+<head>
+<script src="../../Loader.js"></script>
+<script type="text/javascript">
+var url = "../files/themeConfiguration.json";
+var waitTime = 2;
+var _mict=null;
+function test_MultiItemChooserTable_Constructor(t) {
+	buildMict();
+    t.ok(_mict instanceof oscar.Gui.MultiItemChooserTable,"new oscar.Gui.MultiItemChooserTable returns new mict object");
+    var recordSet = _mict.DataTable.getRecordSet();
+    t.ok(recordSet.getRecords().length == 5,"Table has 5 records");
+
+}
+
+function test_MultiItemChooserTable_AutoComplete(t) {
+	buildMict();
+    var recordSet = _mict.DataTable.getRecordSet();
+    t.ok(recordSet.getRecords().length == 5,"Table has 5 records");
+    t.debug_print("Performing search on 'R'");
+    _mict.getItems("R");
+    recordSet = _mict.DataTable.getRecordSet();
+    var records = recordSet.getRecords();
+    t.eq(records.length,1,"Record search returns 1 record");
+    var record = recordSet.getRecord(0);
+    var data = record.getData();
+    var correct = (data.fname =="Richard" && data.lname == "Alpert")?true:false;
+    t.ok(correct,"Search returned correct record: [" + data.fname + " "  + data.lname + "]");
+    t.debug_print("Clearing query parameter");
+    _mict.getItems("");
+    recordSet = _mict.DataTable.getRecordSet();
+    t.ok(recordSet.getRecords().length == 5,"Table has 5 records");
+}
+
+function test_MultiItemChooserTable_SelectAll(t) {
+    buildMict();
+    t.debug_print("Simulate first click Select All to select all records");
+    _mict.checkAllElement.clicked({});
+    t.ok(_mict.ItemsSelections.length == 5,"All 5 records selected");
+    t.debug_print("Simulate second click Select All to unselect all records");
+    _mict.checkAllElement.clicked({});
+    t.ok(_mict.ItemsSelections.length == 0,"All 5 records unselected");
+
+}
+function buildMict() {
+	var myData = [
+	                {"check":1,"fname":"Richard","lname":"Alpert"},
+	                {"check":2,"fname":"Kate","lname":"Austen"},
+	                {"check":3,"fname":"Juliet","lname":"Burke"},
+	                {"check":4,"fname":"Boon","lname":"Caryle"},
+	                {"check":5,"fname":"Ana Lucia","lname":"Cortez"}
+	                ]
+	    
+	    var container = "mict";
+	    var preselected=[];
+	    var dataSource=new YAHOO.util.DataSource(myData,{doBeforeCallback : function(req, raw, res, cb) {
+            var filtered = [];
+            var match = function(obj, key) {
+              if(key!=null) {
+	              if (obj.fname.toLowerCase().contains(
+	                      key.toLowerCase())
+	                      ) {
+	                  return true;
+	              } else {
+	                  return false;
+	              }
+              } else return true;
+            }
+            for ( var item in raw) {
+                var obj = raw[item];
+                if (match(obj, req)) {
+                    filtered.push(obj);
+                }
+            }
+            res.results = filtered
+            return res;
+        }});
+	    dataSource.responseType = YAHOO.util.DataSource.TYPE_JSARRAY;
+	    dataSource.responseSchema = {
+	            fields: ["fname","lname"]
+	    }
+	    var dataTableConfig={}
+	    var columnDefs=[
+                        {key :"check",label :"",formatter:"checkbox"},
+	                    {key:"fname"},
+	                    {key:"lname"},
+	                    ];
+	    var requestParameterIn=null;
+	    var options={
+	    	   getItems:function(query) {
+		    	var ctx = this;
+	            var filterCallBack = function(sRequest, oResponse,
+	                    oPayload) {
+	                ctx.DataTable.onDataReturnReplaceRows(sRequest,
+	                        oResponse, oPayload);
+	                ctx.setCheckboxes();
+	                ctx.paginator.set("totalRecords", ctx.DataTable
+	                        .getRecordSet().getRecords().length);
+	                
+	                if (ctx.checkAllDisplay) {
+	                    ctx.setCheckAllImage();
+	                }
+	
+	            };
+	            this.DataSource.sendRequest(query, filterCallBack,
+	                    this.DataTable);
+	    	   }
+
+	    };
+	    _mict = new oscar.Gui.MultiItemChooserTable(container,preselected,dataSource,dataTableConfig,columnDefs,requestParameterIn,options);
+}
+</script>
+<body class="yui-skin-sam">
+<button onclick="buildMict()">Go</button>
+<div id="mict"></div>
+</body>
+</html>

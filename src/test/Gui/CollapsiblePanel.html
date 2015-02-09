@@ -1,0 +1,18 @@
+<html>
+<head>
+<script src="../../Loader.js"></script>
+<script type="text/javascript">
+var url = "../files/themeConfiguration.json";
+var waitTime = 2;
+function test_Gui_CollapsiblePanel(t) {
+    var cPanel = new oscar.Gui.CollapsiblePanel("panContainer");
+    t.ok(cPanel instanceof oscar.Gui.CollapsiblePanel,"new oscar.Gui.CollapsiblePanel returns CollapsiblePanel object.");
+    t.eq(cPanel.title,"","title property initialized to an empty string");
+    cPanel.setTitle("My Title");
+    t.eq(cPanel.title,"My Title","cPanel.setTitle sets title correctly");
+}
+</script>
+<body>
+<div id="panContainer"></div>
+</body>
+</html>

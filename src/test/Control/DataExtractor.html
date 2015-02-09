@@ -1,0 +1,26 @@
+<html>
+<head>
+<script src="../../Loader.js"></script>
+<script type="text/javascript">
+var url = "../files/themeConfiguration.json";
+var waitTime = 2;
+function test_Control_DataExtractor(t) {
+    var ctrl = new oscar.Control.DataExtractor();
+    t.ok(ctrl instanceof oscar.Control.DataExtractor,"new oscar.Control.DataExtractor returns DataExtractor object.");
+    t.eq(ctrl.CLASS_NAME,"oscar.Control.DataExtractor","CLASS_NAME is set correct");
+    t.eq(ctrl.extractionPanel,null,"control.extractionPanel initialized to null");
+    t.eq(ctrl.theme,null,"control.theme initialized to null");
+	
+	ctrl = new oscar.Control.DataExtractor(new oscar.ox.Theme());
+	t.ok(ctrl.theme instanceof oscar.ox.Theme,"theme set correctly");
+	ctrl.activate();
+	t.ok(ctrl.dlg instanceof oscar.Gui.Dialog,"dialog created");
+	ctrl.deactivate();
+	t.eq(ctrl.ui,null,"control deactivated, ui set to null");
+	t.eq(ctrl.dlg,null,"control deactivated, dlg set to null");
+}
+</script>
+<body>
+
+</body>
+</html>
