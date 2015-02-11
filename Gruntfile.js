@@ -179,13 +179,13 @@ module.exports = function(grunt) {
 			'<%= srcPath %>/Util/DivSelectOption.js',
 			'<%= srcPath %>/Util/CoordinateSystemAutoComplete.js',
 		],
-        dest: '<%= dstPath %>/oscar/oscar.js'
+        dest: '<%= dstPath %>/oscar/oscar.src.js'
       }
     },
 	uglify: {
       dist: {
         src: '<%= concat.dist.dest %>',
-        dest: 'dist/oscar.min.js'
+        dest: '<%= dstPath %>/oscar/oscar.min.js'
       }
     },
 	copy: {
@@ -216,7 +216,7 @@ module.exports = function(grunt) {
 			{
                 src: ['**'],
                 dest: '',
-                cwd: 'public/',
+                cwd: '<%= dstPath %>',
                 expand: true
             }
 		]
