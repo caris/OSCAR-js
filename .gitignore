@@ -5,3 +5,4 @@ target
 bower_components
 /dist
 /node_modules
+/public

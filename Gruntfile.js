@@ -6,7 +6,67 @@ module.exports = function(grunt) {
     // Metadata.
     pkg: grunt.file.readJSON('package.json'),
 	srcPath:"src/lib",
+	dstPath:"public/",
     // Task configuration.
+	bowercopy : {
+		jqueryui: {
+			options: {
+				srcPrefix:"bower_components/jqueryui/",
+				destPrefix:"<%= dstPath %>/jqueryui"
+			},
+			files:{
+				'jquery-ui.min.js':'jquery-ui.min.js',
+				'../jquery/dist/jquery.min.js':'../jquery/dist/jquery.min.js'
+			}
+		},
+		jqueryUILayout: {
+			options: {
+				srcPrefix:"bower_components/jqueryUILayout/source/stable",
+				destPrefix:"<%= dstPath %>/jqueryui-layout"
+			},
+			files:{
+				'jquery.layout.min.js':'jquery.layout.min.js'
+			}
+		},
+		openlayers2: {
+			options: {
+				srcPrefix:"bower_components/openlayers2",
+				destPrefix:"<%= dstPath %>/openlayers"
+			},
+			files:{
+				'OpenLayers.js':'OpenLayers.js',
+				'img':'img',
+				'theme':'theme'
+			}
+		},
+		slimscroll: {
+			options: {
+				srcPrefix:"bower_components/slimscroll",
+				destPrefix:"<%= dstPath %>/slimscroll"
+			},
+			files:{
+				'jquery.slimscroll.js':'jquery.slimscroll.js',
+			}
+		},
+		jsts: {
+			options: {
+				srcPrefix:"bower_components/jsts/src",
+				destPrefix:"<%= dstPath %>/jsts"
+			},
+			files:{
+				'jsts.js':'jsts.js'
+			}
+		},
+		yui2: {
+			options: {
+				srcPrefix:"bower_components/yui2",
+				destPrefix:"<%= dstPath %>/yui2"
+			},
+			files:{
+				'build':'build'
+			}
+		}
+	},
     concat: {
       dist: {
         src: [
@@ -119,23 +179,60 @@ module.exports = function(grunt) {
 			'<%= srcPath %>/Util/DivSelectOption.js',
 			'<%= srcPath %>/Util/CoordinateSystemAutoComplete.js',
 		],
-        dest: 'dist/oscar.js'
+        dest: '<%= dstPath %>/oscar/oscar.js'
       }
-    }
-	,uglify: {
+    },
+	uglify: {
       dist: {
         src: '<%= concat.dist.dest %>',
         dest: 'dist/oscar.min.js'
       }
-    }
+    },
+	copy: {
+		main: {
+			expand : true,
+            dest   : '<%= dstPath %>/oscar',
+            cwd    : 'src/',
+            src    : [
+              'help/**',
+			  'images/**',
+			  'resources/**',
+			  'test/**',
+			  'theme/**',
+			  'Loader.js'
+            ]
+		}
+	},
+	compress:{
+		main: {
+		
+		options: {
+		  archive: function () {
+			// The global value git.tag is set by another task
+			return 'oscar.zip'
+		  }
+		},
+		files: [
+			{
+                src: ['**'],
+                dest: '',
+                cwd: 'public/',
+                expand: true
+            }
+		]
+	  }
+	}
   });
 
   // These plugins provide necessary tasks.
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-bowercopy');
+  grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-contrib-compress');
 
 
   // Default task.
-  grunt.registerTask('default', ['concat','uglify']);
+  grunt.registerTask('default', ['concat','uglify','bowercopy','copy','compress']);
 
 };
