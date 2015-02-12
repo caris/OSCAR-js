@@ -3,7 +3,6 @@
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>oscar</artifactId>
 	<name>oscar</name>
-	<packaging>jar</packaging>
 	<parent>
 		<groupId>com.caris</groupId>
 		<artifactId>oscar_framework</artifactId>
@@ -305,6 +304,23 @@
 			<plugin>
 				<groupId>org.codehaus.mojo.javascript</groupId>
 				<artifactId>javascript-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<descriptor>src/assembly/bin.xml</descriptor>
+					<finalName>${project.name}-${project.version}</finalName>
+					<appendAssemblyId>false</appendAssemblyId>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
