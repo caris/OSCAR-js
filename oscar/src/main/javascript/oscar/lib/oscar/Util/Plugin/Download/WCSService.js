@@ -166,22 +166,26 @@ oscar.Util.Plugin.Download.WCSService = new oscar.BaseClass(oscar.Util.Plugin.Do
             projection : this.map.getProjectionObject()
         });
         this.map.addLayer(crop_layer);
+        var exitMode_function = function(evt) {
+            this.map.removeLayer(crop_layer);
+            this.events.un({
+                "exitMode" : exitMode_function
+            });
+        };
         this.events.on({
-            "exitMode" : function() {
-                this.map.removeLayer(crop_layer);
-            },
+            "exitMode" : exitMode_function,
             scope : this
         });
-
+        
         var $btnPanel = $$("<div></div>");
         $btnPanel.addClass("buttonsPanel");
-
+        
         var $crop_button = $$("<button></button?").html("Crop");
         var $download_button = $$("<button></button?").html("Download");
         $btnPanel.append($crop_button);
         $btnPanel.append($download_button);
         $btnPanel.append($download_button);
-
+        
         $crop_button.button({
             icons : {
                 primary : "ui-icon-crop"
@@ -190,21 +194,21 @@ oscar.Util.Plugin.Download.WCSService = new oscar.BaseClass(oscar.Util.Plugin.Do
         }).click($$.proxy(function() {
             this.cropControl.activate();
         }, this));
-
+        
         $download_button.button({
             icons : {
                 primary : "ui-icon-prepare"
             },
             text : false
         }).click($$.proxy(this.prepareDownload, this));
-
+        
         this.cropControl = new oscar.Control.Box();
         this.map.addControl(this.cropControl);
         this.cropControl.events.on({
             'done' : function(geom) {
                 if (this.cropFeature) {
                     crop_layer.removeFeatures(this.cropFeature);
-
+                    
                 }
                 this.cropFeature = new OpenLayers.Feature.Vector(geom);
                 crop_layer.addFeatures(this.cropFeature);
@@ -219,7 +223,7 @@ oscar.Util.Plugin.Download.WCSService = new oscar.BaseClass(oscar.Util.Plugin.Do
         $header.css("border-bottom", "1px solid black");
         this.$panel.append($header);
         this.results_panel = $$("<div></div>");
-
+        
         this.$panel.append(this.results_panel);
     },
     prepareDownload : function() {
@@ -633,7 +637,7 @@ oscar.Util.Plugin.Download.WCSService = new oscar.BaseClass(oscar.Util.Plugin.Do
         }
     },
     showPreviewLayer : function() {
-
+        
         var isPreviewSupported = function(formats) {
             for (var i = 0; i < formats.length; i++) {
                 if (formats[i] == "image/png") {
@@ -667,13 +671,17 @@ oscar.Util.Plugin.Download.WCSService = new oscar.BaseClass(oscar.Util.Plugin.Do
                     }
                 },
                 scope : this
-
+            
             });
             this.map.addLayer(previewLayer);
+            var exitMode_function = function(evt) {
+                this.map.removeLayer(previewLayer);
+                this.events.un({
+                    "exitMode" : exitMode_function
+                });
+            };
             this.events.on({
-                "exitMode" : function() {
-                    this.map.removeLayer(previewLayer);
-                },
+                "exitMode" : exitMode_function,
                 scope : this
             });
         } else {
@@ -697,14 +705,19 @@ oscar.Util.Plugin.Download.WCSService = new oscar.BaseClass(oscar.Util.Plugin.Do
             projection : map.getProjectionObject()
         });
         this.map.addLayer(poly_layer);
-
+        
         var t = this.record.feature.clone();
         poly_layer.addFeatures(t);
-
+        
+        var exitMode_function = function(evt) {
+            this.map.removeLayer(poly_layer);
+            this.events.un({
+                "exitMode" : exitMode_function
+            });
+        };
+        
         this.events.on({
-            "exitMode" : function() {
-                this.map.removeLayer(poly_layer);
-            },
+            "exitMode" : exitMode_function,
             scope : this
         });
     },
