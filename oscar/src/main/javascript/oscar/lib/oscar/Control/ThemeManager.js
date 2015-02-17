@@ -304,7 +304,7 @@ oscar.Control.ThemeManager = oscar.BaseClass(OpenLayers.Control, {
 				"bottom":'75px'
 			});
 			legend.appendTo(this.map.div);
-			legend.draggable();
+			legend.draggable({containment: "parent"});
 		}	
 
 		//Look for an overview map and destroy it.
