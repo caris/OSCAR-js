@@ -61,6 +61,9 @@ public class ThemeSerializer implements JsonSerializer<Theme> {
             obj.add("backgroundColor", context.serialize(src.getBackgroundColor()));
         if(src.getServices()!=null)
         	obj.add("services", context.serialize(src.getServices()));
+        if(src.getLegend() !=null) {
+        	obj.add("legend", context.serialize(src.getLegend()));
+        }
         try {
             Method method = Theme.class.getMethod("getParameters", (Class<?>[])null);
             Type returnType = method.getGenericReturnType();

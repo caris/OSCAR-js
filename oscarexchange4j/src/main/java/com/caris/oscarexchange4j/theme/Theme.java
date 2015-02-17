@@ -76,6 +76,11 @@ public class Theme {
 	 */
 	List<ThemeLayer> layers;
 
+	/**
+	 * URL pointing to legend graphic.
+	 */
+	private String legend;
+
 	Services services;
 
 	/**
@@ -397,6 +402,25 @@ public class Theme {
 	 */
 	public void setSRS(String srs) {
 		this.srs = srs;
+	}
+
+	/**
+	 * Return the path to the legend.
+	 * 
+	 * @return The path to the legend
+	 */
+	public String getLegend() {
+		return legend;
+	}
+
+	/**
+	 * Set the path to the legend.
+	 * 
+	 * @param legend
+	 *            The path to the legend.
+	 */
+	public void setLegend(String legend) {
+		this.legend = legend;
 	}
 
 }
