@@ -77,7 +77,7 @@ public class Theme {
 	List<ThemeLayer> layers;
 
 	/**
-	 * URL pointing to legend graphic.
+	 * Path pointing to legend graphic.
 	 */
 	private String legend;
 
