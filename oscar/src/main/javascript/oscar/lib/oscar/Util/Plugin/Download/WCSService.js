@@ -281,7 +281,17 @@ oscar.Util.Plugin.Download.WCSService = new oscar.BaseClass(oscar.Util.Plugin.Do
         if (this.gridType == "urn:ogc:def:method:WCS:1.1:2dGridIn2dCrs") {
             offsets.splice(1, 0, 0, 0);
         }
-        
+        var fields = [];
+        for (var i = 0; i < this.downloadOptions.fields.length; i++) {
+            var field = this.downloadOptions.fields[i];
+            fields.push(field.name + ":" + field.interpolation);
+        }
+        var rangeSubset = "";
+        if (fields.length > 1) {
+            rangeSubset = fields.join(";");
+        } else {
+            rangeSubset = fields.join(" ");
+        }
         var url = GetCoverageOp.dcp.http.get;
         var qStringParams = {
             "version" : "1.1.0",
@@ -293,7 +303,7 @@ oscar.Util.Plugin.Download.WCSService = new oscar.BaseClass(oscar.Util.Plugin.Do
             "BoundingBox" : bbox.toString(),
             "GridOrigin" : this.downloadOptions.gridOrigin.toString(),
             "GridOffsets" : offsets.toString(),
-            "RangeSubset" : "Depth:nearest",
+            "RangeSubset" : rangeSubset,
             "GridBaseCRS" : urn,
             "GridType" : this.downloadOptions.gridType
         };
