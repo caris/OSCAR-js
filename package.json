@@ -17,5 +17,18 @@
     "grunt-contrib-copy": "^0.7.0",
     "grunt-contrib-uglify": "^0.7.0",
     "grunt-copy": "^0.1.0"
-  }
+  },
+  "name": "OSCAR-js",
+  "description": "CARIS OSCAR-js (Open Spatial Component Architecture) is a JavaScript Map API that was created to help build [CARIS Spatial Fusion Viewer] (http://www.caris.com/products/sfe/SFE-Viewer/). \r It has been spun-off as an open-source project (licensed under [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0.html))\r to allow for public contributions and forking.",
+  "version": "16.0.0",
+  "main": "Gruntfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://www.github.com/caris/OSCAR-js.git"
+  },
+  "author": "CARIS",
+  "license": "APACHE"
 }
