@@ -176,5 +176,11 @@ oscar.Handler.CSW = new oscar.BaseClass(oscar.Handler, {
             parameters.startPosition = 1;
         this.search(this.query, parameters);
     },
+    jumpTo : function(record) {
+        var parameters = {};
+        OpenLayers.Util.extend(parameters, this.parameters);
+        parameters.startPosition = record;
+        this.search(this.query, parameters);
+    },
     CLASS_NAME : "oscar.Handler.CSW"
 });
