@@ -318,12 +318,12 @@ oscar.Gui.CatalogueResults = new oscar.BaseClass(oscar.Gui, {
                     strokeOpacity : 0.3
                 }),
                 "select" : new OpenLayers.Style({
-                    strokeColor : "#004580",
+                    strokeColor : "#0f0f0f",
                     fillColor : "#0f0f0f",
                     fillOpacity : 0.01,
                     fillOpacity : 0.01,
-                    strokeOpacity : 1,
-                    strokeWidth : 2
+                    strokeOpacity : 0.3,
+                    strokeWidth : 3
                 })
             });
             
@@ -473,6 +473,29 @@ oscar.Gui.CatalogueResults = new oscar.BaseClass(oscar.Gui, {
         if (record.feature) {
             map.zoomToExtent(record.feature.geometry.getBounds());
         }
+        var selection_layer = null;
+        try {
+            selection_layer = this.map.getLayersByName("selected-feature")[0]
+            selection_layer.removeAllFeatures();
+        } catch (err) {
+            var styleMap = new OpenLayers.StyleMap({
+                "default" : new OpenLayers.Style({
+                    strokeColor : "#004580",
+                    fillColor : "#004580",
+                    fillOpacity : 0.1,
+                    strokeOpacity : 1,
+                    strokeWidth : 2
+                })
+            });
+            selection_layer = new OpenLayers.Layer.Vector("selected-feature", {
+                styleMap : styleMap,
+                renderers : [ 'Canvas', 'VML' ],
+                wrapDateLine : true,
+                projection : map.getProjectionObject()
+            });
+            this.map.addLayer(selection_layer);
+        }
+        selection_layer.addFeatures([ record.feature.clone() ]);
     },
     attachMouseEvents : function($resultDiv, record) {
         var scope = this;

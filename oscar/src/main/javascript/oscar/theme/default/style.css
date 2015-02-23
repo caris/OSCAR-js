@@ -1831,11 +1831,11 @@ td#oscarLayoutFooterContainer {
 }
 
 .oscarGuiCatalogueResults .result.over {
-	background-color: #004580;
+	background-color: #C9C9C9;
 }
 
 .oscarGuiCatalogueResults .result.active {
-	background-color: #4a769b;
+	background-color: #004580;
 }
 
 .oscarGuiCatalogueResults .searchResultInformation {
@@ -1868,6 +1868,18 @@ td#oscarLayoutFooterContainer {
 .oscarGuiCatalogueResults .result .abs {
 	height: 25px;
 	overflow: hidden;
+}
+
+.oscarGuiCatalogueResults .result.active .abs {
+	color:#fff;
+	height: 25px;
+	overflow: hidden;
+}
+
+.oscarGuiCatalogueResults .result.active .title {
+	font-size: 16px !important;
+	color: #fff;
+	white-space: nowrap;
 }
 
 .oscarGuiCatalogueResults .result .title {
