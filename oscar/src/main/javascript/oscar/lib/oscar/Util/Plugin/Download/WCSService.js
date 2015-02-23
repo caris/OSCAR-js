@@ -109,19 +109,9 @@ oscar.Util.Plugin.Download.WCSService = new oscar.BaseClass(oscar.Util.Plugin.Do
     play : function() {
         oscar.Util.Plugin.Download.Options.prototype.play.apply(this);
         this.sendRequest();
-        this.setDefaultDownloadOptions();
         this.showPreviewLayer();
         this.buildInformationPanel();
         this.buildDownloadOptionsPanel();
-    },
-    setDefaultDownloadOptions : function() {
-        var spatialDomain = this.coverageDescription.domain.spatialDomain;
-        for (var i = 0; i < this.coverageDescription.domain.spatialDomain.boundingBoxes.length; i++) {
-            var bbox = this.coverageDescription.domain.spatialDomain.boundingBoxes[i];
-            if (bbox.crs == this.coverageDescription.domain.spatialDomain.gridCRS.gridBaseCRS) {
-                this.downloadOptions.bbox = new OpenLayers.Bounds(bbox.west, bbox.south, bbox.east, bbox.north);
-            }
-        }
     },
     buildInformationPanel : function() {
         var $panel = $$("<div></div>");
@@ -481,11 +471,13 @@ oscar.Util.Plugin.Download.WCSService = new oscar.BaseClass(oscar.Util.Plugin.Do
     },
     _createCRSList : function() {
         var gridBaseReference = oscar.Util.CoordinateReferences.getReference(this.coverageDescription.domain.spatialDomain.gridCRS.gridBaseCRS);
+        var gridBaseProjection = new OpenLayers.Projection(gridBaseReference.code);
         var scope = this;
         supportedCRSList = this.coverageDescription.supportedCRS;
         var projections = [];
         for (var i = 0; i < supportedCRSList.length; i++) {
             var crs = oscar.Util.CoordinateReferences.getReference(supportedCRSList[i]);
+            var tmpProj = new OpenLayers.Projection(crs.code);
             projections.push(crs);
         }
         
@@ -537,6 +529,21 @@ oscar.Util.Plugin.Download.WCSService = new oscar.BaseClass(oscar.Util.Plugin.Do
         }
         $crs_input.val(gridBaseReference.description);
         this.downloadOptions.crs = gridBaseReference;
+        
+        oscar.isProjectionReady = window.setInterval($$.proxy(function() {
+            if (!gridBaseProjection.proj.readyToUse) {
+                return;
+            }
+            window.clearInterval(oscar.isProjectionReady);
+            var spatialDomain = this.coverageDescription.domain.spatialDomain;
+            for (var i = 0; i < this.coverageDescription.domain.spatialDomain.boundingBoxes.length; i++) {
+                var bbox = this.coverageDescription.domain.spatialDomain.boundingBoxes[i];
+                if (bbox.crs == this.coverageDescription.domain.spatialDomain.gridCRS.gridBaseCRS) {
+                    var bbox = new OpenLayers.Bounds(bbox.west, bbox.south, bbox.east, bbox.north);
+                    this.downloadOptions.bbox = bbox.transform(this.downloadOptions.crs.code, this.map.getProjectionObject());
+                }
+            }
+        }, this), 500);
     },
     _createFields : function() {
         // create a table row to return.
