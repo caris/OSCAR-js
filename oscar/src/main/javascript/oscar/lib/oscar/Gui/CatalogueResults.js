@@ -23,7 +23,7 @@
  */
 
 oscar.Gui.CatalogueResults = new oscar.BaseClass(oscar.Gui, {
-    EVENT_TYPES : [ "next", "previous", "recordFocus" ],
+    EVENT_TYPES : [ "next", "previous", "jumpTo", "recordFocus" ],
     features : [],
     map : null,
     catalogueServices : null,
@@ -46,6 +46,7 @@ oscar.Gui.CatalogueResults = new oscar.BaseClass(oscar.Gui, {
             this.events.on({
                 "next" : this.searchHandler.next,
                 "previous" : this.searchHandler.previous,
+                "jumpTo" : this.searchHandler.jumpTo,
                 scope : this.searchHandler
             });
         }
@@ -225,7 +226,6 @@ oscar.Gui.CatalogueResults = new oscar.BaseClass(oscar.Gui, {
         }, this));
     },
     showSearchInfo : function(info) {
-        
         var matched = info.numberOfRecordsMatched;
         var returned = info.numberOfRecordsReturned;
         var next = info.nextRecord;
@@ -243,7 +243,7 @@ oscar.Gui.CatalogueResults = new oscar.BaseClass(oscar.Gui, {
         if (to > info.numberOfRecordsMatched) {
             to = info.numberOfRecordsMatched
         }
-        ;
+        
         str += " - " + to;
         str += " of " + info.numberOfRecordsMatched;
         
@@ -259,7 +259,31 @@ oscar.Gui.CatalogueResults = new oscar.BaseClass(oscar.Gui, {
             this.$previous.button("disable");
         }
         
-        this.$searchInfo.html(str);
+        var select = $$("<select></select>").change($$.proxy(function() {
+            this.events.triggerEvent("jumpTo", select.val());
+        }, this));
+        
+        var numPages = Math.ceil(matched / 10);
+        var startAt = 1;
+        var endAt = 10;
+        for (var i = 1; i <= numPages; i++) {
+            var option = $$("<option></option>");
+            option.val(startAt);
+            if (startAt == start) {
+                option.attr("selected", "selected");
+            }
+            var string = "";
+            string += startAt + " - " + endAt;
+            string += " of " + info.numberOfRecordsMatched;
+            startAt += 10;
+            endAt += 10;
+            if (endAt > info.numberOfRecordsMatched) {
+                endAt = info.numberOfRecordsMatched;
+            }
+            option.html(string);
+            select.append(option);
+        }
+        this.$searchInfo.append(select);
     },
     enablePagination : function(info) {
         
