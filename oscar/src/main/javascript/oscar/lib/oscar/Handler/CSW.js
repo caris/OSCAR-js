@@ -51,7 +51,7 @@ oscar.Handler.CSW = new oscar.BaseClass(oscar.Handler, {
         if (this.catalogue.isSetDefaultOutputSchema()) {
             this.DEFAULT_SEARCH_PARAMETERS.outputSchema = this.catalogue.getDefaultOutputSchema();
         }
-
+        
         if (options) {
             if (options.DEFAULT_SEARCH_PARAMETERS) {
                 OpenLayers.Util.extend(this.DEFAULT_SEARCH_PARAMETERS, options.DEFAULT_SEARCH_PARAMETERS);
@@ -99,14 +99,14 @@ oscar.Handler.CSW = new oscar.BaseClass(oscar.Handler, {
         this.events.triggerEvent("failure");
     },
     createFilter : function(parameters) {
-
+        
         var csw_query = {
             "ElementSetName" : {
                 "value" : "full"
             }
         }
         var filters = [];
-
+        
         if (this.query.q.length > 0) {
             var text_filter = new OpenLayers.Filter.Comparison({
                 type : OpenLayers.Filter.Comparison.LIKE,
@@ -115,7 +115,7 @@ oscar.Handler.CSW = new oscar.BaseClass(oscar.Handler, {
             });
             filters.push(text_filter);
         }
-
+        
         if (this.query.spatial) {
             var spatial_filter = new OpenLayers.Filter.Comparison({
                 type : OpenLayers.Filter.Spatial.BBOX,
@@ -125,25 +125,25 @@ oscar.Handler.CSW = new oscar.BaseClass(oscar.Handler, {
             });
             filters.push(spatial_filter);
         }
-
+        
         var filter = null;
         if (filters.length > 1) {
             filter = new OpenLayers.Filter.Logical({
                 type : OpenLayers.Filter.Logical.AND,
                 filters : filters
             });
-
+            
         } else if (filters.length == 1) {
             filter = filters[0];
         }
-
+        
         if (filter) {
             csw_query["Constraint"] = {
                 "version" : "1.1.0",
                 "Filter" : filter
             }
         }
-
+        
         parameters.Query = csw_query;
     },
     next : function() {
@@ -156,7 +156,7 @@ oscar.Handler.CSW = new oscar.BaseClass(oscar.Handler, {
             return;
         }
         parameters.startPosition = newStartPosition;
-
+        
         this.search(this.query, parameters);
     },
     previous : function() {
@@ -164,7 +164,7 @@ oscar.Handler.CSW = new oscar.BaseClass(oscar.Handler, {
         var matched = info.numberOfRecordsMatched;
         var returned = info.numberOfRecordsReturned;
         var next = info.nextRecord;
-
+        
         var parameters = {};
         OpenLayers.Util.extend(parameters, this.parameters);
         if (next > 0) {
