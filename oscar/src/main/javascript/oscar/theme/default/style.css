@@ -1910,3 +1910,27 @@ td#oscarLayoutFooterContainer {
 		!important;
 	background-position: -16px 0px !important;
 }
+
+.oscarControlAdvancedSearchForm {
+	position:relative;
+}
+
+.oscarControlAdvancedSearchForm .advSearchTextArea {
+	resize:none;
+	width:100%;
+	height:42px;
+	font-size:14px;
+	font-family:Helvetica;
+}
+.oscarGuiInfo {
+	display:inline-block;
+}
+
+.oscarGuiDlg {
+	z-index:9999;
+	border:1p solid black;
+}
+
+.oscarGuiDlg .oscarGuiDlgContent {
+	
+}

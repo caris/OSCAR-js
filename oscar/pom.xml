@@ -112,6 +112,8 @@
 								<include>**/Control/Point.js</include>
 								<include>**/Control/Select.js</include>
 								<include>**/Control/CatalogueSearchForm.js</include>
+								<include>**/Control/SimpleCatalogueSearch.js</include>
+								<include>**/Control/AdvancedCatalogueSearch.js</include>
 								<include>**/Control/Print.js</include>
 								<include>**/Control/DataExtractor.js</include>
 								<include>**/Control/Measure.js</include>
