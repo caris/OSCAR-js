@@ -79,7 +79,7 @@ public class Theme {
     /**
      * Path pointing to legend graphic.
      */
-    private String legend
+    private String legend;
 
     Services services;
 
