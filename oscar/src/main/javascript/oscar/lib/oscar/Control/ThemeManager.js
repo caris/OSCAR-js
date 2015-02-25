@@ -290,6 +290,22 @@ oscar.Control.ThemeManager = oscar.BaseClass(OpenLayers.Control, {
 	 * theme - {<oscar.ox.Theme>}
 	 */
 	drawTheme : function(theme,callback) {
+		var mapLegendId = "mapLegend";
+		$$("#"+mapLegendId).remove();
+		 if(theme.legend) {
+			var legend= $$("<img>");
+			legend.attr('src',theme.legend);
+			legend.attr("id",mapLegendId);
+			legend.css({
+				"position":"absolute",
+				"zIndex":1000,
+				"cursor":"move",
+				"right":'5px',
+				"bottom":'75px'
+			});
+			legend.appendTo(this.map.div);
+			legend.draggable({containment: "parent"});
+		}	
 
 		//Look for an overview map and destroy it.
 		try {

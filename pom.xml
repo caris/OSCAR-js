@@ -45,19 +45,18 @@
             <name>CARIS Snapshots</name>
             <id>nexus.caris.com.snapshots</id>
             <url>http://nexus.caris.com/nexus/content/repositories/public-snapshots/</url>            
-        </repository>
+        </repository>    
         <repository>
             <name>CARIS Releases</name>
             <id>nexus.caris.com.releases</id>
             <url>http://nexus.caris.com/nexus/content/repositories/public-releases</url>            
-        </repository>
+        </repository>    
         <repository>
             <name>CARIS Vendor</name>
             <id>nexus.caris.com</id>
             <url>http://nexus.caris.com/nexus/content/repositories/public-vendor/</url>
         </repository>
     </repositories>
-
     <pluginRepositories>                
         <pluginRepository>
             <name>Maven Plugin Repository</name>
@@ -75,7 +74,6 @@
             <url>http://nexus.codehaus.org/content/groups/snapshots-group</url>
         </pluginRepository>                   
     </pluginRepositories>
-
     <modules>
         <module>oscar</module>
         <module>oscarexchange4j</module>

@@ -41,256 +41,264 @@ import com.caris.oscarexchange4j.util.OXUtil;
  */
 public class Theme {
 
-    /**
-     * The theme version.
-     */
-    final double version = 1.0;
+	/**
+	 * The theme version.
+	 */
+	final double version = 1.0;
 
-    /**
-     * Number of zoom levels allowed.
-     */
-    public static final String PARAM_ZOOMLEVELS = "numzoomlevels";
+	/**
+	 * Number of zoom levels allowed.
+	 */
+	public static final String PARAM_ZOOMLEVELS = "numzoomlevels";
 
-    /**
-     * The id.
-     */
-    int id;
+	/**
+	 * The id.
+	 */
+	int id;
 
-    /**
-     * Theme parameters.
-     */
-    private Map<String, String> parameters = new HashMap<String, String>();
+	/**
+	 * Theme parameters.
+	 */
+	private Map<String, String> parameters = new HashMap<String, String>();
 
-    /**
-     * Theme name.
-     */
-    String name;
+	/**
+	 * Theme name.
+	 */
+	String name;
 
-    /**
-     * Theme covers.
-     */
-    Set<Cover> covers;
+	/**
+	 * Theme covers.
+	 */
+	Set<Cover> covers;
 
-    /**
-     * The layers that a theme contains.
-     */
-    List<ThemeLayer> layers;
-    
-    Services services;
+	/**
+	 * The layers that a theme contains.
+	 */
+	List<ThemeLayer> layers;
 
-    /**
-     * Represents the position it should take when dealing with a group of
-     * themes.
-     */
-    int displayOrder;
+	/**
+	 * Path pointing to legend graphic.
+	 */
+	private String legend;
 
-    /**
-     * Coordinate system.
-     */
-    String srs;
+	Services services;
 
-    /**
-     * Background colour.
-     */
-    String backgroundColor;
-    
-    /**
-     * selection style options
-     */
-    SelectionStyle selectionStyle;
+	/**
+	 * Represents the position it should take when dealing with a group of
+	 * themes.
+	 */
+	int displayOrder;
 
-    /**
-     * @return String The background color
-     */
-    public String getBackgroundColor() {
-        return this.backgroundColor;
-    }
+	/**
+	 * Coordinate system.
+	 */
+	String srs;
 
-    /**
-     * @param backgroundColor
-     *            the backgroundColor to set
-     */
-    public void setBackgroundColor(String backgroundColor) {
-        this.backgroundColor = backgroundColor;
-    }
+	/**
+	 * Background colour.
+	 */
+	String backgroundColor;
 
-    /**
-     * @param red
-     *            , green, blue the backgroundColor to set
-     */
-    public void setBackgroundColor(int red, int green, int blue) {
-        this.setBackgroundColor(OXUtil.RGBToHex(red, green, blue));
-    }
+	/**
+	 * selection style options
+	 */
+	SelectionStyle selectionStyle;
 
-    /**
-     * @param color
-     *            the backgroundColor to set
-     */
-    public void setBackgroundColor(Color color) {
-        this.setBackgroundColor(OXUtil.ColorToHex(color));
-    }
+	/**
+	 * @return String The background color
+	 */
+	public String getBackgroundColor() {
+		return this.backgroundColor;
+	}
 
-    /**
-     * @param selectionStyle
-     *            the selection style for this theme
-     */
-    public void setSelectionStyle(SelectionStyle selectionStyle) {
-        this.selectionStyle = selectionStyle;
-    }
-    
-    /**
-     * @return SelectionStyle Object containing selection style parameters
-     */
-    public SelectionStyle getSelectionStyle() {
-        return selectionStyle;
-    }
+	/**
+	 * @param backgroundColor
+	 *            the backgroundColor to set
+	 */
+	public void setBackgroundColor(String backgroundColor) {
+		this.backgroundColor = backgroundColor;
+	}
 
-    /**
-     * @return int The position of where it should be displayed.
-     */
-    public int getDisplayOrder() {
-        return displayOrder;
-    }
+	/**
+	 * @param red
+	 *            , green, blue the backgroundColor to set
+	 */
+	public void setBackgroundColor(int red, int green, int blue) {
+		this.setBackgroundColor(OXUtil.RGBToHex(red, green, blue));
+	}
 
-    /**
-     * @param displayOrder
-     *            The position of where it should be displayed.
-     */
-    public void setDisplayOrder(int displayOrder) {
-        this.displayOrder = displayOrder;
-    }
+	/**
+	 * @param color
+	 *            the backgroundColor to set
+	 */
+	public void setBackgroundColor(Color color) {
+		this.setBackgroundColor(OXUtil.ColorToHex(color));
+	}
 
-    /**
-     * @return List<ThemeLayer> The list of layers associated to the theme.
-     */
-    public List<ThemeLayer> getLayers() {
-        return layers;
-    }
+	/**
+	 * @param selectionStyle
+	 *            the selection style for this theme
+	 */
+	public void setSelectionStyle(SelectionStyle selectionStyle) {
+		this.selectionStyle = selectionStyle;
+	}
 
-    /*
-     * WEB-1005 - Validation of all layers when adding a list.
-     */
-    /**
-     * @param layers
-     *            Set the layers to the theme.
-     */
-    public void setLayers(List<ThemeLayer> layers) {
-        for (ThemeLayer layer : layers)
-            this.addLayer(layer);
-    }
+	/**
+	 * @return SelectionStyle Object containing selection style parameters
+	 */
+	public SelectionStyle getSelectionStyle() {
+		return selectionStyle;
+	}
 
-    /*
-     * WEB-1005 - Validation of theme layer before adding it.
-     */
-    /**
-     * @param layer
-     *            Add a single layer to the current theme.
-     */
-    public void addLayer(ThemeLayer layer) {
-        if (this.layers == null)
-            this.layers = new ArrayList<ThemeLayer>();
-        try {
-            if (layer.validate())
-                this.layers.add(layer);
-        } catch (ValidationException e) {
-            e.printStackTrace();
-        }
-    }
+	/**
+	 * @return int The position of where it should be displayed.
+	 */
+	public int getDisplayOrder() {
+		return displayOrder;
+	}
 
-    /**
-     * @return the services
-     */
-    public Services getServices() {
-            return services;
-    }
+	/**
+	 * @param displayOrder
+	 *            The position of where it should be displayed.
+	 */
+	public void setDisplayOrder(int displayOrder) {
+		this.displayOrder = displayOrder;
+	}
 
-    /**
-     * @param services the services to set
-     */
-    public void setServices(Services services) {
-            this.services = services;
-    }
+	/**
+	 * @return List<ThemeLayer> The list of layers associated to the theme.
+	 */
+	public List<ThemeLayer> getLayers() {
+		return layers;
+	}
 
-    /**
-     * @return int The theme id.
-     */
-    public int getId() {
-        return this.id;
-    }
+	/*
+	 * WEB-1005 - Validation of all layers when adding a list.
+	 */
+	/**
+	 * @param layers
+	 *            Set the layers to the theme.
+	 */
+	public void setLayers(List<ThemeLayer> layers) {
+		for (ThemeLayer layer : layers)
+			this.addLayer(layer);
+	}
 
-    /**
-     * @return Set<Cover> A set of covers for the theme.
-     */
-    public Set<Cover> getCovers() {
-        return this.covers;
-    }
+	/*
+	 * WEB-1005 - Validation of theme layer before adding it.
+	 */
+	/**
+	 * @param layer
+	 *            Add a single layer to the current theme.
+	 */
+	public void addLayer(ThemeLayer layer) {
+		if (this.layers == null)
+			this.layers = new ArrayList<ThemeLayer>();
+		try {
+			if (layer.validate())
+				this.layers.add(layer);
+		} catch (ValidationException e) {
+			e.printStackTrace();
+		}
+	}
 
-    /**
-     * @return String The theme name.
-     */
-    public String getName() {
-        return this.name;
-    }
+	/**
+	 * @return the services
+	 */
+	public Services getServices() {
+		return services;
+	}
 
-    /**
-     * @param id
-     *            The theme id.
-     */
-    public void setId(int id) {
-        this.id = id;
-    }
+	/**
+	 * @param services
+	 *            the services to set
+	 */
+	public void setServices(Services services) {
+		this.services = services;
+	}
 
-    /**
-     * @param name
-     *            The theme name.
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
+	/**
+	 * @return int The theme id.
+	 */
+	public int getId() {
+		return this.id;
+	}
 
-    /**
-     * @param covers
-     *            A set of theme covers.
-     */
-    public void setCovers(Set<Cover> covers) {
-        this.covers = covers;
-    }
+	/**
+	 * @return Set<Cover> A set of covers for the theme.
+	 */
+	public Set<Cover> getCovers() {
+		return this.covers;
+	}
 
-    /**
-     * @return double The theme version.
-     */
-    public double getVersion() {
-        return this.version;
-    }
+	/**
+	 * @return String The theme name.
+	 */
+	public String getName() {
+		return this.name;
+	}
 
-    /**
-     * @return Map<String,String> The theme parameters.
-     */
-    public Map<String, String> getParameters() {
-        return parameters;
-    }
+	/**
+	 * @param id
+	 *            The theme id.
+	 */
+	public void setId(int id) {
+		this.id = id;
+	}
 
-    /**
-     * @param parameters
-     *            The theme parameters.
-     */
-    public void setParameters(Map<String, String> parameters) {
-        this.parameters = parameters;
-    }
+	/**
+	 * @param name
+	 *            The theme name.
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    /**
-     * Add a value to the theme's parameter table.
-     * 
-     * @param key
-     *            The key for the value that is used for lookup.
-     * @param value
-     *            The value to store associated to the key.
-     */
-    public void addParameter(String key, String value) {
-        this.parameters.put(key, value);
-    }
+	/**
+	 * @param covers
+	 *            A set of theme covers.
+	 */
+	public void setCovers(Set<Cover> covers) {
+		this.covers = covers;
+	}
 
-    /* (non-Javadoc)
+	/**
+	 * @return double The theme version.
+	 */
+	public double getVersion() {
+		return this.version;
+	}
+
+	/**
+	 * @return Map<String,String> The theme parameters.
+	 */
+	public Map<String, String> getParameters() {
+		return parameters;
+	}
+
+	/**
+	 * @param parameters
+	 *            The theme parameters.
+	 */
+	public void setParameters(Map<String, String> parameters) {
+		this.parameters = parameters;
+	}
+
+	/**
+	 * Add a value to the theme's parameter table.
+	 * 
+	 * @param key
+	 *            The key for the value that is used for lookup.
+	 * @param value
+	 *            The value to store associated to the key.
+	 */
+	public void addParameter(String key, String value) {
+		this.parameters.put(key, value);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -317,7 +325,9 @@ public class Theme {
 		return result;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -380,18 +390,37 @@ public class Theme {
 	}
 
 	/**
-     * @return String The coordinate system.
-     */
-    public String getSRS() {
-        return this.srs;
-    }
+	 * @return String The coordinate system.
+	 */
+	public String getSRS() {
+		return this.srs;
+	}
 
-    /**
-     * @param inSRS
-     *            The coordinate system.
-     */
-    public void setSRS(String srs) {
-        this.srs = srs;
-    }
+	/**
+	 * @param inSRS
+	 *            The coordinate system.
+	 */
+	public void setSRS(String srs) {
+		this.srs = srs;
+	}
+
+	/**
+	 * Return the path to the legend.
+	 * 
+	 * @return The path to the legend
+	 */
+	public String getLegend() {
+		return legend;
+	}
+
+	/**
+	 * Set the path to the legend.
+	 * 
+	 * @param legend
+	 *            The path to the legend.
+	 */
+	public void setLegend(String legend) {
+		this.legend = legend;
+	}
 
 }
