@@ -4,9 +4,7 @@
  * Used to represent a catalogue service.
  */
 oscar.ogc.CatalogueService = new oscar.BaseClass(oscar.ogc.BaseService, {
-	defaultSearchFields:[
-		"csw:AnyText"
-	],
+    defaultSearchFields : [ "csw:AnyText" ],
     GETRECORDBYID : "GetRecordById",
     GETRECORDS : "GetRecords",
     initialize : function(serviceEntry, options) {

@@ -265,7 +265,7 @@ oscar.Gui.CatalogueResults = new oscar.BaseClass(oscar.Gui, {
         
         var numPages = Math.ceil(matched / 10);
         var startAt = 1;
-        var endAt = (matched > 10)? 10:matched;
+        var endAt = (matched > 10) ? 10 : matched;
         for (var i = 1; i <= numPages; i++) {
             var option = $$("<option></option>");
             option.val(startAt);
