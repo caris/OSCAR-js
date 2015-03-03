@@ -985,7 +985,7 @@ OpenLayers.Format.CQL = (function() {
 
     function tokenize(text) {
         var results = [];
-        var token, expect = ["NOT", "GEOMETRY", "SPATIAL", "PROPERTY", "LPAREN"];
+        var token, expect = ["NOT", "GEOMETRY", "SPATIAL", "LPAREN", "PROPERTY"];
 
         do {
             token = nextToken(text, expect);

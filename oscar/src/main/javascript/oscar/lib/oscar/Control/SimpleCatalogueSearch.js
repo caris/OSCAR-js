@@ -38,12 +38,10 @@ oscar.Control.SimpleCatalogueSearch = oscar.BaseClass(oscar.Control.CatalogueSea
     
     preprocessQuery : function(query) {
         // check for advanced search flag.
-        query = this.bangLookup(query);
+        if(this.bangLookup(query) || query.trim().length === 0) {
+			return;
+		}
         
-        // set the wildcard if there is no text
-        if (query.length === 0) {
-            query = "*";
-        }
         // build the query filter string
         var queryArray = [];
         for (var i = 0; i < this.catalogueService.defaultSearchFields.length; i++) {
@@ -72,9 +70,10 @@ oscar.Control.SimpleCatalogueSearch = oscar.BaseClass(oscar.Control.CatalogueSea
             query = query.replace(match, "").trim();
         }
         if (hasBang) {
-            this.searchHandler.events.triggerEvent("advancedSearch");
+            this.searchHandler.events.triggerEvent("advancedSearch", query.trim());
+			return true;
         }
-        return query.trim();
+        return false;
     },
     
     draw : function() {

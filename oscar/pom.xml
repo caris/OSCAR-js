@@ -88,6 +88,7 @@
 								<include>**/Gui/Download/WFS.js</include>
 								<include>**/Gui/CollapsiblePanel.js</include>
 								<include>**/Gui/DownloadOptions.js</include>
+								<include>**/Gui/Info.js</include>
 								<include>**/Gui/ServicePanel.js</include>
 								<include>**/Gui/ClickableLabel.js</include>
 								<include>**/Gui/ComboBox.js</include>
@@ -184,6 +185,8 @@
 								<include>**/Popup/FramedCloud.js</include>
 								<include>**/Map.js</include>
 								<include>**/OLPrototypePatches.js</include>
+								<include>**/Parser.js</include>
+								<include>**/parsers/*.js</include>
 							</includes>
 						</aggregation>
 						<aggregation>
