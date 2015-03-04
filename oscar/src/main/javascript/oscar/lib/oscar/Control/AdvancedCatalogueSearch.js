@@ -18,6 +18,8 @@
 
 oscar.Control.AdvancedCatalogueSearch = new oscar.BaseClass(oscar.Control.CatalogueSearchForm, {
     EVENT_TYPES : [ 'close' ],
+    autoSearch : false,
+    errorId : null,
     initialize : function(options) {
         oscar.Control.prototype.initialize.apply(this, [ options ]);
         this.searchHandler.events.on({
@@ -27,7 +29,6 @@ oscar.Control.AdvancedCatalogueSearch = new oscar.BaseClass(oscar.Control.Catalo
         
         this.parser = new oscar.Util.Parser(CQL_Parser);
         this.parser.events.on({
-            // "parseerror":this.parseError,
             "parsesuccess" : this.parseSuccess,
             scope : this
         });
@@ -72,7 +73,11 @@ oscar.Control.AdvancedCatalogueSearch = new oscar.BaseClass(oscar.Control.Catalo
     },
     parseSuccess : function(query) {
         $$("#ac-matches").remove();
-        // this.searchHandler.search(query);
+        $$("#" + this.errorId).empty();
+        
+        if (this.autoSearch) {
+            this.searchHandler.search(query);
+        }
     },
     getAdvancedUI : function(container) {
         var closediv = $$("<div></div>");
@@ -100,7 +105,7 @@ oscar.Control.AdvancedCatalogueSearch = new oscar.BaseClass(oscar.Control.Catalo
             "width" : "95%"
         });
         container.append(containerDiv);
-        this.textarea = $$("<textarea></textarea>");
+        this.textarea = $$("<textarea>( csw:AnyText LIKE</textarea>");
         this.textarea.addClass('advSearchTextArea');
         var scope = this;
         
@@ -113,34 +118,7 @@ oscar.Control.AdvancedCatalogueSearch = new oscar.BaseClass(oscar.Control.Catalo
             focus : function(e, ui) {
                 return false;
             },
-            select : function(e, ui) {
-                // the query string
-                var query = $$(this).val();
-                // injection value
-                var injection = ui.item.value;
-                
-                // get the tokens
-                var tokens = query.split(" ");
-                tokens.pop();
-                tokens.push(injection);
-                var tokenString = tokens.join(" ");
-                $$(this).val(tokenString);
-                
-                if (injection === "''") {
-                    setTimeout($$.proxy(function() {
-                        var $this = $$(this);
-                        var query = $this.val();
-                        var word_pos = query.lastIndexOf("'");
-                        var textarea = $this[0];
-                        if (textarea.setSelectionRange) {
-                            textarea.setSelectionRange(word_pos, word_pos);
-                        } else if (this.textarea[0].createTextRange) {
-                            // because of IE
-                        }
-                    }, this), 100);
-                }
-                return false;
-            }
+            select : $$.proxy(this._injectText, this)
         }).focus(function() {
             $$(this).autocomplete("search");
         }).keyup($$.proxy(function(e) {
@@ -156,24 +134,92 @@ oscar.Control.AdvancedCatalogueSearch = new oscar.BaseClass(oscar.Control.Catalo
                 primary : "ui-icon-search"
             },
             text : false
-        }).click($$.proxy(function() {
-            try {
-                this.parser.parse(this.textarea.val());
-                this.searchHandler.search(this.textarea.val());
-            } catch (parseError) {
-                console.log(parseError);
-            }
-            
-        }, this));
+        }).click($$.proxy(this.search, this));
+        
+        var ctrls = $$("<div></div>");
+        ctrls.addClass("advSearchControls");
+        containerDiv.append(ctrls);
+        var parserErrorDiv = $$("<span></span>");
+        this.errorId = OpenLayers.Util.createUniqueID(this.CLASS_NAME + ".errorDiv.");
+        parserErrorDiv.attr("id", this.errorId);
+        parserErrorDiv.addClass("errorDiv");
+        
+        ctrls.append(parserErrorDiv);
         var btns = $$("<div></div>");
-        btns.css({
-            "text-align" : "right"
-        });
+        btns.addClass("advSearchButtons");
         btns.append(btn);
-        
-        containerDiv.append(btns);
-        
         this.addHelp(btns);
+        
+        ctrls.append(btns);
+    },
+    search : function() {
+        try {
+            this.parser.parse(this.textarea.val());
+            this.searchHandler.search(this.textarea.val());
+        } catch (parseError) {
+            this.displayError(parseError);
+        }
+    },
+    displayError : function(err) {
+        var errString = "Error ";
+        if (err.hash && err.hash.loc) {
+            errString += " found at ";
+            var errorLn = err.hash.loc.last_line;
+            var errorCol = err.hash.loc.last_column;
+            errString += errorLn + ":" + errorCol + ".";
+        }
+        
+        if (err.hash && err.hash.expected) {
+            var symbols = [];
+            for (var i = 0; i < err.hash.expected.length; i++) {
+                var symbol = null;
+                if ((symbol = oscar.Util.getGrammarSymbol(err.hash.expected[i]))) {
+                    symbols.push(symbol);
+                }
+            }
+            if (symbols) {
+                errString += " Expected " + symbols.join(" or ") + "."
+            }
+        }
+        
+        $$("#" + this.errorId).html(errString);
+        
+    },
+    _injectText : function(e, ui) {
+        // the query string
+        var query = this.textarea.val();
+        // injection value
+        var injection = ui.item.value;
+        
+        // get the tokens
+        var tokens = query.split(" ");
+        var lastToken = tokens.pop();
+        if (injection.indexOf(lastToken) === -1) {
+            tokens.push(lastToken);
+        }
+        tokens.push(injection);
+        var tokenString = tokens.join(" ");
+        this.textarea.val(tokenString);
+        
+        if (injection === "''") {
+            setTimeout($$.proxy(function() {
+                var query = this.textarea.val();
+                var word_pos = query.lastIndexOf("'");
+                var textarea = this.textarea[0];
+                if (textarea.setSelectionRange) {
+                    textarea.setSelectionRange(word_pos, word_pos);
+                } else if (this.textarea[0].createTextRange) {
+                    // because of IE
+                }
+            }, this), 100);
+        }
+        
+        try {
+            this.parser.parse(this.textarea.val());
+        } catch (parseError) {
+            this.displayError(parseError);
+        }
+        return false;
     },
     setQuery : function(query) {
         this.textarea.val(query);
@@ -183,7 +229,7 @@ oscar.Control.AdvancedCatalogueSearch = new oscar.BaseClass(oscar.Control.Catalo
                 this.searchHandler.search(this.textarea.val());
                 
             } catch (parseError) {
-                
+                this.displayError(parseError);
                 setTimeout($$.proxy(function() {
                     this.textarea.focus();
                 }, this), 500);
@@ -221,45 +267,11 @@ oscar.Control.AdvancedCatalogueSearch = new oscar.BaseClass(oscar.Control.Catalo
                     case "FIELD":
                         suggestions = suggestions.concat(getFieldSuggestions());
                         break;
-                    case "LIKE":
-                        suggestions.push("LIKE");
-                        break;
-                    case "EQUALS":
-                        suggestions.push("=");
-                        break;
-                    case "LT":
-                        suggestions.push("<");
-                        break;
-                    case "LTE":
-                        suggestions.push("<=");
-                        break;
-                    case "GT":
-                        suggestions.push(">");
-                        break;
-                    case "GTE":
-                        suggestions.push(">=");
-                        break;
-                    case "NEQ":
-                        suggestions.push("<>");
-                        break;
-                    
-                    case "OPEN":
-                        suggestions.push("(");
-                        break;
-                    case "CLOSE":
-                        suggestions.push(")");
-                        break;
-                    case "WORD":
-                        suggestions.push("''");
-                        break;
-                    case "AND":
-                        suggestions.push("AND");
-                        break;
-                    case "OR":
-                        suggestions.push("OR");
-                        break;
-                    case "EOF":
-                        break;
+                    default:
+                        var symbol = oscar.Util.getGrammarSymbol(expectation);
+                        if (symbol) {
+                            suggestions.push(symbol);
+                        }
                 }
             }
             return suggestions;
@@ -274,15 +286,16 @@ oscar.Control.AdvancedCatalogueSearch = new oscar.BaseClass(oscar.Control.Catalo
             try {
                 this.parser.parse(this.textarea.val());
             } catch (err) {
+                this.displayError(err);
                 matches = getParserSuggestions(err.hash.expected);
             }
         } else {
             matches = matches.concat(getFieldSuggestions(term));
             if (matches.length === 0) {
                 try {
-                    
                     this.parser.parse(this.textarea.val());
                 } catch (err) {
+                    this.displayError(err);
                     matches = getParserSuggestions(err.hash.expected);
                 }
             }

@@ -851,3 +851,39 @@ oscar.Util.downloadFromService = function(url, filename, proxyOverride) {
         window.open(url, "abc123", "width=640,height=480,menuBar=yes,location=false,scrollbars=yes");
     }
 }
+
+oscar.Util.getGrammarSymbol = function(grammar) {
+    grammar = grammar.replace(/'/g, '');
+    switch (grammar) {
+        case "FIELD":
+            return "FIELD"
+        case "LIKE":
+            return "LIKE";
+        case "EQUALS":
+            return "=";
+        case "LT":
+            return "<";
+        case "LTE":
+            return "<=";
+        case "GT":
+            return ">";
+        case "GTE":
+            return ">=";
+        case "NEQ":
+            return "<>";
+        case "OPEN":
+            return "(";
+        case "CLOSE":
+            return ")";
+        case "WORD":
+            return "''";
+        case "AND":
+            return "AND";
+        case "OR":
+            return "OR";
+            break;
+        case "EOF":
+        default:
+            return null;
+    }
+}
