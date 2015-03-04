@@ -20,6 +20,7 @@ oscar.Control.AdvancedCatalogueSearch = new oscar.BaseClass(oscar.Control.Catalo
     EVENT_TYPES : [ 'close' ],
     autoSearch : false,
     errorId : null,
+    help : "help/advanced-search.html",
     initialize : function(options) {
         oscar.Control.prototype.initialize.apply(this, [ options ]);
         this.searchHandler.events.on({
@@ -304,23 +305,6 @@ oscar.Control.AdvancedCatalogueSearch = new oscar.BaseClass(oscar.Control.Catalo
             matches.sort();
             return matches;
         }
-    },
-    showHelp : function() {
-        var content = $$("<div></div>").html("");
-        content.css({
-            "width" : "100%",
-            "height" : "300px",
-            "overflow" : "auto",
-            "color" : "#000"
-        
-        });
-        new oscar.Gui.Dlg("What's This?", content, {
-            position : {
-                my : "left top",
-                at : "right top",
-                of : this.textarea
-            }
-        }).draw();
     },
     displayFilter : function(filter) {
         this.textarea.val(filter.toString());

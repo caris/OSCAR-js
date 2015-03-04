@@ -21,6 +21,7 @@ oscar.Control.SimpleCatalogueSearch = oscar.BaseClass(oscar.Control.CatalogueSea
     form : null,
     basicSearch : true,
     handler : null,
+    help : "help/simple-search.html",
     spatialSearch : null,
     initialize : function(options) {
         oscar.Control.CatalogueSearchForm.prototype.initialize.apply(this, arguments);
@@ -35,7 +36,9 @@ oscar.Control.SimpleCatalogueSearch = oscar.BaseClass(oscar.Control.CatalogueSea
             scope : this
         });
     },
-    
+    helpLocation : function() {
+        return oscar._getScriptLocation() + this.help;
+    },
     preprocessQuery : function(query) {
         // check for advanced search flag.
         if (this.bangLookup(query) || query.trim().length === 0) {
@@ -75,7 +78,6 @@ oscar.Control.SimpleCatalogueSearch = oscar.BaseClass(oscar.Control.CatalogueSea
         }
         return false;
     },
-    
     draw : function() {
         oscar.Control.CatalogueSearchForm.prototype.draw.apply(this, arguments);
         this.input = $$("<input type='text' id='q' size='50' value=''>");

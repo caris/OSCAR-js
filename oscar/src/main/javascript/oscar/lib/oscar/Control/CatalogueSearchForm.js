@@ -22,32 +22,40 @@
  * 
  */
 
- oscar.Control.CatalogueSearchForm  = oscar.BaseClass(oscar.Control, {
-        EVENT_TYPES : [ "search" ],
-        events:null,
-        initialize:function(options) {
-            this.EVENT_TYPES = this.EVENT_TYPES.concat(oscar.Control.prototype.EVENT_TYPES);
+oscar.Control.CatalogueSearchForm = oscar.BaseClass(oscar.Control, {
+    EVENT_TYPES : [ "search" ],
+    events : null,
+    initialize : function(options) {
+        this.EVENT_TYPES = this.EVENT_TYPES.concat(oscar.Control.prototype.EVENT_TYPES);
         oscar.Control.prototype.initialize.apply(this, [ options ]);
-                this.catalogueService = this.catalogueServices[0];
-        },
-        performSearch:function(queryString) {
-                this.searchHandler.search(queryString);
-        },
-        setMap : function(map) {
+        this.catalogueService = this.catalogueServices[0];
+    },
+    performSearch : function(queryString) {
+        this.searchHandler.search(queryString);
+    },
+    setMap : function(map) {
         oscar.Control.prototype.setMap.apply(this, [ map ]);
     },
-        draw:function(options) {
-                oscar.Control.prototype.draw.apply(this,arguments);
-                this.form = $$("<form onSubmit='return false;'></form>");
-                $$(this.div).append(this.form);
-        },
-        addHelp:function(container) {
-                whatsThis = new oscar.Gui.Info();
-                whatsThis.appendTo(container);
-                whatsThis.events.on({
-                        'whatsthis':this.showHelp,
-                        scope:this
-                });
-        },
-        CLASS_NAME:'oscar.COntrol.CatalogueSearchForm'
- });
+    draw : function(options) {
+        oscar.Control.prototype.draw.apply(this, arguments);
+        this.form = $$("<form onSubmit='return false;'></form>");
+        $$(this.div).append(this.form);
+    },
+    addHelp : function(container) {
+        whatsThis = new oscar.Gui.Info();
+        whatsThis.appendTo(container);
+        whatsThis.events.on({
+            'whatsthis' : this.showHelp,
+            scope : this
+        });
+    },
+    helpLocation : function() {
+        var str = oscar._getScriptLocation() + this.help;
+        return str;
+    },
+    showHelp : function(info) {
+        info.show(this.helpLocation());
+        
+    },
+    CLASS_NAME : 'oscar.Control.CatalogueSearchForm'
+});

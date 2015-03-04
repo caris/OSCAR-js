@@ -1937,15 +1937,40 @@ td#oscarLayoutFooterContainer {
 	color:red;
 }
 
+/* What's This button and dialog style definitions */
 .oscarGuiInfo {
 	display:inline-block;
 }
 
-.oscarGuiDlg {
-	z-index:9999;
-	border:1p solid black;
+.whatsthis-dlg {
+	z-index:100;
+	background:url('img/dlg-background.png');
+	position:absolute;
+	padding:5px;
+	width:400px;
+	height:150px;
 }
 
-.oscarGuiDlg .oscarGuiDlgContent {
-	
+.whatsthis-dlg .wt-titleBar {
+	font-weight:bold;
+	font-size:14px;
+	border-bottom:1px solid #aaa;
+	cursor:move;
+}
+
+.whatsthis-dlg .wt-content {
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;         /* Opera/IE 8+ */
+}
+
+.whatsthis-dlg .wt-content-container {
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;         /* Opera/IE 8+ */
+	width:100%;
+	height:100%;
+	background-color:#e9e9e9;
+	padding:5px;
+	font-size:12px;
 }
