@@ -1934,7 +1934,8 @@ td#oscarLayoutFooterContainer {
 	top:0px;
 }
 .oscarControlAdvancedSearchForm .advSearchControls .errorDiv {
-	color:red;
+	color:#003968;
+	font-weight:bold;
 }
 
 /* What's This button and dialog style definitions */

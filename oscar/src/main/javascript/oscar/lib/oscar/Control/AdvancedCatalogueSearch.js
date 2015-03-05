@@ -57,9 +57,7 @@ oscar.Control.AdvancedCatalogueSearch = new oscar.BaseClass(oscar.Control.Catalo
                     return constraints[i].values;
                 }
             }
-            
         }
-
         var supportedQueryables = getConstraint("SupportedISOQueryables", op.constraints);
         var additionalQueryables = getConstraint("AdditionalQueryables", op.constraints);
         this.supportedFieldList = this.supportedFieldList.concat(supportedQueryables);
@@ -162,9 +160,9 @@ oscar.Control.AdvancedCatalogueSearch = new oscar.BaseClass(oscar.Control.Catalo
         }
     },
     displayError : function(err) {
-        var errString = "Error ";
+        var errString = "Suggestion: ";
         if (err.hash && err.hash.loc) {
-            errString += " found at ";
+            errString += " @";
             var errorLn = err.hash.loc.last_line;
             var errorCol = err.hash.loc.last_column;
             errString += errorLn + ":" + errorCol + ".";
@@ -195,7 +193,11 @@ oscar.Control.AdvancedCatalogueSearch = new oscar.BaseClass(oscar.Control.Catalo
         // get the tokens
         var tokens = query.split(" ");
         var lastToken = tokens.pop();
-        if (injection.indexOf(lastToken) === -1) {
+        if (lastToken.indexOf("(") === 0) {
+            lastToken = lastToken.substring(1, lastToken.length);
+            tokens.push("(");
+        }
+        if (injection.toLowerCase().indexOf(lastToken.toLowerCase()) === -1) {
             tokens.push(lastToken);
         }
         tokens.push(injection);
@@ -258,7 +260,7 @@ oscar.Control.AdvancedCatalogueSearch = new oscar.BaseClass(oscar.Control.Catalo
         };
         
         // get parser suggestions
-        var getParserSuggestions = function(expectations) {
+        var getParserSuggestions = function(expectations, partial) {
             if (!expectations)
                 return;
             var suggestions = [];
@@ -266,12 +268,18 @@ oscar.Control.AdvancedCatalogueSearch = new oscar.BaseClass(oscar.Control.Catalo
                 var expectation = expectations[i].replace(/'/g, '');
                 switch (expectation) {
                     case "FIELD":
-                        suggestions = suggestions.concat(getFieldSuggestions());
+                        suggestions = suggestions.concat(getFieldSuggestions(partial));
                         break;
                     default:
                         var symbol = oscar.Util.getGrammarSymbol(expectation);
                         if (symbol) {
-                            suggestions.push(symbol);
+                            if (partial) {
+                                if (symbol.toLowerCase().indexOf(partial.toLowerCase()) === 0) {
+                                    suggestions.push(symbol);
+                                }
+                            } else {
+                                suggestions.push(symbol);
+                            }
                         }
                 }
             }
@@ -282,6 +290,9 @@ oscar.Control.AdvancedCatalogueSearch = new oscar.BaseClass(oscar.Control.Catalo
         var matches = [];
         
         term = term.split(" ").pop();
+        if (term.indexOf("(") === 0 && term.length > 1) {
+            term = term.substring(1, term.length);
+        }
         
         if (term.length === 0) {
             try {
@@ -290,6 +301,7 @@ oscar.Control.AdvancedCatalogueSearch = new oscar.BaseClass(oscar.Control.Catalo
                 this.displayError(err);
                 matches = getParserSuggestions(err.hash.expected);
             }
+            
         } else {
             matches = matches.concat(getFieldSuggestions(term));
             if (matches.length === 0) {
@@ -297,7 +309,7 @@ oscar.Control.AdvancedCatalogueSearch = new oscar.BaseClass(oscar.Control.Catalo
                     this.parser.parse(this.textarea.val());
                 } catch (err) {
                     this.displayError(err);
-                    matches = getParserSuggestions(err.hash.expected);
+                    matches = getParserSuggestions(err.hash.expected, term);
                 }
             }
         }
