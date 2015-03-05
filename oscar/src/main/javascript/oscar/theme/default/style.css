@@ -1938,9 +1938,17 @@ td#oscarLayoutFooterContainer {
 	font-weight:bold;
 }
 
+
 /* What's This button and dialog style definitions */
 .oscarGuiInfo {
 	display:inline-block;
+}
+
+.oscarGuiInfo .ico {
+	background-image:url('img/help-icon.png');
+	background-repeat:no-repeat;
+	width:29px;
+	height:20px;
 }
 
 .whatsthis-dlg {
