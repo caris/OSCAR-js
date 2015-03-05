@@ -31,7 +31,7 @@ oscar.Control.CatalogueSearchForm = oscar.BaseClass(oscar.Control, {
         this.catalogueService = this.catalogueServices[0];
     },
     performSearch : function(queryString) {
-        this.searchHandler.search(queryString);
+        this.searchHandler.search(new oscar.QueryType(oscar.QueryType.prototype, queryString));
     },
     setMap : function(map) {
         oscar.Control.prototype.setMap.apply(this, [ map ]);
@@ -41,8 +41,10 @@ oscar.Control.CatalogueSearchForm = oscar.BaseClass(oscar.Control, {
         this.form = $$("<form onSubmit='return false;'></form>");
         $$(this.div).append(this.form);
     },
-    addHelp : function(container) {
-        whatsThis = new oscar.Gui.Info();
+    addHelp : function(context, container) {
+        whatsThis = new oscar.Gui.Info({
+            context : context
+        });
         whatsThis.appendTo(container);
         whatsThis.events.on({
             'whatsthis' : this.showHelp,

@@ -25,9 +25,12 @@ oscar.Control.SimpleCatalogueSearch = oscar.BaseClass(oscar.Control.CatalogueSea
     spatialSearch : null,
     initialize : function(options) {
         oscar.Control.CatalogueSearchForm.prototype.initialize.apply(this, arguments);
-        this.spatialSearch = new oscar.Control.Box();
+        this.spatialSearch = new oscar.Control.Box({
+            allowPanning : false,
+            keyMask : OpenLayers.Handler.MOD_CTRL
+        });
         this.spatialSearch.events.on({
-            "done" : this.performSpatialSearch,
+            "done" : this.buildSpatial,
             scope : this
         });
         
@@ -54,7 +57,7 @@ oscar.Control.SimpleCatalogueSearch = oscar.BaseClass(oscar.Control.CatalogueSea
             queryArray.push(queryString);
         }
         this.searchHandler.events.triggerEvent("displayfilter", queryArray.join(" OR "));
-        this.searchHandler.search(queryArray.join(" OR "));
+        this.performSearch(queryArray.join(" OR "));
     },
     bangLookup : function(query) {
         var hasMatch = function(text, pattern) {
@@ -90,33 +93,23 @@ oscar.Control.SimpleCatalogueSearch = oscar.BaseClass(oscar.Control.CatalogueSea
             this.input.val(this.defaultText);
         }
         this.map.addControl(this.spatialSearch);
+        this.spatialSearch.activate();
         this.form.append(this.input);
         this.button = $$("<button></button").html(oscar.i18n("Search"));
-        this.spatialButton = $$("<button></button").html(oscar.i18n("Spatial Search"));
+        
         this.form.append(this.button);
         this.form.append(this.spatialButton);
-        this.addHelp(this.form);
+        this.addHelp("Help", this.form);
         
         var scope = this;
         this.button.button({
             icons : {
                 primary : "ui-icon-search"
             },
-            text : false
+            text : true
         }).click($$.proxy(function() {
             
             this.events.triggerEvent("search", this.input.val());
-        }, this));
-        
-        this.spatialButton.button({
-            icons : {
-                primary : "ui-icon-arrow-4-diag"
-            },
-            text : false
-        }).click($$.proxy(function() {
-            // deactivate any selectFeatureControls here
-            this.toggleFeatureSelection(true);
-            this.spatialSearch.activate();
         }, this));
         
         return this.div;
@@ -131,15 +124,14 @@ oscar.Control.SimpleCatalogueSearch = oscar.BaseClass(oscar.Control.CatalogueSea
             }
         }
     },
-    performSpatialSearch : function(geom) {
-        var criteria = {
-            q : this.input.val(),
+    buildSpatial : function(geom) {
+        var query = {
             spatial : geom.getBounds(),
+            projection : this.map.getProjection(),
             type : oscar.Handler.CSW.prototype.SPATIAL
         }
-        this.spatialSearch.deactivate();
-        this.spatialButton.blur();
-        this.events.triggerEvent("search", criteria);
+        var criteria = new oscar.QueryType(oscar.QueryType.prototype.SPATIAL, query);
+        this.searchHandler.search(criteria);
     },
     CLASS_NAME : "oscar.Control.SimpleCatalogueSearch"
 });

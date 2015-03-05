@@ -80,6 +80,7 @@
 								<include>**/oscar.js</include>
 								<include>**/Util.js</include>
 								<include>**/Types/BaseClass.js</include>
+								<include>**/Types/QueryType.js</include>
 								<include>**/ox/ox.js</include>
 								<include>**/Gui.js</include>
 								<include>**/Gui/CatalogueResults.js</include>

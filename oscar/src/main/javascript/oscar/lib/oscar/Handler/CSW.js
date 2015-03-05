@@ -26,8 +26,6 @@
  */
 
 oscar.Handler.CSW = new oscar.BaseClass(oscar.Handler, {
-    TEXT : 1,
-    SPATIAL : 2,
     DEFAULT_SEARCH_PARAMETERS : {
         request : "GetRecords",
         service : "csw",
@@ -63,18 +61,17 @@ oscar.Handler.CSW = new oscar.BaseClass(oscar.Handler, {
     },
     search : function(query) {
         this.parameters = OpenLayers.Util.extend({}, this.DEFAULT_SEARCH_PARAMETERS);
-        var formatter = new OpenLayers.Format.CQL();
-        var filters = null;
-        filters = formatter.read(query);
+        var filter = null;
+        filter = query.toFilter();
         var csw_query = {
             "ElementSetName" : {
                 "value" : "full"
             }
         }
-        if (filters) {
+        if (filter) {
             csw_query["Constraint"] = {
                 "version" : "1.1.0",
-                "Filter" : filters
+                "Filter" : filter
             }
         }
         

@@ -57,6 +57,7 @@ oscar.Control.AdvancedCatalogueSearch = new oscar.BaseClass(oscar.Control.Catalo
                     return constraints[i].values;
                 }
             }
+            
         }
         var supportedQueryables = getConstraint("SupportedISOQueryables", op.constraints);
         var additionalQueryables = getConstraint("AdditionalQueryables", op.constraints);
@@ -122,17 +123,17 @@ oscar.Control.AdvancedCatalogueSearch = new oscar.BaseClass(oscar.Control.Catalo
             $$(this).autocomplete("search");
         }).keyup($$.proxy(function(e) {
             if (e.ctrlKey && e.keyCode === 13) {
-                this.searchHandler.search(this.textarea.val());
+                this.performSearch(this.textarea.val());
             }
         }, this));
         
         containerDiv.append(this.textarea);
-        var btn = $$("<button></button>").html("Search");
+        var btn = $$("<button></button").html(oscar.i18n("Search"));
         btn.button({
             icons : {
                 primary : "ui-icon-search"
             },
-            text : false
+            text : true
         }).click($$.proxy(this.search, this));
         
         var ctrls = $$("<div></div>");
@@ -147,14 +148,14 @@ oscar.Control.AdvancedCatalogueSearch = new oscar.BaseClass(oscar.Control.Catalo
         var btns = $$("<div></div>");
         btns.addClass("advSearchButtons");
         btns.append(btn);
-        this.addHelp(btns);
+        this.addHelp("Syntax Help", btns);
         
         ctrls.append(btns);
     },
     search : function() {
         try {
             this.parser.parse(this.textarea.val());
-            this.searchHandler.search(this.textarea.val());
+            this.performSearch(this.textarea.val());
         } catch (parseError) {
             this.displayError(parseError);
         }
@@ -229,7 +230,7 @@ oscar.Control.AdvancedCatalogueSearch = new oscar.BaseClass(oscar.Control.Catalo
         if (query.length > 0) {
             try {
                 this.parser.parse(this.textarea.val());
-                this.searchHandler.search(this.textarea.val());
+                this.performSearch(this.textarea.val());
                 
             } catch (parseError) {
                 this.displayError(parseError);
