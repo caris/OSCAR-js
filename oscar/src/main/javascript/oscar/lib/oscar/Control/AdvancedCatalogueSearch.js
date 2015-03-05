@@ -106,7 +106,7 @@ oscar.Control.AdvancedCatalogueSearch = new oscar.BaseClass(oscar.Control.Catalo
             "width" : "95%"
         });
         container.append(containerDiv);
-        this.textarea = $$("<textarea>( csw:AnyText LIKE</textarea>");
+        this.textarea = $$("<textarea></textarea>");
         this.textarea.addClass('advSearchTextArea');
         var scope = this;
         
@@ -115,7 +115,7 @@ oscar.Control.AdvancedCatalogueSearch = new oscar.BaseClass(oscar.Control.Catalo
             source : function(req, resp) {
                 resp(scope.getSuggestions(req));
             },
-            // eliminate the focuse change from the menu
+            // eliminate the focus change from the menu
             focus : function(e, ui) {
                 return false;
             },
