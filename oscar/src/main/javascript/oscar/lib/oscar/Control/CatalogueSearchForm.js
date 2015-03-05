@@ -31,7 +31,7 @@ oscar.Control.CatalogueSearchForm = oscar.BaseClass(oscar.Control, {
         this.catalogueService = this.catalogueServices[0];
     },
     performSearch : function(queryString) {
-        this.searchHandler.search(new oscar.QueryType(oscar.QueryType.prototype, queryString));
+        this.searchHandler.search(new oscar.QueryType(oscar.QueryType.prototype.TEXT, queryString));
     },
     setMap : function(map) {
         oscar.Control.prototype.setMap.apply(this, [ map ]);
