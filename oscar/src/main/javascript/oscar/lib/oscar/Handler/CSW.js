@@ -60,13 +60,14 @@ oscar.Handler.CSW = new oscar.BaseClass(oscar.Handler, {
     },
     search : function(query) {
         this.parameters = OpenLayers.Util.extend({}, this.DEFAULT_SEARCH_PARAMETERS);
-        var filter = null;
-        filter = query.toFilter();
+
         var csw_query = {
             "ElementSetName" : {
                 "value" : "full"
             }
         }
+
+        var filter = filter = query.toFilter();;
         if (filter) {
             csw_query["Constraint"] = {
                 "version" : "1.1.0",
