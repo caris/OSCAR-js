@@ -20,7 +20,7 @@ oscar.Control.SimpleCatalogueSearch = oscar.BaseClass(oscar.Control.CatalogueSea
     form : null,
     basicSearch : true,
     handler : null,
-    help : "help/simple-search.html",
+    help : "help/simple-search-{0}.html",
     spatialSearch : null,
     initialize : function(options) {
         oscar.Control.CatalogueSearchForm.prototype.initialize.apply(this, arguments);

@@ -536,6 +536,19 @@ String.prototype.replaceAll = function(stringToFind, stringToReplace) {
 };
 
 /**
+ * Adds the format function to the String class.
+ */
+
+String.prototype.format = function() {
+    var str = this;
+    for (var i = 0; i < arguments.length; i++) {
+        var reg = new RegExp("\\{" + i + "\\}", "gm");
+        str = str.replace(reg, arguments[i]);
+    }
+    return str;
+}
+
+/**
  * APIMethod: oscar.Util.getServerGeometryPropertyName
  * 
  * returns the geometry property name of the current server

@@ -19,7 +19,7 @@ oscar.Control.AdvancedCatalogueSearch = new oscar.BaseClass(oscar.Control.Catalo
     EVENT_TYPES : [ 'close' ],
     autoSearch : false,
     errorId : null,
-    help : "help/advanced-search.html",
+    help : "help/advanced-search-{0}.html",
     initialize : function(options) {
         oscar.Control.prototype.initialize.apply(this, [ options ]);
         this.searchHandler.events.on({
