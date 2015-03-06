@@ -132,7 +132,7 @@ oscar.Control.AdvancedCatalogueSearch = new oscar.BaseClass(oscar.Control.Catalo
         }, this));
         
         containerDiv.append(this.textarea);
-        var btn = $$("<button></button").html(oscar.i18n("Search"));
+        var btn = $$("<button></button>").html(oscar.i18n("Search"));
         btn.button({
             icons : {
                 primary : "ui-icon-search"
