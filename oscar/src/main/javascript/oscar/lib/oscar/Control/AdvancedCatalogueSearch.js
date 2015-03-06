@@ -1,14 +1,14 @@
 /*
  * CARIS oscar - Open Spatial Component ARchitecture
- *
+ * 
  * Copyright 2014 CARIS <http://www.caris.com>
- *
+ * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- *
+ * 
  * http://www.apache.org/licenses/LICENSE-2.0
- *
+ * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -120,9 +120,14 @@ oscar.Control.AdvancedCatalogueSearch = new oscar.BaseClass(oscar.Control.Catalo
             select : $$.proxy(this._injectText, this)
         }).focus(function() {
             $$(this).autocomplete("search");
-        }).keyup($$.proxy(function(e) {
-            if (e.ctrlKey && e.keyCode === 13) {
-                this.performSearch(this.textarea.val());
+        }).bind('keypress', $$.proxy(function(event) {
+            if (event.keyCode == 13) {
+                try {
+                    this.parser.parse(this.textarea.val());
+                    this.performSearch(this.textarea.val());
+                } catch (err) {
+                }
+                return false;
             }
         }, this));
         
