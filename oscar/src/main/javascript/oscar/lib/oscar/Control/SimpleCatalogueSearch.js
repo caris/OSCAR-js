@@ -1,14 +1,14 @@
 /*
  * CARIS oscar - Open Spatial Component ARchitecture
- *
+ * 
  * Copyright 2014 CARIS <http://www.caris.com>
- *
+ * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- *
+ * 
  * http://www.apache.org/licenses/LICENSE-2.0
- *
+ * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -82,7 +82,7 @@ oscar.Control.SimpleCatalogueSearch = oscar.BaseClass(oscar.Control.CatalogueSea
     },
     draw : function() {
         oscar.Control.CatalogueSearchForm.prototype.draw.apply(this, arguments);
-        this.input = $$("<input type='text' id='q' size='50' value=''>");
+        this.input = $$("<input type='search' id='q' name='q' size='50' value=''>");
         this.input.button().css({
             'text-align' : 'left',
             'outline' : 'none',
@@ -107,9 +107,15 @@ oscar.Control.SimpleCatalogueSearch = oscar.BaseClass(oscar.Control.CatalogueSea
             },
             text : true
         }).click($$.proxy(function() {
-            
             this.events.triggerEvent("search", this.input.val());
         }, this));
+        var args = OpenLayers.Util.getParameters();
+        if (args.q) {
+            this.input.val(args.q);
+            setTimeout($$.proxy(function() {
+                this.button.click();
+            }, this), 500);
+        }
         
         return this.div;
     },
