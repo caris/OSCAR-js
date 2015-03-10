@@ -359,5 +359,7 @@ OpenLayers.Util.applyDefaults(oscar.Lang.getDictionary("en"), {
     
     "OGC:CSW-2.0.0-http-get-record-by-id-view" : "View Metadata",
     
-    "OGC:WCS-1.1.0-http-get-capabilities" : "Coverage"
+    "OGC:WCS-1.1.0-http-get-capabilities" : "Coverage",
+	
+	"simple-search-placeholder" : "Enter Search. Use !e to for advanced mode."
 });
