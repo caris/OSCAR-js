@@ -1,14 +1,14 @@
 /*
  * CARIS oscar - Open Spatial Component ARchitecture
- *
+ * 
  * Copyright 2014 CARIS <http://www.caris.com>
- *
+ * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- *
+ * 
  * http://www.apache.org/licenses/LICENSE-2.0
- *
+ * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -364,6 +364,6 @@ OpenLayers.Util.applyDefaults(oscar.Lang.getDictionary("es"), {
     "OGC:CSW-2.0.0-http-get-record-by-id-view" : "NULL",
     
     "OGC:WCS-1.1.0-http-get-capabilities" : "NULL",
-	
-	"simple-search-placeholder" : "Enter Search. Use !e to for advanced mode."
+    
+    "simple-search-placeholder" : "Enter Search. Use !e to for advanced mode."
 });

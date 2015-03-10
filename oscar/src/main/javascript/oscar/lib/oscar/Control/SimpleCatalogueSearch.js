@@ -83,9 +83,9 @@ oscar.Control.SimpleCatalogueSearch = oscar.BaseClass(oscar.Control.CatalogueSea
     draw : function() {
         oscar.Control.CatalogueSearchForm.prototype.draw.apply(this, arguments);
         this.input = $$("<input type='search' id='q' name='q' size='50' value=''>");
-		
-		this.input.attr("placeholder",oscar.i18n("simple-search-placeholder"));
-		
+        
+        this.input.attr("placeholder", oscar.i18n("simple-search-placeholder"));
+        
         this.input.button().css({
             'text-align' : 'left',
             'outline' : 'none',
