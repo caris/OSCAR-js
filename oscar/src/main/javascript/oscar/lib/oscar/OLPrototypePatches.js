@@ -903,8 +903,8 @@ OpenLayers.Format.CQL = (function() {
         COMMA: ['GEOMETRY', 'VALUE', 'PROPERTY'],
         VALUE: ['LOGICAL', 'COMMA', 'RPAREN', 'END'],
         SPATIAL: ['LPAREN'],
-        LOGICAL: ['NOT', 'VALUE', 'SPATIAL', 'PROPERTY', 'LPAREN'],
-        NOT: ['PROPERTY', 'LPAREN'],
+        LOGICAL: ['NOT', 'VALUE', 'SPATIAL', 'LPAREN', 'PROPERTY'],
+        NOT: ['LPAREN', 'PROPERTY'],
         GEOMETRY: ['COMMA', 'RPAREN']
     },
 
