@@ -1,31 +1,44 @@
+<META http-equiv="Content-Type" content="text/html; charset=Windows-1252"/>
 <html>
 <head>
-<title>Enhanced Search</title>
+<title>Búsqueda mejorada</title>
 <link rel="stylesheet" type="text/css" href="help-style.css">
 </head>
 <body>
-<h1>Enhanced Search</h1>
-<p>Enhanced search provides auto-complete and query building hints along the way.</p>
-<h1>Supported Comparison Operatators</h1>
-<ul>
-	<li>></li>
-	<li>>=</li>
-	<li><</li>
-	<li><=</li>
-	<li><></li>
-	<li>=</li>
-	<li>LIKE</li>
-</ul>
-<h1>Supported Logical Operatators</h1>
-<ul>
-	<li>AND</li>
-	<li>OR</li>
-</ul>
-<p>Literal values must be wrapped in single quotes. Ex. dct:abstract = 'unknown'</p>
-<p>Parenthesis may be used to group conditions. Ex. ( dct:abstract = 'unknown AND dc:title='my title') OR dc:title = 'abc'</p>
-<p>Wildcards are also a valid search literal. Ex. dc:title LIKE '*'</p>
+	<h1>Búsqueda mejorada</h1>
+	<p>La búsqueda mejorada proporciona sugerencias de autocompletar y construcción de consultas a lo largo del proceso.</p>
 
+	<p>Una vez que la consulta está completa pulsando ENTER o haciendo clic en el botón Buscar disparará la búsqueda.</p>
 
+	<h1>Operadores de comparación compatibles</h1>
+	<ul>
+		<li>&gt;</li>
+		<li>&gt;=</li>
+		<li>&lt;</li>
+		<li>&lt;=</li>
+		<li>&lt;&gt;</li>
+		<li>=</li>
+		<li>LIKE</li>
+	</ul>
+	<h1>Operadores lógicos compatibles</h1>
+	<ul>
+		<li>AND</li>
+		<li>OR</li>
+	</ul>
+	<p>Los valores literales deberán encerrarse entre comillas simples. <div class="example">dct:abstract = 'unknown'</div>
+	</p>
+	<p>Se puede utilizar paréntesis para agrupar condiciones. <div class="example">( dct:abstract = 'unknown AND dc:title='my title') OR dc:title = 'abc'</div>
+	</p>
 
+	<h1>Caracteres comodín</h1>
+	<p>Los caracteres comodín son compatibles con los valores literales.</p>
+	<ul>
+		<li>* (Asterisco) - Se utiliza para sustituir múltiples caracteres.</li>
+		<li>. (Punto) - Se utiliza para reemplazar un solo carácter.</li>
+	</ul>
+	<p>Ejemplos</p>
+	<div class="example">dct:abstract LIKE 'unknown'</div>
+	<div class="example">dct:abstract LIKE 'unkn*n'</div>
+	<div class="example">dct:abstract LIKE 'unkn.wn'</div>
 </body>
 </html>
