@@ -365,5 +365,5 @@ OpenLayers.Util.applyDefaults(oscar.Lang.getDictionary("es"), {
     
     "OGC:WCS-1.1.0-http-get-capabilities" : "NULL",
     
-    "simple-search-placeholder" : "Enter Search. Use !e to for advanced mode."
+    "simple-search-placeholder" : "Entrar B\u00fasqueda . Utilice !e de modo mejorado."
 });

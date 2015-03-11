@@ -59,6 +59,7 @@ oscar.Gui.Info = new oscar.BaseClass(oscar.Gui, {
         contentBox.addClass("wt-content");
         closeBox.addClass("closeBox");
         closeBox.click($$.proxy(this.close, this));
+        closeBox.attr("title",oscar.i18n("Close"));
         titleBar.append(closeBox);
         content.append(titleBar);
         content.append(contentBox);

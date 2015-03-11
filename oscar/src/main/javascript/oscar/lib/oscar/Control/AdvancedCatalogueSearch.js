@@ -89,7 +89,7 @@ oscar.Control.AdvancedCatalogueSearch = new oscar.BaseClass(oscar.Control.Catalo
         });
         container.append(closediv);
         
-        var closeBtn = $$("<button></button>").html("Close");
+        var closeBtn = $$("<button></button>").html(oscar.i18n("Close"));
         closediv.append(closeBtn);
         closeBtn.button({
             icons : {

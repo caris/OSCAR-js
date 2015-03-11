@@ -361,5 +361,5 @@ OpenLayers.Util.applyDefaults(oscar.Lang.getDictionary("en"), {
     
     "OGC:WCS-1.1.0-http-get-capabilities" : "Coverage",
     
-    "simple-search-placeholder" : "Enter Search. Use !e to for advanced mode."
+    "simple-search-placeholder" : "Enter Search. Use !e to for enhanced mode."
 });
