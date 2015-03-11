@@ -359,11 +359,11 @@ OpenLayers.Util.applyDefaults(oscar.Lang.getDictionary("es"), {
     
     "dGML" : "Descargar Metadatos (GML)",
     
-    "OGC:CSW-2.0.0-http-get-record-by-id" : "NULL",
+    "save-metadata" : "Descargar metadatos",
     
-    "OGC:CSW-2.0.0-http-get-record-by-id-view" : "NULL",
+    "view-metadata" : "Ver metadatos",
     
-    "OGC:WCS-1.1.0-http-get-capabilities" : "NULL",
+    "OGC:WCS-1.1.0-http-get-capabilities" : "Cobertura",
     
     "simple-search-placeholder" : "Entrar B\u00fasqueda . Utilice !e de modo mejorado."
 });

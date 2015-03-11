@@ -359,11 +359,11 @@ OpenLayers.Util.applyDefaults(oscar.Lang.getDictionary("fr"), {
     
     "dGML" : "T\u00e9l\u00e9charger M\u00e9tadonn\u00e9es (GML)",
     
-    "OGC:CSW-2.0.0-http-get-record-by-id" : "NULL",
+    "save-metadata" : "T\u00e9l\u00e9charger M\u00e9tadonn\u00e9es",
     
-    "OGC:CSW-2.0.0-http-get-record-by-id-view" : "NULL",
+    "view-metadata" : "Voir M\u00e9tadonn\u00e9es",
     
-    "OGC:WCS-1.1.0-http-get-capabilities" : "NULL",
+    "OGC:WCS-1.1.0-http-get-capabilities" : "Couverture",
     
     "simple-search-placeholder" : "Entrez Recherche . Utilisez !e pour pour le mode am\u00e9lior\u00e9."
 });

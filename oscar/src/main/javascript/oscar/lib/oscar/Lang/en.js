@@ -355,9 +355,9 @@ OpenLayers.Util.applyDefaults(oscar.Lang.getDictionary("en"), {
     
     "dGML" : "Download Metadata (GML)",
     
-    "OGC:CSW-2.0.0-http-get-record-by-id" : "Download Metadata",
+    "save-metadata" : "Download Metadata",
     
-    "OGC:CSW-2.0.0-http-get-record-by-id-view" : "View Metadata",
+    "view-metadata" : "View Metadata",
     
     "OGC:WCS-1.1.0-http-get-capabilities" : "Coverage",
     
