@@ -549,6 +549,18 @@ String.prototype.format = function() {
 }
 
 /**
+ * Prototype functions for storing objects in HTML5 storage objects.
+ */
+
+Storage.prototype.setObj = function(key, obj) {
+    return this.setItem(key, JSON.stringify(obj));
+}
+
+Storage.prototype.getObj = function(key) {
+    return JSON.parse(this.getItem(key))
+};
+
+/**
  * APIMethod: oscar.Util.getServerGeometryPropertyName
  * 
  * returns the geometry property name of the current server
