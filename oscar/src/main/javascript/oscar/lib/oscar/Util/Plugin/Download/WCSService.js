@@ -1,14 +1,14 @@
 /*
  * CARIS oscar - Open Spatial Component ARchitecture
- *
+ * 
  * Copyright 2014 CARIS <http://www.caris.com>
- *
+ * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- *
+ * 
  * http://www.apache.org/licenses/LICENSE-2.0
- *
+ * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -234,9 +234,9 @@ oscar.Util.Plugin.Download.WCSService = new oscar.BaseClass(oscar.Util.Plugin.Do
         };
         
         var selectedBounds = this.downloadOptions.bbox;
-        
-        var longitude = parseFloat(this.downloadOptions.gridOffsets.longitude);
-        var latitude = parseFloat(this.downloadOptions.gridOffsets.latitude);
+        var resolution = parseFloat(this.downloadOptions.resolution);
+        var longitude = Math.abs(resolution);
+        var latitude = longitude;
         if (latitude > 0) {
             latitude *= -1;
         }
@@ -305,7 +305,6 @@ oscar.Util.Plugin.Download.WCSService = new oscar.BaseClass(oscar.Util.Plugin.Do
         });
         $div.addClass("md_loadingActive");
         this.results_panel.prepend($div);
-        
         OpenLayers.Request.GET({
             url : url,
             params : qStringParams,
@@ -393,43 +392,98 @@ oscar.Util.Plugin.Download.WCSService = new oscar.BaseClass(oscar.Util.Plugin.Do
         
         // Are the offsets in XY or YX order?
         if (oscar.Util.isGeographicCRS(projection)) {
-            this.downloadOptions.gridOffsets.longitude = parseFloat(offsets[1]) * oscar.Util.getMetersConversionFactor(projection);
-            this.downloadOptions.gridOffsets.latitude = parseFloat(offsets[0]) * oscar.Util.getMetersConversionFactor(projection);
+            this.downloadOptions.resolution = parseFloat(offsets[1]) * oscar.Util.getMetersConversionFactor(projection);
         } else {
-            this.downloadOptions.gridOffsets.longitude = parseFloat(offsets[0]) * oscar.Util.getMetersConversionFactor(projection);
-            this.downloadOptions.gridOffsets.latitude = parseFloat(offsets[1]) * oscar.Util.getMetersConversionFactor(projection);
+            this.downloadOptions.resolution = parseFloat(offsets[0]) * oscar.Util.getMetersConversionFactor(projection);
         }
         
+        var baseResolution = this.downloadOptions.resolution;
+        
         var $resolution = $$("<h3></h3>").html("Resolution");
-        var $label_longitude = $$("<label><label>").html("Longitude:");
-        var $label_latitude = $$("<label><label>").html("Latitude:");
+        var $slider = $$("<div></div>");
+        var $spinnerDiv = $$("<div></div>");
+        $spinnerDiv.css({
+            "margin-top" : "5px",
+            "width" : "200px",
+            "margin-left" : "8px",
+            "outline" : "none",
+            "font-size" : "99%"
+        });
+        var $spinner = $$("<input type='text' id='resolutionSpinner'/>");
+        $spinner.css({
+            "outline" : "none",
+            "width" : "50px"
+        });
+        var $sliderLblDiv = $$("<div></div>")
+        $sliderLblDiv.css("position", "relative");
+        var coarseLbl = $$("<label></label>").html(oscar.i18n("Coarse"));
+        var fineLblText = oscar.i18n("Fine") + " ({0} m)";
+        var fineLbl = $$("<label></label>").html(fineLblText.format(baseResolution));
+        fineLbl.css({
+            "position" : "absolute",
+            "right" : "0px"
+        });
         
-        this.$input_longitude = $$("<input/>").change($$.proxy(function(event) {
-            var $this = $$(event.target);
-            this.downloadOptions.gridOffsets.longitude = parseFloat($this.val());
-        }, this));
+        $sliderLblDiv.css({
+            "width" : "200px",
+            "margin-left" : "8px",
+            "outline" : "none"
+        });
         
-        this.$input_latitude = $$("<input/>").change($$.proxy(function(event) {
-            var $this = $$(event.target);
-            this.downloadOptions.gridOffsets.latitude = parseFloat($this.val());
-        }, this));
+        $slider.css({
+            "width" : "200px",
+            "margin-left" : "8px",
+            "outline" : "none"
+        });
+        $sliderLblDiv.append(fineLbl);
+        $sliderLblDiv.append(coarseLbl);
         
-        this.$input_longitude.val(this.downloadOptions.gridOffsets.longitude)
-        this.$input_latitude.val(this.downloadOptions.gridOffsets.latitude);
-        
-        $label_longitude.append($$("<br/>")).append(this.$input_longitude);
-        var style = {
-            "display" : "block",
-            "font-weight" : "bold",
-            "margin-bottom" : "5px"
-        };
-        $label_longitude.css(style);
-        $label_latitude.append($$("<br/>")).append(this.$input_latitude);
-        $label_latitude.css(style);
-        
+        $spinnerDiv.append($spinner);
         this.$panel.append($resolution);
-        this.$panel.append($label_longitude);
-        this.$panel.append($label_latitude);
+        this.$panel.append($sliderLblDiv);
+        this.$panel.append($slider);
+        this.$panel.append($spinnerDiv);
+        
+        var scope = this;
+        $slider.slider({
+            value : 100,
+            step : 10,
+            slide : function(e, u) {
+                var multiplier = 1 + (1 - u.value / 100);
+                var product = baseResolution * multiplier;
+                $spinner.spinner("value", product);
+            }
+        });
+        $spinner.val(baseResolution);
+        $spinner.spinner({
+            min : baseResolution,
+            max : 1,
+            step : 0.010,
+            numberFormat : "N3",
+            change : function(e, ui) {
+                var val = $spinner.val();
+                var pct = ((1 - (val / baseResolution - 1)) * 100).toFixed(2);
+                if (pct >= 0 && pct <= 100) {
+                    $slider.slider("value", pct);
+                }
+                scope.downloadOptions.resolution = val;
+            },
+            spin : function(e, ui) {
+                var val = $spinner.val();
+                var pct = ((1 - (val / baseResolution - 1)) * 100).toFixed(2);
+                if (pct >= 0 && pct <= 100) {
+                    $slider.slider("value", pct);
+                }
+                scope.downloadOptions.resolution = val;
+            }
+        }).blur(function(e) {
+            var $this = $$(this);
+            if (isNaN($this.val()) || ($this.val() < baseResolution)) {
+                $this.val(baseResolution);
+                e.stopImmediatePropagation();
+            }
+            
+        });
     },
     _createFormatList : function() {
         var scope = this;
