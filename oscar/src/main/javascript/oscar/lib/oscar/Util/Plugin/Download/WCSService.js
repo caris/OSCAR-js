@@ -457,7 +457,7 @@ oscar.Util.Plugin.Download.WCSService = new oscar.BaseClass(oscar.Util.Plugin.Do
         $spinner.val(baseResolution);
         $spinner.spinner({
             min : baseResolution,
-            max : 1,
+            max : baseResolution * 2,
             step : 0.010,
             numberFormat : "N3",
             change : function(e, ui) {
