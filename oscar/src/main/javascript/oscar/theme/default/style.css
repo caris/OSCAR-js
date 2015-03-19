@@ -1983,3 +1983,13 @@ td#oscarLayoutFooterContainer {
 	padding:5px;
 	font-size:12px;
 }
+
+.oscar-inline-container {
+	display:inline-block;
+	vertical-align: middle;
+	margin:2px;
+}
+
+.ui-slider-handle {
+	outline:none;
+}

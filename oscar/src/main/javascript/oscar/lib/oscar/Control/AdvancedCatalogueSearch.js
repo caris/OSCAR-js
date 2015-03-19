@@ -151,8 +151,15 @@ oscar.Control.AdvancedCatalogueSearch = new oscar.BaseClass(oscar.Control.Catalo
         ctrls.append(parserErrorDiv);
         var btns = $$("<div></div>");
         btns.addClass("advSearchButtons");
-        btns.append(btn);
-        this.addHelp("Syntax Help", btns);
+        var search_btn_container = $$("<div></div>");
+        search_btn_container.addClass("oscar-inline-container");
+        var help_container = $$("<div></div>");
+        help_container.addClass("oscar-inline-container");
+        
+        search_btn_container.append(btn);
+        this.addHelp("Syntax Help", help_container);
+        btns.append(search_btn_container);
+        btns.append(help_container);
         
         ctrls.append(btns);
     },

@@ -171,9 +171,14 @@ oscar.Util.Plugin.Download.WCSService = new oscar.BaseClass(oscar.Util.Plugin.Do
         
         var $crop_button = $$("<button></button?").html("Crop");
         var $download_button = $$("<button></button?").html("Download");
-        $btnPanel.append($crop_button);
-        $btnPanel.append($download_button);
-        $btnPanel.append($download_button);
+        
+        var crop_btn_container = $$("<div></div>").addClass("oscar-inline-container");
+        var download_btn_container = $$("<div></div>").addClass("oscar-inline-container");
+        crop_btn_container.append($crop_button);
+        download_btn_container.append($download_button);
+        
+        $btnPanel.append(crop_btn_container);
+        $btnPanel.append(download_btn_container);
         
         $crop_button.button({
             icons : {

@@ -82,26 +82,38 @@ oscar.Control.SimpleCatalogueSearch = oscar.BaseClass(oscar.Control.CatalogueSea
     },
     draw : function() {
         oscar.Control.CatalogueSearchForm.prototype.draw.apply(this, arguments);
+        
         this.input = $$("<input type='search' id='q' name='q' size='50' value=''>");
-        
         this.input.attr("placeholder", oscar.i18n("simple-search-placeholder"));
-        
-        this.input.button().css({
+        this.input.addClass("ui-widget ui-corner-all");
+        this.input.css({
             'text-align' : 'left',
             'outline' : 'none',
-            'cursor' : 'text'
+            'cursor' : 'text',
+            'border' : '1px solid #2a3583',
+            'line-height' : '1.9em',
         });
         if (this.defaultText) {
             this.input.val(this.defaultText);
         }
         this.map.addControl(this.spatialSearch);
         this.spatialSearch.activate();
-        this.form.append(this.input);
+        var inputContainer = $$("<div></div>");
+        inputContainer.addClass("oscar-inline-container");
+        inputContainer.append(this.input);
+        
+        this.form.append(inputContainer);
         this.button = $$("<button></button").html(oscar.i18n("Search"));
         
-        this.form.append(this.button);
-        this.form.append(this.spatialButton);
-        this.addHelp("Help", this.form);
+        var search_btn_container = $$("<div></div>");
+        search_btn_container.addClass("oscar-inline-container");
+        search_btn_container.append(this.button);
+        this.form.append(search_btn_container);
+        var help_container = $$("<div></div>");
+        help_container.addClass("oscar-inline-container");
+        
+        this.addHelp("Help", help_container);
+        this.form.append(help_container);
         
         var scope = this;
         this.button.button({
