@@ -109,7 +109,10 @@ break;
 case 3:
 this.$ = function(obj){return ($$[$0-2](obj) || $$[$0](obj));};
 break;
-case 4: case 5: case 6: case 7: case 8: case 9: case 10:
+case 4:
+ this.$ = function(obj){return $$[$0-2](obj) + $$[$0-1](obj) + $$[$0](obj)};
+break;
+case 5: case 6: case 7: case 8: case 9: case 10:
  this.$ = function(obj){return $$[$0-2](obj)};
 break;
 case 11:
@@ -628,7 +631,7 @@ case 15:return "EOF"
 break;
 }
 },
-rules: [/^(?:\s+)/,/^(?:AND\b)/,/^(?:OR\b)/,/^(?:NEQ|<>)/,/^(?:LTE|<=)/,/^(?:GTE|>=)/,/^(?:LT|<)/,/^(?:GT|>)/,/^(?:LIKE|~)/,/^(?:EQUALS|=)/,/^(?:(?=\[\\s\\S\]\+)(?=g))/,/^(?:\()/,/^(?:\))/,/^(?:^[_a-zA-Z:-]*\w\b)/,/^(?:^[_a-zA-Z]*\w\b)/,/^(?:$)/],
+rules: [/^(?:\s+)/,/^(?:AND\b)/,/^(?:OR\b)/,/^(?:NEQ|<>)/,/^(?:LTE|<=)/,/^(?:GTE|>=)/,/^(?:LT|<)/,/^(?:GT|>)/,/^(?:LIKE|~)/,/^(?:EQUALS|=)/,/^(?:'[\s\S]+')/,/^(?:\()/,/^(?:\))/,/^(?:^[_a-zA-Z:-]*\w\b)/,/^(?:^[_a-zA-Z]*\w\b)/,/^(?:$)/],
 conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],"inclusive":true}}
 });
 return lexer;
