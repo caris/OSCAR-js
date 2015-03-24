@@ -860,7 +860,7 @@ OpenLayers.Format.CQL = (function() {
         IS_NULL: /^IS NULL/i,
         COMMA: /^,/,
         LOGICAL: /^(AND|OR)/i,
-        VALUE: /^('([^']|'')*'|\d+(\.\d*)?|\.\d+)/,
+        VALUE: /^(["']).*?\1(?=\s+AND|\s+OR|\s*\)|\s*$)/i,
         LPAREN: /^\(/,
         RPAREN: /^\)/,
         SPATIAL: /^(BBOX|INTERSECTS|DWITHIN|WITHIN|CONTAINS)/i,
