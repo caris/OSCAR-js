@@ -1,7 +1,7 @@
 /*
  * CARIS oscar - Open Spatial Component ARchitecture
  * 
- * Copyright 2012 CARIS <http://www.caris.com>
+ * Copyright 2014 CARIS <http://www.caris.com>
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -15,7 +15,6 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-
 /**
  * Class: oscar.Handler.CSW
  * 
@@ -26,8 +25,6 @@
  */
 
 oscar.Handler.CSW = new oscar.BaseClass(oscar.Handler, {
-    TEXT : 1,
-    SPATIAL : 2,
     DEFAULT_SEARCH_PARAMETERS : {
         request : "GetRecords",
         service : "csw",
@@ -37,7 +34,7 @@ oscar.Handler.CSW = new oscar.BaseClass(oscar.Handler, {
         maxRecords : 10,
         startPosition : 1
     },
-    EVENT_TYPES : [ "beforeSearch", "afterSearch", "success", "failure" ],
+    EVENT_TYPES : [ "beforeSearch", "afterSearch", "advancedSearch", "displayfilter", "success", "failure" ],
     catalogue : null,
     initialize : function(catalogueService, options) {
         if ($$.isArray(catalogueService)) {
@@ -51,7 +48,7 @@ oscar.Handler.CSW = new oscar.BaseClass(oscar.Handler, {
         if (this.catalogue.isSetDefaultOutputSchema()) {
             this.DEFAULT_SEARCH_PARAMETERS.outputSchema = this.catalogue.getDefaultOutputSchema();
         }
-
+        
         if (options) {
             if (options.DEFAULT_SEARCH_PARAMETERS) {
                 OpenLayers.Util.extend(this.DEFAULT_SEARCH_PARAMETERS, options.DEFAULT_SEARCH_PARAMETERS);
@@ -61,32 +58,37 @@ oscar.Handler.CSW = new oscar.BaseClass(oscar.Handler, {
     setMap : function(map) {
         this.map = map;
     },
-    search : function(query, parameters) {
-        this.events.triggerEvent("beforeSearch");
-        if (parameters) {
-            this.parameters = parameters;
-        } else {
-            this.parameters = {};
-            OpenLayers.Util.extend(this.parameters, this.DEFAULT_SEARCH_PARAMETERS);
-        }
-        this.query = query;
-        this.createFilter(this.parameters)
-        var formatter = new OpenLayers.Format.CSWGetRecords();
-        var scope = this;
-        try {
-            OpenLayers.Request.POST({
-                url : this.catalogue.getUrl(oscar.ogc.CatalogueService.prototype.GETRECORDS, "POST"),
-                success : this.success,
-                failure : this.failure,
-                data : formatter.write(this.parameters),
-                scope : this
-            });
-        } catch (err) {
-            if (console) {
-                console.log(err);
+    search : function(query) {
+        this.parameters = OpenLayers.Util.extend({}, this.DEFAULT_SEARCH_PARAMETERS);
+
+        var csw_query = {
+            "ElementSetName" : {
+                "value" : "full"
             }
-            this.events.triggerEvent("failure");
         }
+
+        var filter = filter = query.toFilter();;
+        if (filter) {
+            csw_query["Constraint"] = {
+                "version" : "1.1.0",
+                "Filter" : filter
+            }
+        }
+        
+        this.parameters.Query = csw_query;
+        this.createRequest();
+    },
+    createRequest : function() {
+        this.events.triggerEvent("beforeSearch");
+        var formatter = new OpenLayers.Format.CSWGetRecords();
+        var data = formatter.write(this.parameters);
+        OpenLayers.Request.POST({
+            url : this.catalogue.getUrl(oscar.ogc.CatalogueService.prototype.GETRECORDS, "POST"),
+            success : this.success,
+            failure : this.failure,
+            data : data,
+            scope : this
+        });
     },
     success : function(resp) {
         this.events.triggerEvent("afterSearch");
@@ -98,83 +100,36 @@ oscar.Handler.CSW = new oscar.BaseClass(oscar.Handler, {
     failure : function() {
         this.events.triggerEvent("failure");
     },
-    createFilter : function(parameters) {
-
-        var csw_query = {
-            "ElementSetName" : {
-                "value" : "full"
-            }
-        }
-        var filters = [];
-
-        if (this.query.q.length > 0) {
-            var text_filter = new OpenLayers.Filter.Comparison({
-                type : OpenLayers.Filter.Comparison.LIKE,
-                property : "csw:AnyText",
-                value : this.query.q
-            });
-            filters.push(text_filter);
-        }
-
-        if (this.query.spatial) {
-            var spatial_filter = new OpenLayers.Filter.Comparison({
-                type : OpenLayers.Filter.Spatial.BBOX,
-                property : "ows:BoundingBox",
-                value : this.query.spatial,
-                projection : this.map.getProjection()
-            });
-            filters.push(spatial_filter);
-        }
-
-        var filter = null;
-        if (filters.length > 1) {
-            filter = new OpenLayers.Filter.Logical({
-                type : OpenLayers.Filter.Logical.AND,
-                filters : filters
-            });
-
-        } else if (filters.length == 1) {
-            filter = filters[0];
-        }
-
-        if (filter) {
-            csw_query["Constraint"] = {
-                "version" : "1.1.0",
-                "Filter" : filter
-            }
-        }
-
-        parameters.Query = csw_query;
-    },
     next : function() {
         var info = this.results.SearchResults;
-        var parameters = {};
-        OpenLayers.Util.extend(parameters, this.parameters);
-        parameters.startPosition = info.nextRecord;
+        this.parameters.startPosition = info.nextRecord;
         var newStartPosition = info.nextRecord;
         if (newStartPosition > info.numberOfRecordsMatched) {
             return;
         }
-        parameters.startPosition = newStartPosition;
-
-        this.search(this.query, parameters);
+        this.parameters.startPosition = newStartPosition;
+        this.createRequest();
     },
     previous : function() {
         var info = this.results.SearchResults;
         var matched = info.numberOfRecordsMatched;
         var returned = info.numberOfRecordsReturned;
         var next = info.nextRecord;
-
-        var parameters = {};
-        OpenLayers.Util.extend(parameters, this.parameters);
+        
         if (next > 0) {
-            parameters.startPosition = next - returned - this.DEFAULT_SEARCH_PARAMETERS.maxRecords;
+            this.parameters.startPosition = next - returned - this.DEFAULT_SEARCH_PARAMETERS.maxRecords;
         } else {
-            parameters.startPosition = matched - returned + 1 - this.DEFAULT_SEARCH_PARAMETERS.maxRecords;
+            this.parameters.startPosition = matched - returned + 1 - this.DEFAULT_SEARCH_PARAMETERS.maxRecords;
         }
-        if (parameters.startPosition < 0)
-            parameters.startPosition = 1;
-        this.search(this.query, parameters);
+        if (this.parameters.startPosition < 0)
+            this.parameters.startPosition = 1;
+        
+        this.createRequest();
+    },
+    
+    jumpTo : function(record) {
+        this.parameters.startPosition = record;
+        this.createRequest();
     },
     CLASS_NAME : "oscar.Handler.CSW"
 });

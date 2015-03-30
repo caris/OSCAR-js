@@ -1,7 +1,7 @@
 /*
  * CARIS oscar - Open Spatial Component ARchitecture
  * 
- * Copyright 2012 CARIS <http://www.caris.com>
+ * Copyright 2014 CARIS <http://www.caris.com>
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -15,7 +15,6 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-
 /**
  * Class: oscar.Util.Plugin.Download.WCSService
  * 
@@ -46,7 +45,7 @@ oscar.Util.Plugin.Download.WCSService = new oscar.BaseClass(oscar.Util.Plugin.Do
             scope : this
         });
     },
-
+    
     /**
      * Method: sendRequest
      * 
@@ -60,7 +59,7 @@ oscar.Util.Plugin.Download.WCSService = new oscar.BaseClass(oscar.Util.Plugin.Do
         }
 
         var baseUrl = $$.trim(this.link.url).split("?")[0];
-
+        
         this.wcsRequest = OpenLayers.Request.GET({
             url : baseUrl,
             params : params,
@@ -70,7 +69,7 @@ oscar.Util.Plugin.Download.WCSService = new oscar.BaseClass(oscar.Util.Plugin.Do
             scope : this
         });
     },
-
+    
     /**
      * Method: success
      * 
@@ -80,9 +79,9 @@ oscar.Util.Plugin.Download.WCSService = new oscar.BaseClass(oscar.Util.Plugin.Do
         var reader = new oscar.Format.WCSCapabilities();
         this.capabilities = reader.read(response.responseXML);
         var coverage = null;
-
+        
         var url = oscar.Util.Metadata.getOperationHref(this.capabilities, "DescribeCoverage");
-
+        
         OpenLayers.Request.GET({
             url : $$.trim(url),
             async : false,
@@ -101,7 +100,7 @@ oscar.Util.Plugin.Download.WCSService = new oscar.BaseClass(oscar.Util.Plugin.Do
         });
         this.coverageDescription = coverage.coverageDescription;
     },
-
+    
     /**
      * @Override
      * @see oscar.Util.Plugin
@@ -109,19 +108,9 @@ oscar.Util.Plugin.Download.WCSService = new oscar.BaseClass(oscar.Util.Plugin.Do
     play : function() {
         oscar.Util.Plugin.Download.Options.prototype.play.apply(this);
         this.sendRequest();
-        this.setDefaultDownloadOptions();
         this.showPreviewLayer();
         this.buildInformationPanel();
         this.buildDownloadOptionsPanel();
-    },
-    setDefaultDownloadOptions : function() {
-        var spatialDomain = this.coverageDescription.domain.spatialDomain;
-        for (var i = 0; i < this.coverageDescription.domain.spatialDomain.boundingBoxes.length; i++) {
-            var bbox = this.coverageDescription.domain.spatialDomain.boundingBoxes[i];
-            if (bbox.crs == this.coverageDescription.domain.spatialDomain.gridCRS.gridBaseCRS) {
-                this.downloadOptions.bbox = new OpenLayers.Bounds(bbox.west, bbox.south, bbox.east, bbox.north);
-            }
-        }
     },
     buildInformationPanel : function() {
         var $panel = $$("<div></div>");
@@ -132,20 +121,20 @@ oscar.Util.Plugin.Download.WCSService = new oscar.BaseClass(oscar.Util.Plugin.Do
         var $abstract = $$("<p></p>").html(abs);
         $panel.append($abstract);
         this.addOption($panel);
-
+        
     },
     buildDownloadOptionsPanel : function() {
         this.$panel = $$("<div></div>");
         var $header = $$("<h2></h2>").html("Download Options");
         $header.css("border-bottom", "1px solid black");
-
+        
         this.$panel.append($header);
         this._createFormatList();
         this._createCRSList();
         this._createFields();
         this._createResolution();
         this._createToolButtons();
-
+        
         this.addOption(this.$panel);
     },
     _createToolButtons : function() {
@@ -166,22 +155,31 @@ oscar.Util.Plugin.Download.WCSService = new oscar.BaseClass(oscar.Util.Plugin.Do
             projection : this.map.getProjectionObject()
         });
         this.map.addLayer(crop_layer);
+        var exitMode_function = function(evt) {
+            this.map.removeLayer(crop_layer);
+            this.events.un({
+                "exitMode" : exitMode_function
+            });
+        };
         this.events.on({
-            "exitMode" : function() {
-                this.map.removeLayer(crop_layer);
-            },
+            "exitMode" : exitMode_function,
             scope : this
         });
-
+        
         var $btnPanel = $$("<div></div>");
         $btnPanel.addClass("buttonsPanel");
-
+        
         var $crop_button = $$("<button></button?").html("Crop");
         var $download_button = $$("<button></button?").html("Download");
-        $btnPanel.append($crop_button);
-        $btnPanel.append($download_button);
-        $btnPanel.append($download_button);
-
+        
+        var crop_btn_container = $$("<div></div>").addClass("oscar-inline-container");
+        var download_btn_container = $$("<div></div>").addClass("oscar-inline-container");
+        crop_btn_container.append($crop_button);
+        download_btn_container.append($download_button);
+        
+        $btnPanel.append(crop_btn_container);
+        $btnPanel.append(download_btn_container);
+        
         $crop_button.button({
             icons : {
                 primary : "ui-icon-crop"
@@ -190,21 +188,21 @@ oscar.Util.Plugin.Download.WCSService = new oscar.BaseClass(oscar.Util.Plugin.Do
         }).click($$.proxy(function() {
             this.cropControl.activate();
         }, this));
-
+        
         $download_button.button({
             icons : {
                 primary : "ui-icon-prepare"
             },
             text : false
         }).click($$.proxy(this.prepareDownload, this));
-
+        
         this.cropControl = new oscar.Control.Box();
         this.map.addControl(this.cropControl);
         this.cropControl.events.on({
             'done' : function(geom) {
                 if (this.cropFeature) {
                     crop_layer.removeFeatures(this.cropFeature);
-
+                    
                 }
                 this.cropFeature = new OpenLayers.Feature.Vector(geom);
                 crop_layer.addFeatures(this.cropFeature);
@@ -219,12 +217,12 @@ oscar.Util.Plugin.Download.WCSService = new oscar.BaseClass(oscar.Util.Plugin.Do
         $header.css("border-bottom", "1px solid black");
         this.$panel.append($header);
         this.results_panel = $$("<div></div>");
-
+        
         this.$panel.append(this.results_panel);
     },
     prepareDownload : function() {
         var GetCoverageOp = oscar.Util.Metadata.getOperation(this.capabilities, "GetCoverage");
-
+        
         var isServiceStorageAllowed = function(op) {
             for (var i = 0; i < op.parameters.length; i++) {
                 var param = op.parameters[i];
@@ -234,37 +232,37 @@ oscar.Util.Plugin.Download.WCSService = new oscar.BaseClass(oscar.Util.Plugin.Do
                             return true;
                         }
                     }
-
+                    
                 }
             }
             return false;
         };
-
+        
         var selectedBounds = this.downloadOptions.bbox;
-
-        var longitude = parseFloat(this.downloadOptions.gridOffsets.longitude);
-        var latitude = parseFloat(this.downloadOptions.gridOffsets.latitude);
+        var resolution = parseFloat(this.downloadOptions.resolution);
+        var longitude = Math.abs(resolution);
+        var latitude = longitude;
         if (latitude > 0) {
             latitude *= -1;
         }
         var format = this.selectedFormat;
-
+        
         // convert the crs to urn;
         var projection = new OpenLayers.Projection(this.downloadOptions.crs.code);
         var isGeographicCRS = oscar.Util.isGeographicCRS(projection);
         var urn = oscar.Util.EpsgConversion.epsgToUrn(projection.projCode);
-
+        
         // Does the bounds need to be transformed
         if (projection.projCode != this.map.getProjection()) {
             selectedBounds = selectedBounds.clone().transform(this.map.getProjectionObject(), projection);
         }
-
+        
         longitude /= oscar.Util.getMetersConversionFactor(projection);
         latitude /= oscar.Util.getMetersConversionFactor(projection);
-
+        
         var bbox = selectedBounds.toArray(isGeographicCRS);
         bbox.push(urn);
-
+        
         var offsets = [];
         if (isGeographicCRS) {
             offsets.push(latitude);
@@ -273,11 +271,21 @@ oscar.Util.Plugin.Download.WCSService = new oscar.BaseClass(oscar.Util.Plugin.Do
             offsets.push(longitude);
             offsets.push(latitude);
         }
-
+        
         if (this.gridType == "urn:ogc:def:method:WCS:1.1:2dGridIn2dCrs") {
             offsets.splice(1, 0, 0, 0);
         }
-
+        var fields = [];
+        for (var i = 0; i < this.downloadOptions.fields.length; i++) {
+            var field = this.downloadOptions.fields[i];
+            fields.push(field.name + ":" + field.interpolation);
+        }
+        var rangeSubset = "";
+        if (fields.length > 1) {
+            rangeSubset = fields.join(";");
+        } else {
+            rangeSubset = fields.join(" ");
+        }
         var url = GetCoverageOp.dcp.http.get;
         var qStringParams = {
             "version" : "1.1.0",
@@ -289,11 +297,11 @@ oscar.Util.Plugin.Download.WCSService = new oscar.BaseClass(oscar.Util.Plugin.Do
             "BoundingBox" : bbox.toString(),
             "GridOrigin" : this.downloadOptions.gridOrigin.toString(),
             "GridOffsets" : offsets.toString(),
-            "RangeSubset" : "Depth:nearest",
+            "RangeSubset" : rangeSubset,
             "GridBaseCRS" : urn,
             "GridType" : this.downloadOptions.gridType
         };
-
+        
         var $div = $$("<div></div>")
         $div.css({
             "border-bottom" : "1px solid black",
@@ -302,7 +310,6 @@ oscar.Util.Plugin.Download.WCSService = new oscar.BaseClass(oscar.Util.Plugin.Do
         });
         $div.addClass("md_loadingActive");
         this.results_panel.prepend($div);
-
         OpenLayers.Request.GET({
             url : url,
             params : qStringParams,
@@ -311,12 +318,12 @@ oscar.Util.Plugin.Download.WCSService = new oscar.BaseClass(oscar.Util.Plugin.Do
                 this.transformResult($div, qStringParams, resp);
             },
             failure : function(a) {
-
+                
             },
         });
     },
     transformResult : function($div, params, resp) {
-
+        
         var xml = resp.responseXML;
         var xsl = null;
         OpenLayers.Request.GET({
@@ -327,22 +334,22 @@ oscar.Util.Plugin.Download.WCSService = new oscar.BaseClass(oscar.Util.Plugin.Do
             },
             scope : this
         });
-
+        
         $div.removeClass("md_loadingActive");
-
+        
         var $timestamp = $$("<div></div>").html(new Date());
         var $format = $$("<div></div>").html("Format:" + params.format);
         var $crs = $$("<div></div>").html("CRS:" + params.GridBaseCRS);
         $div.append($format);
         $div.append($crs);
         $div.append($timestamp);
-
+        
         var transformation = oscar.Util.Transform.transform(xml, xsl);
         var $btns = $$("<div></div>");
         $btns.css({
             "text-align" : "left"
         });
-
+        
         $btns.append(transformation);
         $div.append($btns);
         $btns.find("a").each(function() {
@@ -360,73 +367,128 @@ oscar.Util.Plugin.Download.WCSService = new oscar.BaseClass(oscar.Util.Plugin.Do
                 return false;
             });
         });
-
+        
     },
     _createResolution : function() {
         var projection = new OpenLayers.Projection(this.coverageDescription.domain.spatialDomain.gridCRS.gridBaseCRS);
         this.downloadOptions.gridType = "urn:ogc:def:method:WCS:1.1:2dSimpleGrid"
         this.downloadOptions.gridOrigin = "0 0";
         var gridOffsets = "0 0";
-
+        
         if (this.coverageDescription.domain.spatialDomain.gridCRS.gridOrigin) {
             this.downloadOptions.gridOrigin = this.coverageDescription.domain.spatialDomain.gridCRS.gridOrigin;
         }
-
+        
         this.downloadOptions.gridOrigin = this.downloadOptions.gridOrigin.split(" ");
-
+        
         if (this.coverageDescription.domain.spatialDomain.gridCRS.gridType) {
             this.downloadOptions.gridType = this.coverageDescription.domain.spatialDomain.gridCRS.gridType;
         }
-
+        
         if (this.coverageDescription.domain.spatialDomain.gridCRS.gridOffsets) {
             gridOffsets = this.coverageDescription.domain.spatialDomain.gridCRS.gridOffsets;
         }
-
+        
         var offsets = oscar.Util.getGridOffsets(gridOffsets);
         this.downloadOptions.gridOffsets = {
             longitude : 0,
             latitude : 0
         };
-
+        
         // Are the offsets in XY or YX order?
         if (oscar.Util.isGeographicCRS(projection)) {
-            this.downloadOptions.gridOffsets.longitude = parseFloat(offsets[1]) * oscar.Util.getMetersConversionFactor(projection);
-            this.downloadOptions.gridOffsets.latitude = parseFloat(offsets[0]) * oscar.Util.getMetersConversionFactor(projection);
+            this.downloadOptions.resolution = parseFloat(offsets[1]) * oscar.Util.getMetersConversionFactor(projection);
         } else {
-            this.downloadOptions.gridOffsets.longitude = parseFloat(offsets[0]) * oscar.Util.getMetersConversionFactor(projection);
-            this.downloadOptions.gridOffsets.latitude = parseFloat(offsets[1]) * oscar.Util.getMetersConversionFactor(projection);
+            this.downloadOptions.resolution = parseFloat(offsets[0]) * oscar.Util.getMetersConversionFactor(projection);
         }
-
+        
+        var baseResolution = this.downloadOptions.resolution;
+        
         var $resolution = $$("<h3></h3>").html("Resolution");
-        var $label_longitude = $$("<label><label>").html("Longitude:");
-        var $label_latitude = $$("<label><label>").html("Latitude:");
-
-        this.$input_longitude = $$("<input/>").change($$.proxy(function(event) {
-            var $this = $$(event.target);
-            this.downloadOptions.gridOffsets.longitude = parseFloat($this.val());
-        }, this));
-
-        this.$input_latitude = $$("<input/>").change($$.proxy(function(event) {
-            var $this = $$(event.target);
-            this.downloadOptions.gridOffsets.latitude = parseFloat($this.val());
-        }, this));
-
-        this.$input_longitude.val(this.downloadOptions.gridOffsets.longitude)
-        this.$input_latitude.val(this.downloadOptions.gridOffsets.latitude);
-
-        $label_longitude.append($$("<br/>")).append(this.$input_longitude);
-        var style = {
-            "display" : "block",
-            "font-weight" : "bold",
-            "margin-bottom" : "5px"
-        };
-        $label_longitude.css(style);
-        $label_latitude.append($$("<br/>")).append(this.$input_latitude);
-        $label_latitude.css(style);
-
+        var $slider = $$("<div></div>");
+        var $spinnerDiv = $$("<div></div>");
+        $spinnerDiv.css({
+            "margin-top" : "5px",
+            "width" : "200px",
+            "margin-left" : "8px",
+            "outline" : "none",
+            "font-size" : "99%"
+        });
+        var $spinner = $$("<input type='text' id='resolutionSpinner'/>");
+        $spinner.css({
+            "outline" : "none",
+            "width" : "50px"
+        });
+        var $sliderLblDiv = $$("<div></div>")
+        $sliderLblDiv.css("position", "relative");
+        var coarseLbl = $$("<label></label>").html(oscar.i18n("Coarse"));
+        var fineLblText = oscar.i18n("Fine") + " ({0} m)";
+        var fineLbl = $$("<label></label>").html(fineLblText.format(baseResolution));
+        fineLbl.css({
+            "position" : "absolute",
+            "right" : "0px"
+        });
+        
+        $sliderLblDiv.css({
+            "width" : "200px",
+            "margin-left" : "8px",
+            "outline" : "none"
+        });
+        
+        $slider.css({
+            "width" : "200px",
+            "margin-left" : "8px",
+            "outline" : "none"
+        });
+        $sliderLblDiv.append(fineLbl);
+        $sliderLblDiv.append(coarseLbl);
+        
+        $spinnerDiv.append($spinner);
         this.$panel.append($resolution);
-        this.$panel.append($label_longitude);
-        this.$panel.append($label_latitude);
+        this.$panel.append($sliderLblDiv);
+        this.$panel.append($slider);
+        this.$panel.append($spinnerDiv);
+        
+        var scope = this;
+        $slider.slider({
+            value : 100,
+            step : 10,
+            slide : function(e, u) {
+                var multiplier = 1 + (1 - u.value / 100);
+                var product = baseResolution * multiplier;
+                $spinner.spinner("value", product);
+            }
+        });
+        $spinner.val(baseResolution);
+        $spinner.spinner({
+            min : baseResolution,
+            max : baseResolution * 2,
+            step : 0.010,
+            numberFormat : "N3",
+            change : function(e, ui) {
+                var val = $spinner.val();
+                var pct = ((1 - (val / baseResolution - 1)) * 100).toFixed(2);
+                if (pct >= 0 && pct <= 100) {
+                    $slider.slider("value", pct);
+                }
+                scope.downloadOptions.resolution = val;
+            },
+            spin : function(e, ui) {
+                var val = $spinner.val();
+                var pct = ((1 - (val / baseResolution - 1)) * 100).toFixed(2);
+                if (pct >= 0 && pct <= 100) {
+                    $slider.slider("value", pct);
+                }
+                scope.downloadOptions.resolution = val;
+            }
+        }).blur(function(e) {
+            var $this = $$(this);
+            if (isNaN($this.val()) || ($this.val() < baseResolution)) {
+                $this.val(baseResolution);
+                e.stopImmediatePropagation();
+            }
+            
+        });
     },
     _createFormatList : function() {
         var scope = this;
@@ -439,13 +501,13 @@ oscar.Util.Plugin.Download.WCSService = new oscar.BaseClass(oscar.Util.Plugin.Do
             });
         }
         var $format = $$("<h3></h3>").html("Format");
-
+        
         var $format_input = $$("<input/>");
         $format_input.attr("readonly", "readonly");
         $format_input.val(simpleFormats[0]);
         $format_input.css("cursor", "pointer");
         this.$panel.append($format);
-
+        
         this.$panel.append($format_input);
         $format_input.autocomplete({
             minLength : 0,
@@ -461,26 +523,28 @@ oscar.Util.Plugin.Download.WCSService = new oscar.BaseClass(oscar.Util.Plugin.Do
         }).click(function() {
             $$(this).focus();
         });
-
+        
         $format_input.val(simpleFormats[0].label);
         this.downloadOptions.format = simpleFormats[0].value;
     },
     _createCRSList : function() {
         var gridBaseReference = oscar.Util.CoordinateReferences.getReference(this.coverageDescription.domain.spatialDomain.gridCRS.gridBaseCRS);
+        var gridBaseProjection = new OpenLayers.Projection(gridBaseReference.code);
         var scope = this;
         supportedCRSList = this.coverageDescription.supportedCRS;
         var projections = [];
         for (var i = 0; i < supportedCRSList.length; i++) {
             var crs = oscar.Util.CoordinateReferences.getReference(supportedCRSList[i]);
+            var tmpProj = new OpenLayers.Projection(crs.code);
             projections.push(crs);
         }
-
+        
         var $crs_input = $$("<input/>");
         $crs_input.css({
             "cursor" : "pointer",
             "width" : "90%"
         });
-
+        
         var $crs = $$("<h3></h3>").html("Coordinate Reference System");
         this.$panel.append($crs);
         this.$panel.append($crs_input);
@@ -523,28 +587,43 @@ oscar.Util.Plugin.Download.WCSService = new oscar.BaseClass(oscar.Util.Plugin.Do
         }
         $crs_input.val(gridBaseReference.description);
         this.downloadOptions.crs = gridBaseReference;
+        
+        oscar.isProjectionReady = window.setInterval($$.proxy(function() {
+            if (!gridBaseProjection.proj.readyToUse) {
+                return;
+            }
+            window.clearInterval(oscar.isProjectionReady);
+            var spatialDomain = this.coverageDescription.domain.spatialDomain;
+            for (var i = 0; i < this.coverageDescription.domain.spatialDomain.boundingBoxes.length; i++) {
+                var bbox = this.coverageDescription.domain.spatialDomain.boundingBoxes[i];
+                if (bbox.crs == this.coverageDescription.domain.spatialDomain.gridCRS.gridBaseCRS) {
+                    var bbox = new OpenLayers.Bounds(bbox.west, bbox.south, bbox.east, bbox.north);
+                    this.downloadOptions.bbox = bbox.transform(this.downloadOptions.crs.code, this.map.getProjectionObject());
+                }
+            }
+        }, this), 500);
     },
     _createFields : function() {
         // create a table row to return.
         this.downloadOptions.fields = [];
         var createFieldRow = function(field, isDefaultField, scope) {
             var numeric_id = Math.round(Math.random() * 1000);
-
+            
             var $row = $$("<tr></tr>");
             var $checkbox_cell = $$("<td></td>");
             var $field_label_cell = $$("<td></td>");
             var $field_interpolation_cell = $$("<td></td>");
-
+            
             var identifier = field.identifier;
             var defaultMethod = field.interpolationMethods.defaultMethod;
             var methods = field.interpolationMethods.methods;
-
+            
             // Create the field checkbox
             var $field_checkbox = $$("<input/>");
             $field_checkbox.click($$.proxy(function(event) {
                 this.updateFields($$(event.target));
             }, scope));
-
+            
             var checkbox_id = field.identifier + "_" + numeric_id + "_" + "checkbox";
             var select_id = field.identifier + "_" + numeric_id + "_" + "select"
             $field_checkbox.attr("type", "checkbox");
@@ -552,11 +631,11 @@ oscar.Util.Plugin.Download.WCSService = new oscar.BaseClass(oscar.Util.Plugin.Do
             $field_checkbox.attr("data-field", field.identifier);
             $field_checkbox.attr("data-interpolation", select_id);
             $checkbox_cell.append($field_checkbox);
-
+            
             // Create the field label
             var $field_label = $$("<label></label>").html(identifier);
             $field_label_cell.append($field_label);
-
+            
             // Create the field interpolation methods dropdown.
             var $select_interpolation = $$("<select></select>");
             $select_interpolation.attr("id", select_id);
@@ -571,13 +650,13 @@ oscar.Util.Plugin.Download.WCSService = new oscar.BaseClass(oscar.Util.Plugin.Do
                 $select_interpolation.append($option);
                 $field_interpolation_cell.append($select_interpolation);
             }
-
+            
             $select_interpolation.change($$.proxy(function(event) {
                 var $this = $$(event.target);
                 var $checkbox = $$("#" + $this.attr("data-checkbox"));
                 this.updateFields($checkbox);
             }, scope));
-
+            
             $row.append($checkbox_cell);
             $row.append($field_label_cell);
             $row.append($field_interpolation_cell);
@@ -588,7 +667,7 @@ oscar.Util.Plugin.Download.WCSService = new oscar.BaseClass(oscar.Util.Plugin.Do
             }
             return $row;
         };
-
+        
         var fields = this.coverageDescription.range.fields
         var $fields = $$("<h3></h3>").html("Fields");
         var $table = $$("<table></table");
@@ -599,7 +678,7 @@ oscar.Util.Plugin.Download.WCSService = new oscar.BaseClass(oscar.Util.Plugin.Do
             isDefaultField = (i == 0) ? true : false;
             $table.append(createFieldRow(field, isDefaultField, this));
         }
-
+        
     },
     updateFields : function($checkbox) {
         var $select = $$("#" + $checkbox.attr("data-interpolation"));
@@ -610,7 +689,7 @@ oscar.Util.Plugin.Download.WCSService = new oscar.BaseClass(oscar.Util.Plugin.Do
         if ($checkbox.is(":checked")) {
             var select_id = $checkbox.attr("data-field") + "_" + $checkbox.attr("data-numeric-id") + "_select";
             var $interpolation = $$("#" + select_id);
-
+            
             var found = false;
             for (var i = 0; i < this.downloadOptions.fields.length; i++) {
                 var existingField = this.downloadOptions.fields[i];
@@ -633,7 +712,7 @@ oscar.Util.Plugin.Download.WCSService = new oscar.BaseClass(oscar.Util.Plugin.Do
         }
     },
     showPreviewLayer : function() {
-
+        
         var isPreviewSupported = function(formats) {
             for (var i = 0; i < formats.length; i++) {
                 if (formats[i] == "image/png") {
@@ -667,13 +746,17 @@ oscar.Util.Plugin.Download.WCSService = new oscar.BaseClass(oscar.Util.Plugin.Do
                     }
                 },
                 scope : this
-
+            
             });
             this.map.addLayer(previewLayer);
+            var exitMode_function = function(evt) {
+                this.map.removeLayer(previewLayer);
+                this.events.un({
+                    "exitMode" : exitMode_function
+                });
+            };
             this.events.on({
-                "exitMode" : function() {
-                    this.map.removeLayer(previewLayer);
-                },
+                "exitMode" : exitMode_function,
                 scope : this
             });
         } else {
@@ -697,14 +780,19 @@ oscar.Util.Plugin.Download.WCSService = new oscar.BaseClass(oscar.Util.Plugin.Do
             projection : map.getProjectionObject()
         });
         this.map.addLayer(poly_layer);
-
+        
         var t = this.record.feature.clone();
         poly_layer.addFeatures(t);
-
+        
+        var exitMode_function = function(evt) {
+            this.map.removeLayer(poly_layer);
+            this.events.un({
+                "exitMode" : exitMode_function
+            });
+        };
+        
         this.events.on({
-            "exitMode" : function() {
-                this.map.removeLayer(poly_layer);
-            },
+            "exitMode" : exitMode_function,
             scope : this
         });
     },

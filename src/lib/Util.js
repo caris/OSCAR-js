@@ -1,14 +1,14 @@
 /*
  * CARIS oscar - Open Spatial Component ARchitecture
- * 
- * Copyright 2012 CARIS <http://www.caris.com>
- * 
+ *
+ * Copyright 2014 CARIS <http://www.caris.com>
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -536,6 +536,31 @@ String.prototype.replaceAll = function(stringToFind, stringToReplace) {
 };
 
 /**
+ * Adds the format function to the String class.
+ */
+
+String.prototype.format = function() {
+    var str = this;
+    for (var i = 0; i < arguments.length; i++) {
+        var reg = new RegExp("\\{" + i + "\\}", "gm");
+        str = str.replace(reg, arguments[i]);
+    }
+    return str;
+}
+
+/**
+ * Prototype functions for storing objects in HTML5 storage objects.
+ */
+
+Storage.prototype.setObj = function(key, obj) {
+    return this.setItem(key, JSON.stringify(obj));
+}
+
+Storage.prototype.getObj = function(key) {
+    return JSON.parse(this.getItem(key))
+};
+
+/**
  * APIMethod: oscar.Util.getServerGeometryPropertyName
  * 
  * returns the geometry property name of the current server
@@ -849,5 +874,41 @@ oscar.Util.downloadFromService = function(url, filename, proxyOverride) {
         form.submit();
     } else {
         window.open(url, "abc123", "width=640,height=480,menuBar=yes,location=false,scrollbars=yes");
+    }
+}
+
+oscar.Util.getGrammarSymbol = function(grammar) {
+    grammar = grammar.replace(/'/g, '');
+    switch (grammar) {
+        case "FIELD":
+            return "FIELD"
+        case "LIKE":
+            return "LIKE";
+        case "EQUALS":
+            return "=";
+        case "LT":
+            return "<";
+        case "LTE":
+            return "<=";
+        case "GT":
+            return ">";
+        case "GTE":
+            return ">=";
+        case "NEQ":
+            return "<>";
+        case "OPEN":
+            return "(";
+        case "CLOSE":
+            return ")";
+        case "WORD":
+            return "''";
+        case "AND":
+            return "AND";
+        case "OR":
+            return "OR";
+            break;
+        case "EOF":
+        default:
+            return null;
     }
 }

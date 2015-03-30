@@ -1812,10 +1812,12 @@ td#oscarLayoutFooterContainer {
 .oscarGuiCatalogueResults .ui-layout-pane-north {
 	background-color: #fff;
 	padding: 5px;
+	border:1px solid #ababab;
 }
 
 .oscarGuiCatalogueResults .ui-layout-pane-center {
 	padding: 5px;
+	border:1px solid #ababab;
 }
 
 .oscarGuiCatalogueResults .result {
@@ -1829,11 +1831,11 @@ td#oscarLayoutFooterContainer {
 }
 
 .oscarGuiCatalogueResults .result.over {
-	background-color: #004580;
+	background-color: #C9C9C9;
 }
 
 .oscarGuiCatalogueResults .result.active {
-	background-color: #4a769b;
+	background-color: #004580;
 }
 
 .oscarGuiCatalogueResults .searchResultInformation {
@@ -1868,6 +1870,18 @@ td#oscarLayoutFooterContainer {
 	overflow: hidden;
 }
 
+.oscarGuiCatalogueResults .result.active .abs {
+	color:#fff;
+	height: 25px;
+	overflow: hidden;
+}
+
+.oscarGuiCatalogueResults .result.active .title {
+	font-size: 16px !important;
+	color: #fff;
+	white-space: nowrap;
+}
+
 .oscarGuiCatalogueResults .result .title {
 	font-size: 16px !important;
 	color: #004580;
@@ -1895,4 +1909,87 @@ td#oscarLayoutFooterContainer {
 	background-image: url("img/oscar-ui-icons_888888_256x240.png")
 		!important;
 	background-position: -16px 0px !important;
+}
+.oscarControlAdvancedSearchForm {
+	position:relative;
+}
+
+.oscarControlAdvancedSearchForm .advSearchTextArea {
+	resize:none;
+	width:100%;
+	height:42px;
+	font-size:14px;
+	font-family:Helvetica;
+	background-color:#e9e9e9;
+}
+
+.oscarControlAdvancedSearchForm .advSearchControls {
+	width:100%;
+	position:relative;
+}
+
+.oscarControlAdvancedSearchForm .advSearchControls .advSearchButtons {
+	position:absolute;
+	right:0px;
+	top:0px;
+}
+.oscarControlAdvancedSearchForm .advSearchControls .errorDiv {
+	color:#003968;
+	font-weight:bold;
+}
+
+
+/* What's This button and dialog style definitions */
+.oscarGuiInfo {
+	display:inline-block;
+}
+
+.oscarGuiInfo .ico {
+	background-image:url('img/help-icon.png');
+	background-repeat:no-repeat;
+	width:29px;
+	height:20px;
+}
+
+.whatsthis-dlg {
+	z-index:100;
+	background:url('img/dlg-background.png');
+	position:absolute;
+	padding:5px;
+	width:400px;
+	height:150px;
+}
+
+.whatsthis-dlg .wt-titleBar {
+	font-weight:bold;
+	font-size:14px;
+	border-bottom:1px solid #aaa;
+	cursor:move;
+}
+
+.whatsthis-dlg .wt-content {
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;         /* Opera/IE 8+ */
+}
+
+.whatsthis-dlg .wt-content-container {
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;         /* Opera/IE 8+ */
+	width:100%;
+	height:100%;
+	background-color:#e9e9e9;
+	padding:5px;
+	font-size:12px;
+}
+
+.oscar-inline-container {
+	display:inline-block;
+	vertical-align: middle;
+	margin:2px;
+}
+
+.ui-slider-handle {
+	outline:none;
 }

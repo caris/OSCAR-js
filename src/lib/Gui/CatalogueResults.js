@@ -1,14 +1,14 @@
 /*
  * CARIS oscar - Open Spatial Component ARchitecture
- * 
- * Copyright 2012 CARIS <http://www.caris.com>
- * 
+ *
+ * Copyright 2014 CARIS <http://www.caris.com>
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -23,7 +23,7 @@
  */
 
 oscar.Gui.CatalogueResults = new oscar.BaseClass(oscar.Gui, {
-    EVENT_TYPES : [ "next", "previous", "recordFocus" ],
+    EVENT_TYPES : [ "next", "previous", "jumpTo", "recordFocus" ],
     features : [],
     map : null,
     catalogueServices : null,
@@ -46,6 +46,7 @@ oscar.Gui.CatalogueResults = new oscar.BaseClass(oscar.Gui, {
             this.events.on({
                 "next" : this.searchHandler.next,
                 "previous" : this.searchHandler.previous,
+                "jumpTo" : this.searchHandler.jumpTo,
                 scope : this.searchHandler
             });
         }
@@ -87,10 +88,10 @@ oscar.Gui.CatalogueResults = new oscar.BaseClass(oscar.Gui, {
          */
         var pagination_panel = build_ele("div", [ "ui-layout-north" ]);
         var results_list_panel = build_ele("div", [ "ui-layout-center" ]);
-
+        
         $$(this.div).append(this.modes_panel);
         $$(this.div).append(this.results_panel);
-
+        
         this.results_panel.append(pagination_panel);
         this.results_panel.append(results_list_panel);
         this.layout = this.results_panel.layout({
@@ -103,11 +104,11 @@ oscar.Gui.CatalogueResults = new oscar.BaseClass(oscar.Gui, {
             center : {},
             center__showOverflow : true,
         });
-
+        
         this.$searchInfo = $$("<div>&nbsp;</div>");
         this.$previous = $$("<button>Previous</button>");
         this.$next = $$("<button>Next</button>");
-
+        
         this.$buttons = $$("<div></div>");
         this.$buttons.css({
             "position" : "relative"
@@ -122,13 +123,13 @@ oscar.Gui.CatalogueResults = new oscar.BaseClass(oscar.Gui, {
         }).click($$.proxy(function() {
             this.events.triggerEvent("next");
         }, this));
-
+        
         this.$next.css({
             "position" : "absolute",
             "right" : "0px",
             "top" : "0px"
         });
-
+        
         this.$previous.button({
             icons : {
                 primary : "ui-icon-triangle-1-w"
@@ -138,23 +139,23 @@ oscar.Gui.CatalogueResults = new oscar.BaseClass(oscar.Gui, {
         }).click($$.proxy(function() {
             this.events.triggerEvent("previous");
         }, this));
-
+        
         this.$previous.css({
             "position" : "absolute",
             "left" : "0px",
             "top" : "0px"
         });
-
+        
         this.$searchInfo.addClass("searchResultInformation");
         this.$buttons.append(this.$next);
         this.$buttons.append(this.$previous);
         pagination_panel.append(this.$buttons);
         this.$buttons.css("visibility", "hidden");
-
+        
         this.results = $$("<div></div>");
-
+        
         results_list_panel.append(this.results);
-
+        
         $$(window).resize($$.proxy(function() {
             this.layout.resizeAll();
         }, this));
@@ -172,9 +173,9 @@ oscar.Gui.CatalogueResults = new oscar.BaseClass(oscar.Gui, {
         this._buildLayout();
         this.layout.resizeAll();
         var records = results.records;
-
+        
         this.showSearchInfo(results.SearchResults);
-
+        
         if (records.length == 0) {
             this.$searchInfo.html(oscar.i18n("map.information.no.records.found"));
             return;
@@ -185,23 +186,23 @@ oscar.Gui.CatalogueResults = new oscar.BaseClass(oscar.Gui, {
             if (record.bounds) {
                 var recordProjection = record.projection || "EPSG:4326";
                 var crs = oscar.Util.CoordinateReferences.getReference(recordProjection);
-
+                
                 var projection = new OpenLayers.Projection(crs.code);
                 var bbox = record.bounds.toArray(oscar.Util.isGeographicCRS(projection))
 
                 if (oscar.Util.isGeographicCRS(projection)) {
                     record.bounds = OpenLayers.Bounds.fromArray(bbox);
                 }
-
+                
                 projection = new OpenLayers.Projection("EPSG:4326");
-
+                
                 var feature = oscar.Util.boundsToFeature(record.bounds, projection, this.map);
                 record.feature = feature.clone();
                 features_array.push(record.feature);
             }
             this.addRecordToResultList(record);
         }
-
+        
         features_array.sort(function(feature_a, feature_b) {
             if (feature_a.geometry.getArea() < feature_b.geometry.getArea()) {
                 return 1;
@@ -211,7 +212,7 @@ oscar.Gui.CatalogueResults = new oscar.BaseClass(oscar.Gui, {
                 return 0;
             }
         });
-
+        
         this.renderFeaturesToMap(features_array);
         this.results.slimScroll({
             height : "100%",
@@ -225,12 +226,11 @@ oscar.Gui.CatalogueResults = new oscar.BaseClass(oscar.Gui, {
         }, this));
     },
     showSearchInfo : function(info) {
-
         var matched = info.numberOfRecordsMatched;
         var returned = info.numberOfRecordsReturned;
         var next = info.nextRecord;
         this.$buttons.css("visibility", "visible");
-
+        
         var str = "";
         var start = (info.nextRecord != 0) ? info.nextRecord - info.numberOfRecordsReturned : 1;
         if (next > 0) {
@@ -243,26 +243,50 @@ oscar.Gui.CatalogueResults = new oscar.BaseClass(oscar.Gui, {
         if (to > info.numberOfRecordsMatched) {
             to = info.numberOfRecordsMatched
         }
-        ;
+        
         str += " - " + to;
         str += " of " + info.numberOfRecordsMatched;
-
+        
         if (to != matched) {
             this.$next.button("enable");
         } else {
             this.$next.button("disable");
         }
-
+        
         if (start != 1) {
             this.$previous.button("enable");
         } else {
             this.$previous.button("disable");
         }
-
-        this.$searchInfo.html(str);
+        
+        var select = $$("<select></select>").change($$.proxy(function() {
+            this.events.triggerEvent("jumpTo", select.val());
+        }, this));
+        
+        var numPages = Math.ceil(matched / 10);
+        var startAt = 1;
+        var endAt = (matched > 10) ? 10 : matched;
+        for (var i = 1; i <= numPages; i++) {
+            var option = $$("<option></option>");
+            option.val(startAt);
+            if (startAt == start) {
+                option.attr("selected", "selected");
+            }
+            var string = "";
+            string += startAt + " - " + endAt;
+            string += " of " + info.numberOfRecordsMatched;
+            startAt += 10;
+            endAt += 10;
+            if (endAt > info.numberOfRecordsMatched) {
+                endAt = info.numberOfRecordsMatched;
+            }
+            option.html(string);
+            select.append(option);
+        }
+        this.$searchInfo.append(select);
     },
     enablePagination : function(info) {
-
+        
     },
     postSearch : function() {
         $$(this.div).fadeTo("fast", 1);
@@ -274,16 +298,16 @@ oscar.Gui.CatalogueResults = new oscar.BaseClass(oscar.Gui, {
         for (var i = 0; i < selFeatures.length; i++) {
             selFeatures[i].deactivate();
         }
-
+        
         if (this.activePlugin) {
             this.activePlugin.destroy();
         }
         $$(this.div).fadeTo("fast", 0.2);
     },
-
+    
     _addFeatureLayer : function() {
         var feat_layer = this.map.getLayersByName("results")[0];
-
+        
         if (!feat_layer) {
             var styleMap = new OpenLayers.StyleMap({
                 "default" : new OpenLayers.Style({
@@ -294,15 +318,15 @@ oscar.Gui.CatalogueResults = new oscar.BaseClass(oscar.Gui, {
                     strokeOpacity : 0.3
                 }),
                 "select" : new OpenLayers.Style({
-                    strokeColor : "#004580",
+                    strokeColor : "#0f0f0f",
                     fillColor : "#0f0f0f",
                     fillOpacity : 0.01,
                     fillOpacity : 0.01,
-                    strokeOpacity : 1,
-                    strokeWidth : 2
+                    strokeOpacity : 0.3,
+                    strokeWidth : 3
                 })
             });
-
+            
             feat_layer = new OpenLayers.Layer.Vector("results", {
                 styleMap : styleMap,
                 renderers : [ 'Canvas', 'VML' ],
@@ -317,7 +341,7 @@ oscar.Gui.CatalogueResults = new oscar.BaseClass(oscar.Gui, {
                         scope.overRecord($$(feature.record_div).data("record"));
                     }
                 },
-
+                
                 "featureunselected" : function(event) {
                     var feature = event.feature;
                     if (feature.record_div) {
@@ -379,13 +403,13 @@ oscar.Gui.CatalogueResults = new oscar.BaseClass(oscar.Gui, {
          * different protocol cases.
          */
         $result.append(this.createLinksPanel(record));
-
+        
         this.attachMouseEvents($result, record);
-
+        
     },
     createLinksPanel : function(record) {
         var $div = $$("<div></div>");
-
+        
         if (record.links == null || record.links.length == 0) {
             record.links = [];
         }
@@ -433,9 +457,9 @@ oscar.Gui.CatalogueResults = new oscar.BaseClass(oscar.Gui, {
         record.container.switchClass("over", "", 100), record.container.children().each(function() {
             var $this = $$(this);
             $this.removeClass("over");
-
+            
         });
-
+        
     },
     focusRecord : function(record) {
         this.events.triggerEvent("recordFocus", record);
@@ -444,11 +468,34 @@ oscar.Gui.CatalogueResults = new oscar.BaseClass(oscar.Gui, {
             var $local = $$(this);
             $local.removeClass("active");
         });
-
+        
         $this.addClass("active");
         if (record.feature) {
             map.zoomToExtent(record.feature.geometry.getBounds());
         }
+        var selection_layer = null;
+        try {
+            selection_layer = this.map.getLayersByName("selected-feature")[0]
+            selection_layer.removeAllFeatures();
+        } catch (err) {
+            var styleMap = new OpenLayers.StyleMap({
+                "default" : new OpenLayers.Style({
+                    strokeColor : "#004580",
+                    fillColor : "#004580",
+                    fillOpacity : 0.1,
+                    strokeOpacity : 1,
+                    strokeWidth : 2
+                })
+            });
+            selection_layer = new OpenLayers.Layer.Vector("selected-feature", {
+                styleMap : styleMap,
+                renderers : [ 'Canvas', 'VML' ],
+                wrapDateLine : true,
+                projection : map.getProjectionObject()
+            });
+            this.map.addLayer(selection_layer);
+        }
+        selection_layer.addFeatures([ record.feature.clone() ]);
     },
     attachMouseEvents : function($resultDiv, record) {
         var scope = this;
@@ -458,19 +505,19 @@ oscar.Gui.CatalogueResults = new oscar.BaseClass(oscar.Gui, {
                 ctrl.select(record.feature);
             }
         });
-
+        
         $resultDiv.mouseleave(function(e) {
             if (record.feature) {
                 var ctrl = scope.map.getControlsByClass(OpenLayers.Control.SelectFeature.prototype.CLASS_NAME)[0];
                 ctrl.unselect(record.feature);
-
+                
             }
         });
         var scope = this;
         $resultDiv.click(function(e) {
             scope.focusRecord(record);
         });
-
+        
         this.map.events.on({
             "mouseout" : function(evt) {
                 try {
@@ -494,7 +541,7 @@ var cswget = {
                 } else {
                     return r.title;
                 }
-
+                
             } catch (err) {
                 return null;
             }
@@ -517,10 +564,10 @@ var cswget = {
         }
     },
     projection : function(r) {
-
+        
     },
     bounds : function(r) {
-
+        
     },
     identifier : function(r) {
         if (r.identifier) {
@@ -530,6 +577,6 @@ var cswget = {
                 return null;
             }
         }
-
+        
     }
 }

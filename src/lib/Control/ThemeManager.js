@@ -1,14 +1,14 @@
 /*
  * CARIS oscar - Open Spatial Component ARchitecture
- * 
- * Copyright 2012 CARIS <http://www.caris.com>
- * 
+ *
+ * Copyright 2014 CARIS <http://www.caris.com>
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -277,6 +277,22 @@ oscar.Control.ThemeManager = oscar.BaseClass(OpenLayers.Control, {
      * Parameters: theme - {<oscar.ox.Theme>}
      */
     drawTheme : function(theme, callback) {
+	var mapLegendId = "mapLegend";
+	$$("#"+mapLegendId).remove();
+	 if(theme.legend) {
+		var legend= $$("<img>");
+		legend.attr('src',theme.legend);
+		legend.attr("id",mapLegendId);
+		legend.css({
+			"position":"absolute",
+			"zIndex":1000,
+			"cursor":"move",
+			"right":'5px',
+			"bottom":'75px'
+		});
+		legend.appendTo(this.map.div);
+		legend.draggable({containment: "parent"});
+	}	
 
 	// Look for an overview map and destroy it.
 	try {
