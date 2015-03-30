@@ -73,6 +73,7 @@ module.exports = function(grunt) {
 			'<%= srcPath %>/oscar.js',
 			'<%= srcPath %>/Util.js',
 			'<%= srcPath %>/Types/BaseClass.js',
+			'<%= srcPath %>/Types/QueryType.js',
 			'<%= srcPath %>/ox/ox.js',
 			'<%= srcPath %>/Gui.js',
 			'<%= srcPath %>/Gui/CatalogueResults.js',
@@ -104,6 +105,8 @@ module.exports = function(grunt) {
 			'<%= srcPath %>/Control/Point.js',
 			'<%= srcPath %>/Control/Select.js',
 			'<%= srcPath %>/Control/CatalogueSearchForm.js',
+			'<%= srcPath %>/Control/AdvancedCatalogueSearchForm.js',
+			'<%= srcPath %>/Control/SimpleSearchForm.js',
 			'<%= srcPath %>/Control/Print.js',
 			'<%= srcPath %>/Control/DataExtractor.js',
 			'<%= srcPath %>/Control/Measure.js',
@@ -162,7 +165,9 @@ module.exports = function(grunt) {
 			'<%= srcPath %>/Popup/FramedCloud.js',
 			'<%= srcPath %>/Map.js',
 			'<%= srcPath %>/OLPrototypePatches.js',
+			'<%= srcPath %>/Parser.js',
 			'<%= srcPath %>/Gui/Dialog.js',
+			'<%= srcPath %>/Gui/Info.js',
 			'<%= srcPath %>/Gui/AlertDialog.js',
 			'<%= srcPath %>/Gui/ConfirmDialog.js',
 			'<%= srcPath %>/Gui/MultiItemChooserTable.js',
@@ -178,6 +183,7 @@ module.exports = function(grunt) {
 			'<%= srcPath %>/Util/DivSelect.js',
 			'<%= srcPath %>/Util/DivSelectOption.js',
 			'<%= srcPath %>/Util/CoordinateSystemAutoComplete.js',
+			'generated/cql.js'
 		],
         dest: '<%= dstPath %>/oscar/oscar.src.js'
       }
@@ -221,6 +227,14 @@ module.exports = function(grunt) {
             }
 		]
 	  }
+	},
+	jison: {
+		options: {
+			moduleName: "CQL_Parser"
+		},
+		my_parser: {
+			files: { 'generated/cql.js': '<%= srcPath %>/parsers/jison/cql.jison' }
+		}
 	}
   });
 
@@ -230,9 +244,11 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-bowercopy');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-compress');
+  grunt.loadNpmTasks('grunt-jison');
 
 
   // Default task.
-  grunt.registerTask('default', ['concat','uglify','bowercopy','copy','compress']);
+  grunt.registerTask('default', ['jison','concat','uglify','bowercopy','copy','compress']);
+  grunt.registerTask('build_parser', ['jison']);
 
 };
