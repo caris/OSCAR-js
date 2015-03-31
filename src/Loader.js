@@ -19,62 +19,59 @@
 
 
 var $_oscarcssdependencies = [
-	"../jquery/jquery/css/smoothness/jquery-ui-1.10.0.custom.min.css"
-	,"../jquery/plugins/datetimepicker/jquery.datetimepicker.css"
+	"../jqueryui/theme/smoothness/jquery-ui.min.css"
+	,"../datetimepicker/jquery.datetimepicker.css"
 	,"theme/default/style.css"
-	,"../yui/build/fonts/fonts-min.css"
-	,"../yui/build/button/assets/skins/sam/button.css"
-	,"../yui/build/autocomplete/assets/skins/sam/autocomplete.css"
-	,"../yui/build/container/assets/skins/sam/container.css"
-	,"../yui/build/paginator/assets/skins/sam/paginator.css"
-	,"../yui/build/datatable/assets/skins/sam/datatable.css"
-	,"../yui/build/datatable/assets/skins/sam/datatable-skin.css"
-	,"../yui/build/layout/assets/skins/sam/layout.css"
-	,"../yui/build/resize/assets/skins/sam/resize.css"
-	,"../yui/build/tabview/assets/skins/sam/tabview.css"
+	,"../yui2/build/fonts/fonts-min.css"
+	,"../yui2/build/button/assets/skins/sam/button.css"
+	,"../yui2/build/autocomplete/assets/skins/sam/autocomplete.css"
+	,"../yui2/build/container/assets/skins/sam/container.css"
+	,"../yui2/build/paginator/assets/skins/sam/paginator.css"
+	,"../yui2/build/datatable/assets/skins/sam/datatable.css"
+	,"../yui2/build/datatable/assets/skins/sam/datatable-skin.css"
+	,"../yui2/build/layout/assets/skins/sam/layout.css"
+	,"../yui2/build/resize/assets/skins/sam/resize.css"
+	,"../yui2/build/tabview/assets/skins/sam/tabview.css"
 ];
 
 
 var $_oscarscripts = [
-	"../jquery/jquery/js/jquery-1.9.0.js"
-	,"../jquery/jquery/js/jquery-ui-1.10.0.custom.min.js"
-	,"../jquery/plugins/datetimepicker/jquery.datetimepicker.js"
-	,"../jquery/plugins/stalker/jquery.stalker.js"
-	,"../jquery/plugins/layout/js/jquery.layout-latest.min.js"
-	,"../jquery/plugins/slimScroll/jquery.slimscroll.js"
-	,"../proj4js/lib/proj4js.js"
+	"../jquery/dist/jquery.min.js"
+	,"../jqueryui/jquery-ui.min.js"
+	,"../datetimepicker/jquery.datetimepicker.js"
+	,"../jqueryui-layout/jquery.layout.min.js"
+	,"../slimscroll/jquery.slimscroll.js"
+	//,"../proj4js/lib/proj4js.js"
 	,"../openlayers/OpenLayers.js"
-	,"../jsts/lib/javascript.util.js"
-	,"../jsts/lib/jsts.js"
+	,"../jsts/jsts.js"
 ];
 
 
 var $_oscaryuiscripts = [
-	"../yui/build/yahoo-dom-event/yahoo-dom-event.js",
-	"../yui/build/element/element-min.js",
-	"../yui/build/button/button-min.js",
-	"../yui/build/container/container-min.js",
-	"../yui/build/datasource/datasource.js",
-	"../yui/build/json/json.js",
-	"../yui/build/dragdrop/dragdrop.js",
-	"../yui/build/treeview/treeview.js",
-	"../yui/build/animation/animation.js",
-	"../yui/build/autocomplete/autocomplete.js",
-	"../yui/build/connection/connection.js",
-	"../yui/build/datatable/datatable.js",
-	"../yui/build/paginator/paginator-min.js",
-	"../yui/build/resize/resize.js",
-	"../yui/build/layout/layout-min.js",
-	"../yui/build/connection/connection.js",
-	"../yui/build/resize/resize-min.js",
-	"../yui/build/tabview/tabview-min.js"
+	"../yui2/build/yahoo-dom-event/yahoo-dom-event.js",
+	"../yui2/build/element/element-min.js",
+	"../yui2/build/button/button-min.js",
+	"../yui2/build/container/container-min.js",
+	"../yui2/build/datasource/datasource.js",
+	"../yui2/build/json/json.js",
+	"../yui2/build/dragdrop/dragdrop.js",
+	"../yui2/build/treeview/treeview.js",
+	"../yui2/build/animation/animation.js",
+	"../yui2/build/autocomplete/autocomplete.js",
+	"../yui2/build/connection/connection.js",
+	"../yui2/build/datatable/datatable.js",
+	"../yui2/build/paginator/paginator-min.js",
+	"../yui2/build/resize/resize.js",
+	"../yui2/build/layout/layout-min.js",
+	"../yui2/build/connection/connection.js",
+	"../yui2/build/resize/resize-min.js",
+	"../yui2/build/tabview/tabview-min.js"
 ];
 
 
 $_oscarscriptdependencies = $_oscarscripts.concat($_oscaryuiscripts);
 	
-$_oscarscriptdependencies.push("oscar.js");
-$_oscarscriptdependencies.push("yuiDependencies.js");
+$_oscarscriptdependencies.push("oscar.min.js");
 
 window["oscar"] = {
 	injectJs:yepnope.injectJs,

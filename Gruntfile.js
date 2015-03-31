@@ -9,14 +9,25 @@ module.exports = function(grunt) {
 	dstPath:"public/",
     // Task configuration.
 	bowercopy : {
+		jquery: {
+			options: {
+				srcPrefix:"bower_components/jquery/",
+				destPrefix:"<%= dstPath %>/jquery"
+			},
+			files:{
+				'jquery.min.js':'dist/jquery.min.js',
+				'jquery.min.map':'dist/jquery.min.map'
+			}
+		},
 		jqueryui: {
 			options: {
 				srcPrefix:"bower_components/jqueryui/",
-				destPrefix:"<%= dstPath %>/jqueryui"
+				destPrefix:"<%= dstPath %>/jqueryui",
+				theme:"smoothness"
 			},
 			files:{
 				'jquery-ui.min.js':'jquery-ui.min.js',
-				'../jquery/dist/jquery.min.js':'../jquery/dist/jquery.min.js'
+				'themes':'themes'
 			}
 		},
 		jqueryUILayout: {
