@@ -50,6 +50,16 @@ module.exports = function(grunt) {
 				'theme':'theme'
 			}
 		},
+		proj4js: {
+			options: {
+				srcPrefix:"bower_components/proj4js",
+				destPrefix:"<%= dstPath %>/proj4js"
+			},
+			files:{
+				'/':'lib'
+			}
+		},
+
 		slimscroll: {
 			options: {
 				srcPrefix:"bower_components/slimscroll",

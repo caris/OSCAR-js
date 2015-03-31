@@ -41,7 +41,7 @@ var $_oscarscripts = [
 	,"../datetimepicker/jquery.datetimepicker.js"
 	,"../jqueryui-layout/jquery.layout.min.js"
 	,"../slimscroll/jquery.slimscroll.js"
-	//,"../proj4js/lib/proj4js.js"
+	,"../proj4js/proj4js.js"
 	,"../openlayers/OpenLayers.js"
 	,"../jsts/jsts.js"
 ];
