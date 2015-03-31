@@ -1,6 +1,6 @@
 /*global module:false*/
 module.exports = function(grunt) {
-
+  
   // Project configuration.
   grunt.initConfig({
     // Metadata.
@@ -244,10 +244,7 @@ module.exports = function(grunt) {
 		main: {
 		
 		options: {
-		  archive: function () {
-			// The global value git.tag is set by another task
-			return 'oscar.zip'
-		  }
+		  archive: "<%= pkg.name %>-<%= pkg.version %>.zip"
 		},
 		files: [
 			{
@@ -276,6 +273,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-compress');
   grunt.loadNpmTasks('grunt-jison');
+   
 
 
   // Default task.
