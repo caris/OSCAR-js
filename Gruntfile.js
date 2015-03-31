@@ -65,6 +65,16 @@ module.exports = function(grunt) {
 			files:{
 				'build':'build'
 			}
+		},
+		datetimepicker: {
+			options: {
+				srcPrefix:"bower_components/datetimepicker",
+				destPrefix:"<%= dstPath %>/datetimepicker"
+			},
+			files:{
+				'jquery.datetimepicker.css':'jquery.datetimepicker.css',
+				'jquery.datetimepicker.js':'jquery.datetimepicker.js'
+			}
 		}
 	},
     concat: {

@@ -6,3 +6,5 @@ bower_components
 /dist
 /node_modules
 /public
+/*.zip
+/generated

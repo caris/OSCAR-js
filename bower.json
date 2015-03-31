@@ -21,6 +21,7 @@
     "jsts": "~0.15.0",
     "jqueryUILayout": "https://github.com/allpro/layout/archive/v1.4.3.zip",
     "proj4js": "http://download.osgeo.org/proj4js/proj4js-1.1.0.zip",
-    "yui2": "https://github.com/yui/yui2.git#~2.8.0"
+    "yui2": "https://github.com/yui/yui2.git#~2.8.0",
+    "datetimepicker": "~2.4.1"
   }
 }
