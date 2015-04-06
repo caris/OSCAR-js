@@ -7,6 +7,7 @@ module.exports = function(grunt) {
         pkg: grunt.file.readJSON('package.json'),
         srcPath:"src/lib",
         dstPath:"public/",
+        snapshotRepository:"http://nexus.caris.priv/nexus/content/repositories/public-snapshots/",
         // Task configuration.
         bowercopy : {
             datetimepicker: {
@@ -100,7 +101,7 @@ module.exports = function(grunt) {
         clean: {
             bower_dependencies: ["bower_components"],
             build: ["generated", "public"],
-            package: ["oscar-js.zip"]
+            package: ["*.zip"]
         },
         concat: {
             dist: {
@@ -265,6 +266,26 @@ module.exports = function(grunt) {
                 src: '<%= concat.dist.dest %>',
                 dest: '<%= dstPath %>/oscar/oscar.min.js'
             }
+        },
+        maven: {
+            options: {
+                groupId: 'com.caris',
+                injectDestFolder: ''
+            },
+            deploy: {
+                options: {
+                    goal: 'deploy',
+                    url: '<%= snapshotRepository %>',
+                    repositoryId: 'public-snapshots'
+                },
+                files: [{
+                    src: ['**'],
+                    dest: '',
+                    cwd: '<%= dstPath %>',
+                    expand: true
+                    }
+                ]
+            }
         }
     });
 
@@ -276,9 +297,11 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-jison');
+    grunt.loadNpmTasks('grunt-maven-tasks');
 
     // Available tasks.
     grunt.registerTask('cleanup', ['clean']);
     grunt.registerTask('generate-sources', ['jison']);
     grunt.registerTask('package', ['jison','concat','uglify','bowercopy','copy','compress']);
+    grunt.registerTask('deploy-snapshot', ['package','maven']);
 };
