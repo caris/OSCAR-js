@@ -1,14 +1,14 @@
 /*
  * CARIS oscar - Open Spatial Component ARchitecture
- *
+ * 
  * Copyright 2014 CARIS <http://www.caris.com>
- *
+ * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- *
+ * 
  * http://www.apache.org/licenses/LICENSE-2.0
- *
+ * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -65,22 +65,22 @@ oscar.Control.DataDiscovery = oscar.BaseClass(oscar.Control.DragPanel, {
      * {Boolean} - Chooses if the widget can be collapsed. Default is true.
      */
     collapsible : true,
-
+    
     /**
      * APIProperty: database {oscar.Util.Database} - The database object to use
      * for searching.
      */
-
+    
     database : null,
-
+    
     showAbstract : true,
-
+    
     /**
      * APIProperty: styles
      * 
      * {Object} - Used to select and crop style.
      */
-
+    
     styles : {
         select : {
             fillColor : "#fff",
@@ -97,7 +97,7 @@ oscar.Control.DataDiscovery = oscar.BaseClass(oscar.Control.DragPanel, {
             opacity : 0.1
         }
     },
-
+    
     /**
      * Constructor: oscar.Control.DataDiscovery
      * 
@@ -137,7 +137,7 @@ oscar.Control.DataDiscovery = oscar.BaseClass(oscar.Control.DragPanel, {
         });
         this.checkLayer();
     },
-
+    
     /**
      * Method: draw
      * 
@@ -148,7 +148,7 @@ oscar.Control.DataDiscovery = oscar.BaseClass(oscar.Control.DragPanel, {
         this.buildDiscoverPanels();
         return this.div;
     },
-
+    
     /**
      * Method: buildDiscoveryPanel
      * 
@@ -156,33 +156,33 @@ oscar.Control.DataDiscovery = oscar.BaseClass(oscar.Control.DragPanel, {
      */
     buildDiscoverPanels : function() {
         this.discoverPanel = $$("<div></div>").addClass("discoverPanel");
-
+        
         /* build the search header and panel */
         var searchHeader = $$("<h3></h3>");
         var searchHeaderAnchor = $$("<a></a>").attr("href", "#").html(oscar.i18n("Search"));
         searchHeader.append(searchHeaderAnchor);
         var searchPanel = $$("<div></div>").addClass("searchPanel");
-
+        
         /* build the download options header and panel */
         var optionsHeader = $$("<h3></h3>");
         var optionsHeaderAnchor = $$("<a></a>").attr("href", "#").html(oscar.i18n("DownloadOptions"));
         optionsHeader.append(optionsHeaderAnchor);
         this.optionsPanel = $$("<div></div>").addClass("optionsPanel");
-
+        
         /* build the download queue header and panel */
         this.queueHeader = $$("<h3></h3>");
         var queueHeaderAnchor = $$("<a></a>").attr("href", "#").html(oscar.i18n("DownloadQueue"));
         this.queueHeader.append(queueHeaderAnchor);
         this.queuePanel = $$("<div></div>").addClass("queuePanel");
-
+        
         /* add everything to the main panel */
-        // $$(this.discoverPanel).append(searchHeader);
-        // $$(this.discoverPanel).append(searchPanel);
+        $$(this.discoverPanel).append(searchHeader);
+        $$(this.discoverPanel).append(searchPanel);
         $$(this.discoverPanel).append(optionsHeader);
         $$(this.discoverPanel).append(this.optionsPanel);
         $$(this.discoverPanel).append(this.queueHeader);
         $$(this.discoverPanel).append(this.queuePanel);
-
+        
         var textEntryPanel = $$("<div></div>");
         textEntryPanel.css({
             'padding' : '2px 2px 2px 2px'
@@ -196,37 +196,37 @@ oscar.Control.DataDiscovery = oscar.BaseClass(oscar.Control.DragPanel, {
         searchPanel.append($mGlass);
         searchPanel.append(textEntryPanel);
         searchPanel.append(this.resultsPanel);
-
+        
         this.txt = $$("<input>").attr("type", "text").addClass("search");
         this.txt.css("width", "200px");
         textEntryPanel.append(this.txt);
         textEntryPanel.append(reset);
-
+        
         var scope = this;
-
+        
         reset.click(function() {
             scope.reset();
         });
-
+        
         var br = $$("<br>").attr("clear", "left");
         textEntryPanel.append(br);
-
+        
         this.txt.focus(function() {
             this.value = "";
         });
-
+        
         this.txt.keyup(function(e) {
             switch (e.keyCode) {
-            case 13:
-            case 16:
-            case 16:
-            case 17:
-            case 18:
-                return;
+                case 13:
+                case 16:
+                case 16:
+                case 17:
+                case 18:
+                    return;
             }
             scope.displayResults();
         });
-
+        
         var icons = {
             header : "ui-icon-circle-arrow-e",
             headerSelected : "ui-icon-circle-arrow-s"
@@ -239,7 +239,7 @@ oscar.Control.DataDiscovery = oscar.BaseClass(oscar.Control.DragPanel, {
         OpenLayers.Event.observe(this.discoverPanel, "mousedown", function(e) {
             OpenLayers.Event.stop(e, true);
         });
-
+        
         OpenLayers.Event.observe(this.discoverPanel, "click", function(e) {
             OpenLayers.Event.stop(e, true);
         });
@@ -248,9 +248,9 @@ oscar.Control.DataDiscovery = oscar.BaseClass(oscar.Control.DragPanel, {
             this.txt.val(this.query);
         }
         this.getResults();
-
+        
     },
-
+    
     /**
      * Method: unselectFeature Removes the feature from the map and unselects
      * any feature from the list.
@@ -271,13 +271,13 @@ oscar.Control.DataDiscovery = oscar.BaseClass(oscar.Control.DragPanel, {
         this.map.zoomToMaxExtent();
         this.displayResults();
     },
-
+    
     /**
      * Method: getResults
      * 
      * Uses the database object to obtain an array of the available results.
      */
-
+    
     getResults : function() {
         var scope = this;
         var columns = this.database.tables["sources"].columns;
@@ -297,9 +297,9 @@ oscar.Control.DataDiscovery = oscar.BaseClass(oscar.Control.DragPanel, {
                 var $this = $$(this);
                 scope.unselectFeature();
                 $this.addClass("selected");
-                scope.discoverPanel.accordion("option", "active", 0);
+                scope.discoverPanel.accordion("option", "active", 1);
                 scope.drawFeature($this);
-
+                
             });
             $recDiv.hide();
             this.resultsPanel.append($recDiv);
@@ -321,8 +321,10 @@ oscar.Control.DataDiscovery = oscar.BaseClass(oscar.Control.DragPanel, {
             var $this = $$(this);
             var mapViewPort = scope.map.getExtent();
             var isInRange = (mapViewPort.containsBounds($this.data("bbox")) || mapViewPort.intersectsBounds($this.data("bbox")));
-
-            if (isInRange) {
+            
+            var textFound = (query.length == 0 || $this.data("id").toLowerCase().indexOf(query.toLowerCase()) != -1 || $this.data("title").toLowerCase().indexOf(query.toLowerCase()) != -1);
+            
+            if (isInRange && textFound) {
                 $this.show();
                 validResults.push($this);
             } else {
@@ -350,7 +352,7 @@ oscar.Control.DataDiscovery = oscar.BaseClass(oscar.Control.DragPanel, {
         feat.div = $div;
         this.layer.addFeatures(feat);
         this.layer.events.triggerEvent("loadend");
-
+        
         var scope = this;
         setTimeout(function() {
             var selectFeature = scope.map.getControlsByClass("oscar.Control.SelectFeature")[0];
@@ -359,7 +361,7 @@ oscar.Control.DataDiscovery = oscar.BaseClass(oscar.Control.DragPanel, {
                 selectFeature.ctrl.select(feat);
             }
         }, 0);
-
+        
         var viewPort = this.map.getExtent();
         if (viewPort.containsBounds(bbox)) {
             this.map.zoomToExtent(bbox);
@@ -376,7 +378,6 @@ oscar.Control.DataDiscovery = oscar.BaseClass(oscar.Control.DragPanel, {
             });
             this.downloadOptions.appendTo(this.optionsPanel);
         }
-        this.downloadOptions.coverage = $div.data("coverage")
         this.downloadOptions.setFeature(feat);
     },
     /**
@@ -403,13 +404,13 @@ oscar.Control.DataDiscovery = oscar.BaseClass(oscar.Control.DragPanel, {
         this.layer.hidden = true;
         var selectStyle = OpenLayers.Util.applyDefaults(this.styles.select, OpenLayers.Feature.Vector.style["select"]);
         selectStyle.cursor = "";
-
+        
         var temporaryStyle = OpenLayers.Util.applyDefaults(this.styles.temporary, OpenLayers.Feature.Vector.style["temporary"]);
         this.layer.styleMap = new OpenLayers.StyleMap({
             "select" : selectStyle,
             "temporary" : temporaryStyle
         });
-
+        
         this.map.addLayer(this.layer);
     },
     /**
@@ -420,7 +421,7 @@ oscar.Control.DataDiscovery = oscar.BaseClass(oscar.Control.DragPanel, {
             "moveend" : this.displayResults,
             scope : this
         });
-
+        
         if (this.layer && this.layer.map != null) {
             this.map.removeLayer(this.layer);
             this.layer = null;
@@ -429,7 +430,7 @@ oscar.Control.DataDiscovery = oscar.BaseClass(oscar.Control.DragPanel, {
             oscar.jQuery(this.div).fadeOut();
         }
         oscar.jQuery(this.div).empty();
-
+        
         oscar.Control.prototype.deactivate.apply(this);
     },
     /**
@@ -437,15 +438,15 @@ oscar.Control.DataDiscovery = oscar.BaseClass(oscar.Control.DragPanel, {
      * panel.
      */
     queueDownload : function(service) {
-
-        this.discoverPanel.accordion("option", "active", 1);
-
+        
+        this.discoverPanel.accordion("option", "active", 2);
+        
         if (this.queuePanel.children().length > 0) {
             this.queuePanel.prepend(service.draw());
         } else {
             this.queuePanel.append(service.draw());
         }
-
+        
     },
     /**
      * Constant: CLASS_NAME

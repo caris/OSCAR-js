@@ -1,14 +1,14 @@
 /*
  * CARIS oscar - Open Spatial Component ARchitecture
- *
+ * 
  * Copyright 2014 CARIS <http://www.caris.com>
- *
+ * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- *
+ * 
  * http://www.apache.org/licenses/LICENSE-2.0
- *
+ * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -35,7 +35,7 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
      * Property: serviceType The type of service
      */
     serviceType : null,
-
+    
     /**
      * Property: showAbstract Show the abstract of the feature selected.
      * Defaults to true.
@@ -67,7 +67,7 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
         this.events = new OpenLayers.Events(this, null, this.EVENT_TYPES, false, {
             includeXY : false
         });
-
+        
     },
     /**
      * Method: draw Creates the interface panel.
@@ -81,7 +81,7 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
         OpenLayers.Event.observe(this.div, "click", function(e) {
             OpenLayers.Event.stop(e, true);
         });
-
+        
         return this.div;
     },
     /**
@@ -102,13 +102,13 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
         } else {
             featureAbstract.innerHTML = this.feature.div.data("abstract");
         }
-
+        
         if (!this.showAbstract) {
             $$(infoPanel).css("display", "none");
         }
-
+        
         this.buildDownloadOptions();
-
+        
     },
     /**
      * Method: deactivate
@@ -119,33 +119,33 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
             this.cropTool.deactivate();
         }
     },
-
+    
     buildDownloadOptions : function() {
         var scope = this;
         this.defaultOptions = {};
-
+        
         var userConfigPanel = document.createElement("div");
         userConfigPanel.id = "userConfigPanel";
         this.div.appendChild(userConfigPanel);
-
+        
         var buttonsPanel = document.createElement("div");
         oscar.jQuery(buttonsPanel).addClass("buttonsPanel");
         this.div.appendChild(buttonsPanel);
-
+        
         this.cropDiv = document.createElement("span");
         oscar.jQuery(this.cropDiv).addClass("dOption crop");
         this.cropDiv.setAttribute("title", oscar.i18n("Crop"));
         buttonsPanel.appendChild(this.cropDiv);
-
+        
         var downloadDiv = document.createElement("span");
         downloadDiv.setAttribute("title", oscar.i18n("AddToQueue"));
         oscar.jQuery(downloadDiv).addClass("dOption queueDownload");
         buttonsPanel.appendChild(downloadDiv);
-
+        
         OpenLayers.Event.observe(downloadDiv, "click", function(e) {
             scope.queueDownload();
         });
-
+        
         OpenLayers.Event.observe(this.cropDiv, "click", function(e) {
             scope.cropTool = new oscar.Control.Box();
             scope.map.addControl(scope.cropTool);
@@ -156,12 +156,12 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
                     var layer = scope.feature.layer;
                     var featureBounds = scope.feature.geometry.getBounds();
                     var newBounds = geom.getBounds();
-
+                    
                     if (!featureBounds.intersectsBounds(newBounds) && !featureBounds.containsBounds(newBounds)) {
                         alert("Crop area outside of the bounds");
                         return;
                     }
-
+                    
                     if (scope.cropFeature) {
                         try {
                             layer.removeFeatures(scope.cropFeature);
@@ -169,7 +169,7 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
                         } catch (err) {
                         }
                     }
-
+                    
                     scope.cropFeature = newFeature = scope.feature.clone();
                     scope.cropFeature.geometry = geom;
                     layer.addFeatures(scope.cropFeature);
@@ -180,15 +180,15 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
                 },
                 scope : scope
             });
-
+            
         });
         var proc = this["getOptions_" + this.serviceType];
         if (proc) {
             proc.call(this, userConfigPanel);
         }
-
+        
     },
-
+    
     /**
      * This function will build the download options for a Web Feature Service
      * Supports: - Format
@@ -196,7 +196,7 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
     getOptions_WFS : function(div) {
         this.defaultOptions.service = "WFS";
         var GetFeatureOp = oscar.Util.Metadata.getOperation(this.capabilities.capabilities, "GetFeature");
-
+        
         outputFormats = oscar.Util.Metadata.getParameters(this.capabilities.capabilities, "GetFeature", [ "outputFormat", "formats" ])
 
         var formats = [];
@@ -207,25 +207,25 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
                 formats.push(prop);
             }
         }
-
+        
         var id = oscar.Util.Metadata.getFeatureTypesById(this.capabilities.capabilities, this.feature.div.data("id"));
-
+        
         this.makeFormatList(div, formats);
         this.makeCRSList(div, id.srss || [ id.srs ]);
         var opURL = null
         try {
             opUrl = GetFeatureOp.dcp.http.get[0].url || GetFeatureOp.dcp.http.get;
         } catch (e) { // wfs 1.0.0 doesn't have dcp so this will throw a null
-            // error...
+                        // error...
             opUrl = GetFeatureOp.href.get;
         }
         this.defaultOptions.operationUrl = opUrl;
         this.defaultOptions.id = this.feature.div.data("id");
         this.defaultOptions.bbox = this.feature.div.data("bbox");
         this.defaultOptions.title = this.feature.div.data("title") || this.feature.div.data("id");
-
+        
     },
-
+    
     /**
      * Method: makeFormatList
      * 
@@ -245,7 +245,7 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
 
         var usedFormats = [];
         for ( var f in outputFormats) {
-
+            
             var simpleFormat = oscar.Util.convertFormat(outputFormats[f]);
             if (inArray(simpleFormat, usedFormats)) {
                 continue;
@@ -282,12 +282,12 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
                 this.value = ui.item.label;
                 scope.defaultOptions.format = ui.item.value;
                 return false;
-
+                
             }
         }).css("width", "190px");
-
+        
         oscar.jQuery(input).addClass("foramtListWidth");
-
+        
         var button = document.createElement("button");
         button.innerHTML = oscar.i18n("Format");
         formatDiv.appendChild(button);
@@ -309,9 +309,9 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
         input.value = usedFormats[0].label;
         this.defaultOptions.format = usedFormats[0].value
         div.appendChild(formatDiv);
-
+        
     },
-
+    
     /**
      * Method: makeCRSList
      * 
@@ -330,7 +330,7 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
             crsReferences.push(crs);
         }
         $$(crsDiv).append($$("<label></label>").html(oscar.i18n("srsCodeColumnLabel") + ":").addClass("heading"));
-
+        
         var input = document.createElement("input");
         input.type = "text";
         $$(input).addClass("crsInput");
@@ -356,16 +356,16 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
             focus : function(event, ui) {
                 this.value = ui.item.description;
                 return false;
-
+                
             }
         }).data("uiAutocomplete")._renderItem = function(ul, item) {
             var li = document.createElement("li");
             return oscar.jQuery(li).data("ui-autocomplete-item", item).append("<a>" + item.code + "<br>" + item.description + "</a>").appendTo(ul);
-
+            
         };
-
-        $$(input).css("width", "175px");
-
+        
+        $$(input).css("width", "190px");
+        
         var button = document.createElement("button");
         button.innerHTML = oscar.i18n("srsCodeColumnLabel");
         $$(button).addClass("crsButton");
@@ -388,7 +388,7 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
         input.value = crsReferences[0].description;
         this.defaultOptions.crs = crsReferences[0].code
         div.appendChild(crsDiv);
-
+        
     },
     /**
      * Method: _createFieldCheckout This method creates the checkbox to display
@@ -446,7 +446,7 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
         if (field.interpolationMethods.methods.length == 0) {
             $selection.css("display", "none");
         }
-
+        
         return $selection;
     },
     /**
@@ -461,7 +461,7 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
         var $fieldDiv = $$("<div></div>");
         var $fieldButton = $$("<button></button>").html(oscar.i18n("Fields"));
         $fieldButton.addClass("heading");
-
+        
         var $table = $$("<table></table>");
         $table.css("display", "none");
         for (i in fields) {
@@ -471,33 +471,33 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
             var $fieldCell = $inputCell.clone().html(field.identifier);
             $fieldCell.addClass("heading");
             var $selectionCell = $inputCell.clone();
-
+            
             var $selection = this._createInterploationMethodList(field);
-
+            
             var $input = this._createFieldCheckbox(field);
-
+            
             $input.data("selection", $selection);
-
+            
             if (i == 0) {
                 $input.attr("checked", true);
                 this.defaultOptions.field = new Array($input);
             }
-
+            
             $row.append($inputCell);
             $inputCell.append($input);
             $row.append($fieldCell);
             $row.append($selectionCell);
             $selectionCell.append($selection);
-
+            
             $table.append($row);
         }
-
+        
         $fieldDiv.append($table);
         $$(div).append($fieldButton);
         $fieldButton.click(function() {
             $table.slideToggle("slow");
         });
-
+        
         $$(div).append($fieldDiv);
     },
     /**
@@ -506,7 +506,7 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
      */
     makeResolutionFields : function(div) {
         var offsets = oscar.Util.getGridOffsets(this.gridOffsets);
-
+        
         var $resolutionDiv = $$("<div></div>");
         var $xLabel = $$("<label>").html(oscar.i18n("resolution-x") + ":&nbsp;");
         $xLabel.addClass("heading");
@@ -518,34 +518,42 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
         $meters.addClass("heading");
         $resolutionDiv.append($xLabel);
         $resolutionDiv.append(this.$xText);
-
+        
         $resolutionDiv.append($meters);
         $resolutionDiv.append($$("<br/>"));
         $resolutionDiv.append($yLabel);
         $resolutionDiv.append(this.$yText);
         $resolutionDiv.append($meters.clone());
         $$(div).append($resolutionDiv);
+        // variable names are just labels; the offsets array could be ordered XY
+        // or YX, depending on the CRS
         var offsetX = parseFloat(offsets[0]);
         var offsetY = parseFloat(offsets[1]);
         var projection = new OpenLayers.Projection(this.gridBaseCRS);
         offsetX *= oscar.Util.getMetersConversionFactor(projection);
         offsetY *= oscar.Util.getMetersConversionFactor(projection);
-        this.$xText.val(offsetX);
-        this.$yText.val(Math.abs(offsetY));
+        var isGeographicCRS = oscar.Util.isGeographicCRS(projection);
+        if (isGeographicCRS) {
+            this.$xText.val(offsetY);
+            this.$yText.val(offsetX);
+        } else {
+            this.$xText.val(offsetX);
+            this.$yText.val(offsetY);
+        }
     },
     /**
      * This function will build the download options for a Web Coverage Service
      * Supports: - Format - CRS - Fields
      */
-
+    
     getOptions_WCS : function(div) {
         this.defaultOptions.service = "WCS";
         var loading = document.createElement("div");
         oscar.jQuery(loading).addClass("optionsLoading");
         div.appendChild(loading);
-
+        
         var GetCoverageOp = oscar.Util.Metadata.getOperation(this.capabilities.capabilities, "GetCoverage");
-
+        
         var isServiceStorageAllowed = function(op) {
             for (var i = 0; i < op.parameters.length; i++) {
                 var param = op.parameters[i];
@@ -555,65 +563,93 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
                             return true;
                         }
                     }
-
+                    
                 }
             }
             return false;
         }
         this.defaultOptions.store = isServiceStorageAllowed(GetCoverageOp);
-        oscar.jQuery(loading).fadeOut();
-        var version = this.capabilities.capabilities.version;
-        this.coverage.coverageDescription;
-        var fields = null;
-
-        try {
-            this.gridBaseCRS = this.coverage.coverageDescription.domain.spatialDomain.gridCRS.gridBaseCRS;
-
-            this.gridType = "urn:ogc:def:method:WCS:1.1:2dSimpleGrid";
-            if (this.coverage.coverageDescription.domain.spatialDomain.gridCRS.gridType) {
-                this.gridType = this.coverage.coverageDescription.domain.spatialDomain.gridCRS.gridType;
-            }
-
-            if (this.coverage.coverageDescription.domain.spatialDomain.gridCRS.gridOrigin) {
-                this.gridOrigin = this.coverage.coverageDescription.domain.spatialDomain.gridCRS.gridOrigin;
-            } else {
-                this.gridOrigin = "0 0";
-            }
-            if (this.coverage.coverageDescription.domain.spatialDomain.gridCRS.gridOffsets) {
-                this.gridOffsets = this.coverage.coverageDescription.domain.spatialDomain.gridCRS.gridOffsets;
-            } else {
-                this.gridOffsets = "0 0";
-            }
-            var fields = this.coverage.coverageDescription.range.fields;
-            supportedCRSs = this.coverage.coverageDescription.supportedCRS;
-            supportedFormats = this.coverage.coverageDescription.supportedFormats;
-            this.makeFormatList(div, supportedFormats);
-            this.makeCRSList(div, supportedCRSs);
-            this.makeFieldList(div, fields);
-            this.makeResolutionFields(div);
-        } catch (err) {
-            alert(err.message);
-            alert("error in response");
+        
+        var url = oscar.Util.Metadata.getOperationHref(this.capabilities.capabilities, "DescribeCoverage");
+        
+        var params = {
+            service : "WCS",
+            request : "DescribeCoverage",
+            identifiers : this.feature.div.data("id"),
+            version : this.capabilities.capabilities.version
         }
+        var scope = this;
+        var success = function(resp) {
+            oscar.jQuery(loading).fadeOut();
+            var version = this.capabilities.capabilities.version;
+            var reader = new oscar.Format.WCSDescribeCoverage({
+                "version" : version
+            });
+            var coverageDescription = reader.read(resp.responseXML);
+            var fields = null;
+            
+            try {
+                this.gridBaseCRS = coverageDescription.coverageDescription.domain.spatialDomain.gridCRS.gridBaseCRS;
+                
+                this.gridType = "urn:ogc:def:method:WCS:1.1:2dSimpleGrid";
+                if (coverageDescription.coverageDescription.domain.spatialDomain.gridCRS.gridType) {
+                    this.gridType = coverageDescription.coverageDescription.domain.spatialDomain.gridCRS.gridType;
+                }
+                
+                if (coverageDescription.coverageDescription.domain.spatialDomain.gridCRS.gridOrigin) {
+                    this.gridOrigin = coverageDescription.coverageDescription.domain.spatialDomain.gridCRS.gridOrigin;
+                } else {
+                    this.gridOrigin = "0 0";
+                }
+                if (coverageDescription.coverageDescription.domain.spatialDomain.gridCRS.gridOffsets) {
+                    this.gridOffsets = coverageDescription.coverageDescription.domain.spatialDomain.gridCRS.gridOffsets;
+                } else {
+                    this.gridOffsets = "0 0";
+                }
+                var fields = coverageDescription.coverageDescription.range.fields;
+                supportedCRSs = coverageDescription.coverageDescription.supportedCRS;
+                supportedFormats = coverageDescription.coverageDescription.supportedFormats;
+                this.makeFormatList(div, supportedFormats);
+                this.makeCRSList(div, supportedCRSs);
+                this.makeFieldList(div, fields);
+                this.makeResolutionFields(div);
+            } catch (err) {
+                alert(err.message);
+                alert("error in response");
+            }
+            
+        };
+        
+        var request = new OpenLayers.Request.GET({
+            url : url,
+            params : params,
+            async : true,
+            success : success,
+            failure : function(resp) {
+            },
+            scope : this
+        });
+        
         this.defaultOptions.operationUrl = GetCoverageOp.dcp.http.get;
-        this.defaultOptions.id = this.coverage.coverageDescription.identifier
+        this.defaultOptions.id = this.feature.div.data("id");
         this.defaultOptions.bbox = this.feature.div.data("bbox");
-        this.defaultOptions.title = this.coverage.coverageDescription.title || this.coverage.coverageDescription.identifier
-
+        this.defaultOptions.title = this.feature.div.data("title") || this.feature.div.data("id");
+        
     },
     /**
      * Method: setFeature
      * 
      * Sets the current selected feature.
      * 
-     * Parameters: - OpenLayers.Feature
+     * Parameters:
+     *  - OpenLayers.Feature
      */
     setFeature : function(feature) {
         this.feature = feature;
         this.getCapabilities();
         this.redraw();
     },
-
+    
     /**
      * Method: getCapabilites
      * 
@@ -627,7 +663,7 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
         });
         this.serviceType = oscar.Util.Metadata.getServiceType(this.capabilities.capabilities);
     },
-
+    
     /**
      * Method: queueDownload
      * 
@@ -651,152 +687,153 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
                 var separator = (url.indexOf('?') > -1) ? '&' : '?';
                 url += separator + paramString;
             }
-
+            
             return url;
         }
 
         switch (serviceType) {
-        case "WFS":
-            var buildWFSFilter = function(bbox, projection, version, typeNames, crs) {
-                var options = {
-                    version : version,
-                    featureType : typeNames
+            case "WFS":
+                var buildWFSFilter = function(bbox, projection, version, typeNames, crs) {
+                    var options = {
+                        version : version,
+                        featureType : typeNames
+                    };
+                    if (version != "1.0.0") {
+                        options.xy = (projection.proj.projName == "longlat") ? false : true;
+                    }
+                    if (crs) {
+                        options.srsName = crs;
+                    }
+                    var format = new OpenLayers.Format.WFST(options);
+                    var sFilter = new OpenLayers.Filter.Spatial({
+                        type : OpenLayers.Filter.Spatial.BBOX,
+                        value : bbox,
+                        projection : projection.projCode
+                    });
+                    var data = OpenLayers.Format.XML.prototype.write.apply(format, [ format.writeNode("wfs:GetFeature", {
+                        filter : sFilter
+                    }) ]);
+                    return data;
                 };
-                if (version != "1.0.0") {
-                    options.xy = (projection.proj.projName == "longlat") ? false : true;
+                
+                var filter = buildWFSFilter(this.defaultOptions.bbox, this.map.projection, this.capabilities.capabilities.version, this.defaultOptions.id, this.defaultOptions.crs);
+                var params = {
+                    service : "WFS",
+                    request : "GetFeature",
+                    srsName : this.defaultOptions.crs,
+                    filter : encodeURIComponent(filter),
+                    version : this.capabilities.capabilities.version,
+                    typename : this.defaultOptions.id,
+                    outputFormat : encodeURIComponent(this.defaultOptions.format)
                 }
-                if (crs) {
-                    options.srsName = crs;
+
+                var url = this.defaultOptions.operationUrl;
+                var paramString = OpenLayers.Util.getParameterString(params);
+                paramString = unescape(paramString);
+                if (paramString.length > 0) {
+                    var separator = (url.indexOf('?') > -1) ? '&' : '?';
+                    url += separator + paramString;
                 }
-                var format = new OpenLayers.Format.WFST(options);
-                var sFilter = new OpenLayers.Filter.Spatial({
-                    type : OpenLayers.Filter.Spatial.BBOX,
-                    value : bbox,
-                    projection : projection.projCode
+                downloadService = new oscar.Gui.Download.WFS(this.defaultOptions.operationUrl, params, {
+                    title : this.defaultOptions.title
                 });
-                var data = OpenLayers.Format.XML.prototype.write.apply(format, [ format.writeNode("wfs:GetFeature", {
-                    filter : sFilter
-                }) ]);
-                return data;
-            };
-
-            var filter = buildWFSFilter(this.defaultOptions.bbox, this.map.projection, this.capabilities.capabilities.version, this.defaultOptions.id, this.defaultOptions.crs);
-            var params = {
-                service : "WFS",
-                request : "GetFeature",
-                srsName : this.defaultOptions.crs,
-                filter : encodeURIComponent(filter),
-                version : this.capabilities.capabilities.version,
-                typename : this.defaultOptions.id,
-                outputFormat : encodeURIComponent(this.defaultOptions.format)
-            }
-
-            var url = this.defaultOptions.operationUrl;
-            var paramString = OpenLayers.Util.getParameterString(params);
-            paramString = unescape(paramString);
-            if (paramString.length > 0) {
-                var separator = (url.indexOf('?') > -1) ? '&' : '?';
-                url += separator + paramString;
-            }
-            downloadService = new oscar.Gui.Download.WFS(this.defaultOptions.operationUrl, params, {
-                title : this.defaultOptions.title
-            });
-            break;
-        case "WCS":
-            var bounds = this.defaultOptions.bbox;
-            var projection = new OpenLayers.Projection(this.defaultOptions.crs);
-            var urn = oscar.Util.EpsgConversion.epsgToUrn(projection.projCode);
-            var isGeographicCRS = oscar.Util.isGeographicCRS(projection);
-            // do I need to transform the boundingbox
-            if (projection.projCode != this.map.getProjectionObject().projCode) { // perform
-                // transformation
-                bounds = bounds.clone().transform(this.map.getProjectionObject(), projection);
-            }
-
-            var localBBOX = bounds.toArray(isGeographicCRS);
-
-            // get the requested fields / bands to build the range subset
-            var fields = this.defaultOptions.field;
-            var fieldsArray = new Array();
-            for (f in fields) {
-                var field = fields[f];
-                var $input = $$(field);
-                var fieldName = encodeURI($input.val());
-                var select = $$($input.data("selection"));
-                var selectValue = select.val();
-
-                if (select.val() != null) {
-                    fieldsArray.push(fieldName + ":" + select.val());
-                } else {
-                    fieldsArray.push(fieldName);
+                break;
+            case "WCS":
+                var bounds = this.defaultOptions.bbox;
+                var projection = new OpenLayers.Projection(this.defaultOptions.crs);
+                var urn = oscar.Util.EpsgConversion.epsgToUrn(projection.projCode);
+                var isGeographicCRS = oscar.Util.isGeographicCRS(projection);
+                // do I need to transform the boundingbox
+                if (projection.projCode != this.map.getProjectionObject().projCode) { // perform
+                                                                                        // transformation
+                    bounds = bounds.clone().transform(this.map.getProjectionObject(), projection);
                 }
-            }
+                
+                var localBBOX = bounds.toArray(isGeographicCRS);
+                
+                // get the requested fields / bands to build the range subset
+                var fields = this.defaultOptions.field;
+                var fieldsArray = new Array();
+                for (f in fields) {
+                    var field = fields[f];
+                    var $input = $$(field);
+                    var fieldName = encodeURI($input.val());
+                    var select = $$($input.data("selection"));
+                    var selectValue = select.val();
+                    
+                    if (select.val() != null) {
+                        fieldsArray.push(fieldName + ":" + select.val());
+                    } else {
+                        fieldsArray.push(fieldName);
+                    }
+                }
+                
+                var rngSubset = "";
+                if (fieldsArray.length > 1) {
+                    rngSubset = fieldsArray.join(";");
+                } else {
+                    rngSubset = fieldsArray.join(" ");
+                }
+                
+                var localparams = {
+                    request : "GetCoverage",
+                    store : this.defaultOptions.store,
+                    GridBaseCRS : urn,
+                    identifier : this.defaultOptions.id,
+                    BoundingBox : localBBOX + "," + urn,
+                    format : this.defaultOptions.format,
+                    gridType : this.gridType
+                }
 
-            var rngSubset = "";
-            if (fieldsArray.length > 1) {
-                rngSubset = fieldsArray.join(";");
-            } else {
-                rngSubset = fieldsArray.join(" ");
-            }
-
-            var localparams = {
-                request : "GetCoverage",
-                store : this.defaultOptions.store,
-                GridBaseCRS : urn,
-                identifier : this.defaultOptions.id,
-                BoundingBox : localBBOX + "," + urn,
-                format : this.defaultOptions.format,
-                gridType : this.gridType
-            }
-
-            if (fieldsArray.length > 0) {
-                localparams.RangeSubset = rngSubset;
-            }
-
-            /*
-             * If the urn value is the same as the gridBaseCRS value then
-             * include the grid origin
-             */
-            if (urn == this.gridBaseCRS) {
-                localparams.GridOrigin = this.gridOrigin.split(" ").join(",")
-            }
-
-            // inject the new grid offset values.
-            var resX = parseFloat(this.$xText.val());
-            var resY = parseFloat(this.$yText.val());
-            if (resY > 0) {
-                resY *= -1;
-            }
-
-            resX /= oscar.Util.getMetersConversionFactor(projection);
-            resY /= oscar.Util.getMetersConversionFactor(projection);
-            var offsetArray = [];
-            if (isGeographicCRS) {
-                offsetArray.push(resY);
-                offsetArray.push(resX);
-            } else {
-                offsetArray.push(resX);
-                offsetArray.push(resY);
-            }
-
-            if (this.gridType == "urn:ogc:def:method:WCS:1.1:2dGridIn2dCrs") {
-                offsetArray.splice(1, 0, 0);
-                offsetArray.splice(1, 0, 0);
-            }
-            localparams.GridOffsets = offsetArray.toString();
-
-            OpenLayers.Util.extend(localparams, params);
-            var url = buildUrl(this.defaultOptions.operationUrl, localparams);
-
-            downloadService = new oscar.Gui.Download.WCS(url, null, {
-                title : this.defaultOptions.title
-            });
-            break;
+                if (fieldsArray.length > 0) {
+                    localparams.RangeSubset = rngSubset;
+                }
+                
+                /*
+                 * If the urn value is the same as the gridBaseCRS value then
+                 * include the grid origin
+                 */
+                if (urn == this.gridBaseCRS) {
+                    localparams.GridOrigin = this.gridOrigin.split(" ").join(",")
+                }
+                
+                // inject the new grid offset values.
+                var resX = parseFloat(this.$xText.val());
+                var resY = parseFloat(this.$yText.val());
+                
+                if (resY > 0) {
+                    resY *= -1;
+                }
+                
+                resX /= oscar.Util.getMetersConversionFactor(projection);
+                resY /= oscar.Util.getMetersConversionFactor(projection);
+                var offsetArray = [];
+                if (isGeographicCRS) {
+                    offsetArray.push(resY);
+                    offsetArray.push(resX);
+                } else {
+                    offsetArray.push(resX);
+                    offsetArray.push(resY);
+                }
+                
+                if (this.gridType == "urn:ogc:def:method:WCS:1.1:2dGridIn2dCrs") {
+                    offsetArray.splice(1, 0, 0);
+                    offsetArray.splice(1, 0, 0);
+                }
+                localparams.GridOffsets = offsetArray.toString();
+                
+                OpenLayers.Util.extend(localparams, params);
+                var url = buildUrl(this.defaultOptions.operationUrl, localparams);
+                
+                downloadService = new oscar.Gui.Download.WCS(url, null, {
+                    title : this.defaultOptions.title
+                });
+                break;
         }
         if (downloadService) {
             this.events.triggerEvent("serviceReady", downloadService);
         }
-
+        
     },
     /**
      * Constant: CLASS_NAME
