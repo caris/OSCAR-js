@@ -93,7 +93,7 @@ oscar.Control.AdvancedCatalogueSearch = new oscar.BaseClass(oscar.Control.Catalo
         closediv.append(closeBtn);
         closeBtn.button({
             icons : {
-                primary : 'ui-icon-close'
+                primary : 'ui-icon-oux-close'
             },
             text : false
         }).click($$.proxy(function() {
@@ -135,7 +135,7 @@ oscar.Control.AdvancedCatalogueSearch = new oscar.BaseClass(oscar.Control.Catalo
         var btn = $$("<button></button>").html(oscar.i18n("Search"));
         btn.button({
             icons : {
-                primary : "ui-icon-search"
+                primary : "ui-icon-oux-search"
             },
             text : true
         }).click($$.proxy(this.search, this));

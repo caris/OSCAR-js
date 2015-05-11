@@ -116,7 +116,7 @@ oscar.Gui.CatalogueResults = new oscar.BaseClass(oscar.Gui, {
         this.$buttons.append(this.$searchInfo);
         this.$next.button({
             icons : {
-                primary : "ui-icon-triangle-1-e"
+                primary : "ui-icon-oux-next"
             },
             text : false,
             disabled : true
@@ -132,7 +132,7 @@ oscar.Gui.CatalogueResults = new oscar.BaseClass(oscar.Gui, {
         
         this.$previous.button({
             icons : {
-                primary : "ui-icon-triangle-1-w"
+                primary : "ui-icon-oux-prev"
             },
             text : false,
             disabled : true

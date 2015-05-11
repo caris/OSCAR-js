@@ -118,7 +118,7 @@ oscar.Control.SimpleCatalogueSearch = oscar.BaseClass(oscar.Control.CatalogueSea
         var scope = this;
         this.button.button({
             icons : {
-                primary : "ui-icon-search"
+                primary : "ui-icon-oux-search"
             },
             text : true
         }).click($$.proxy(function() {

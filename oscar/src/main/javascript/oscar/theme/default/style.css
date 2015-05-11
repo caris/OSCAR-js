@@ -1,4 +1,5 @@
 @import url('help.css');
+@import url('oscar-jqui.css');
 
 body {
 	font-family: "Arial", "Helvetica", "Verdana", "sans-serif" !important;
@@ -1893,18 +1894,6 @@ td#oscarLayoutFooterContainer {
 	color: #fff;
 }
 
-.ui-icon-wcs-download {
-	background-image: url("img/oscar-ui-icons_888888_256x240.png")
-		!important;
-	background-position: 0 0;
-}
-
-.ui-icon-crop {
-	background-image: url("img/oscar-ui-icons_888888_256x240.png")
-		!important;
-	background-position: -32px 0px !important
-}
-
 .ui-icon-prepare {
 	background-image: url("img/oscar-ui-icons_888888_256x240.png")
 		!important;
@@ -1947,8 +1936,8 @@ td#oscarLayoutFooterContainer {
 .oscarGuiInfo .ico {
 	background-image:url('img/help-icon.png');
 	background-repeat:no-repeat;
-	width:29px;
-	height:20px;
+	width:32px;
+	height:32px;
 }
 
 .whatsthis-dlg {

@@ -71,7 +71,7 @@ oscar.Util.Plugin.Download.Options = new oscar.BaseClass(oscar.Util.Plugin.Downl
         north.append(title_panel);
         close_btn.button({
             icons : {
-                primary : "ui-icon-closethick"
+                primary : "ui-icon-oux-close"
             },
             text : false,
             label : "Close"
