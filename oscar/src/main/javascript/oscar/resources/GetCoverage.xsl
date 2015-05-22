@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <xsl:stylesheet version="1.0"
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+	<xsl:output method="html"/>
 	<!-- WCS 1.1.0 -->
 	<xsl:template match="owcs:Coverages" xmlns:geonet="http://www.fao.org/geonetwork"
 		xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dct="http://purl.org/dc/terms/"
