@@ -251,15 +251,15 @@ oscar.Gui.Download.WCS = oscar.BaseClass(oscar.Gui.Download, {
         var scope = this;
         var fadeIn = function() {
             scope.transformedDiv.innerHTML = pHolder.innerHTML;
-			$$(scope.transformedDiv).find("span").each(function(){ 
-				var $this = $$(this);
-				var href = $this.attr("href").trim();
-				var cls = $this.attr("class").trim();
-				$this.click(function() {
-					scope.gotoUrl(cls,href);
-				});
-			});
-
+            $$(scope.transformedDiv).find("span").each(function() {
+                var $this = $$(this);
+                var href = $this.attr("href").trim();
+                var cls = $this.attr("class").trim();
+                $this.click(function() {
+                    scope.gotoUrl(cls, href);
+                });
+            });
+            
             oscar.jQuery(scope.grfx).addClass("downloadReady");
             oscar.jQuery(this.content).addClass("ready");
             oscar.jQuery(scope.content).fadeIn("fast");
