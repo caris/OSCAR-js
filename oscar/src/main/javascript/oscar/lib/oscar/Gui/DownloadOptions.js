@@ -329,8 +329,8 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
             new OpenLayers.Projection(crs.code);
             crsReferences.push(crs);
         }
-        $$(crsDiv).append($$("<label></label>").html(oscar.i18n("srsCodeColumnLabel") + ":").addClass("heading"));
-        
+        $$(crsDiv).append($$("<label></label>").html(oscar.i18n("srsCodeColumnLabel") + ":").addClass("heading").css("display","block"));
+
         var input = document.createElement("input");
         input.type = "text";
         $$(input).addClass("crsInput");
