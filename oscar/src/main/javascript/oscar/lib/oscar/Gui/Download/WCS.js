@@ -248,27 +248,23 @@ oscar.Gui.Download.WCS = oscar.BaseClass(oscar.Gui.Download, {
         } else {
             pHolder.appendChild(results);
         }
-
         var scope = this;
         var fadeIn = function() {
             scope.transformedDiv.innerHTML = pHolder.innerHTML;
-            var children = oscar.jQuery(scope.transformedDiv).find("span");
-            for (var i = 0; i < children.length; i++) {
-                var child = children[i];
-                var href = child.attributes['href'].value;
-                var onclick = function(classType, url) {
-                    return function() {
-                        scope.gotoUrl(classType, url);
-                    }
-                }
-                child.onclick = onclick(child.attributes['class'].value, href);
-            }
+			$$(scope.transformedDiv).find("span").each(function(){ 
+				var $this = $$(this);
+				var href = $this.attr("href").trim();
+				var cls = $this.attr("class").trim();
+				$this.click(function() {
+					scope.gotoUrl(cls,href);
+				});
+			});
+
             oscar.jQuery(scope.grfx).addClass("downloadReady");
             oscar.jQuery(this.content).addClass("ready");
             oscar.jQuery(scope.content).fadeIn("fast");
         }
         oscar.jQuery(this.content).fadeOut("fast", fadeIn);
-
     },
     /**
      * Method: gotoUrl Called when the coverage and metadata icons are clicked.
