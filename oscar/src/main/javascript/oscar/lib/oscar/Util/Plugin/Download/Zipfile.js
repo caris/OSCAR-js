@@ -17,7 +17,7 @@
  */
 oscar.Util.Plugin.Download.Zipfile = new oscar.BaseClass(oscar.Util.Plugin.Download, {
     pluginType : "application/zip",
-    icon : "ui-icon-disk",
+    icon : "ui-icon-oux-direct-download",
     initialize : function(options) {
         oscar.Util.Plugin.Download.prototype.initialize.apply(this, [ options ]);
 
