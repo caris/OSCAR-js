@@ -48,6 +48,14 @@ oscar.Control.SimpleCatalogueSearch = oscar.BaseClass(oscar.Control.CatalogueSea
         }
         
         // build the query filter string
+		//add wildcards to the start and end of the query
+		if(!query.startsWith("*")) {
+			query = "*"+query;
+		}
+		if(!query.endsWith("*")) {
+			query+="*";
+		}
+		
         var queryArray = [];
         for (var i = 0; i < this.catalogueService.defaultSearchFields.length; i++) {
             var queryString = "";
