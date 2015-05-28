@@ -162,7 +162,7 @@ oscar.Control.DragPanel = oscar.BaseClass(oscar.Control, {
                 oscar.jQuery(this).removeClass("olDragDown");
                 event.stopPropagation();
             },
-            drag : function(e, u) {
+            drag : function(event, u) {
                 event.stopPropagation();
             },
             cancel : "div.content"
