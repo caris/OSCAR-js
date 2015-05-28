@@ -1,0 +1,20 @@
+html, body {
+	font-family:Arial;
+	font-size:12px;
+}
+
+h1 {
+	font-size:14px;
+}
+
+p {
+	font-size:12px;
+}
+
+.example {
+	margin:5px;
+	display:block;
+	border:1px dashed #000;
+	background-color:#C2C2C2;
+	padding:5px;
+}

@@ -1,0 +1,48 @@
+<html>
+<head>
+<title>Enhanced Search</title>
+<link rel="stylesheet" type="text/css" href="help-style.css">
+</head>
+<body>
+	<h1>Enhanced Search</h1>
+	<p>Enhanced search provides auto-complete and query building hints
+		along the way.</p>
+
+	<p>Once the query is complete pressing ENTER or clicking the Search
+		button will trigger the search.</p>
+
+	<h1>Supported Comparison Operators</h1>
+	<ul>
+		<li>></li>
+		<li>>=</li>
+		<li><</li>
+		<li><=</li>
+		<li><></li>
+		<li>=</li>
+		<li>LIKE</li>
+	</ul>
+	<h1>Supported Logical Operators</h1>
+	<ul>
+		<li>AND</li>
+		<li>OR</li>
+	</ul>
+	<p>Literal values must be wrapped in single quotes.
+	<div class="example">dct:abstract = 'unknown'</div>
+	</p>
+	<p>Parenthesis may be used to group conditions.
+	<div class="example">( dct:abstract = 'unknown AND dc:title='my
+		title') OR dc:title = 'abc'</div>
+	</p>
+
+	<h1>Wildcards</h1>
+	<p>Wildcards are supported in literal values.</p>
+	<ul>
+		<li>* (Asterisk) - Used to replace multiple characters.</li>
+		<li>. (Period) - Used to replace a single character.</li>
+	</ul>
+	<p>Examples</p>
+	<div class="example">dct:abstract LIKE 'unknown'</div>
+	<div class="example">dct:abstract LIKE 'unkn*n'</div>
+	<div class="example">dct:abstract LIKE 'unkn.wn'</div>
+</body>
+</html>

@@ -23,69 +23,81 @@ package com.caris.oscarexchange4j.util;
  */
 public class ScaleSet {
 
-	/** Well Known Scale Sets **/
-	public static final String GoogleMapsCompatible = "GoogleMapsCompatible";
-	public static final String GoogleCRS84Quad = "GoogleCRS84Quad";
-	
-	/**
-	 * The name of the scale set.
-	 */
-	private String tileMatrixSet;
-	
-	/**
-	 * The coordinates for the top-left corner
-	 */
-	private double[] tileOrigin=null;
-	/**
-	 * The world cover.
-	 */
-	private double[] tileFullExtent=null;
+    /** Well Known Scale Sets **/
+    public static final String GoogleMapsCompatible = "GoogleMapsCompatible";
 
-	/**
-	 * Sets the name of the scale set to be used.
-	 * @param tileMatrixSet
-	 */
-	public void setTileMatrixSet(String tileMatrixSet) {
-		this.tileMatrixSet = tileMatrixSet;
-	}
+    public static final String GoogleCRS84Quad = "GoogleCRS84Quad";
 
-	/**
-	 * 
-	 * @return String The name of the scale set.
-	 */
-	public String getTileMatrixSet() {
-		return tileMatrixSet;
-	}
-	/**
-	 * @return double[] The top-left corner.
-	 */
-	public double[] getTileOrigin() {
-		return tileOrigin.clone();
-	}
+    /**
+     * The name of the scale set.
+     */
+    private String tileMatrixSet;
 
-	/**
-	 * Sets the top-left corner
-	 * 
-	 * @param tileOrigin
-	 */
-	public void setTileOrigin(double[] tileOrigin) {
-		this.tileOrigin = tileOrigin.clone();
-	}
+    /**
+     * The coordinates for the top-left corner
+     */
+    private double[] tileOrigin = null;
 
-	/**
-	 * @return double[] The world cover.
-	 */
-	public double[] getTileFullExtent() {
-		return tileFullExtent.clone();
-	}
+    /**
+     * The world cover.
+     */
+    private double[] tileFullExtent = null;
 
-	/**
-	 * Sets the world cover
-	 * 
-	 * @param tileFullExtent
-	 */
-	public void setTileFullExtent(double[] tileFullExtent) {
-		this.tileFullExtent = tileFullExtent.clone();
-	}
+    /**
+     * Sets the identifier of the scale set to be used.
+     * 
+     * @param tileMatrixSet
+     *            The tile matrix set identifier.
+     */
+    public void setTileMatrixSet(String tileMatrixSet) {
+        this.tileMatrixSet = tileMatrixSet;
+    }
+
+    /**
+     * Get the tile matrix set identifier.
+     * 
+     * @return String The identifier of the scale set.
+     */
+    public String getTileMatrixSet() {
+        return tileMatrixSet;
+    }
+
+    /**
+     * Get the tile origin.
+     * 
+     * @return The top-left corner.
+     */
+    public double[] getTileOrigin() {
+        return tileOrigin.clone();
+    }
+
+    /**
+     * Sets the top-left corner.
+     * 
+     * @param tileOrigin
+     *            The tile orgin.
+     */
+    public void setTileOrigin(double[] tileOrigin) {
+        this.tileOrigin = tileOrigin.clone();
+    }
+
+    /**
+     * Get the world cover.
+     * 
+     * @return The world cover.
+     */
+    public double[] getTileFullExtent() {
+        return tileFullExtent.clone();
+    }
+
+    /**
+     * Sets the world cover.
+     * 
+     * @param tileFullExtent
+     *            The extent of the world.
+     */
+    public void setTileFullExtent(double[] tileFullExtent) {
+        this.tileFullExtent = tileFullExtent.clone();
+    }
 
 }

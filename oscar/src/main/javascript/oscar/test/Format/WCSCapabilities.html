@@ -60,6 +60,26 @@ function test_WCS_1_1_1(t) {
 	  OpenLayers.loadURL(urls["1.1.1"], null, this, success, fail);
 	  t.wait_result(waitTime);
 	}
+	
+function test_WCS_OtherSource(t) {
+	OpenLayers.Request.GET({
+		url:urls["1.1.1"],
+		success:function(resp) {
+			t.plan(3);
+			var format = new oscar.Format.WCSCapabilities();
+			var doc = resp.responseXML;
+			var capDocument = format.read(doc);
+			t.ok(capDocument.contents.OtherSource != null,"OtherSource exists.");
+			try {
+				t.ok(Array.isArray(capDocument.contents.OtherSource), "OtherSource is an array.");
+			} catch(err) {
+				t.ok(capDocument.contents.OtherSource instanceof Array, "OtherSource is an array")
+			}
+			t.ok(capDocument.contents.OtherSource.length == 1, "OtherSource has 1 index.")
+		}
+	});
+	t.wait_result(5);
+}
 </script>
 <body>
 </body>

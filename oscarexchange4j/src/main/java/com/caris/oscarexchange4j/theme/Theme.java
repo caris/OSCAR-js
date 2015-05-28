@@ -17,11 +17,6 @@
  */
 package com.caris.oscarexchange4j.theme;
 
-/*
- * WEB-1002 JavaDocs cleanup, added methods to add individual layers.
- * WEB-1005 Added call to validate the layer when adding it.
- * SFV-96 Needed to add an equals as part of some viewer cleanup.
- */
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -72,10 +67,20 @@ public class Theme {
     Set<Cover> covers;
 
     /**
+     * The position object.
+     */
+    private Position position;
+
+    /**
      * The layers that a theme contains.
      */
     List<ThemeLayer> layers;
-    
+
+    /**
+     * Path pointing to legend graphic.
+     */
+    private String legend;
+
     Services services;
 
     /**
@@ -93,13 +98,15 @@ public class Theme {
      * Background colour.
      */
     String backgroundColor;
-    
+
     /**
      * selection style options
      */
     SelectionStyle selectionStyle;
 
     /**
+     * Get the background colour.
+     * 
      * @return String The background color
      */
     public String getBackgroundColor() {
@@ -107,6 +114,8 @@ public class Theme {
     }
 
     /**
+     * Set the background colour.
+     * 
      * @param backgroundColor
      *            the backgroundColor to set
      */
@@ -115,44 +124,60 @@ public class Theme {
     }
 
     /**
+     * Set the background colour.
+     * 
      * @param red
-     *            , green, blue the backgroundColor to set
+     *            The red value (0-255)
+     * @param green
+     *            The green value (0-255).
+     * @param blue
+     *            The blue value (0-255).
      */
     public void setBackgroundColor(int red, int green, int blue) {
         this.setBackgroundColor(OXUtil.RGBToHex(red, green, blue));
     }
 
     /**
+     * Set the background colour.
+     * 
      * @param color
-     *            the backgroundColor to set
+     *            The background colour.
      */
     public void setBackgroundColor(Color color) {
         this.setBackgroundColor(OXUtil.ColorToHex(color));
     }
 
     /**
+     * Set the selection style.
+     * 
      * @param selectionStyle
-     *            the selection style for this theme
+     *            The selection style for this theme.
      */
     public void setSelectionStyle(SelectionStyle selectionStyle) {
         this.selectionStyle = selectionStyle;
     }
-    
+
     /**
-     * @return SelectionStyle Object containing selection style parameters
+     * Get the selection style.
+     * 
+     * @return The selection style for this theme.
      */
     public SelectionStyle getSelectionStyle() {
         return selectionStyle;
     }
 
     /**
-     * @return int The position of where it should be displayed.
+     * Get the display order.
+     * 
+     * @return The position of where it should be displayed.
      */
     public int getDisplayOrder() {
         return displayOrder;
     }
 
     /**
+     * Set the display order.
+     * 
      * @param displayOrder
      *            The position of where it should be displayed.
      */
@@ -161,16 +186,17 @@ public class Theme {
     }
 
     /**
-     * @return List<ThemeLayer> The list of layers associated to the theme.
+     * Get the list of layers for this theme.
+     * 
+     * @return The list of layers associated to the theme.
      */
     public List<ThemeLayer> getLayers() {
         return layers;
     }
 
-    /*
-     * WEB-1005 - Validation of all layers when adding a list.
-     */
     /**
+     * Set the list of layers for this theme.
+     * 
      * @param layers
      *            Set the layers to the theme.
      */
@@ -179,10 +205,9 @@ public class Theme {
             this.addLayer(layer);
     }
 
-    /*
-     * WEB-1005 - Validation of theme layer before adding it.
-     */
     /**
+     * Add a layer to this theme.
+     * 
      * @param layer
      *            Add a single layer to the current theme.
      */
@@ -198,41 +223,54 @@ public class Theme {
     }
 
     /**
-     * @return the services
+     * Get the services used by this theme.
+     * 
+     * @return The services in this theme.
      */
     public Services getServices() {
-            return services;
+        return services;
     }
 
     /**
-     * @param services the services to set
+     * Set the services for this theme.
+     * 
+     * @param services
+     *            The services to be used by the theme.
      */
     public void setServices(Services services) {
-            this.services = services;
+        this.services = services;
     }
 
     /**
-     * @return int The theme id.
+     * Get the theme identifier.
+     * 
+     * @return The theme identifier.
      */
     public int getId() {
         return this.id;
     }
 
     /**
-     * @return Set<Cover> A set of covers for the theme.
+     * Get the covers for this theme.
+     * 
+     * @return A set of covers for the theme.
      */
     public Set<Cover> getCovers() {
         return this.covers;
     }
 
     /**
-     * @return String The theme name.
+     * Get the theme name.
+     * 
+     * @return The theme name.
      */
     public String getName() {
         return this.name;
     }
 
     /**
+     * Set the theme id.
+     * 
      * @param id
      *            The theme id.
      */
@@ -241,6 +279,8 @@ public class Theme {
     }
 
     /**
+     * Set the theme name.
+     * 
      * @param name
      *            The theme name.
      */
@@ -249,6 +289,8 @@ public class Theme {
     }
 
     /**
+     * Set the theme covers.
+     * 
      * @param covers
      *            A set of theme covers.
      */
@@ -257,20 +299,26 @@ public class Theme {
     }
 
     /**
-     * @return double The theme version.
+     * Get the theme version.
+     * 
+     * @return The theme version.
      */
     public double getVersion() {
         return this.version;
     }
 
     /**
-     * @return Map<String,String> The theme parameters.
+     * Get the theme parameters.
+     * 
+     * @return The theme parameters.
      */
     public Map<String, String> getParameters() {
         return parameters;
     }
 
     /**
+     * Set the theme parameters.
+     * 
      * @param parameters
      *            The theme parameters.
      */
@@ -290,108 +338,154 @@ public class Theme {
         this.parameters.put(key, value);
     }
 
-    /* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result
-				+ ((backgroundColor == null) ? 0 : backgroundColor.hashCode());
-		result = prime * result + ((covers == null) ? 0 : covers.hashCode());
-		result = prime * result + displayOrder;
-		result = prime * result + id;
-		result = prime * result + ((layers == null) ? 0 : layers.hashCode());
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result
-				+ ((parameters == null) ? 0 : parameters.hashCode());
-		result = prime * result
-				+ ((selectionStyle == null) ? 0 : selectionStyle.hashCode());
-		result = prime * result
-				+ ((services == null) ? 0 : services.hashCode());
-		result = prime * result + ((srs == null) ? 0 : srs.hashCode());
-		long temp;
-		temp = Double.doubleToLongBits(version);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		return result;
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result
+                + ((backgroundColor == null) ? 0 : backgroundColor.hashCode());
+        result = prime * result + ((covers == null) ? 0 : covers.hashCode());
+        result = prime * result + displayOrder;
+        result = prime * result + id;
+        result = prime * result + ((layers == null) ? 0 : layers.hashCode());
+        result = prime * result + ((name == null) ? 0 : name.hashCode());
+        result = prime * result
+                + ((parameters == null) ? 0 : parameters.hashCode());
+        result = prime * result
+                + ((selectionStyle == null) ? 0 : selectionStyle.hashCode());
+        result = prime * result
+                + ((services == null) ? 0 : services.hashCode());
+        result = prime * result + ((srs == null) ? 0 : srs.hashCode());
+        long temp;
+        temp = Double.doubleToLongBits(version);
+        result = prime * result + (int) (temp ^ (temp >>> 32));
+        return result;
+    }
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (!(obj instanceof Theme))
-			return false;
-		Theme other = (Theme) obj;
-		if (backgroundColor == null) {
-			if (other.backgroundColor != null)
-				return false;
-		} else if (!backgroundColor.equals(other.backgroundColor))
-			return false;
-		if (covers == null) {
-			if (other.covers != null)
-				return false;
-		} else if (!covers.equals(other.covers))
-			return false;
-		if (displayOrder != other.displayOrder)
-			return false;
-		if (id != other.id)
-			return false;
-		if (layers == null) {
-			if (other.layers != null)
-				return false;
-		} else if (!layers.equals(other.layers))
-			return false;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
-		if (parameters == null) {
-			if (other.parameters != null)
-				return false;
-		} else if (!parameters.equals(other.parameters))
-			return false;
-		if (selectionStyle == null) {
-			if (other.selectionStyle != null)
-				return false;
-		} else if (!selectionStyle.equals(other.selectionStyle))
-			return false;
-		if (services == null) {
-			if (other.services != null)
-				return false;
-		} else if (!services.equals(other.services))
-			return false;
-		if (srs == null) {
-			if (other.srs != null)
-				return false;
-		} else if (!srs.equals(other.srs))
-			return false;
-		if (Double.doubleToLongBits(version) != Double
-				.doubleToLongBits(other.version))
-			return false;
-		return true;
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (!(obj instanceof Theme))
+            return false;
+        Theme other = (Theme) obj;
+        if (backgroundColor == null) {
+            if (other.backgroundColor != null)
+                return false;
+        } else if (!backgroundColor.equals(other.backgroundColor))
+            return false;
+        if (covers == null) {
+            if (other.covers != null)
+                return false;
+        } else if (!covers.equals(other.covers))
+            return false;
+        if (displayOrder != other.displayOrder)
+            return false;
+        if (id != other.id)
+            return false;
+        if (layers == null) {
+            if (other.layers != null)
+                return false;
+        } else if (!layers.equals(other.layers))
+            return false;
+        if (name == null) {
+            if (other.name != null)
+                return false;
+        } else if (!name.equals(other.name))
+            return false;
+        if (parameters == null) {
+            if (other.parameters != null)
+                return false;
+        } else if (!parameters.equals(other.parameters))
+            return false;
+        if (selectionStyle == null) {
+            if (other.selectionStyle != null)
+                return false;
+        } else if (!selectionStyle.equals(other.selectionStyle))
+            return false;
+        if (services == null) {
+            if (other.services != null)
+                return false;
+        } else if (!services.equals(other.services))
+            return false;
+        if (srs == null) {
+            if (other.srs != null)
+                return false;
+        } else if (!srs.equals(other.srs))
+            return false;
+        if (Double.doubleToLongBits(version) != Double
+                .doubleToLongBits(other.version))
+            return false;
+        return true;
+    }
 
-	/**
-     * @return String The coordinate system.
+    /**
+     * Get the spatial reference system key.
+     * 
+     * @return The spatial reference system key.
      */
     public String getSRS() {
         return this.srs;
     }
 
     /**
-     * @param inSRS
-     *            The coordinate system.
+     * Set the spatial reference system key.
+     * 
+     * @param srs
+     *            The spatial reference system key.
      */
     public void setSRS(String srs) {
         this.srs = srs;
     }
+
+    /**
+     * Returns the position object.
+     * 
+     * @return the position
+     */
+    public Position getPosition() {
+        return position;
+    }
+
+    /**
+     * Sets the position object.
+     * 
+     * @param position
+     *            the position to set
+     */
+    public void setPosition(Position position) {
+        this.position = position;
+    }
+
+    /**
+     * Return the path to the legend.
+     * 
+     * @return The path to the legend
+     */
+    public String getLegend() {
+        return legend;
+    }
+
+    /**
+     * Set the path to the legend.
+     * 
+     * @param legend
+     *            The path to the legend.
+     */
+    public void setLegend(String legend) {
+        this.legend = legend;
+    }    
 
 }

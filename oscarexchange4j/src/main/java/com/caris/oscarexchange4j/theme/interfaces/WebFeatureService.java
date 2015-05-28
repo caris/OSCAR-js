@@ -17,10 +17,6 @@
  */
 package com.caris.oscarexchange4j.theme.interfaces;
 
-/*
- * WEB-999 - Interface added to define methods used by web feature service layers.
- */
-
 /**
  * Interface to define methods used by Web Feature Service layers.
  * 
@@ -39,6 +35,7 @@ public interface WebFeatureService {
      * Sets the Web Feature Service version
      * 
      * @param wfsVersion
+     *            The WFS version string.
      */
     public void setWFSVersion(String wfsVersion);
 
@@ -53,6 +50,7 @@ public interface WebFeatureService {
      * Sets the Web Feature Service output format
      * 
      * @param responseFormat
+     *            The output format of the WFS.
      */
     public void setResponseFormat(String responseFormat);
 

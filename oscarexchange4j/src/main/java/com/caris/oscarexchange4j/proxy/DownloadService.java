@@ -28,6 +28,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * Proxy service to obtain files from a server.
+ * 
  * @author tcoburn
  * 
  */
@@ -45,7 +46,9 @@ public class DownloadService implements Reader {
 
     /**
      * Sets the url used for the request.
+     * 
      * @param url
+     *            The URL used for the request.
      */
     public void setUrl(String url) {
         this.url = url;
@@ -53,22 +56,27 @@ public class DownloadService implements Reader {
 
     /**
      * Returns the url used for the request.
-     * @return
+     * 
+     * @return The URL used by this service.
      */
     public String getUrl() {
         return this.url;
     }
 
     /**
-     * Makes a connection to the url, reads the stream into a byte array and returns it
+     * Makes a connection to the url, reads the stream into a byte array and
+     * returns it
+     * 
      * @return byte[] byte array containing the content of the response.
      * @throws Exception
+     *             Thrown if there is a problem making a connection to the URL
+     *             or reading the data from it.
      */
     public byte[] run() throws Exception {
         URL url = new URL(this.url);
         HttpURLConnection uc = (HttpURLConnection) url.openConnection();
         uc.connect();
-        this.responseHeaders=uc.getHeaderFields();
+        this.responseHeaders = uc.getHeaderFields();
         BufferedInputStream in = new BufferedInputStream(uc.getInputStream());
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
 
@@ -84,8 +92,12 @@ public class DownloadService implements Reader {
         return buffer.toByteArray();
     }
 
-    /* (non-Javadoc)
-     * @see com.caris.oscarexchange4j.proxy.Reader#makeRequest(javax.servlet.http.HttpServletRequest)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.caris.oscarexchange4j.proxy.Reader#makeRequest(javax.servlet.http
+     * .HttpServletRequest)
      */
     @Override
     public Response makeRequest(HttpServletRequest httpServletRequest) {
@@ -93,8 +105,9 @@ public class DownloadService implements Reader {
     }
 
     /**
-     * Returns a Map<String, List<String> object containing the headers of the response.
-     * @return Returns a Map<String, List<String> object containing the headers of the response.
+     * Returns a map containing the headers of the response.
+     * 
+     * @return Returns a map containing the headers of the response.
      */
     public Map<String, List<String>> getResponseHeaders() {
         return responseHeaders;

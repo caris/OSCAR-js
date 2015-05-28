@@ -1,0 +1,35 @@
+.ui-icon-oux-close {
+background-image: url("img/oscar-ui-icons_888888_256x240.png") !important;		
+	background-position: -208px 0px;
+}
+.ui-icon-oux-search {
+	background-image: url("img/oscar-ui-icons_888888_256x240.png") !important;	
+	background-position: -160px -16px;
+}
+.ui-icon-oux-next {
+	background-image: url("img/oscar-ui-icons_888888_256x240.png") !important;		
+	background-position: -240px 0px;
+}
+.ui-icon-oux-prev {
+	background-image: url("img/oscar-ui-icons_888888_256x240.png") !important;		
+	background-position: -224px 0px ;
+}
+
+.ui-icon-oux-close {
+background-image: url("img/oscar-ui-icons_888888_256x240.png") !important;		
+}
+
+.ui-icon-oux-direct-download {		
+	background-image: url("img/oscar-ui-icons_888888_256x240.png") !important;		
+	background-position: -160px 0px;
+}
+
+.ui-icon-wcs-download {		
+	background-image: url("img/oscar-ui-icons_888888_256x240.png") !important;		
+	background-position: 0px 0px ;
+}		
+		
+.ui-icon-crop {		
+	background-image: url("img/oscar-ui-icons_888888_256x240.png") !important;		
+	background-position: -32px 0px !important		
+}		

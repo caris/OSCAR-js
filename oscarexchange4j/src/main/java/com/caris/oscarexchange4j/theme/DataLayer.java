@@ -16,9 +16,6 @@
  * limitations under the License.
  */
 package com.caris.oscarexchange4j.theme;
-/*
- * WEB-1002 - JavaDocs cleanup.
- */
 
 /**
  * This class represents an Oscar DataLayer
@@ -41,15 +38,18 @@ public class DataLayer {
      * index member
      */
     private int index;
-    
+
     /**
      * no-args constructor
      */
-    public DataLayer(){}
+    public DataLayer() {
+    }
 
     /**
      * Create a data layer with a given name.
+     * 
      * @param layerName
+     *            The data layer layer name.
      */
     public DataLayer(String layerName) {
         super();
@@ -58,8 +58,11 @@ public class DataLayer {
 
     /**
      * Create a data layer with an index and name.
+     * 
      * @param index
+     *            The data layer index.
      * @param layerName
+     *            The data layer layer name.
      */
     public DataLayer(int index, String layerName) {
         super();
@@ -69,9 +72,13 @@ public class DataLayer {
 
     /**
      * Create a data layer with an id, index and name.
+     * 
      * @param id
+     *            The data layer identifier.
      * @param index
+     *            The data layer index.
      * @param layerName
+     *            The data layer layer name.
      */
     public DataLayer(int id, int index, String layerName) {
         super();
@@ -81,42 +88,57 @@ public class DataLayer {
     }
 
     /**
-     * @return int
+     * Get the data layer identifier.
+     * 
+     * @return The data layer identifier.
      */
     public int getId() {
         return id;
     }
 
     /**
+     * Set the identifier for the data layer.
+     * 
      * @param id
+     *            The identifier for the data layer.
      */
     public void setId(int id) {
         this.id = id;
     }
 
     /**
-     * @return java.lang.String
+     * Get the layer name.
+     * 
+     * @return The layer name.
      */
     public String getLayerName() {
         return layerName;
     }
 
     /**
+     * Set the layer name for the data layer.
+     * 
      * @param layerName
+     *            The layer name for the data layer.
      */
     public void setLayerName(String layerName) {
         this.layerName = layerName;
     }
 
     /**
+     * Set the index for the data layer.
+     * 
      * @param index
+     *            The index for the data layer.
      */
     public void setIndex(int index) {
         this.index = index;
     }
 
     /**
-     * @return int
+     * Get the index for the data layer.
+     * 
+     * @return The index for the data layer.
      */
     public int getIndex() {
         return index;

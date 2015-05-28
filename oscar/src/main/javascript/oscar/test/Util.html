@@ -29,21 +29,22 @@
 		var projection = new OpenLayers.Projection("EPSG:4326");
 		
 		var bbox1 = new OpenLayers.Bounds(-150,-89,-140,89);
-		
-		var features = oscar.Util.boundsToFeatures(bbox1,projection,map);
-		t.eq(features.length,1,"One feature created from the bbox");
-		
-		var bbox2 = new OpenLayers.Bounds(178,40,-178,50);
-		features = oscar.Util.boundsToFeatures(bbox2,projection,map);
-		t.eq(features.length,2,"Two features created from the bbox (s the dateline)");
+		var feature = oscar.Util.boundsToFeature(bbox1,projection,map);
+		t.ok(feature,"One feature created from the bbox");
+
+		var bbox2 = new OpenLayers.Bounds(140,40,-148,50);
+		var feature = oscar.Util.boundsToFeature(bbox2,projection,map);
+		t.eq(feature.geometry.CLASS_NAME,"OpenLayers.Geometry.MultiPolygon", "We're wrapping the dateline!");
 		
 		var bbox3 = new OpenLayers.Bounds(-180,40,-178,50);
-		features = oscar.Util.boundsToFeatures(bbox3,projection,map);
-		t.eq(features.length,1,"One feature created from the bbox (western edge of the date line)");
-
+		feature = oscar.Util.boundsToFeature(bbox3,projection,map);
+		t.ok(feature,"Feature created on the western edge of the date line.");
+		
 		var bbox4 = new OpenLayers.Bounds(178,40,180,50);
-		features = oscar.Util.boundsToFeatures(bbox3,projection,map);
-		t.eq(features.length,1,"One feature created from the bbox (eastern edge of the date line)");
+		feature = oscar.Util.boundsToFeature(bbox4,projection,map);
+		t.ok(feature,"Feature created on the eastern edge of the date line.");
+		
+		
 	}
 	/**
 	* Test the mergeGeometries function

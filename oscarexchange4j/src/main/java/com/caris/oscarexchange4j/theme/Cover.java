@@ -48,7 +48,10 @@ public class Cover {
     }
 
     /**
+     * Set the type of cover.
+     * 
      * @param type
+     *            The type of cover.
      */
     public void setType(CoverType type) {
         this.type = type;
@@ -90,35 +93,50 @@ public class Cover {
     }
 
     /**
+     * Set the cover's identifier.
+     * 
      * @param id
+     *            The cover's identifier.
      */
     public void setId(int id) {
         this.id = id;
     }
 
     /**
+     * Set the cover's maximum X value.
+     * 
      * @param maxX
+     *            The cover's maximum X value.
      */
     public void setMaxX(double maxX) {
         this.maxX = maxX;
     }
 
     /**
+     * Set the cover's maximum Y value.
+     * 
      * @param maxY
+     *            The cover's maximum Y value.
      */
     public void setMaxY(double maxY) {
         this.maxY = maxY;
     }
 
     /**
+     * Set the cover's minimum X value.
+     * 
      * @param minX
+     *            The cover's minimum X value.
      */
     public void setMinX(double minX) {
         this.minX = minX;
     }
 
     /**
+     * Set the cover's minimum Y value.
+     * 
      * @param minY
+     *            The cover's minimum Y value.
      */
     public void setMinY(double minY) {
         this.minY = minY;

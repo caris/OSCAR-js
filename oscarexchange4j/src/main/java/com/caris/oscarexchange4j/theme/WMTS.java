@@ -28,163 +28,168 @@ import com.caris.oscarexchange4j.util.ScaleSet;
 
 public class WMTS extends ThemeLayer {
 
-	/**
-	 * Valid encodings for a WMTS layer
-	 */
-	public static final String KVP = "KVP";
-	public static final String REST = "REST";
+    /**
+     * Valid encodings for a WMTS layer
+     */
+    public static final String KVP = "KVP";
 
-	/**
-	 * Upper left starting point for the tiles.
-	 */
-	private double[] tileOrigin;
+    public static final String REST = "REST";
 
-	/**
-	 * The full coverage area for the tile set.
-	 */
-	private double[] tileFullExtent;
-	/**
-	 * Default request type.
-	 */
-	private String requestType = WMTS.REST;
-		
-	/**
-	 * The tile matrix set
-	 */
-	private String tileMatrixSet;
+    /**
+     * Upper left starting point for the tiles.
+     */
+    private double[] tileOrigin;
 
-	/**
-	 * Constructor Sets the layer type to LayerType.WMTS
-	 */
-	public WMTS() {
-		this.setLayerType(LayerType.WMTS);
-	}
+    /**
+     * The full coverage area for the tile set.
+     */
+    private double[] tileFullExtent;
 
-	/**
-	 * @deprecated - Use new WMTS(url,requestType)
-	 * @param url
-	 *            - Source URL
-	 * @param layerName
-	 *            - Layer name or Theme name
-	 * @param requestType
-	 *            - REST or KVP (Key Value Pair)
-	 * @param srs
-	 *            - EPSG code
-	 */
-	public WMTS(String url, String layerName, String requestType, String srs,
-			String format) {
-		this.setLayerType(LayerType.WMTS);
-		this.addUrl(url);
-		this.setName(layerName);
-		this.requestType = requestType;
-		DataLayer dataLayer = new DataLayer();
-		dataLayer.setLayerName(layerName);
-		this.addDataLayer(dataLayer);
-		this.setFormat(format);
-		this.setSRS(srs);
-	}
-	public WMTS(String url,String requestEncoding) {
-		this.setLayerType(LayerType.WMTS);
-		this.addUrl(url);
-	}
-	/**
-	 * 
-	 * @param srs Uses the SRS to determine the tile origin and the full extent.
-	 */
-	public void setSRS(String srs) {
-		ScaleSet scaleSet = OXUtil.getScaleSet(srs);
-		this.setTileOrigin(scaleSet.getTileOrigin());
-		this.setTileFullExtent(scaleSet.getTileFullExtent());
-		this.setTileMatrixSet(scaleSet.getTileMatrixSet());
-	}
+    /**
+     * Default request type.
+     */
+    private String requestType = WMTS.REST;
 
-	/**
-	 * @param requestType
-	 *            Sets the request type KVP or REST
-	 */
-	public void setRequestType(String requestType) {
-		this.requestType = requestType;
-	}
+    /**
+     * The tile matrix set
+     */
+    private String tileMatrixSet;
 
-	/**
-	 * @return String - The request type. KVP or REST.
-	 */
-	public String getRequestType() {
-		return requestType;
-	}
+    /**
+     * Constructor Sets the layer type to LayerType.WMTS
+     */
+    public WMTS() {
+        this.setLayerType(LayerType.WMTS);
+    }
 
-	/**
-	 * @param tileMatrixSet
-	 * Sets the tile matrix set to use.
-	 */
-	public void setTileMatrixSet(String tileMatrixSet) {
-		this.tileMatrixSet = tileMatrixSet;
-	}
+    /**
+     * @deprecated - Use new WMTS(url,requestType)
+     * @param url
+     *            Source URL
+     * @param layerName
+     *            Layer name or Theme name
+     * @param requestType
+     *            REST or KVP (Key Value Pair)
+     * @param srs
+     *            A string representing the spatial reference system key.
+     * @param format
+     *            The desired WMTS output format.
+     */
+    public WMTS(String url, String layerName, String requestType, String srs,
+            String format) {
+        this.setLayerType(LayerType.WMTS);
+        this.addUrl(url);
+        this.setName(layerName);
+        this.requestType = requestType;
+        DataLayer dataLayer = new DataLayer();
+        dataLayer.setLayerName(layerName);
+        this.addDataLayer(dataLayer);
+        this.setFormat(format);
+        this.setSRS(srs);
+    }
 
-	/**
-	 * @return - The name of the tile matrix set.
-	 */
-	public String getTileMatrixSet() {
-		return tileMatrixSet;
-	}
-	
-	/**
-	 * 
-	 * @return Retuns the origin position of the first tile.
-	 */
-	public double[] getTileOrigin() {
-		return tileOrigin.clone();
-	}
+    public WMTS(String url, String requestEncoding) {
+        this.setLayerType(LayerType.WMTS);
+        this.addUrl(url);
+    }
 
-	/**
-	 * @param tileOrigin
-	 *            Sets the origin position of the first tile.
-	 */
-	public void setTileOrigin(double[] tileOrigin) {
-		this.tileOrigin = tileOrigin.clone();
-	}
+    /**
+     * 
+     * @param srs
+     *            Uses the SRS to determine the tile origin and the full extent.
+     */
+    public void setSRS(String srs) {
+        ScaleSet scaleSet = OXUtil.getScaleSet(srs);
+        this.setTileOrigin(scaleSet.getTileOrigin());
+        this.setTileFullExtent(scaleSet.getTileFullExtent());
+        this.setTileMatrixSet(scaleSet.getTileMatrixSet());
+    }
 
-	/**
-	 * @return double[] sets the overall extent
-	 * 
-	 */
-	public double[] getTileFullExtent() {
-		return tileFullExtent.clone();
-	}
+    /**
+     * @param requestType
+     *            Sets the request type KVP or REST
+     */
+    public void setRequestType(String requestType) {
+        this.requestType = requestType;
+    }
 
-	/**
-	 * @param tileFullExtent
-	 *            Sets the over all extent
-	 */
-	public void setTileFullExtent(double[] tileFullExtent) {
-		this.tileFullExtent = tileFullExtent.clone();
-	}
+    /**
+     * @return String - The request type. KVP or REST.
+     */
+    public String getRequestType() {
+        return requestType;
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.caris.oscarexchange4j.theme.ThemeLayer#validate()
-	 */
-	/**
-	 * Validation Rules for WMTS layer
-	 * 
-	 */
-	@Override
-	public boolean validate() throws ValidationException {
-		String tileMatrixSet = this.getTileMatrixSet();
-		if (tileMatrixSet == null || tileMatrixSet.length() == 0)
-			throw new ValidationException("TileMatrixSet is null or is empty");
-		if (this.tileFullExtent == null || this.tileFullExtent.length != 4) {
-			throw new ValidationException(
-					"TileFullExtent is null or does not contain 4 values.");
-		}
-		if (this.tileOrigin == null || this.tileOrigin.length != 2) {
-			throw new ValidationException(
-					"TileOrigin is null or does not contain 2 values.");
-		}
-		return super.validate();
-	}
+    /**
+     * @param tileMatrixSet
+     *            Sets the tile matrix set to use.
+     */
+    public void setTileMatrixSet(String tileMatrixSet) {
+        this.tileMatrixSet = tileMatrixSet;
+    }
 
+    /**
+     * @return - The name of the tile matrix set.
+     */
+    public String getTileMatrixSet() {
+        return tileMatrixSet;
+    }
 
+    /**
+     * 
+     * @return Retuns the origin position of the first tile.
+     */
+    public double[] getTileOrigin() {
+        return tileOrigin.clone();
+    }
+
+    /**
+     * @param tileOrigin
+     *            Sets the origin position of the first tile.
+     */
+    public void setTileOrigin(double[] tileOrigin) {
+        this.tileOrigin = tileOrigin.clone();
+    }
+
+    /**
+     * @return double[] sets the overall extent
+     * 
+     */
+    public double[] getTileFullExtent() {
+        return tileFullExtent.clone();
+    }
+
+    /**
+     * @param tileFullExtent
+     *            Sets the over all extent
+     */
+    public void setTileFullExtent(double[] tileFullExtent) {
+        this.tileFullExtent = tileFullExtent.clone();
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.caris.oscarexchange4j.theme.ThemeLayer#validate()
+     */
+    /**
+     * Validation Rules for WMTS layer
+     * 
+     */
+    @Override
+    public boolean validate() throws ValidationException {
+        String tileMatrixSet = this.getTileMatrixSet();
+        if (tileMatrixSet == null || tileMatrixSet.length() == 0)
+            throw new ValidationException("TileMatrixSet is null or is empty");
+        if (this.tileFullExtent == null || this.tileFullExtent.length != 4) {
+            throw new ValidationException(
+                    "TileFullExtent is null or does not contain 4 values.");
+        }
+        if (this.tileOrigin == null || this.tileOrigin.length != 2) {
+            throw new ValidationException(
+                    "TileOrigin is null or does not contain 2 values.");
+        }
+        return super.validate();
+    }
 
 }
