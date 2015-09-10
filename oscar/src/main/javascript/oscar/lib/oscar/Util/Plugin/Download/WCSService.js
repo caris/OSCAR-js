@@ -114,9 +114,19 @@ oscar.Util.Plugin.Download.WCSService = new oscar.BaseClass(oscar.Util.Plugin.Do
     },
     buildInformationPanel : function() {
         var $panel = $$("<div></div>");
-        var title = this.record.title[0].value || this.record.identifier[0].value;
+		var title = "";
+		try {
+			title = this.record.title[0].value || this.record.identifier[0].value;
+		} catch(err) {
+			title="";
+		}
         this.setTitle(title);
-        var abs = this.record["abstract"][0];
+		var abs = "";
+		try {
+			abs = this.record["abstract"][0];
+		} catch(err) {
+			abs = "";
+		}
         $panel = $$("<div></div>");
         var $abstract = $$("<p></p>").html(abs);
         $panel.append($abstract);
