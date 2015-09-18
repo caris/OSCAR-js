@@ -371,5 +371,5 @@ OpenLayers.Util.applyDefaults(oscar.Lang.getDictionary("fr"), {
     
     "Fine" : "Fine",
     
-    "Syntax Help":"Syntaxe  Aide"
+    "Syntax Help":"Aide pour la sintaxe"
 });
