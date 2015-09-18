@@ -157,7 +157,7 @@ oscar.Control.AdvancedCatalogueSearch = new oscar.BaseClass(oscar.Control.Catalo
         help_container.addClass("oscar-inline-container");
         
         search_btn_container.append(btn);
-        this.addHelp("Syntax Help", help_container);
+        this.addHelp(oscar.i18n("Syntax Help"), help_container);
         btns.append(search_btn_container);
         btns.append(help_container);
         

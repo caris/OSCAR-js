@@ -120,7 +120,7 @@ oscar.Control.SimpleCatalogueSearch = oscar.BaseClass(oscar.Control.CatalogueSea
         var help_container = $$("<div></div>");
         help_container.addClass("oscar-inline-container");
         
-        this.addHelp("Help", help_container);
+        this.addHelp(oscar.i18n("Help"), help_container);
         this.form.append(help_container);
         
         var scope = this;

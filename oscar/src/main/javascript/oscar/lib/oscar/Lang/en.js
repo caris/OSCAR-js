@@ -365,5 +365,7 @@ OpenLayers.Util.applyDefaults(oscar.Lang.getDictionary("en"), {
     
     "Coarse" : "Coarse",
     
-    "Fine" : "Fine"
+    "Fine" : "Fine",
+    
+    "Syntax Help":"Syntax Help"
 });
