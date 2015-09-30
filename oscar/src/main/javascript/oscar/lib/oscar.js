@@ -43,4 +43,4 @@
 /**
  * Constant: VERSION_NUMBER
  */
-oscar.VERSION_NUMBER = "15.0-SNAPSHOT";
+oscar.VERSION_NUMBER = "15.0.1-RC1";
