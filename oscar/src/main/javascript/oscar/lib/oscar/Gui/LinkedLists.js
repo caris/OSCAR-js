@@ -1,14 +1,14 @@
 /*
  * CARIS oscar - Open Spatial Component ARchitecture
- *
+ * 
  * Copyright 2014 CARIS <http://www.caris.com>
- *
+ * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- *
+ * 
  * http://www.apache.org/licenses/LICENSE-2.0
- *
+ * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -26,7 +26,7 @@ oscar.Gui.LinkedLists = new oscar.BaseClass(oscar.Gui, {
         this.connectionClass = OpenLayers.Util.createUniqueID("connection");
         this.events.register("sourceReceived", this, this.sourceReceived);
         this.events.register("destinationReceived", this, this.destinationReceived);
-
+        
     },
     filter : function() {
         return true;
@@ -37,7 +37,7 @@ oscar.Gui.LinkedLists = new oscar.BaseClass(oscar.Gui, {
     draw : function() {
         var sourceId = OpenLayers.Util.createUniqueID("source");
         var destinationId = OpenLayers.Util.createUniqueID("destination");
-
+        
         oscar.Gui.prototype.draw.apply(this);
         var $this = $$(this.div);
         this.sourceDiv = $$("<div></div>");
@@ -48,24 +48,24 @@ oscar.Gui.LinkedLists = new oscar.BaseClass(oscar.Gui, {
         this.navTextDiv.addClass("navText");
         this.selectedTextDiv = $$("<div></div>").html(oscar.i18n(this.selectedText));
         this.selectedTextDiv.addClass("selectedText");
-
+        
         this.sourceList = $$("<ul></ul>");
         this.sourceList.addClass(this.connectionClass);
         this.sourceList.attr("id", sourceId);
         this.sourceDiv.append(this.sourceList);
-
+        
         this.buttonsDiv = $$("<div></div>");
         this.buttonsDiv.addClass("buttonsDiv");
-
+        
         this.destinationDiv = $$("<div></div>");
         this.destinationDiv.addClass("selectedDiv");
-
+        
         this.destinationList = $$("<ul></ul>");
         this.destinationList.attr("id", destinationId);
         this.destinationList.addClass(this.connectionClass);
-
+        
         this.destinationDiv.append(this.destinationList);
-
+        
         $this.append(this.sourceTextDiv);
         $this.append(this.navTextDiv);
         $this.append(this.selectedTextDiv);
@@ -75,12 +75,12 @@ oscar.Gui.LinkedLists = new oscar.BaseClass(oscar.Gui, {
         $this.append(this.sourceDiv);
         $this.append(this.buttonsDiv);
         $this.append(this.destinationDiv);
-
+        
         $this.addClass(this.displayClass);
         this.buildButtons();
         $this.append("<br clear='left'>");
         $this.disableSelection();
-
+        
     },
     sourceReceived : function(li) {
         this.sourceList.append(li);
@@ -107,12 +107,12 @@ oscar.Gui.LinkedLists = new oscar.BaseClass(oscar.Gui, {
         }
         this.destinationFilter(li);
     },
-
+    
     buildButtons : function() {
         var scope = this;
         this.toTheRight = $$("<button onclick='return false;'></button>").html(oscar.i18n("MoveAllToTheRight"));
-		this.toTheRight.prop('type','button');
-		
+        this.toTheRight.prop('type', 'button');
+        
         this.toTheRight.button({
             icons : {
                 primary : "ui-icon-seek-next"
@@ -129,9 +129,9 @@ oscar.Gui.LinkedLists = new oscar.BaseClass(oscar.Gui, {
         });
         this.toTheRight.css("float", "center");
         
-		this.toTheLeft = $$("<button onclick='return false;'></button>").html(oscar.i18n("MoveAllToTheLeft"));
-		this.toTheLeft.prop('type','button');
-		
+        this.toTheLeft = $$("<button onclick='return false;'></button>").html(oscar.i18n("MoveAllToTheLeft"));
+        this.toTheLeft.prop('type', 'button');
+        
         this.toTheLeft.button({
             icons : {
                 primary : "ui-icon-seek-prev"
@@ -153,11 +153,11 @@ oscar.Gui.LinkedLists = new oscar.BaseClass(oscar.Gui, {
         var li = $$("<li></li>").html(listItem.text);
         li.attr("title", listItem.text);
         var data = listItem.getData();
-
+        
         for ( var p in data) {
             li.data(p, data[p]);
         }
-
+        
         li.addClass("ui-state-default");
         if (!this.isSelected(li)) {
             this.events.triggerEvent("sourceReceived", li);
@@ -169,14 +169,14 @@ oscar.Gui.LinkedLists = new oscar.BaseClass(oscar.Gui, {
         var li = $$("<li></li>").html(listItem.text);
         li.attr("title", listItem.text);
         var data = listItem.getData();
-
+        
         for ( var p in data) {
             li.data(p, data[p]);
         }
         li.addClass("ui-state-default");
         this.events.triggerEvent("destinationReceived", li);
         this.sortable();
-
+        
         return li;
     },
     sortable : function() {
@@ -189,7 +189,7 @@ oscar.Gui.LinkedLists = new oscar.BaseClass(oscar.Gui, {
                 scope.events.triggerEvent("sourceReceived", ui.item);
             }
         }).disableSelection();
-
+        
         $$(this.destinationList).sortable({
             connectWith : "." + this.connectionClass,
             dropOnEmpty : true,
@@ -235,7 +235,7 @@ oscar.Gui.LinkedLists = new oscar.BaseClass(oscar.Gui, {
         }
         this.helpDiv.html("");
         this.helpDiv.html(oscar.i18n(str));
-
+        
     },
     CLASS_NAME : "oscar.Gui.LinkedLists"
 
