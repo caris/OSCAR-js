@@ -111,7 +111,8 @@ oscar.Gui.LinkedLists = new oscar.BaseClass(oscar.Gui, {
     buildButtons : function() {
         var scope = this;
         this.toTheRight = $$("<button onclick='return false;'></button>").html(oscar.i18n("MoveAllToTheRight"));
-
+		this.toTheRight.prop('type','button');
+		
         this.toTheRight.button({
             icons : {
                 primary : "ui-icon-seek-next"
@@ -127,7 +128,10 @@ oscar.Gui.LinkedLists = new oscar.BaseClass(oscar.Gui, {
             return false;
         });
         this.toTheRight.css("float", "center");
-        this.toTheLeft = $$("<button onclick='return false;'></button>").html(oscar.i18n("MoveAllToTheLeft"));
+        
+		this.toTheLeft = $$("<button onclick='return false;'></button>").html(oscar.i18n("MoveAllToTheLeft"));
+		this.toTheLeft.prop('type','button');
+		
         this.toTheLeft.button({
             icons : {
                 primary : "ui-icon-seek-prev"
