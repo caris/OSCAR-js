@@ -1795,7 +1795,7 @@ td#oscarLayoutFooterContainer {
 	height: 200px;
 }
 
-.oscarGuiLinkedLists button {
+.oscarGuiLinkedLists .buttonsDiv a {
 	display: block;
 	position: relative;
 	left: 25%;
