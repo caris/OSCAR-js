@@ -342,33 +342,36 @@ oscar.ox.Layer = oscar.BaseClass({
         }
         var olLayer = null;
         var onEvents = null;
+		var aliasproj = new OpenLayers.Projection("EPSG:3857");
         switch (this.layerType) {
-        case "GOOGLE_PHYSICAL":
-            olLayer = new OpenLayers.Layer.Google("Google Physical", {
-                type : G_PHYSICAL_MAP,
-                sphericalMercator : true
-            });
+		case "GOOGLE_PHYSICAL":
+			olLayer = new OpenLayers.Layer.Google("Google Physical", {
+				type :google.maps.MapTypeId.TERRAIN,
+				sphericalMercator :true
+			});
+			olLayer.projection = aliasproj;
+			break;
+		case "GOOGLE_STREETS":
+			olLayer = new OpenLayers.Layer.Google("Google Streets", {
+				sphericalMercator :true
+			});
+			olLayer.projection = aliasproj;
+			break;
 
-            break;
-        case "GOOGLE_STREETS":
-            olLayer = new OpenLayers.Layer.Google("Google Streets", {
-                type : G_NORMAL_MAP,
-                sphericalMercator : true
-            });
-            break;
-
-        case "GOOGLE_HYBRID":
-            olLayer = new OpenLayers.Layer.Google("Google Hybrid", {
-                type : G_HYBRID_MAP,
-                sphericalMercator : true
-            });
-            break;
-        case "GOOGLE_SATELLITE":
-            olLayer = new OpenLayers.Layer.Google("Google Satellite", {
-                type : G_SATELLITE_MAP,
-                sphericalMercator : true
-            });
-            break;
+		case "GOOGLE_HYBRID":
+			olLayer = new OpenLayers.Layer.Google("Google Hybrid", {
+				type :google.maps.MapTypeId.HYBRID,
+				sphericalMercator :true
+			});
+			olLayer.projection = aliasproj;
+			break;
+		case "GOOGLE_SATELLITE":
+			olLayer = new OpenLayers.Layer.Google("Google Satellite", {
+				type :google.maps.MapTypeId.SATELLITE,
+				sphericalMercator :true
+			});
+			olLayer.projection = aliasproj;
+			break;
         case "MARKER":
             var externalProjection = null;
             if (this.parameters.srs) {
@@ -637,6 +640,7 @@ oscar.ox.Layer = oscar.BaseClass({
             break;
         case "OSM":
             olLayer = new OpenLayers.Layer.OSM(this.name);
+			olLayer.projection = aliasproj;
             break;
         case "WMS":
             var params = {};
@@ -666,8 +670,7 @@ oscar.ox.Layer = oscar.BaseClass({
                 buffer : 0
             });
             break;
-        }
-        ;
+        };
 
         if (olLayer != null) {
             map.addLayer(olLayer);
