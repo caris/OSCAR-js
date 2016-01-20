@@ -460,6 +460,7 @@ oscar.Control.ThemeSwitcher = oscar.BaseClass(oscar.Control.DragPanel, {
                     var getClickFn = function(context, layerGroup) {
                         return function(e) {
                             context.adjustLayerGroup(layerGroup);
+							e.stopPropagation();
                         };
                     };
                     this.layerGroups[layerGroupName].layers.push(input);
@@ -512,6 +513,7 @@ oscar.Control.ThemeSwitcher = oscar.BaseClass(oscar.Control.DragPanel, {
         var getClickFn = function(layer) {
             return function(e) {
                 layer.setVisibility(!layer.getVisibility());
+				e.stopPropagation();
             };
         };
         OpenLayers.Event.observe(input, "click", OpenLayers.Function.bindAsEventListener(getClickFn(layer)));
@@ -548,6 +550,7 @@ oscar.Control.ThemeSwitcher = oscar.BaseClass(oscar.Control.DragPanel, {
         var getClickFn = function(layer) {
             return function(e) {
                 layer.setVisibility(!layer.getVisibility());
+				e.stopPropagation();
             };
         };
         OpenLayers.Event.observe(input, "click", OpenLayers.Function.bindAsEventListener(getClickFn(layer)));
