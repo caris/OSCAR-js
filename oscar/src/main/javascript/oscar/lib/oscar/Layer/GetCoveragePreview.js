@@ -40,7 +40,12 @@ oscar.Layer.GetCoveragePreview = new oscar.BaseClass(OpenLayers.Layer.WMS, {
         newparams.IDENTIFIER = this.params.IDENTIFIER;
         newparams.SERVICEENDPOINT = this.params.SERVICEENDPOINT;
         newparams.RANGESUBSET = this.params.RANGESUBSET;
-        newparams.GRIDBASECRS = oscar.Util.EpsgConversion.epsgToUrn(this.map.getProjection())
+
+		if(projection == "EPSG:900913") {
+			projection = "EPSG:3857";
+		}
+
+        newparams.GRIDBASECRS = oscar.Util.EpsgConversion.epsgToUrn(projection);
         var qString = OpenLayers.Layer.WMS.prototype.getFullRequestString.apply(this, [ newparams, altUrl ]);
 
         return qString;
