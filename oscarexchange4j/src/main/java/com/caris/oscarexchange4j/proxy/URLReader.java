@@ -108,7 +108,7 @@ public class URLReader implements Reader {
             con.setRequestMethod(methodName);
             con.setDoOutput(true);
             con.setDoInput(true);
-            HttpURLConnection.setFollowRedirects(false);
+            con.setInstanceFollowRedirects(true);
             con.setUseCaches(true);
 
             for (Enumeration<String> e = request.getHeaderNames(); e
