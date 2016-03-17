@@ -799,13 +799,23 @@ oscar.Util.Plugin.Download.WCSService = new oscar.BaseClass(
 				if (isPreviewSupported(this.coverageDescription.supportedFormats)) {
 					var GetCoverageOp = oscar.Util.Metadata.getOperation(
 							this.capabilities, "GetCoverage");
-					var previewLayer = new oscar.Layer.GetCoveragePreview(
+
+					//Get the first available field with it's default interpolation method.
+                                        var rangeSubset = function(coverage) {
+                                            subsetting = coverage.range;
+                                            var field = subsetting.fields[0];
+                                            var id = field.identifier;
+                                            var interpolation = field.interpolationMethods.defaultMethod;
+                                            return id + ":" + interpolation;
+                                        };
+
+                                        var previewLayer = new oscar.Layer.GetCoveragePreview(
 							this.coverageDescription.identifier,
 							oscar.PreviewCoverageProxy,
 							{
 								identifier : this.coverageDescription.identifier,
 								serviceEndpoint : GetCoverageOp.dcp.http.get,
-								rangeSubset : "Depth:linear",
+								rangeSubset : rangeSubset(this.coverageDescription),
 								version : "1.1.0"
 							}, {
 								isBaseLayer : false,
