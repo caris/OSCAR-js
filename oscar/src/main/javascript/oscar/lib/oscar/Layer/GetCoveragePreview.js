@@ -34,20 +34,22 @@ oscar.Layer.GetCoveragePreview = new oscar.BaseClass(OpenLayers.Layer.WMS, {
         OpenLayers.Layer.WMS.prototype.initialize.apply(this, [ name, url, params, options ]);
     },
     getFullRequestString : function(newparams, altUrl) {
-
+        
+        var projection = this.map.getProjection();
+        
+        if (projection == "EPSG:900913") {
+            projection = "EPSG:3857";
+        }
+        
         var resolution = this.map.getResolution();
+        
         newparams.GRIDOFFSETS = resolution + "," + (resolution * -1);
         newparams.IDENTIFIER = this.params.IDENTIFIER;
         newparams.SERVICEENDPOINT = this.params.SERVICEENDPOINT;
         newparams.RANGESUBSET = this.params.RANGESUBSET;
-
-		if(projection == "EPSG:900913") {
-			projection = "EPSG:3857";
-		}
-
         newparams.GRIDBASECRS = oscar.Util.EpsgConversion.epsgToUrn(projection);
         var qString = OpenLayers.Layer.WMS.prototype.getFullRequestString.apply(this, [ newparams, altUrl ]);
-
+        
         return qString;
     },
     CLASS_NAME : "oscar.Layer.GetCoveragePreview"
