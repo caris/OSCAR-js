@@ -127,7 +127,8 @@ oscar.Handler.WFS = oscar.BaseClass(oscar.Handler, {
         var params = {
             service : "WFS",
             request : "DescribeFeatureType",
-            version : serviceEntry.version
+            version : serviceEntry.version,
+            typename:serviceEntry.identifiers[0]
         };
         var onSuccess = function(resp) {
             serviceEntry.schema = new OpenLayers.Format.WFSDescribeFeatureType().read(resp.responseXML);
