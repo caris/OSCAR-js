@@ -154,15 +154,6 @@ oscar.Handler.WFS = oscar.BaseClass(oscar.Handler, {
             projection : theme.srs
         });
 
-        var featTypes = [];
-
-        for ( var el in serviceEntry.identifiers) {
-            var feat = serviceEntry.identifiers[el];
-            if (feat.indexOf(serviceEntry.schema.targetPrefix) > -1) {
-                feat = feat.split(":")[1];
-            }
-            featTypes.push(feat);
-        }
         var formatOptions = {
             extractAttributes : true
         };
@@ -175,10 +166,8 @@ oscar.Handler.WFS = oscar.BaseClass(oscar.Handler, {
         var protocol = new OpenLayers.Protocol.WFS({
             url : serviceEntry.url,
             version : serviceEntry.version,
-            featureType : featTypes.toString(),
+            featureType : serviceEntry.identifiers.toString(),
             geometryName : serviceEntry.schema.featureTypes[0].properties[0].name,
-            featureNS : serviceEntry.schema.targetNamespace,
-            featurePrefix : serviceEntry.schema.targetPrefix,
             formatOptions : formatOptions,
             filter : sFilter,
             scope : this
