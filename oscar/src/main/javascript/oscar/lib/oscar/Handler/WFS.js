@@ -128,7 +128,7 @@ oscar.Handler.WFS = oscar.BaseClass(oscar.Handler, {
             service : "WFS",
             request : "DescribeFeatureType",
             version : serviceEntry.version,
-            typename:serviceEntry.identifiers[0]
+			typename:serviceEntry.identifiers[0]
         };
         var onSuccess = function(resp) {
             serviceEntry.schema = new OpenLayers.Format.WFSDescribeFeatureType().read(resp.responseXML);
@@ -146,35 +146,6 @@ oscar.Handler.WFS = oscar.BaseClass(oscar.Handler, {
         });
     },
 
-    buildProtocol : function(serviceEntry, geom, theme) {
-
-        var sFilter = new OpenLayers.Filter.Spatial({
-            type : OpenLayers.Filter.Spatial.BBOX,
-            value : this.getBounds(geom),
-            projection : theme.srs
-        });
-
-        var formatOptions = {
-            extractAttributes : true
-        };
-        formatOptions.srsName = theme.srs;
-        if (serviceEntry.version != "1.0.0") {
-            formatOptions.xy = (this.map.projection.proj.projName == "longlat") ? false : true;
-        }
-        formatOptions.autoConfig = true;
-        formatOptions.singleFeatureType = false
-        var protocol = new OpenLayers.Protocol.WFS({
-            url : serviceEntry.url,
-            version : serviceEntry.version,
-            featureType : serviceEntry.identifiers.toString(),
-            geometryName : serviceEntry.schema.featureTypes[0].properties[0].name,
-            formatOptions : formatOptions,
-            filter : sFilter,
-            scope : this
-        });
-
-        return protocol;
-    },
 
     /**
      * Method: doGetFeatureRequest
@@ -186,17 +157,69 @@ oscar.Handler.WFS = oscar.BaseClass(oscar.Handler, {
      * -reference to a {<oscar.ox.Theme>} object.
      */
     doGetFeatureRequest : function(serviceEntry, geom, theme) {
+		
+        var sFilter = new OpenLayers.Filter.Spatial({
+            type : OpenLayers.Filter.Spatial.BBOX,
+            value : this.getBounds(geom),
+            projection : theme.srs
+        });
 
-        var protocol = this.buildProtocol(serviceEntry, geom, theme);
+        var formatOptions = {
+            extractAttributes : true,
+			autoConfig:true,
+			singleFeatureType:false,
+			srsName:theme.srs
+        };
 
-        var now = new Date();
+        if (serviceEntry.version != "1.0.0") {
+            formatOptions.xy = (this.map.projection.proj.projName == "longlat") ? false : true;
+        }
+		
+		var numRequests = serviceEntry.identifiers.length;
+		var completedRequests = 0;
+		
+		var featureList=[];
+		
+		var callbackfn = function(evt) {
+			featureList = featureList.concat(evt.features);
+			completedRequests++;
+		}
+		var me = this;
+		
+		var reqCounter = window.setInterval(function() {
+			if(completedRequests>=numRequests) {
+				window.clearInterval(reqCounter);
+				me.drawFeatures(featureList);
+			}
+		},500);
+		 this.showDialog();
+		
+		for (var i in serviceEntry.identifiers) {
+			var protocol = new OpenLayers.Protocol.WFS({
+				url : serviceEntry.url,
+				version : serviceEntry.version,
+				featureType : serviceEntry.identifiers[i],
+				singleFeatureType:false,
+				geometryName : serviceEntry.schema.featureTypes[0].properties[0].name,
+				formatOptions : formatOptions,
+				filter : sFilter,
+				scope : this
+			});
+			
+			protocol.read({
+				callback:callbackfn
+			});
+		}
+    },
+	
+	drawFeatures:function(features) {
+	
+	    var now = new Date();
         var hour = now.getHours();
         var minutes = now.getMinutes();
         var ampm = (hour > 12) ? "am" : "pm";
 
         this.layer = new OpenLayers.Layer.Vector("@ " + hour + ":" + minutes + " " + ampm, {
-            strategies : [ new OpenLayers.Strategy.Fixed() ],
-            protocol : protocol,
             temporary : true,
             displayInLayerSwitcher : false
         });
@@ -239,7 +262,11 @@ oscar.Handler.WFS = oscar.BaseClass(oscar.Handler, {
         });
 
         this.map.addLayer(this.layer);
-    },
+		this.layer.addFeatures(features);
+		this.events.triggerEvent("requestComplete");
+	},
+	
+	
     /**
      * Method: getBounds
      * 
