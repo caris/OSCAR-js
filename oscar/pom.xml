@@ -3,13 +3,10 @@
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>oscar</artifactId>
 	<name>oscar</name>
-	<packaging>jar</packaging>
-	<groupId>com.caris</groupId>
-	<version>14.0-SNAPSHOT</version>
 	<parent>
 		<groupId>com.caris</groupId>
 		<artifactId>oscar_framework</artifactId>
-		<version>14.0-SNAPSHOT</version>
+		<version>15.0.2-RC1</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 	<dependencies>
@@ -83,6 +80,7 @@
 								<include>**/oscar.js</include>
 								<include>**/Util.js</include>
 								<include>**/Types/BaseClass.js</include>
+								<include>**/Types/QueryType.js</include>
 								<include>**/ox/ox.js</include>
 								<include>**/Gui.js</include>
 								<include>**/Gui/CatalogueResults.js</include>
@@ -91,6 +89,7 @@
 								<include>**/Gui/Download/WFS.js</include>
 								<include>**/Gui/CollapsiblePanel.js</include>
 								<include>**/Gui/DownloadOptions.js</include>
+								<include>**/Gui/Info.js</include>
 								<include>**/Gui/ServicePanel.js</include>
 								<include>**/Gui/ClickableLabel.js</include>
 								<include>**/Gui/ComboBox.js</include>
@@ -103,6 +102,7 @@
 								<include>**/Control/ArgParser.js</include>
 								<include>**/Control/DragPanel.js</include>
 								<include>**/Control/DataDiscovery.js</include>
+								<include>**/Control/LoadingBar.js</include>
 								<include>**/Control/Multi.js</include>
 								<include>**/Control/MeasurementTools.js</include>
 								<include>**/Control/SelectionTools.js</include>
@@ -114,6 +114,8 @@
 								<include>**/Control/Point.js</include>
 								<include>**/Control/Select.js</include>
 								<include>**/Control/CatalogueSearchForm.js</include>
+								<include>**/Control/SimpleCatalogueSearch.js</include>
+								<include>**/Control/AdvancedCatalogueSearch.js</include>
 								<include>**/Control/Print.js</include>
 								<include>**/Control/DataExtractor.js</include>
 								<include>**/Control/Measure.js</include>
@@ -133,6 +135,11 @@
 								<include>**/Format/OXF.js</include>
 								<include>**/Format/OXF/v2.js</include>
 								<include>**/Format/OXF/XML.js</include>
+								<include>**/Format/OGC/Filter.js</include>
+								<include>**/Format/OGC/Filter/v1_1_0.js</include>
+								<include>**/Format/CSW.js</include>
+								<include>**/Format/CSW/v2_0_2.js</include>
+								<include>**/Format/CSW/v2_0_2/Capabilities.js</include>
 								<include>**/Format/WCSCapabilities.js</include>
 								<include>**/Format/WCSCapabilities/v1.js</include>
 								<include>**/Format/WCSCapabilities/v1_0_0.js</include>
@@ -164,14 +171,23 @@
 								<include>**/Util/PluginManager.js</include>
 								<include>**/Util/Plugin/Plugin.js</include>
 								<include>**/Util/Plugin/Download/Download.js</include>
+								<include>**/Util/Plugin/Download/Options.js</include>
 								<include>**/Util/Plugin/Download/WCSService.js</include>
+								<include>**/Util/Plugin/Download/Zipfile.js</include>
 								<include>**/Lang.js</include>
 								<include>**/Lang/en.js</include>
 								<include>**/Lang/es.js</include>
 								<include>**/Lang/fr.js</include>
+								<include>**/Layer.js</include>
+								<include>**/Layer/GetCoveragePreview.js</include>
+								<include>**/ogc.js</include>
+								<include>**/ogc/BaseService.js</include>
+								<include>**/ogc/Catalogue/CatalogueService.js</include>
 								<include>**/Popup/FramedCloud.js</include>
 								<include>**/Map.js</include>
 								<include>**/OLPrototypePatches.js</include>
+								<include>**/Parser.js</include>
+								<include>**/parsers/*.js</include>
 							</includes>
 						</aggregation>
 						<aggregation>
@@ -294,6 +310,23 @@
 			<plugin>
 				<groupId>org.codehaus.mojo.javascript</groupId>
 				<artifactId>javascript-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<descriptor>src/assembly/bin.xml</descriptor>
+					<finalName>${project.name}-${project.version}</finalName>
+					<appendAssemblyId>false</appendAssemblyId>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>

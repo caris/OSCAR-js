@@ -1,7 +1,7 @@
 /**
  * CARIS oscar - Open Spatial Component ARchitecture
  *
- * Copyright 2014 CARIS <http://www.caris.com>
+ * Copyright 2016 CARIS <http://www.caris.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,21 +29,26 @@ public interface Service {
 
     /**
      * Returns the type of service.
+     * 
      * @return ServiceType SERVICE, SELECTION, or EXTRACTION, as appropriate.
      */
     public abstract ServiceType getServiceType();
 
     /**
-     * Returns a list of ServiceEntry objects that are registered with this service.
-     * @return List<ServiceEntry> The ServiceEntry objects registered with this service.
-     *                  Returns null if no ServiceEntries are present.
+     * Returns a list of ServiceEntry objects that are registered with this
+     * service.
+     * 
+     * @return The ServiceEntry objects registered with this service. Returns
+     *         null if no ServiceEntries are present.
      */
     public abstract List<ServiceEntry> getServiceEntries();
 
     /**
      * Registers a ServiceEntry object with this Service. If no entries exist it
      * creates a new list of entries.
-     * @param entry The entry to add.
+     * 
+     * @param entry
+     *            The entry to add.
      */
     public abstract void addServiceEntry(ServiceEntry entry);
 

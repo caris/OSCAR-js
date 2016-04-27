@@ -1,7 +1,7 @@
 /**
  * CARIS oscar - Open Spatial Component ARchitecture
  *
- * Copyright 2014 CARIS <http://www.caris.com>
+ * Copyright 2016 CARIS <http://www.caris.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,10 +16,6 @@
  * limitations under the License.
  */
 package com.caris.oscarexchange4j.theme.interfaces;
-
-/*
- * WEB-999 - Interface added to define methods used by web feature service layers.
- */
 
 /**
  * Interface to define methods used by Web Feature Service layers.
@@ -39,6 +35,7 @@ public interface WebFeatureService {
      * Sets the Web Feature Service version
      * 
      * @param wfsVersion
+     *            The WFS version string.
      */
     public void setWFSVersion(String wfsVersion);
 
@@ -53,6 +50,7 @@ public interface WebFeatureService {
      * Sets the Web Feature Service output format
      * 
      * @param responseFormat
+     *            The output format of the WFS.
      */
     public void setResponseFormat(String responseFormat);
 

@@ -4,7 +4,7 @@
     <groupId>com.caris</groupId>
     <artifactId>oscar_framework</artifactId>
     <name>Oscar Framework</name>
-    <version>14.0-SNAPSHOT</version>
+    <version>15.0.2-RC1</version>
     <packaging>pom</packaging>
     <description>This is the CARIS JavaScript map library. It currently
         extends the Openlayers library and uses YUI and jQuery UI to make
@@ -14,7 +14,7 @@
     </description>
 
     <properties>
-        <branch>14.0</branch>
+        <branch>15.0</branch>
         <project.scm.url>https://github.com/caris/OSCAR-js.git</project.scm.url>
         <maven.project.info.reports.plugin.version>2.7</maven.project.info.reports.plugin.version>
         <maven.site.plugin.version>3.3</maven.site.plugin.version>
@@ -23,7 +23,7 @@
     <parent>
         <groupId>com.caris.pom</groupId>
         <artifactId>caris-opensource-pom</artifactId>
-        <version>12</version>
+        <version>16-SNAPSHOT</version>
     </parent>
 
     <issueManagement>
@@ -47,19 +47,18 @@
             <name>CARIS Snapshots</name>
             <id>nexus.caris.com.snapshots</id>
             <url>http://nexus.caris.com/nexus/content/repositories/public-snapshots/</url>            
-        </repository>
+        </repository>    
         <repository>
             <name>CARIS Releases</name>
             <id>nexus.caris.com.releases</id>
             <url>http://nexus.caris.com/nexus/content/repositories/public-releases</url>            
-        </repository>
+        </repository>    
         <repository>
             <name>CARIS Vendor</name>
             <id>nexus.caris.com</id>
             <url>http://nexus.caris.com/nexus/content/repositories/public-vendor/</url>
         </repository>
     </repositories>
-
     <pluginRepositories>                
         <pluginRepository>
             <name>Maven Plugin Repository</name>
@@ -70,16 +69,68 @@
             <name>oss.sonatype.org</name>
             <id>oss.sonatype.org</id>
             <url>http://oss.sonatype.org/content/groups/public</url>
-        </pluginRepository>	
+        </pluginRepository>    
         <pluginRepository>
             <name>nexus.codehouse.org</name>
             <id>nexus.codehouse.org</id>
             <url>http://nexus.codehaus.org/content/groups/snapshots-group</url>
-        </pluginRepository>	               
+        </pluginRepository>                   
     </pluginRepositories>
 
     <modules>
         <module>oscar</module>
         <module>oscarexchange4j</module>
     </modules>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>3.4</version>
+                <configuration>
+                    <reportPlugins>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-changelog-plugin</artifactId>
+                            <version>${maven.changelog.plugin.version}</version>
+                        </plugin>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-checkstyle-plugin</artifactId>
+                            <version>${maven.checksytle.plugin.version}</version>
+                        </plugin>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-javadoc-plugin</artifactId>
+                            <version>${maven.javadoc.plugin.version}</version>
+                        </plugin>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-pmd-plugin</artifactId>
+                            <version>${maven.pmd.plugin.version}</version>
+                            <configuration>
+                                <targetJdk>${compile.source}</targetJdk>
+                            </configuration>
+                        </plugin>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-project-info-reports-plugin</artifactId>
+                            <version>${maven.project.info.reports.plugin.version}</version>
+                        </plugin>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-surefire-report-plugin</artifactId>
+                            <version>${maven.surefire.report.plugin.version}</version>
+                        </plugin>
+                        <plugin>
+                            <groupId>org.codehaus.mojo</groupId>
+                            <artifactId>findbugs-maven-plugin</artifactId>
+                            <version>3.0.0</version>
+                        </plugin>
+                    </reportPlugins>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>

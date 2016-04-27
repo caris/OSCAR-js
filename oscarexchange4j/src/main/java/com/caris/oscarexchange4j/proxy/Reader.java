@@ -1,7 +1,7 @@
 /**
  * CARIS oscar - Open Spatial Component ARchitecture
  *
- * Copyright 2014 CARIS <http://www.caris.com>
+ * Copyright 2016 CARIS <http://www.caris.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,13 +21,17 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author tcoburn
- *
  */
 public interface Reader {
+
     /**
      * Make a request
+     * 
+     * @param httpServletRequest
+     *            The incoming request that contains the proxy URL.
+     * 
      * @return The Resposne object from the request.
      */
-	public Response makeRequest(HttpServletRequest httpServletRequest);
+    public Response makeRequest(HttpServletRequest httpServletRequest);
 
 }
