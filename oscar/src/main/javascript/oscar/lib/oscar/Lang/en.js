@@ -367,5 +367,23 @@ OpenLayers.Util.applyDefaults(oscar.Lang.getDictionary("en"), {
     
     "Fine" : "Fine",
     
-    "Syntax Help":"Syntax Help"
+    "Syntax Help":"Syntax Help",
+	//datatable
+	"datatable-emptyTable":"No data available in table",
+	"datatable-info":"Showing _START_ to _END_ of _TOTAL_ entries",
+	"datatable-infoEmpty":  "Showing 0 to 0 of 0 entries",
+	"datatable-infoFiltered":   "(filtered from _MAX_ total entries)",
+	"datatable-infoPostFix":"",
+	"datatable-infoThousands":  ",",
+	"datatable-lengthMenu": "Show _MENU_ entries",
+	"datatable-loadingRecords": "Loading...",
+	"datatable-processing": "Processing...",
+	"datatable-search": "Search:",
+	"datatable-zeroRecords":"No matching records found",
+	"datatable-first":"First",
+	"datatable-last": "Last",
+	"datatable-next": "Next",
+	"datatable-previous": "Previous",
+	"datatable-sortAscending":  ": activate to sort column ascending",
+	"datatable-sortDescending": ": activate to sort column descending"
 });

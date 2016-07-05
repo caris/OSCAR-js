@@ -371,5 +371,23 @@ OpenLayers.Util.applyDefaults(oscar.Lang.getDictionary("es"), {
     
     "Fine" : "Fina",
     
-    "Syntax Help":"Ayuda para la sintaxis"
+    "Syntax Help":"Ayuda para la sintaxis",
+	//datatable
+	"datatable-emptyTable":"Ningún dato disponible en esta tabla",
+	"datatable-info":"Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+	"datatable-infoEmpty":  "Mostrando registros del 0 al 0 de un total de 0 registros",
+	"datatable-infoFiltered":   "(filtrado de un total de _MAX_ registros)",
+	"datatable-infoPostFix":"",
+	"datatable-infoThousands":  ",",
+	"datatable-lengthMenu": "Mostrar _MENU_ registros",
+	"datatable-loadingRecords": "Cargando...",
+	"datatable-processing": "Procesando...",
+	"datatable-search": "Buscar:",
+	"datatable-zeroRecords":"No se encontraron resultados",
+	"datatable-first":"Primero",
+	"datatable-last": "Último",
+	"datatable-next": "Siguiente",
+	"datatable-previous": "Anterior",
+	"datatable-sortAscending":  ": Activar para ordenar la columna de manera ascendente",
+	"datatable-sortDescending": ": Activar para ordenar la columna de manera descendente"	
 });

@@ -371,5 +371,23 @@ OpenLayers.Util.applyDefaults(oscar.Lang.getDictionary("fr"), {
     
     "Fine" : "Fine",
     
-    "Syntax Help":"Aide pour la sintaxe"
+    "Syntax Help":"Aide pour la sintaxe",
+	//datatable
+	"datatable-emptyTable":"Aucune donn&eacute;e disponible dans le tableau",
+	"datatable-info":"Affichage de l'&eacute;l&eacute;ment _START_ &agrave; _END_ sur _TOTAL_ &eacute;l&eacute;ments",
+	"datatable-infoEmpty":  "Affichage de l'&eacute;l&eacute;ment 0 &agrave; 0 sur 0 &eacute;l&eacute;ment",
+	"datatable-infoFiltered": "(filtr&eacute; de _MAX_ &eacute;l&eacute;ments au total)",
+	"datatable-infoPostFix":"",
+	"datatable-infoThousands":  ",",
+	"datatable-lengthMenu": "Afficher _MENU_ &eacute;l&eacute;ments",
+	"datatable-loadingRecords": "Chargement en cours...",
+	"datatable-processing": "Traitement en cours...",
+	"datatable-search": "Rechercher&nbsp;:",
+	"datatable-zeroRecords":"Aucun &eacute;l&eacute;ment &agrave; afficher",
+	"datatable-first":"Premier",
+	"datatable-last": "Dernier",
+	"datatable-next": "Suivant",
+	"datatable-previous": "Pr&eacute;c&eacute;dent",
+	"datatable-sortAscending":  ": activer pour trier la colonne par ordre croissant",
+	"datatable-sortDescending": ": activer pour trier la colonne par ordre d&eacute;croissant"	
 });
