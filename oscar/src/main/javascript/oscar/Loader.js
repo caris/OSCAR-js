@@ -35,46 +35,46 @@ var $_oscarcssdependencies = [
 ];
 
 
-var $_oscarscripts = [
-	"../jquery/jquery/js/jquery-1.9.0.js"
-	,"../jquery/jquery/js/jquery-ui-1.10.0.custom.min.js"
-	,"../jquery/plugins/datetimepicker/jquery.datetimepicker.js"
-	,"../jquery/plugins/stalker/jquery.stalker.js"
-	,"../jquery/plugins/layout/js/jquery.layout-latest.min.js"
-	,"../jquery/plugins/slimScroll/jquery.slimscroll.js"
-	,"../proj4js/lib/proj4js.js"
-	,"../openlayers/OpenLayers.js"
-	,"../jsts/lib/javascript.util.js"
-	,"../jsts/lib/jsts.js"
-];
+var $_oscarjquery = "../jquery/jquery/js/jquery-1.9.0.js";
+
+var $_oscaryuiscripts = {"../yui/build/yahoo-dom-event/yahoo-dom-event.js": [
+    {"../yui/build/element/element-min.js": [
+        "../yui/build/layout/layout-min.js",
+        "../yui/build/button/button-min.js",
+        "../yui/build/tabview/tabview-min.js",
+        "../yui/build/resize/resize-min.js"]
+    },
+    "../yui/build/container/container-min.js",
+    "../yui/build/datasource/datasource.js",
+    {"../yui/build/json/json.js": [
+        {"../yui/build/autocomplete/autocomplete.js": ["../yui/build/datasource/datasource.js"]}
+    ]},
+    "../yui/build/dragdrop/dragdrop.js",
+    "../yui/build/treeview/treeview.js",
+    "../yui/build/animation/animation.js",
+    "../yui/build/connection/connection.js",
+    "../yui/build/datatable/datatable.js",
+    "../yui/build/paginator/paginator-min.js",
+    "../yui/build/resize/resize.js",
+    "../yui/build/connection/connection.js"]
+};
 
 
-var $_oscaryuiscripts = [
-	"../yui/build/yahoo-dom-event/yahoo-dom-event.js",
-	"../yui/build/element/element-min.js",
-	"../yui/build/button/button-min.js",
-	"../yui/build/container/container-min.js",
-	"../yui/build/datasource/datasource.js",
-	"../yui/build/json/json.js",
-	"../yui/build/dragdrop/dragdrop.js",
-	"../yui/build/treeview/treeview.js",
-	"../yui/build/animation/animation.js",
-	"../yui/build/autocomplete/autocomplete.js",
-	"../yui/build/connection/connection.js",
-	"../yui/build/datatable/datatable.js",
-	"../yui/build/paginator/paginator-min.js",
-	"../yui/build/resize/resize.js",
-	"../yui/build/layout/layout-min.js",
-	"../yui/build/connection/connection.js",
-	"../yui/build/resize/resize-min.js",
-	"../yui/build/tabview/tabview-min.js"
-];
+var $_oscarscriptdependencies = {
+    "../jquery/jquery/js/jquery-ui-1.10.0.custom.min.js": [
+        "../jquery/plugins/datetimepicker/jquery.datetimepicker.js",
+        "../jquery/plugins/stalker/jquery.stalker.js",
+        "../jquery/plugins/layout/js/jquery.layout-latest.min.js",
+        "../jquery/plugins/slimScroll/jquery.slimscroll.js",
+        "../proj4js/lib/proj4js.js",
+        "../openlayers/OpenLayers.js",
+        {"../jsts/lib/javascript.util.js": ["../jsts/lib/jsts.js"]},
+        $_oscaryuiscripts
+    ]
+};
 
 
-$_oscarscriptdependencies = $_oscarscripts.concat($_oscaryuiscripts);
-	
-$_oscarscriptdependencies.push("oscar.js");
-$_oscarscriptdependencies.push("yuiDependencies.js");
+var $_oscarfinaldependencies = {"oscar.js": ["yuiDependencies.js"]};
 
 window["oscar"] = {
 	injectJs:yepnope.injectJs,
@@ -85,10 +85,10 @@ window["oscar"] = {
 /**
  * Method: _isReady Internal function call to begin performing call backs
  */
-oscar._isReady = function() {   
+oscar._isReady = function() {
 	var scope = this;
 	$$(document).ready(function() {
-		
+
 		var cb = null;
 		while((cb = scope.readyCallbacks.shift()) != null) {
 			cb.call(scope);
@@ -109,7 +109,7 @@ oscar.getScriptLocation = function() {
  * oscar is ready to be used.
  */
 oscar.onReady = function(fn) {
-	
+
 	this.readyCallbacks.push(fn);
 };
 
@@ -125,22 +125,69 @@ oscar.onReady = function(fn) {
 				break;
 			}
 		}
-		loadUtility.loadScript = function() {
-			var scriptToLoad = $_oscarscriptdependencies.shift();
-			var scope = this;
-			if(scriptToLoad!=null) {
-				var s = scriptToLoad;
-				if(scriptToLoad.indexOf("http")== -1) {
-					scriptToLoad=this.host + scriptToLoad;
-				}
-				oscar.injectJs(scriptToLoad,function(){scope.loadScript()});
-			} else {
-				setTimeout("oscar._isReady()",0);
-				}
-		}
-		var css =null;
-		while((css = $_oscarcssdependencies.shift())!= null) {
-			oscar.injectCss(loadUtility.host + css);
-		}
-		loadUtility.loadScript();
+        loadUtility.Url = function(url) {
+            return url.indexOf("http") == -1 ? loadUtility.host + url : url;
+        }
+        loadUtility.injectJs = function(url, dependents, callback) {
+            var scope = this;
+            scope.url = url,
+            scope.dependents = dependents,
+            scope.callback = callback;
+            if(url instanceof Object){
+                for(var w in url) break;
+                scope.url = w,
+                scope.dependents = url[w];
+            } else {
+                scope.dependents = dependents !== undefined && dependents instanceof Array ? dependents : [];
+            }
+            scope.callback  = (callback === undefined || callback === null) && dependents instanceof Function ? dependents : callback !== undefined && callback !== null && callback instanceof Function ? callback : function(){},
+            scope.deferred = new jQuery.Deferred(),
+            scope.start = function() {
+                scope.proxyFunc = function() {
+                    return function() {
+                        var deferreds = [];
+                        for(var dep in scope.dependents) {
+                            var dependent_url = scope.dependents[dep] instanceof oscar.injectJs ? scope.dependents[dep] : new loadUtility.injectJs(scope.dependents[dep]);
+                            dependent_url.start();
+                            deferreds.push(dependent_url.deferred)
+                        }
+                        jQuery.when.apply(scope, deferreds).done(function(){
+                            scope.deferred.resolve();
+                            scope.callback();
+                        })
+                    }
+                };
+                loadUtility.loadJS(loadUtility.Url(scope.url), scope.proxyFunc());
+            }
+        }
+        loadUtility.loadJS = function(url, callback){
+            var element = document.createElement('script');
+            element.src = url;
+            element.onload = callback;
+            element.onreadystatechange = callback;
+            document.getElementsByTagName('head')[0].appendChild(element);
+        }
+        loadUtility.loadScript = function(object, callback) {
+            for(var first in object) break;
+            var currentScript = new loadUtility.injectJs(first, object[first], callback);
+            currentScript.start();
+        }
+        loadUtility.loadJS(loadUtility.Url($_oscarjquery), function(){
+            var jq = new loadUtility.injectJs($_oscarscriptdependencies, function(){
+                var deps = new loadUtility.injectJs($_oscarfinaldependencies, function(){
+                    setTimeout("oscar._isReady()", 0);
+                });
+                deps.start();
+            });
+            jq.start();
+        })
+        var css =null;
+        while((css = $_oscarcssdependencies.shift())!= null) {
+            oscar.injectCss(loadUtility.host + css);
+        }
+        loadUtility.loadScript($_oscarscriptdependencies, function(){
+            loadUtility.loadScript($_oscarfinaldependencies, function(){
+                setTimeout("oscar._isReady()",0);
+            })
+        });
 })();
