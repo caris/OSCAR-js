@@ -220,6 +220,13 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
             opUrl = GetFeatureOp.href.get;
         }
         this.defaultOptions.operationUrl = opUrl;
+		
+		var idOpt= "";
+		if(namespace != null) {
+			idOpt = namespace+":" +(this.feature.div.data("id") || this.feature.div.data("title"));
+		}
+		
+        this.defaultOptions.id = idOpt;
         this.defaultOptions.id = this.feature.div.data("id");
         this.defaultOptions.bbox = this.feature.div.data("bbox");
         this.defaultOptions.title = this.feature.div.data("title") || this.feature.div.data("id");
