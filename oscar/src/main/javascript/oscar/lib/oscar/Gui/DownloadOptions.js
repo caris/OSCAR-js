@@ -221,13 +221,19 @@ oscar.Gui.DownloadOptions = oscar.BaseClass(oscar.Gui, {
         }
         this.defaultOptions.operationUrl = opUrl;
 		
+		var namespace=null;
+		if(id.featureNS !=null) {
+            namespace = id.featureNS.substring(id.featureNS.lastIndexOf("/")+1);
+		}
+		
 		var idOpt= "";
 		if(namespace != null) {
 			idOpt = namespace+":" +(this.feature.div.data("id") || this.feature.div.data("title"));
+		} else {
+			idOpt = this.feature.div.data("id") || this.feature.div.data("title");
 		}
 		
         this.defaultOptions.id = idOpt;
-        this.defaultOptions.id = this.feature.div.data("id");
         this.defaultOptions.bbox = this.feature.div.data("bbox");
         this.defaultOptions.title = this.feature.div.data("title") || this.feature.div.data("id");
         
