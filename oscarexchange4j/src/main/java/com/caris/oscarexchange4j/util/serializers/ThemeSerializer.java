@@ -1,7 +1,7 @@
 /**
  * CARIS oscar - Open Spatial Component ARchitecture
  *
- * Copyright 2016 CARIS <http://www.caris.com>
+ * Copyright 2021 CARIS <http://www.caris.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +23,8 @@ package com.caris.oscarexchange4j.util.serializers;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.caris.oscarexchange4j.theme.Theme;
 import com.google.gson.JsonElement;
@@ -36,7 +37,7 @@ import com.google.gson.JsonSerializer;
  * 
  */
 public class ThemeSerializer implements JsonSerializer<Theme> {
-    Logger logger = Logger.getLogger(this.getClass().getName());
+    Logger logger = LogManager.getLogger(this.getClass().getName());
     /*
      * (non-Javadoc)
      * 

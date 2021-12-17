@@ -1,7 +1,7 @@
 /**
  * CARIS oscar - Open Spatial Component ARchitecture
  *
- * Copyright 2016 CARIS <http://www.caris.com>
+ * Copyright 2021 CARIS <http://www.caris.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,162 +29,153 @@ import java.util.Enumeration;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * @author tcoburn
  * 
  */
 public class URLReader implements Reader {
-    /**
-     * This is the logger object.
-     */
-    Logger log = Logger.getLogger(this.getClass().getName());
+	/**
+	 * This is the logger object.
+	 */
+	Logger log = LogManager.getLogger(URLReader.class);
 
-    /**
-     * This was added, pretty sure, to just confuse people.
-     */
-    private URL url;
+	/**
+	 * This was added, pretty sure, to just confuse people.
+	 */
+	private URL url;
 
-    /**
-     * This is a constructor for the URLReader class
-     * 
-     * @param connectionString
-     *            I have no idea what this is supposed to do.
-     * @throws MalformedURLException
-     *             Thrown if the connection string cannot be made into a URL.
-     */
-    public URLReader(String connectionString) throws MalformedURLException {
-        // replace spaces with %20
-        connectionString = connectionString.replace(" ", "%20");
-        this.url = new URL(connectionString);
-    }
+	/**
+	 * This is a constructor for the URLReader class
+	 * 
+	 * @param connectionString I have no idea what this is supposed to do.
+	 * @throws MalformedURLException Thrown if the connection string cannot be made
+	 *                               into a URL.
+	 */
+	public URLReader(String connectionString) throws MalformedURLException {
+		// replace spaces with %20
+		connectionString = connectionString.replace(" ", "%20");
+		this.url = new URL(connectionString);
+	}
 
-    /**
-     * This is a constructor for the URLReader class
-     * 
-     * @param url
-     *            I have no idea what this is supposed to do.
-     */
-    public URLReader(URL url) {
-        this.url = url;
-    }
+	/**
+	 * This is a constructor for the URLReader class
+	 * 
+	 * @param url I have no idea what this is supposed to do.
+	 */
+	public URLReader(URL url) {
+		this.url = url;
+	}
 
-    /**
-     * Returns an HttpConnection object based on the classes URL.
-     * 
-     * @return A HTTP connection for the current URL. A URL that I have no idea
-     *         why we're providing.
-     * @throws IOException
-     *             A problem occurred while opening the connection to the URL.
-     */
-    public HttpURLConnection getConnection() throws IOException {
-        return (HttpURLConnection) this.url.openConnection();
-    }
+	/**
+	 * Returns an HttpConnection object based on the classes URL.
+	 * 
+	 * @return A HTTP connection for the current URL. A URL that I have no idea why
+	 *         we're providing.
+	 * @throws IOException A problem occurred while opening the connection to the
+	 *                     URL.
+	 */
+	public HttpURLConnection getConnection() throws IOException {
+		return (HttpURLConnection) this.url.openConnection();
+	}
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * com.caris.oscarexchange4j.proxy.Reader#makeRequest(javax.servlet.http
-     * .HttpServletRequest)
-     */
-    @Override
-    public Response makeRequest(HttpServletRequest request) {
-        Response resp = new Response();
-        BufferedInputStream webToProxyBuf = null;
-        HttpURLConnection con;
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.caris.oscarexchange4j.proxy.Reader#makeRequest(javax.servlet.http
+	 * .HttpServletRequest)
+	 */
+	@Override
+	public Response makeRequest(HttpServletRequest request) {
+		Response resp = new Response();
+		BufferedInputStream webToProxyBuf = null;
+		HttpURLConnection con;
 
-        try {
-            int oneByte;
-            String methodName;
-            String urlString = encodeSpaces(request.getParameter("url"));
+		try {
+			int oneByte;
+			String methodName;
+			String urlString = encodeSpaces(request.getParameter("url"));
 
-            // encoding any space characters with %20
-            URL url = new URL(urlString);
-            con = (HttpURLConnection) url.openConnection();
+			// encoding any space characters with %20
+			URL url = new URL(urlString);
+			con = (HttpURLConnection) url.openConnection();
 
-            methodName = request.getMethod();
-            con.setRequestMethod(methodName);
-            con.setDoOutput(true);
-            con.setDoInput(true);
-            con.setInstanceFollowRedirects(true);
-            con.setUseCaches(true);
+			methodName = request.getMethod();
+			con.setRequestMethod(methodName);
+			con.setDoOutput(true);
+			con.setDoInput(true);
+			con.setInstanceFollowRedirects(true);
+			con.setUseCaches(true);
 
-            for (Enumeration<String> e = request.getHeaderNames(); e
-                    .hasMoreElements();) {
-                String headerName = e.nextElement().toString();
-                // When the request is forwarded, copying the current host
-                // header field in the servletRequest will cause
-                // a valid host header field
-                if (!headerName.equals("accept-encoding")
-                        && !headerName.equals("host")) {
-                    con.setRequestProperty(headerName,
-                            request.getHeader(headerName));
-                }
-            }
+			for (Enumeration<String> e = request.getHeaderNames(); e.hasMoreElements();) {
+				String headerName = e.nextElement().toString();
+				// When the request is forwarded, copying the current host
+				// header field in the servletRequest will cause
+				// a valid host header field
+				if (!headerName.equals("accept-encoding") && !headerName.equals("host")) {
+					con.setRequestProperty(headerName, request.getHeader(headerName));
+				}
+			}
 
-            con.connect();
+			con.connect();
 
-            if (methodName.equals("POST")) {
-                BufferedInputStream clientToProxyBuf = new BufferedInputStream(
-                        request.getInputStream());
-                BufferedOutputStream proxyToWebBuf = new BufferedOutputStream(
-                        con.getOutputStream());
+			if (methodName.equals("POST")) {
+				BufferedInputStream clientToProxyBuf = new BufferedInputStream(request.getInputStream());
+				BufferedOutputStream proxyToWebBuf = new BufferedOutputStream(con.getOutputStream());
 
-                while ((oneByte = clientToProxyBuf.read()) != -1)
-                    proxyToWebBuf.write(oneByte);
+				while ((oneByte = clientToProxyBuf.read()) != -1)
+					proxyToWebBuf.write(oneByte);
 
-                proxyToWebBuf.flush();
-                proxyToWebBuf.close();
-                clientToProxyBuf.close();
-            }
+				proxyToWebBuf.flush();
+				proxyToWebBuf.close();
+				clientToProxyBuf.close();
+			}
 
-            resp.setContentType(con.getContentType());
-            StringBuffer input = new StringBuffer();
-            BufferedReader in = null;
-            try {
-                in = new BufferedReader(new InputStreamReader(
-                        con.getInputStream()));
-                String line = null;
+			resp.setContentType(con.getContentType());
+			StringBuffer input = new StringBuffer();
+			BufferedReader in = null;
+			try {
+				in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+				String line = null;
 
-                while ((line = in.readLine()) != null) {
-                    input.append(line);
-                    input.append(System.getProperty("line.separator"));
-                }
-            } catch (IOException e) {
-                log.error("Error attempting to read from the resource.", e);
-            } finally {
-                try {
-                    if (in != null) {
-                        in.close();
-                    }
-                } catch (IOException e) {
-                    log.error("Error attempting to close the connection.", e);
-                }
-            }
-            if (webToProxyBuf != null) {
-                webToProxyBuf.close();
-            }
-            con.disconnect();
-            resp.setBytes(input.toString().getBytes());
+				while ((line = in.readLine()) != null) {
+					input.append(line);
+					input.append(System.getProperty("line.separator"));
+				}
+			} catch (IOException e) {
+				log.error("Error attempting to read from the resource.", e);
+			} finally {
+				try {
+					if (in != null) {
+						in.close();
+					}
+				} catch (IOException e) {
+					log.error("Error attempting to close the connection.", e);
+				}
+			}
+			if (webToProxyBuf != null) {
+				webToProxyBuf.close();
+			}
+			con.disconnect();
+			resp.setBytes(input.toString().getBytes());
 
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            e.printStackTrace();
-        } finally {
-        }
-        return resp;
-    }
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		} finally {
+		}
+		return resp;
+	}
 
-    /**
-     * 
-     * @param url
-     *            The url to encode
-     * @return A string with the spaces encoded with %20
-     */
-    protected String encodeSpaces(String url) {
-        return url.replace(" ", "%20");
-    }
+	/**
+	 * 
+	 * @param url The url to encode
+	 * @return A string with the spaces encoded with %20
+	 */
+	protected String encodeSpaces(String url) {
+		return url.replace(" ", "%20");
+	}
 
 }

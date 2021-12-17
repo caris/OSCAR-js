@@ -16,12 +16,13 @@
     <properties>
         <branch>15.1</branch>
         <project.scm.url>https://github.com/caris/OSCAR-js.git</project.scm.url>
+        <license.year>2021</license.year>
     </properties>
 
     <parent>
         <groupId>com.caris.pom</groupId>
         <artifactId>caris-opensource-pom</artifactId>
-        <version>16-SNAPSHOT</version>
+        <version>17.1-SNAPSHOT</version>
     </parent>
 
     <issueManagement>
